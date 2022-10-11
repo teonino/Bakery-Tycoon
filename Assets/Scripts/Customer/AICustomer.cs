@@ -8,42 +8,46 @@ using UnityEngine.AI;
 public class AICustomer : MonoBehaviour {
     [SerializeField] private AssetReference assetProductCanvas;
     [SerializeField] private AssetReference assetPaymentCanvas;
-    [SerializeField] private float waitingTime = 5f;
-    [SerializeField] private Product product;
+    [SerializeField] private float waitingTime = 5f; //Time before customer leaves after ordering
+    [SerializeField] private ProductSO product;
 
-    private Vector3 spawnPosition; //Return to the exit once customer is leaving
+    [SerializeField] private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private Shelf shelf;
     private NavMeshAgent agent;
     private GameObject productCanvas; //Stores gameobject to release instance after
-    private GameObject item; 
+    private GameObject item;
     private bool waiting = false;
-    
+
     private void Awake() {
-        spawnPosition = transform.position;
+
         agent = GetComponent<NavMeshAgent>();
 
         //Check shelves
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
         foreach (Shelf shelf in shelves) {
-            if (shelf.item.GetComponent<Product>().GetName() == product.GetName()) { //If the requested item is already displayed
+            if (shelf.item == null) { //Go to an empty shelf 
+                if (this.shelf == null && !shelf.occupied)
+                    this.shelf = shelf;
+            }
+            else if (shelf.item.GetComponent<Product>().GetName() == product.name) { //If the requested item is already displayed
                 this.shelf = shelf;
             }
-            else if (shelf.item == null && shelf == null) { //Go to an empty shelf 
-                this.shelf = shelf;
-            }
-
         }
+
+        //Set the shelf as occupied
+        this.shelf.occupied = true;
 
         //Instantiate panel that display the requested product
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
             productCanvas.transform.position = transform.position + Vector3.up * 2;
-            productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(product.GetName());
+            productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(product.name);
         };
     }
 
     void Start() {
+        spawnPosition = transform.position;
         agent.SetDestination(shelf.transform.position);
     }
 
@@ -63,19 +67,21 @@ public class AICustomer : MonoBehaviour {
         }
 
         //Buy item and leave
-        if (shelf.item.GetComponent<Product>().GetName() == product.GetName() && waiting) {
-            //Stop waiting
-            StopAllCoroutines();
+        if (shelf.item && waiting) {
+            if (shelf.item.GetComponent<Product>().GetName() == product.name) {
+                //Stop waiting
+                StopAllCoroutines();
 
-            //Pay
-            DisplayPayment();
+                //Pay
+                DisplayPayment();
 
-            //Take item
-            item = shelf.item;
-            shelf.item = null;
-            item.transform.SetParent(transform);
-            item.transform.localPosition = Vector3.up * 1.25f;
-            Leave();
+                //Take item
+                item = shelf.item;
+                shelf.item = null;
+                item.transform.SetParent(transform);
+                item.transform.localPosition = Vector3.up * 1.25f;
+                Leave();
+            }
         }
     }
 
@@ -86,8 +92,10 @@ public class AICustomer : MonoBehaviour {
 
     //Remove product panel + exit bakery
     private void Leave() {
+        shelf.occupied = false;
         waiting = false;
-        Addressables.ReleaseInstance(productCanvas);
+        if (productCanvas)
+            Addressables.ReleaseInstance(productCanvas);
         agent.SetDestination(spawnPosition);
     }
 
@@ -95,7 +103,7 @@ public class AICustomer : MonoBehaviour {
     public void DisplayPayment() {
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = shelf.transform.position + Vector3.up * 2;
-            go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + product.GetPrice() + "€";
+            go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + product.price + "€";
             StartCoroutine(DisplayPaymentCoroutine(go.Result));
         };
     }

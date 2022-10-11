@@ -25,9 +25,8 @@ public class PlayerController : MonoBehaviour {
 
     public void OnInterract(InputAction.CallbackContext context) {
         RaycastHit hitInfo;
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo) && hitInfo.collider.tag == "Interractable") {
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo) && hitInfo.collider.GetComponent<Interactable>())
             hitInfo.collider.GetComponent<Interactable>().Effect();
-        }
     }
 
     public void EnableInput() {
