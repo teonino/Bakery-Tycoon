@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WorkplaceButton : MonoBehaviour
-{
+public class WorkplaceButton : MonoBehaviour {
     [SerializeField] private ProductSO product;
+    [SerializeField] private GameObject productRequirementPanel;
 
     private Workplace workplace;
 
@@ -15,6 +15,11 @@ public class WorkplaceButton : MonoBehaviour
         GetComponentInChildren<RawImage>().texture = product.image;
 
         workplace = FindObjectOfType<Workplace>();
+
+        if (!product.CheckRequirement()) {
+            GetComponent<Button>().enabled = false; // if requirement are not met, disable button
+            productRequirementPanel.SetActive(true);
+        }
     }
 
     public void LaunchMinigames() {
