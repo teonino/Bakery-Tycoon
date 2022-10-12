@@ -12,7 +12,6 @@ public class SpawnCustomer : MonoBehaviour {
 
     public int nbCustomer = 0;
     private List<Shelf> shelves;
-    private bool canSpawn = false;
 
     void Start() {
         shelves = new List<Shelf>(FindObjectsOfType<Shelf>());

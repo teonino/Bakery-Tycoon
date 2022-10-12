@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int money = 0;
+    public float reputation = 0;
+    public float money = 0;
     public List<ProductSO> products;
 
     public int GetLenghtProducts() => products.Count;

@@ -19,6 +19,7 @@ public class AICustomer : MonoBehaviour {
     private GameObject productCanvas; //Stores gameobject to release instance after
     private GameObject item;
     private bool waiting = false;
+    private bool leaving = false;
 
     private void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();
@@ -40,7 +41,7 @@ public class AICustomer : MonoBehaviour {
         }
 
         //Set the shelf as occupied
-        this.shelf.occupied = true;
+        shelf.occupied = true;
 
         //Instantiate panel that display the requested product
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
@@ -66,7 +67,7 @@ public class AICustomer : MonoBehaviour {
         }
 
         //Exit the bakery
-        if (Vector3.Distance(transform.position, spawnPosition) < 2 && waiting) {
+        if (Vector3.Distance(transform.position, spawnPosition) < 2 && leaving) {
             if (item)
                 Addressables.ReleaseInstance(item);
             spawner.nbCustomer--;
@@ -74,7 +75,7 @@ public class AICustomer : MonoBehaviour {
         }
 
         //Buy item and leave
-        if (shelf.item && waiting) {
+        if (shelf.item && waiting &&!leaving) {
             if (shelf.item.GetComponent<Product>().GetName() == product.name) {
                 //Stop waiting
                 StopAllCoroutines();
@@ -94,11 +95,13 @@ public class AICustomer : MonoBehaviour {
 
     private IEnumerator CustomerWaiting(float time) {
         yield return new WaitForSeconds(time);
+        
         Leave();
     }
 
     //Remove product panel + exit bakery
     private void Leave() {
+        leaving = true;
         shelf.occupied = false;
         if (productCanvas)
             Addressables.ReleaseInstance(productCanvas);
@@ -111,7 +114,9 @@ public class AICustomer : MonoBehaviour {
             go.Result.transform.position = shelf.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + product.price + "€";
             StartCoroutine(DisplayPaymentCoroutine(go.Result));
+            product = null;
         };
+        manager.money += product.price;
     }
 
     private IEnumerator DisplayPaymentCoroutine(GameObject go) {

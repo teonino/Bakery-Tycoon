@@ -19,6 +19,5 @@ public class TestMinigame2 : Minigame {
     public void Test(InputAction.CallbackContext context) {
         if (context.performed)
             End();
-
     }
 }
