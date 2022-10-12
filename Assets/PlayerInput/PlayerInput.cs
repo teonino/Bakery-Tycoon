@@ -125,6 +125,90 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""TestMinigame"",
+            ""id"": ""bc3162d7-1ddb-477b-8025-3ae526dd7471"",
+            ""actions"": [
+                {
+                    ""name"": ""TestAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""8d600910-070c-4482-8832-efd96693f2da"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b084a525-e6e5-4478-b195-d947969a53e2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Workplace"",
+            ""id"": ""a719ec9b-28f2-4858-bc3a-ea28bf73b662"",
+            ""actions"": [
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d991274b-b0c7-4201-8994-9cfedd663cc4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3e28eed6-0291-4d76-a956-f586600ab01b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""TestMinigame2"",
+            ""id"": ""af6cf9d8-6a65-4ff8-8db0-51d8b9e423fb"",
+            ""actions"": [
+                {
+                    ""name"": ""TestAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""b86569cd-d0ed-4026-8790-9a085c3f3dca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b720b13c-396f-4d6e-93cb-41f46933440f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -133,6 +217,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // TestMinigame
+        m_TestMinigame = asset.FindActionMap("TestMinigame", throwIfNotFound: true);
+        m_TestMinigame_TestAction = m_TestMinigame.FindAction("TestAction", throwIfNotFound: true);
+        // Workplace
+        m_Workplace = asset.FindActionMap("Workplace", throwIfNotFound: true);
+        m_Workplace_Quit = m_Workplace.FindAction("Quit", throwIfNotFound: true);
+        // TestMinigame2
+        m_TestMinigame2 = asset.FindActionMap("TestMinigame2", throwIfNotFound: true);
+        m_TestMinigame2_TestAction = m_TestMinigame2.FindAction("TestAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,9 +322,120 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // TestMinigame
+    private readonly InputActionMap m_TestMinigame;
+    private ITestMinigameActions m_TestMinigameActionsCallbackInterface;
+    private readonly InputAction m_TestMinigame_TestAction;
+    public struct TestMinigameActions
+    {
+        private @PlayerInput m_Wrapper;
+        public TestMinigameActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @TestAction => m_Wrapper.m_TestMinigame_TestAction;
+        public InputActionMap Get() { return m_Wrapper.m_TestMinigame; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TestMinigameActions set) { return set.Get(); }
+        public void SetCallbacks(ITestMinigameActions instance)
+        {
+            if (m_Wrapper.m_TestMinigameActionsCallbackInterface != null)
+            {
+                @TestAction.started -= m_Wrapper.m_TestMinigameActionsCallbackInterface.OnTestAction;
+                @TestAction.performed -= m_Wrapper.m_TestMinigameActionsCallbackInterface.OnTestAction;
+                @TestAction.canceled -= m_Wrapper.m_TestMinigameActionsCallbackInterface.OnTestAction;
+            }
+            m_Wrapper.m_TestMinigameActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @TestAction.started += instance.OnTestAction;
+                @TestAction.performed += instance.OnTestAction;
+                @TestAction.canceled += instance.OnTestAction;
+            }
+        }
+    }
+    public TestMinigameActions @TestMinigame => new TestMinigameActions(this);
+
+    // Workplace
+    private readonly InputActionMap m_Workplace;
+    private IWorkplaceActions m_WorkplaceActionsCallbackInterface;
+    private readonly InputAction m_Workplace_Quit;
+    public struct WorkplaceActions
+    {
+        private @PlayerInput m_Wrapper;
+        public WorkplaceActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Quit => m_Wrapper.m_Workplace_Quit;
+        public InputActionMap Get() { return m_Wrapper.m_Workplace; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WorkplaceActions set) { return set.Get(); }
+        public void SetCallbacks(IWorkplaceActions instance)
+        {
+            if (m_Wrapper.m_WorkplaceActionsCallbackInterface != null)
+            {
+                @Quit.started -= m_Wrapper.m_WorkplaceActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_WorkplaceActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_WorkplaceActionsCallbackInterface.OnQuit;
+            }
+            m_Wrapper.m_WorkplaceActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
+            }
+        }
+    }
+    public WorkplaceActions @Workplace => new WorkplaceActions(this);
+
+    // TestMinigame2
+    private readonly InputActionMap m_TestMinigame2;
+    private ITestMinigame2Actions m_TestMinigame2ActionsCallbackInterface;
+    private readonly InputAction m_TestMinigame2_TestAction;
+    public struct TestMinigame2Actions
+    {
+        private @PlayerInput m_Wrapper;
+        public TestMinigame2Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @TestAction => m_Wrapper.m_TestMinigame2_TestAction;
+        public InputActionMap Get() { return m_Wrapper.m_TestMinigame2; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TestMinigame2Actions set) { return set.Get(); }
+        public void SetCallbacks(ITestMinigame2Actions instance)
+        {
+            if (m_Wrapper.m_TestMinigame2ActionsCallbackInterface != null)
+            {
+                @TestAction.started -= m_Wrapper.m_TestMinigame2ActionsCallbackInterface.OnTestAction;
+                @TestAction.performed -= m_Wrapper.m_TestMinigame2ActionsCallbackInterface.OnTestAction;
+                @TestAction.canceled -= m_Wrapper.m_TestMinigame2ActionsCallbackInterface.OnTestAction;
+            }
+            m_Wrapper.m_TestMinigame2ActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @TestAction.started += instance.OnTestAction;
+                @TestAction.performed += instance.OnTestAction;
+                @TestAction.canceled += instance.OnTestAction;
+            }
+        }
+    }
+    public TestMinigame2Actions @TestMinigame2 => new TestMinigame2Actions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface ITestMinigameActions
+    {
+        void OnTestAction(InputAction.CallbackContext context);
+    }
+    public interface IWorkplaceActions
+    {
+        void OnQuit(InputAction.CallbackContext context);
+    }
+    public interface ITestMinigame2Actions
+    {
+        void OnTestAction(InputAction.CallbackContext context);
     }
 }

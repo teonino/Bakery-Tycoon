@@ -10,6 +10,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private int maxDelaySpawn = 5;
     [SerializeField] private AssetReference customerAsset;
 
+    public int nbCustomer = 0;
     private List<Shelf> shelves;
     private bool canSpawn = false;
 
@@ -24,18 +25,11 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     private void Spawn() {
-        //Check if a shelf is empty
-        foreach (Shelf shelf in shelves) {
-            if (!shelf.occupied)
-                canSpawn = true;
-        }
-
         //Spawn a customer
-        if (canSpawn && enableSpawn)
+        if (enableSpawn && nbCustomer <= shelves.Count) {
             customerAsset.InstantiateAsync(transform);
-
-        //Reset canSpawn 
-        canSpawn = false;
+            nbCustomer++;
+        }
 
         //Start SpawnDelay again
         StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));

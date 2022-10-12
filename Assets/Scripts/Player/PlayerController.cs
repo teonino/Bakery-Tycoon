@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
-
+    [SerializeField] float interactionDistance;
     public PlayerInput playerInput { get; private set; }
     private PlayerMovements playerMovements;
 
@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
+        Debug.DrawRay(transform.position, transform.forward * interactionDistance, Color.green);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
-        RaycastHit hitInfo;
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo) && hitInfo.collider.GetComponent<Interactable>())
-            hitInfo.collider.GetComponent<Interactable>().Effect();
+        if (context.performed) {
+            RaycastHit hitInfo;
+            if (Physics.Raycast(transform.position, transform.forward, out hitInfo, interactionDistance) && hitInfo.collider.GetComponent<Interactable>())
+                hitInfo.collider.GetComponent<Interactable>().Effect();
+        }
     }
 
     public void EnableInput() {

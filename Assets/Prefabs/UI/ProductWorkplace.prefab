@@ -342,6 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   product: {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
   productRequirementPanel: {fileID: 1774291696163365375}
+  workplacePanel: {fileID: 0}
 --- !u!222 &3715516186203549299
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -426,7 +427,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7861670065530328140}
         m_TargetAssemblyTypeName: WorkplaceButton, Assembly-CSharp
-        m_MethodName: SpawnItem
+        m_MethodName: SetOngoingProduct
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

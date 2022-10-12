@@ -9,18 +9,23 @@ public class AICustomer : MonoBehaviour {
     [SerializeField] private AssetReference assetProductCanvas;
     [SerializeField] private AssetReference assetPaymentCanvas;
     [SerializeField] private float waitingTime = 5f; //Time before customer leaves after ordering
-    [SerializeField] private ProductSO product;
+    [SerializeField] private NavMeshAgent agent;
 
-    [SerializeField] private Vector3 spawnPosition; //Return to the exit once customer is leaving
+    private SpawnCustomer spawner;
+    private ProductSO product;
+    private GameManager manager;
+    private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private Shelf shelf;
-    private NavMeshAgent agent;
     private GameObject productCanvas; //Stores gameobject to release instance after
     private GameObject item;
     private bool waiting = false;
 
     private void Awake() {
+        spawner = FindObjectOfType<SpawnCustomer>();
+        manager = FindObjectOfType<GameManager>();
 
-        agent = GetComponent<NavMeshAgent>();
+        //Set product
+        product = manager.products[Random.Range(0, manager.GetLenghtProducts())];
 
         //Check shelves
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
@@ -46,13 +51,14 @@ public class AICustomer : MonoBehaviour {
         };
     }
 
+
     void Start() {
         spawnPosition = transform.position;
         agent.SetDestination(shelf.transform.position);
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         //Go to the shelf
         if (Vector3.Distance(transform.position, shelf.transform.position) < 2 && !waiting) {
             waiting = true;
@@ -63,6 +69,7 @@ public class AICustomer : MonoBehaviour {
         if (Vector3.Distance(transform.position, spawnPosition) < 2 && waiting) {
             if (item)
                 Addressables.ReleaseInstance(item);
+            spawner.nbCustomer--;
             Addressables.ReleaseInstance(gameObject);
         }
 
@@ -93,7 +100,6 @@ public class AICustomer : MonoBehaviour {
     //Remove product panel + exit bakery
     private void Leave() {
         shelf.occupied = false;
-        waiting = false;
         if (productCanvas)
             Addressables.ReleaseInstance(productCanvas);
         agent.SetDestination(spawnPosition);

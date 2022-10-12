@@ -17,7 +17,7 @@ public class ProductSO : ScriptableObject {
 
     [Space(10)]
     [Header("Minigames")]
-    public List<Minigame> minigames;
+    public List<AssetReference> minigames;
 
     public bool CheckRequirement() {
         bool requirementMet = true;
