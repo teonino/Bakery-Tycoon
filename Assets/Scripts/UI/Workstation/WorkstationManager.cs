@@ -24,7 +24,7 @@ public class WorkstationManager : MonoBehaviour {
         for (int i = 0; i < gameManager.GetLenghtProducts(); i++) {
             productButton.InstantiateAsync(transform).Completed += (go) => {
                 go.Result.GetComponent<WorkstationButton>().workplacePanel = this;
-                go.Result.GetComponent<WorkstationButton>().SetProduct(gameManager.products[nbButton]);
+                go.Result.GetComponent<WorkstationButton>().SetProduct(gameManager.productsList[nbButton]);
                 productButtonList.Add(go.Result);
                 SetupButtons();
             };

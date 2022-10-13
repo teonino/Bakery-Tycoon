@@ -1,24 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
+    [Header("Global variables")]
     public DayTime dayTime;
     public float reputation = 0;
     public float money = 0;
-    public List<ProductSO> products;
 
-    public int GetLenghtProducts() => products.Count;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Space(10)]
+    public List<ProductSO> productsList;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Stocks")]
+    public int maxStock;
+    public int currentStock;
+    public List<Stock> stocks;
+
+    public int GetLenghtProducts() => productsList.Count;
 }

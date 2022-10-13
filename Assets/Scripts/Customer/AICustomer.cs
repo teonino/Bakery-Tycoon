@@ -26,7 +26,7 @@ public class AICustomer : MonoBehaviour {
         manager = FindObjectOfType<GameManager>();
 
         //Set product
-        product = manager.products[Random.Range(0, manager.GetLenghtProducts())];
+        product = manager.productsList[Random.Range(0, manager.GetLenghtProducts())];
 
         //Check shelves
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
