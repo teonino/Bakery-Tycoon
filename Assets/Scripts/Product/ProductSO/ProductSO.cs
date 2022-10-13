@@ -8,6 +8,7 @@ public class ProductSO : ScriptableObject {
     [Header("Global variables")]
     public new string name;
     public float price;
+    public float recipePrice;
     public bool unlocked;
     public AssetReference asset;
     public Texture image;

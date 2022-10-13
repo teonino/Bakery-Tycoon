@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public abstract class Minigame : MonoBehaviour {
-    
-    protected WorkstationManager workplacePanel; 
 
+    [SerializeField] protected CraftingStationType craftingStationRequired;
+    protected WorkstationManager workplacePanel;
     protected PlayerController controller;
     protected float launchTime;
     protected float endTime;
@@ -20,8 +20,23 @@ public abstract class Minigame : MonoBehaviour {
 
     protected void End() {
         endTime = Time.time;
+        DirtyCraftingStation();
         workplacePanel.MinigameComplete();
     }
 
     protected float GetTimer() => endTime - launchTime; //Return time taken to complete the minigame
+
+    protected void DirtyCraftingStation() {
+        GameObject go = null;
+        switch (craftingStationRequired) {
+            case CraftingStationType.Hoven:
+                go = GameObject.FindGameObjectWithTag("Hoven");
+                break;
+            default:
+                break;
+        }
+
+        if (go == null)
+            go.GetComponent<CraftingStation>().AddDirt();
+    }
 }

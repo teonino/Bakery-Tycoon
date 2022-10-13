@@ -14,12 +14,15 @@ public class Workstation : Interactable {
         
     }
 
+    private void Start() {
+        playerController.playerInput.Workplace.Quit.performed += Quit;
+    }
+
     public override void Effect() {
         if (!playerController.itemHolded) {
             playerController.DisableInput();
             workplacePanel.SetActive(true);
             playerController.playerInput.Workplace.Enable();
-            playerController.playerInput.Workplace.Quit.performed += Quit;
         }
     }
 

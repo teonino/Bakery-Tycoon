@@ -42,8 +42,4 @@ public class PlayerController : MonoBehaviour {
     private void OnEnable() {
         playerInput.Player.Interact.performed += OnInterract;
     }
-
-    private void OnDisable() {
-        playerInput.Player.Interact.canceled -= OnInterract;
-    }
 }

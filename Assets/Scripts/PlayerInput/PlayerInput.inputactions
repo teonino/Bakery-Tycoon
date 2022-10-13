@@ -133,6 +133,34 @@
             ]
         },
         {
+            "name": "TestMinigame2",
+            "id": "af6cf9d8-6a65-4ff8-8db0-51d8b9e423fb",
+            "actions": [
+                {
+                    "name": "TestAction",
+                    "type": "Button",
+                    "id": "b86569cd-d0ed-4026-8790-9a085c3f3dca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b720b13c-396f-4d6e-93cb-41f46933440f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Workplace",
             "id": "a719ec9b-28f2-4858-bc3a-ea28bf73b662",
             "actions": [
@@ -161,13 +189,22 @@
             ]
         },
         {
-            "name": "TestMinigame2",
-            "id": "af6cf9d8-6a65-4ff8-8db0-51d8b9e423fb",
+            "name": "Building",
+            "id": "6ad8660a-8a33-4654-8768-79f81f54fef0",
             "actions": [
                 {
-                    "name": "TestAction",
+                    "name": "Quit",
                     "type": "Button",
-                    "id": "b86569cd-d0ed-4026-8790-9a085c3f3dca",
+                    "id": "0fd5dead-5c97-4c9a-8f24-fa0dd33c2726",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "545e6474-0a19-4ac5-8872-205174cf5ae4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -177,12 +214,23 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "b720b13c-396f-4d6e-93cb-41f46933440f",
-                    "path": "<Keyboard>/q",
+                    "id": "3e5ad963-e47a-4531-9862-72d0d36f62a0",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TestAction",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d74113b5-f6be-46fc-a77a-0454f9d97d43",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
