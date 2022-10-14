@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class AnimationManagement : MonoBehaviour
+{
+    [Header("GameObject")]
+    [SerializeField] private Button button;
+    [Header("Animator")]
+    [SerializeField] Animator PriceAnimationTree;
+    [Header("Boolean")]
+    [SerializeField] private bool isDisplayed = false;
+    [SerializeField] private bool animationIsPlaying = false;
+
+    public void DisplayMenu()
+    {
+        if (isDisplayed)
+        {
+            PriceAnimationTree.SetTrigger("beingFolded");
+            Debug.Log("MenuFolded");
+            isDisplayed = false;
+        }
+        else
+        {
+            PriceAnimationTree.SetTrigger("beingDisplayed");
+            Debug.Log("MenuDisplayed");
+            isDisplayed = true;
+        }
+
+    }
+}
