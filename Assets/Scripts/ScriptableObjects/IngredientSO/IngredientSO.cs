@@ -7,7 +7,7 @@ public class IngredientSO : ScriptableObject {
 
     public new string name;
     public int price;
-    public Texture texture;
+    public Texture image;
     // Start is called before the first frame update
     void Start() {
 

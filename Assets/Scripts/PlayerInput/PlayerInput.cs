@@ -183,34 +183,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Workplace"",
-            ""id"": ""a719ec9b-28f2-4858-bc3a-ea28bf73b662"",
-            ""actions"": [
-                {
-                    ""name"": ""Quit"",
-                    ""type"": ""Button"",
-                    ""id"": ""d991274b-b0c7-4201-8994-9cfedd663cc4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""3e28eed6-0291-4d76-a956-f586600ab01b"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Quit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Building"",
             ""id"": ""6ad8660a-8a33-4654-8768-79f81f54fef0"",
             ""actions"": [
@@ -257,6 +229,74 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""1553c491-aa6d-41e7-8596-6d42e2fbbc4a"",
+            ""actions"": [
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""7dee7be6-6520-40b5-a9d7-60cfda8b4838"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""9e47fee7-ef76-4eca-a8c2-f6b5b8760fa6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""bfc9a33f-56f6-4ca8-a4c6-3f9b65eb81b0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5030b964-b365-4a60-94b0-546e26b45acd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6dc1cca-2d87-48a5-aca3-32870cc30923"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59851724-5934-4c91-a37d-8cc734a3b943"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -271,13 +311,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // TestMinigame2
         m_TestMinigame2 = asset.FindActionMap("TestMinigame2", throwIfNotFound: true);
         m_TestMinigame2_TestAction = m_TestMinigame2.FindAction("TestAction", throwIfNotFound: true);
-        // Workplace
-        m_Workplace = asset.FindActionMap("Workplace", throwIfNotFound: true);
-        m_Workplace_Quit = m_Workplace.FindAction("Quit", throwIfNotFound: true);
         // Building
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_Quit = m_Building.FindAction("Quit", throwIfNotFound: true);
         m_Building_Select = m_Building.FindAction("Select", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
+        m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
+        m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -441,39 +483,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public TestMinigame2Actions @TestMinigame2 => new TestMinigame2Actions(this);
 
-    // Workplace
-    private readonly InputActionMap m_Workplace;
-    private IWorkplaceActions m_WorkplaceActionsCallbackInterface;
-    private readonly InputAction m_Workplace_Quit;
-    public struct WorkplaceActions
-    {
-        private @PlayerInput m_Wrapper;
-        public WorkplaceActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Quit => m_Wrapper.m_Workplace_Quit;
-        public InputActionMap Get() { return m_Wrapper.m_Workplace; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(WorkplaceActions set) { return set.Get(); }
-        public void SetCallbacks(IWorkplaceActions instance)
-        {
-            if (m_Wrapper.m_WorkplaceActionsCallbackInterface != null)
-            {
-                @Quit.started -= m_Wrapper.m_WorkplaceActionsCallbackInterface.OnQuit;
-                @Quit.performed -= m_Wrapper.m_WorkplaceActionsCallbackInterface.OnQuit;
-                @Quit.canceled -= m_Wrapper.m_WorkplaceActionsCallbackInterface.OnQuit;
-            }
-            m_Wrapper.m_WorkplaceActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Quit.started += instance.OnQuit;
-                @Quit.performed += instance.OnQuit;
-                @Quit.canceled += instance.OnQuit;
-            }
-        }
-    }
-    public WorkplaceActions @Workplace => new WorkplaceActions(this);
-
     // Building
     private readonly InputActionMap m_Building;
     private IBuildingActions m_BuildingActionsCallbackInterface;
@@ -514,6 +523,55 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public BuildingActions @Building => new BuildingActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Quit;
+    private readonly InputAction m_UI_Click;
+    private readonly InputAction m_UI_Point;
+    public struct UIActions
+    {
+        private @PlayerInput m_Wrapper;
+        public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Quit => m_Wrapper.m_UI_Quit;
+        public InputAction @Click => m_Wrapper.m_UI_Click;
+        public InputAction @Point => m_Wrapper.m_UI_Point;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Quit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnQuit;
+                @Click.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+                @Point.started += instance.OnPoint;
+                @Point.performed += instance.OnPoint;
+                @Point.canceled += instance.OnPoint;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -527,13 +585,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnTestAction(InputAction.CallbackContext context);
     }
-    public interface IWorkplaceActions
-    {
-        void OnQuit(InputAction.CallbackContext context);
-    }
     public interface IBuildingActions
     {
         void OnQuit(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnQuit(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnPoint(InputAction.CallbackContext context);
     }
 }

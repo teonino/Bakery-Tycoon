@@ -1,0 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
+
+public class DeliveryManager : MonoBehaviour {
+    [SerializeField] private AssetReference ingredientButtonAsset;
+    [SerializeField] private AssetReference cartAsset;
+    [SerializeField] private AssetReference stockAsset;
+
+    private GameManager gameManager;
+    private List<GameObject> ingredientButtonList;
+    private int nbButton = 0;
+
+    public Computer computer;
+    public Dictionary<IngredientSO, int> cart;
+
+    void Start() {
+        //Get references
+        gameManager = FindObjectOfType<GameManager>();
+        ingredientButtonList = new List<GameObject>();
+        cart = new Dictionary<IngredientSO, int>();
+
+        //Manage Inputs
+        gameManager.playerController.DisableInput();
+        gameManager.playerController.playerInput.UI.Enable();
+        gameManager.playerController.playerInput.UI.Quit.performed += Quit;
+
+        //Init Cart
+        foreach (StockIngredientSO stockIngredient in gameManager.ingredientList) {
+            cart.Add(stockIngredient.ingredient, 0);
+        }
+
+        //Instantiate buttons
+        for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
+            ingredientButtonAsset.InstantiateAsync(transform).Completed += (go) => { 
+                go.Result.GetComponent<DeliveryButton>().stockmanager = this;
+                go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.ingredientList[nbButton].ingredient);
+                ingredientButtonList.Add(go.Result);
+                SetupButtons();
+            };
+        }
+    }
+
+    public void AddIngredient(IngredientSO ingredient) {
+        cart[ingredient]++;
+    }
+
+    void SetupButtons() {
+        if(nbButton == gameManager.GetLenghtIngredients() - 1) {
+            for(int i = 0; i < gameManager.GetLenghtIngredients(); i++)
+                ingredientButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 90 * i, -40 , 0);
+        }
+        nbButton++;
+    }
+
+    public void DisplayCart() {
+        cartAsset.InstantiateAsync(transform).Completed += (go) => {
+            go.Result.GetComponent<Cart>().stocks = cart;
+            go.Result.GetComponent<Cart>().deliveryManager = this;
+            gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
+            gameManager.playerController.playerInput.UI.Quit.performed += go.Result.GetComponent<Cart>().Quit;
+        };
+    }
+
+    public void DisplayStock() {
+        stockAsset.InstantiateAsync(transform).Completed += (go) => {
+            go.Result.GetComponent<Warehouse>().deliveryManager = this;
+            gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
+            gameManager.playerController.playerInput.UI.Quit.performed += go.Result.GetComponent<Warehouse>().Quit;
+        };
+    }
+
+    public void Quit(InputAction.CallbackContext context) {
+        gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
+        gameManager.playerController.playerInput.UI.Disable();
+        gameManager.playerController.EnableInput();
+        foreach (GameObject go in ingredientButtonList)
+            Addressables.ReleaseInstance(go);
+        if (gameObject)
+            Addressables.ReleaseInstance(gameObject);
+    }
+}

@@ -36,7 +36,7 @@ public abstract class Minigame : MonoBehaviour {
                 break;
         }
 
-        if (go == null)
+        if (go != null)
             go.GetComponent<CraftingStation>().AddDirt();
     }
 }

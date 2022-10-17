@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Computer : Interactable {
+public class BuildingMode : Interactable {
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject buildingCamera;
     [SerializeField] private LayerMask pickUpLayer;

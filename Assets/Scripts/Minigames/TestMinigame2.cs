@@ -11,13 +11,13 @@ public class TestMinigame2 : Minigame {
         controller.playerInput.TestMinigame2.TestAction.performed += Test;
     }
 
-    new void End() {
-        controller.playerInput.TestMinigame2.Disable();
-        base.End();
-    }
-
     public void Test(InputAction.CallbackContext context) {
         if (context.performed)
             End();
+    }
+
+    private void OnDestroy() {
+        controller.playerInput.TestMinigame2.Disable();
+        controller.playerInput.TestMinigame2.TestAction.performed -= Test;
     }
 }
