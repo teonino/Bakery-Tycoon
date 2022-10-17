@@ -18,16 +18,28 @@ public class AnimationManagement : MonoBehaviour
     {
         if (isDisplayed)
         {
+
             PriceAnimationTree.SetTrigger("beingFolded");
             Debug.Log("MenuFolded");
             isDisplayed = false;
+
         }
         else
         {
+
             PriceAnimationTree.SetTrigger("beingDisplayed");
             Debug.Log("MenuDisplayed");
             isDisplayed = true;
         }
 
     }
+
+    /*public void TriggerAnimation()
+    {
+        PriceAnimationTree.SetTrigger("beingFolded");
+        isDisplayed = false;
+        Debug.Log("Function Triggered");
+    }
+    */
+
 }

@@ -10,39 +10,31 @@ public class TabsManagement : MonoBehaviour
     [SerializeField] private GameObject HiringPanel;
     [SerializeField] private GameObject IkaePanel;
     [SerializeField] private GameObject AmafoodPanel;
+
     private bool f = false;
     private bool t = true;
 
     public void ShowPricePanel()
     {
-        PricePanel.SetActive(t);
-        HiringPanel.SetActive(f);
-        IkaePanel.SetActive(f);
-        AmafoodPanel.SetActive(f);
+        PricePanel.transform.SetAsLastSibling();
+
     }
 
     public void ShowHiringPanel()
     {
-        PricePanel.SetActive(f);
-        HiringPanel.SetActive(t);
-        IkaePanel.SetActive(f);
-        AmafoodPanel.SetActive(f);
+        HiringPanel.transform.SetAsLastSibling();
+
     }
 
     public void ShowIakePanel()
     {
-        PricePanel.SetActive(f);
-        HiringPanel.SetActive(f);
-        IkaePanel.SetActive(t);
-        AmafoodPanel.SetActive(f);
+        IkaePanel.transform.SetAsLastSibling();
+
     }
 
     public void ShowAmafoodPanel()
     {
-        PricePanel.SetActive(f);
-        HiringPanel.SetActive(f);
-        IkaePanel.SetActive(f);
-        AmafoodPanel.SetActive(t);
+        AmafoodPanel.transform.SetAsLastSibling();
     }
 
 }
