@@ -12,7 +12,6 @@ public class AnimationManagement : MonoBehaviour
     [SerializeField] Animator PriceAnimationTree;
     [Header("Boolean")]
     [SerializeField] private bool isDisplayed = false;
-    [SerializeField] private bool animationIsPlaying = false;
 
     public void DisplayMenu()
     {
