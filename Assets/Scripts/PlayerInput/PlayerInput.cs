@@ -613,6 +613,34 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""RollPaste"",
+            ""id"": ""2a77045c-e556-4930-9476-39a991673936"",
+            ""actions"": [
+                {
+                    ""name"": ""Roll"",
+                    ""type"": ""Value"",
+                    ""id"": ""9255a8d2-305c-4539-947b-c83ccd22fb3d"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""30ad9510-1981-40a8-884c-f157b32eed3d"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -655,6 +683,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // AddSeeds
         m_AddSeeds = asset.FindActionMap("AddSeeds", throwIfNotFound: true);
         m_AddSeeds_AddSeed = m_AddSeeds.FindAction("AddSeed", throwIfNotFound: true);
+        // RollPaste
+        m_RollPaste = asset.FindActionMap("RollPaste", throwIfNotFound: true);
+        m_RollPaste_Roll = m_RollPaste.FindAction("Roll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1077,6 +1108,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public AddSeedsActions @AddSeeds => new AddSeedsActions(this);
+
+    // RollPaste
+    private readonly InputActionMap m_RollPaste;
+    private IRollPasteActions m_RollPasteActionsCallbackInterface;
+    private readonly InputAction m_RollPaste_Roll;
+    public struct RollPasteActions
+    {
+        private @PlayerInput m_Wrapper;
+        public RollPasteActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Roll => m_Wrapper.m_RollPaste_Roll;
+        public InputActionMap Get() { return m_Wrapper.m_RollPaste; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(RollPasteActions set) { return set.Get(); }
+        public void SetCallbacks(IRollPasteActions instance)
+        {
+            if (m_Wrapper.m_RollPasteActionsCallbackInterface != null)
+            {
+                @Roll.started -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRoll;
+                @Roll.performed -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRoll;
+                @Roll.canceled -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRoll;
+            }
+            m_Wrapper.m_RollPasteActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Roll.started += instance.OnRoll;
+                @Roll.performed += instance.OnRoll;
+                @Roll.canceled += instance.OnRoll;
+            }
+        }
+    }
+    public RollPasteActions @RollPaste => new RollPasteActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -1121,5 +1185,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IAddSeedsActions
     {
         void OnAddSeed(InputAction.CallbackContext context);
+    }
+    public interface IRollPasteActions
+    {
+        void OnRoll(InputAction.CallbackContext context);
     }
 }

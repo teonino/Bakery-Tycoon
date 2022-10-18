@@ -51,7 +51,7 @@ public class DeliveryManager : MonoBehaviour {
     void SetupButtons() {
         if(nbButton == gameManager.GetLenghtIngredients() - 1) {
             for(int i = 0; i < gameManager.GetLenghtIngredients(); i++)
-                ingredientButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 90 * i, -40 , 0);
+                ingredientButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 90 * (i % 4), -40 - (110 * (i / 4)) , 0);
         }
         nbButton++;
     }
