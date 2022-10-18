@@ -10,12 +10,14 @@ public class WorkstationButton : MonoBehaviour {
     [SerializeField] private GameObject productRequirementPanel;
 
     public WorkstationManager workplacePanel;
+    public bool requirementMet;
 
     private void Start() {
         GetComponentInChildren<TextMeshProUGUI>().SetText(product.name);
         GetComponentInChildren<RawImage>().texture = product.image;
 
-        if (!product.CheckRequirement()) {
+        requirementMet = true;
+        if (!requirementMet) {
             GetComponent<Button>().enabled = false; // if requirement are not met, disable button
             productRequirementPanel.SetActive(true);
         }

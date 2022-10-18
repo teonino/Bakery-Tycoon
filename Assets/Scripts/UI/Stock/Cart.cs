@@ -13,7 +13,8 @@ public class Cart : MonoBehaviour {
 
     [HideInInspector]
     public DeliveryManager deliveryManager;
-    public Dictionary<IngredientSO, int> stocks;
+    public Dictionary<IngredientSO, int> cart;
+    public float cartWeight;
 
     private GameManager gameManager;
     private float cost = 0;
@@ -22,7 +23,7 @@ public class Cart : MonoBehaviour {
         gameManager = FindObjectOfType<GameManager>();
 
         string newText = "";
-        foreach (KeyValuePair<IngredientSO, int> stock in stocks) {
+        foreach (KeyValuePair<IngredientSO, int> stock in cart) {
             if (stock.Value > 0) {
                 newText += stock.Key.name + " x" + stock.Value + " : " + stock.Key.price * stock.Value + "€\n";
                 cost += stock.Key.price * stock.Value;
@@ -33,14 +34,21 @@ public class Cart : MonoBehaviour {
     }
 
     public void Order() {
-        if (gameManager.money >= cost)
-            foreach (KeyValuePair<IngredientSO, int> stock in stocks)
-                if (stock.Value > 0)
-                    foreach (StockIngredientSO stockIngredient in gameManager.ingredientList)
+        //Check if the order can be stocked
+        if (cartWeight > 0 && cartWeight + gameManager.currentStock <= gameManager.maxStock) {
+            foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                if (stock.Value > 0) {
+                    foreach (StockIngredient stockIngredient in gameManager.ingredientLists)
                         if (stockIngredient.ingredient == stock.Key)
                             stockIngredient.amount += stock.Value;
-        DestroyPanel();
+                }
+            }
+
+            deliveryManager.Reset();
+            DestroyPanel();
+        }
     }
+
 
     public void Quit(InputAction.CallbackContext context) {
         DestroyPanel();

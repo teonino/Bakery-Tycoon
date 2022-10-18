@@ -8,13 +8,5 @@ public class IngredientSO : ScriptableObject {
     public new string name;
     public int price;
     public Texture image;
-    // Start is called before the first frame update
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
+    public float weight;
 }

@@ -127,62 +127,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""TestMinigame"",
-            ""id"": ""bc3162d7-1ddb-477b-8025-3ae526dd7471"",
-            ""actions"": [
-                {
-                    ""name"": ""TestAction"",
-                    ""type"": ""Button"",
-                    ""id"": ""8d600910-070c-4482-8832-efd96693f2da"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b084a525-e6e5-4478-b195-d947969a53e2"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TestAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""TestMinigame2"",
-            ""id"": ""af6cf9d8-6a65-4ff8-8db0-51d8b9e423fb"",
-            ""actions"": [
-                {
-                    ""name"": ""TestAction"",
-                    ""type"": ""Button"",
-                    ""id"": ""b86569cd-d0ed-4026-8790-9a085c3f3dca"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b720b13c-396f-4d6e-93cb-41f46933440f"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TestAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Building"",
             ""id"": ""6ad8660a-8a33-4654-8768-79f81f54fef0"",
             ""actions"": [
@@ -297,6 +241,378 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SpreadPaste"",
+            ""id"": ""4b057310-33a5-479a-98cf-ffc34e8b1b5f"",
+            ""actions"": [
+                {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""df5fed86-1788-4a65-abda-556772ae2f65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Z"",
+                    ""type"": ""Button"",
+                    ""id"": ""6402662e-1203-4645-b02b-9eab62a17470"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9c0caff-047f-43e1-82ac-f590f76e4365"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""X"",
+                    ""type"": ""Button"",
+                    ""id"": ""04ff7953-e18a-4323-9c19-41ea8d401198"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""46069e79-8268-4697-8bae-ac7e63c49d6d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""252f89bc-f6d7-4b52-a7a3-8ba7cc09ed73"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Z"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1da62472-8ddf-430e-aed2-6a21676d6c06"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c26afbf5-7159-483b-a6bb-c39632b45ad5"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""CutPaste"",
+            ""id"": ""206dee9d-8672-4f18-98b1-d21df08131a6"",
+            ""actions"": [
+                {
+                    ""name"": ""A"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecdbdbb1-94b9-4a44-8f49-c573e3c26488"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""S"",
+                    ""type"": ""Button"",
+                    ""id"": ""3309673c-72bf-4dd5-a54c-0ec1988cd63b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""C"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ea9050e-69d6-475e-9044-0aa7093193ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""af292c55-c221-49e6-a1b0-af4a4371f0da"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fb2cb63-4fd0-4f79-bbf2-93fb16583c3c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""S"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff54b224-ee15-40a8-989c-29adacc71b63"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""C"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""AddButter"",
+            ""id"": ""75f8803a-f11e-4113-8e58-c0b506996d96"",
+            ""actions"": [
+                {
+                    ""name"": ""A"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1c76733-3779-44ef-88ec-108205649a87"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Z"",
+                    ""type"": ""Button"",
+                    ""id"": ""e346326e-e43e-445a-b698-6573522ec9f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""E"",
+                    ""type"": ""Button"",
+                    ""id"": ""36a0dfff-e46e-4194-96c2-8c9aeeff4ee4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""34a117f1-76d1-431a-ac7b-d6f67e691f4c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""S"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb4872ba-2975-4470-923b-4b089390adcd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e196e4b-253a-45db-b802-df17d65d8551"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""W"",
+                    ""type"": ""Button"",
+                    ""id"": ""efc6f2e3-f8dd-4965-8915-22960c9f6e27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""X"",
+                    ""type"": ""Button"",
+                    ""id"": ""2dd8dd0b-d8e3-4e46-8f53-8bba167284ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""C"",
+                    ""type"": ""Button"",
+                    ""id"": ""b71f2340-2917-420f-abfb-215564df6822"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3f94d745-c778-4efa-9d9e-58b9b1351555"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f437f502-7257-4620-81f8-b224e69211b5"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Z"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d98bbd0-0f45-412d-8774-baffb29cf750"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""E"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e7f03d2-08d1-4003-9f2e-af2e49929441"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4722daa3-13c1-4b11-8c2e-4cc4f71db443"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""S"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e66e5afb-6de1-4ebe-be50-fc2e5cf05000"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0abd575e-468c-4ba4-8f21-695d6a78a077"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""W"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7242c56-b7a3-4b01-b762-7ec4ad12fc78"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19433088-02ff-4b7b-82c3-943e8300daad"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""C"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""AddSeeds"",
+            ""id"": ""62cbf4d2-01e9-40f1-a409-b07a38225eab"",
+            ""actions"": [
+                {
+                    ""name"": ""AddSeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""d09ae8d0-915a-40c4-b579-6e6450f3b016"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""aa9204d6-87b8-4297-a107-e42c44ca2cdf"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddSeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -305,12 +621,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        // TestMinigame
-        m_TestMinigame = asset.FindActionMap("TestMinigame", throwIfNotFound: true);
-        m_TestMinigame_TestAction = m_TestMinigame.FindAction("TestAction", throwIfNotFound: true);
-        // TestMinigame2
-        m_TestMinigame2 = asset.FindActionMap("TestMinigame2", throwIfNotFound: true);
-        m_TestMinigame2_TestAction = m_TestMinigame2.FindAction("TestAction", throwIfNotFound: true);
         // Building
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_Quit = m_Building.FindAction("Quit", throwIfNotFound: true);
@@ -320,6 +630,31 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
+        // SpreadPaste
+        m_SpreadPaste = asset.FindActionMap("SpreadPaste", throwIfNotFound: true);
+        m_SpreadPaste_Q = m_SpreadPaste.FindAction("Q", throwIfNotFound: true);
+        m_SpreadPaste_Z = m_SpreadPaste.FindAction("Z", throwIfNotFound: true);
+        m_SpreadPaste_D = m_SpreadPaste.FindAction("D", throwIfNotFound: true);
+        m_SpreadPaste_X = m_SpreadPaste.FindAction("X", throwIfNotFound: true);
+        // CutPaste
+        m_CutPaste = asset.FindActionMap("CutPaste", throwIfNotFound: true);
+        m_CutPaste_A = m_CutPaste.FindAction("A", throwIfNotFound: true);
+        m_CutPaste_S = m_CutPaste.FindAction("S", throwIfNotFound: true);
+        m_CutPaste_C = m_CutPaste.FindAction("C", throwIfNotFound: true);
+        // AddButter
+        m_AddButter = asset.FindActionMap("AddButter", throwIfNotFound: true);
+        m_AddButter_A = m_AddButter.FindAction("A", throwIfNotFound: true);
+        m_AddButter_Z = m_AddButter.FindAction("Z", throwIfNotFound: true);
+        m_AddButter_E = m_AddButter.FindAction("E", throwIfNotFound: true);
+        m_AddButter_Q = m_AddButter.FindAction("Q", throwIfNotFound: true);
+        m_AddButter_S = m_AddButter.FindAction("S", throwIfNotFound: true);
+        m_AddButter_D = m_AddButter.FindAction("D", throwIfNotFound: true);
+        m_AddButter_W = m_AddButter.FindAction("W", throwIfNotFound: true);
+        m_AddButter_X = m_AddButter.FindAction("X", throwIfNotFound: true);
+        m_AddButter_C = m_AddButter.FindAction("C", throwIfNotFound: true);
+        // AddSeeds
+        m_AddSeeds = asset.FindActionMap("AddSeeds", throwIfNotFound: true);
+        m_AddSeeds_AddSeed = m_AddSeeds.FindAction("AddSeed", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -417,72 +752,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
-    // TestMinigame
-    private readonly InputActionMap m_TestMinigame;
-    private ITestMinigameActions m_TestMinigameActionsCallbackInterface;
-    private readonly InputAction m_TestMinigame_TestAction;
-    public struct TestMinigameActions
-    {
-        private @PlayerInput m_Wrapper;
-        public TestMinigameActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @TestAction => m_Wrapper.m_TestMinigame_TestAction;
-        public InputActionMap Get() { return m_Wrapper.m_TestMinigame; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TestMinigameActions set) { return set.Get(); }
-        public void SetCallbacks(ITestMinigameActions instance)
-        {
-            if (m_Wrapper.m_TestMinigameActionsCallbackInterface != null)
-            {
-                @TestAction.started -= m_Wrapper.m_TestMinigameActionsCallbackInterface.OnTestAction;
-                @TestAction.performed -= m_Wrapper.m_TestMinigameActionsCallbackInterface.OnTestAction;
-                @TestAction.canceled -= m_Wrapper.m_TestMinigameActionsCallbackInterface.OnTestAction;
-            }
-            m_Wrapper.m_TestMinigameActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @TestAction.started += instance.OnTestAction;
-                @TestAction.performed += instance.OnTestAction;
-                @TestAction.canceled += instance.OnTestAction;
-            }
-        }
-    }
-    public TestMinigameActions @TestMinigame => new TestMinigameActions(this);
-
-    // TestMinigame2
-    private readonly InputActionMap m_TestMinigame2;
-    private ITestMinigame2Actions m_TestMinigame2ActionsCallbackInterface;
-    private readonly InputAction m_TestMinigame2_TestAction;
-    public struct TestMinigame2Actions
-    {
-        private @PlayerInput m_Wrapper;
-        public TestMinigame2Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @TestAction => m_Wrapper.m_TestMinigame2_TestAction;
-        public InputActionMap Get() { return m_Wrapper.m_TestMinigame2; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TestMinigame2Actions set) { return set.Get(); }
-        public void SetCallbacks(ITestMinigame2Actions instance)
-        {
-            if (m_Wrapper.m_TestMinigame2ActionsCallbackInterface != null)
-            {
-                @TestAction.started -= m_Wrapper.m_TestMinigame2ActionsCallbackInterface.OnTestAction;
-                @TestAction.performed -= m_Wrapper.m_TestMinigame2ActionsCallbackInterface.OnTestAction;
-                @TestAction.canceled -= m_Wrapper.m_TestMinigame2ActionsCallbackInterface.OnTestAction;
-            }
-            m_Wrapper.m_TestMinigame2ActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @TestAction.started += instance.OnTestAction;
-                @TestAction.performed += instance.OnTestAction;
-                @TestAction.canceled += instance.OnTestAction;
-            }
-        }
-    }
-    public TestMinigame2Actions @TestMinigame2 => new TestMinigame2Actions(this);
-
     // Building
     private readonly InputActionMap m_Building;
     private IBuildingActions m_BuildingActionsCallbackInterface;
@@ -572,18 +841,246 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // SpreadPaste
+    private readonly InputActionMap m_SpreadPaste;
+    private ISpreadPasteActions m_SpreadPasteActionsCallbackInterface;
+    private readonly InputAction m_SpreadPaste_Q;
+    private readonly InputAction m_SpreadPaste_Z;
+    private readonly InputAction m_SpreadPaste_D;
+    private readonly InputAction m_SpreadPaste_X;
+    public struct SpreadPasteActions
+    {
+        private @PlayerInput m_Wrapper;
+        public SpreadPasteActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Q => m_Wrapper.m_SpreadPaste_Q;
+        public InputAction @Z => m_Wrapper.m_SpreadPaste_Z;
+        public InputAction @D => m_Wrapper.m_SpreadPaste_D;
+        public InputAction @X => m_Wrapper.m_SpreadPaste_X;
+        public InputActionMap Get() { return m_Wrapper.m_SpreadPaste; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SpreadPasteActions set) { return set.Get(); }
+        public void SetCallbacks(ISpreadPasteActions instance)
+        {
+            if (m_Wrapper.m_SpreadPasteActionsCallbackInterface != null)
+            {
+                @Q.started -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnQ;
+                @Q.performed -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnQ;
+                @Q.canceled -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnQ;
+                @Z.started -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnZ;
+                @Z.performed -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnZ;
+                @Z.canceled -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnZ;
+                @D.started -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnD;
+                @D.performed -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnD;
+                @D.canceled -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnD;
+                @X.started -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnX;
+                @X.performed -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnX;
+                @X.canceled -= m_Wrapper.m_SpreadPasteActionsCallbackInterface.OnX;
+            }
+            m_Wrapper.m_SpreadPasteActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Q.started += instance.OnQ;
+                @Q.performed += instance.OnQ;
+                @Q.canceled += instance.OnQ;
+                @Z.started += instance.OnZ;
+                @Z.performed += instance.OnZ;
+                @Z.canceled += instance.OnZ;
+                @D.started += instance.OnD;
+                @D.performed += instance.OnD;
+                @D.canceled += instance.OnD;
+                @X.started += instance.OnX;
+                @X.performed += instance.OnX;
+                @X.canceled += instance.OnX;
+            }
+        }
+    }
+    public SpreadPasteActions @SpreadPaste => new SpreadPasteActions(this);
+
+    // CutPaste
+    private readonly InputActionMap m_CutPaste;
+    private ICutPasteActions m_CutPasteActionsCallbackInterface;
+    private readonly InputAction m_CutPaste_A;
+    private readonly InputAction m_CutPaste_S;
+    private readonly InputAction m_CutPaste_C;
+    public struct CutPasteActions
+    {
+        private @PlayerInput m_Wrapper;
+        public CutPasteActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @A => m_Wrapper.m_CutPaste_A;
+        public InputAction @S => m_Wrapper.m_CutPaste_S;
+        public InputAction @C => m_Wrapper.m_CutPaste_C;
+        public InputActionMap Get() { return m_Wrapper.m_CutPaste; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CutPasteActions set) { return set.Get(); }
+        public void SetCallbacks(ICutPasteActions instance)
+        {
+            if (m_Wrapper.m_CutPasteActionsCallbackInterface != null)
+            {
+                @A.started -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnA;
+                @A.performed -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnA;
+                @A.canceled -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnA;
+                @S.started -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnS;
+                @S.performed -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnS;
+                @S.canceled -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnS;
+                @C.started -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnC;
+                @C.performed -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnC;
+                @C.canceled -= m_Wrapper.m_CutPasteActionsCallbackInterface.OnC;
+            }
+            m_Wrapper.m_CutPasteActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @A.started += instance.OnA;
+                @A.performed += instance.OnA;
+                @A.canceled += instance.OnA;
+                @S.started += instance.OnS;
+                @S.performed += instance.OnS;
+                @S.canceled += instance.OnS;
+                @C.started += instance.OnC;
+                @C.performed += instance.OnC;
+                @C.canceled += instance.OnC;
+            }
+        }
+    }
+    public CutPasteActions @CutPaste => new CutPasteActions(this);
+
+    // AddButter
+    private readonly InputActionMap m_AddButter;
+    private IAddButterActions m_AddButterActionsCallbackInterface;
+    private readonly InputAction m_AddButter_A;
+    private readonly InputAction m_AddButter_Z;
+    private readonly InputAction m_AddButter_E;
+    private readonly InputAction m_AddButter_Q;
+    private readonly InputAction m_AddButter_S;
+    private readonly InputAction m_AddButter_D;
+    private readonly InputAction m_AddButter_W;
+    private readonly InputAction m_AddButter_X;
+    private readonly InputAction m_AddButter_C;
+    public struct AddButterActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AddButterActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @A => m_Wrapper.m_AddButter_A;
+        public InputAction @Z => m_Wrapper.m_AddButter_Z;
+        public InputAction @E => m_Wrapper.m_AddButter_E;
+        public InputAction @Q => m_Wrapper.m_AddButter_Q;
+        public InputAction @S => m_Wrapper.m_AddButter_S;
+        public InputAction @D => m_Wrapper.m_AddButter_D;
+        public InputAction @W => m_Wrapper.m_AddButter_W;
+        public InputAction @X => m_Wrapper.m_AddButter_X;
+        public InputAction @C => m_Wrapper.m_AddButter_C;
+        public InputActionMap Get() { return m_Wrapper.m_AddButter; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AddButterActions set) { return set.Get(); }
+        public void SetCallbacks(IAddButterActions instance)
+        {
+            if (m_Wrapper.m_AddButterActionsCallbackInterface != null)
+            {
+                @A.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnA;
+                @A.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnA;
+                @A.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnA;
+                @Z.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnZ;
+                @Z.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnZ;
+                @Z.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnZ;
+                @E.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnE;
+                @E.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnE;
+                @E.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnE;
+                @Q.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnQ;
+                @Q.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnQ;
+                @Q.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnQ;
+                @S.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnS;
+                @S.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnS;
+                @S.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnS;
+                @D.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnD;
+                @D.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnD;
+                @D.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnD;
+                @W.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnW;
+                @W.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnW;
+                @W.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnW;
+                @X.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnX;
+                @X.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnX;
+                @X.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnX;
+                @C.started -= m_Wrapper.m_AddButterActionsCallbackInterface.OnC;
+                @C.performed -= m_Wrapper.m_AddButterActionsCallbackInterface.OnC;
+                @C.canceled -= m_Wrapper.m_AddButterActionsCallbackInterface.OnC;
+            }
+            m_Wrapper.m_AddButterActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @A.started += instance.OnA;
+                @A.performed += instance.OnA;
+                @A.canceled += instance.OnA;
+                @Z.started += instance.OnZ;
+                @Z.performed += instance.OnZ;
+                @Z.canceled += instance.OnZ;
+                @E.started += instance.OnE;
+                @E.performed += instance.OnE;
+                @E.canceled += instance.OnE;
+                @Q.started += instance.OnQ;
+                @Q.performed += instance.OnQ;
+                @Q.canceled += instance.OnQ;
+                @S.started += instance.OnS;
+                @S.performed += instance.OnS;
+                @S.canceled += instance.OnS;
+                @D.started += instance.OnD;
+                @D.performed += instance.OnD;
+                @D.canceled += instance.OnD;
+                @W.started += instance.OnW;
+                @W.performed += instance.OnW;
+                @W.canceled += instance.OnW;
+                @X.started += instance.OnX;
+                @X.performed += instance.OnX;
+                @X.canceled += instance.OnX;
+                @C.started += instance.OnC;
+                @C.performed += instance.OnC;
+                @C.canceled += instance.OnC;
+            }
+        }
+    }
+    public AddButterActions @AddButter => new AddButterActions(this);
+
+    // AddSeeds
+    private readonly InputActionMap m_AddSeeds;
+    private IAddSeedsActions m_AddSeedsActionsCallbackInterface;
+    private readonly InputAction m_AddSeeds_AddSeed;
+    public struct AddSeedsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AddSeedsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddSeed => m_Wrapper.m_AddSeeds_AddSeed;
+        public InputActionMap Get() { return m_Wrapper.m_AddSeeds; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AddSeedsActions set) { return set.Get(); }
+        public void SetCallbacks(IAddSeedsActions instance)
+        {
+            if (m_Wrapper.m_AddSeedsActionsCallbackInterface != null)
+            {
+                @AddSeed.started -= m_Wrapper.m_AddSeedsActionsCallbackInterface.OnAddSeed;
+                @AddSeed.performed -= m_Wrapper.m_AddSeedsActionsCallbackInterface.OnAddSeed;
+                @AddSeed.canceled -= m_Wrapper.m_AddSeedsActionsCallbackInterface.OnAddSeed;
+            }
+            m_Wrapper.m_AddSeedsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @AddSeed.started += instance.OnAddSeed;
+                @AddSeed.performed += instance.OnAddSeed;
+                @AddSeed.canceled += instance.OnAddSeed;
+            }
+        }
+    }
+    public AddSeedsActions @AddSeeds => new AddSeedsActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-    }
-    public interface ITestMinigameActions
-    {
-        void OnTestAction(InputAction.CallbackContext context);
-    }
-    public interface ITestMinigame2Actions
-    {
-        void OnTestAction(InputAction.CallbackContext context);
     }
     public interface IBuildingActions
     {
@@ -595,5 +1092,34 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnQuit(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
+    }
+    public interface ISpreadPasteActions
+    {
+        void OnQ(InputAction.CallbackContext context);
+        void OnZ(InputAction.CallbackContext context);
+        void OnD(InputAction.CallbackContext context);
+        void OnX(InputAction.CallbackContext context);
+    }
+    public interface ICutPasteActions
+    {
+        void OnA(InputAction.CallbackContext context);
+        void OnS(InputAction.CallbackContext context);
+        void OnC(InputAction.CallbackContext context);
+    }
+    public interface IAddButterActions
+    {
+        void OnA(InputAction.CallbackContext context);
+        void OnZ(InputAction.CallbackContext context);
+        void OnE(InputAction.CallbackContext context);
+        void OnQ(InputAction.CallbackContext context);
+        void OnS(InputAction.CallbackContext context);
+        void OnD(InputAction.CallbackContext context);
+        void OnW(InputAction.CallbackContext context);
+        void OnX(InputAction.CallbackContext context);
+        void OnC(InputAction.CallbackContext context);
+    }
+    public interface IAddSeedsActions
+    {
+        void OnAddSeed(InputAction.CallbackContext context);
     }
 }

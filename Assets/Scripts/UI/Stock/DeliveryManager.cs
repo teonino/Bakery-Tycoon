@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class DeliveryManager : MonoBehaviour {
 
     public Computer computer;
     public Dictionary<IngredientSO, int> cart;
+    float weightCart = 0;
 
     void Start() {
         //Get references
@@ -28,15 +30,13 @@ public class DeliveryManager : MonoBehaviour {
         gameManager.playerController.playerInput.UI.Quit.performed += Quit;
 
         //Init Cart
-        foreach (StockIngredientSO stockIngredient in gameManager.ingredientList) {
-            cart.Add(stockIngredient.ingredient, 0);
-        }
+        InitCart();
 
         //Instantiate buttons
         for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
             ingredientButtonAsset.InstantiateAsync(transform).Completed += (go) => { 
                 go.Result.GetComponent<DeliveryButton>().stockmanager = this;
-                go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.ingredientList[nbButton].ingredient);
+                go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.ingredientLists[nbButton].ingredient);
                 ingredientButtonList.Add(go.Result);
                 SetupButtons();
             };
@@ -45,6 +45,7 @@ public class DeliveryManager : MonoBehaviour {
 
     public void AddIngredient(IngredientSO ingredient) {
         cart[ingredient]++;
+        weightCart += ingredient.weight;
     }
 
     void SetupButtons() {
@@ -55,12 +56,26 @@ public class DeliveryManager : MonoBehaviour {
         nbButton++;
     }
 
+    private void InitCart() {
+        foreach (StockIngredient stockIngredient in gameManager.ingredientLists) {
+            cart.Add(stockIngredient.ingredient, 0);
+        }
+    }
+
+    public void Reset() {
+        cart.Clear();
+        InitCart();
+        weightCart = 0;
+    }
+
     public void DisplayCart() {
         cartAsset.InstantiateAsync(transform).Completed += (go) => {
-            go.Result.GetComponent<Cart>().stocks = cart;
-            go.Result.GetComponent<Cart>().deliveryManager = this;
+            Cart currentCart = go.Result.GetComponent<Cart>();
+            currentCart.cart = cart;
+            currentCart.cartWeight = weightCart;
+            currentCart.deliveryManager = this;
             gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-            gameManager.playerController.playerInput.UI.Quit.performed += go.Result.GetComponent<Cart>().Quit;
+            gameManager.playerController.playerInput.UI.Quit.performed += currentCart.Quit;
         };
     }
 

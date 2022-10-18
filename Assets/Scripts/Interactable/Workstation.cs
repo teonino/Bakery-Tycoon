@@ -35,7 +35,8 @@ public class Workstation : Interactable {
             playerController.playerInput.UI.Quit.performed -= Quit;
             playerController.playerInput.UI.Disable();
             playerController.EnableInput();
-            Addressables.ReleaseInstance(workplacePanel);
+            if (workplacePanel)
+                Addressables.ReleaseInstance(workplacePanel);
         }
     }
 
@@ -46,7 +47,8 @@ public class Workstation : Interactable {
         playerController.itemHolded = go;
         playerController.itemHolded.transform.SetParent(arm); //the arm of the player becomes the parent
         playerController.itemHolded.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
-        playerController.EnableInput();
-        Addressables.ReleaseInstance(workplacePanel);
+        playerController.EnableInput(); 
+        if (workplacePanel)
+            Addressables.ReleaseInstance(workplacePanel);
     }
 }

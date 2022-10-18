@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Croissant
   price: 0.5
+  nbCreated: 3
   recipePrice: 10
   unlocked: 0
   asset:
@@ -23,4 +24,21 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   image: {fileID: 2800000, guid: 147c630272351a049ade2374e88a0af0, type: 3}
   hoven: 1
-  minigames: []
+  ingredients:
+  - {fileID: 11400000, guid: 5634a38850114db43849021ec4b79bbe, type: 2}
+  - {fileID: 11400000, guid: 0df0ca16d75623a43b0c2718542710bc, type: 2}
+  minigames:
+  - minigameAsset:
+      m_AssetGUID: 3ded3e09c81c3794792139faa1318233
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    launchTime: 0
+    endTime: 0
+  - minigameAsset:
+      m_AssetGUID: 5b64b5ef2138049448f34ee56e20dff6
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    launchTime: 0
+    endTime: 0

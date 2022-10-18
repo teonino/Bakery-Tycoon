@@ -9,7 +9,6 @@ public class WorkstationManager : MonoBehaviour {
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
-    private List<GameObject> minigamePanelList;
     private Workstation workplace;
     private int nbButton = 0;
     private int currentMinigame = 0;
@@ -20,16 +19,41 @@ public class WorkstationManager : MonoBehaviour {
         gameManager = FindObjectOfType<GameManager>();
         workplace = FindObjectOfType<Workstation>();
         productButtonList = new List<GameObject>();
-        minigamePanelList = new List<GameObject>();
 
         for (int i = 0; i < gameManager.GetLenghtProducts(); i++) {
             productButtonAsset.InstantiateAsync(transform).Completed += (go) => {
-                go.Result.GetComponent<WorkstationButton>().workplacePanel = this;
-                go.Result.GetComponent<WorkstationButton>().SetProduct(gameManager.productsList[nbButton]);
+                WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
+                button.workplacePanel = this;
+                button.SetProduct(gameManager.productsList[nbButton]);
+                button.requirementMet = CheckRequirement(gameManager.productsList[nbButton]);
                 productButtonList.Add(go.Result);
                 SetupButtons();
             };
         }
+    }
+
+    public bool CheckRequirement(ProductSO product) {
+        bool requirementMet = true;
+        List<CraftingStation> craftingStations = new List<CraftingStation>(FindObjectsOfType<CraftingStation>());
+
+        //Check Crafting Station
+        if (product.hoven && requirementMet) { // If hoven is a requirement and requirementMet is still true
+            requirementMet = false;
+            foreach (CraftingStation craftingStation in craftingStations) {
+                if (craftingStation.type == CraftingStationType.Hoven) {
+                    requirementMet = true;
+                }
+            }
+        }
+
+        //Check Ingredients
+        foreach (IngredientSO ingredient in product.ingredients) {
+            if (gameManager.GetIngredientAmount(ingredient) == 0) {
+                requirementMet = false;
+            }
+        }
+
+        return requirementMet;
     }
 
     private void OnEnable() {
@@ -42,7 +66,7 @@ public class WorkstationManager : MonoBehaviour {
     private void SetupButtons() {
         if (nbButton == gameManager.GetLenghtProducts() - 1) {
             for (int i = 0; i < gameManager.GetLenghtProducts(); i++)
-                productButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 120 * i, -20, 0);
+                productButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 110 * (i % 4), -20 - (110 * (i / 4)), 0);
         }
         nbButton++;
     }
@@ -55,35 +79,33 @@ public class WorkstationManager : MonoBehaviour {
 
     private void LaunchMinigame() {
         if (currentProduct) {
+            //Launch minigame
             if (currentMinigame != currentProduct.minigames.Count)
-                currentProduct.minigames[currentMinigame].InstantiateAsync(transform).Completed += (go) => {
-                    minigamePanelList.Add(go.Result);
+                currentProduct.minigames[currentMinigame].minigameAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = " Panel " + currentMinigame;
                 };
+            //Create product
             else {
                 currentProduct.asset.InstantiateAsync().Completed += (go) => {
-                    DestroyMinigames();
                     workplace.CloseWorkplace(go.Result);
                 };
 
+                RemoveIngredients(currentProduct);
                 currentMinigame = 0;
                 currentProduct = null;
             }
         }
     }
 
+    private void RemoveIngredients(ProductSO product) {
+        foreach (IngredientSO ingredient in product.ingredients) {
+            gameManager.RemoveIngredientStock(ingredient, 1);
+        }
+    }
+
     public void ResetManager() {
         currentMinigame = 0;
         currentProduct = null;
-        DestroyMinigames();
-    }
-
-    public void DestroyMinigames() {
-        //Destroy all minigame panels
-        foreach (GameObject gos in minigamePanelList) {
-            Addressables.Release(gos);
-        }
-        minigamePanelList.Clear();
     }
 
     public void MinigameComplete() {

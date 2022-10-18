@@ -58,7 +58,6 @@ public class AICustomer : MonoBehaviour {
         agent.SetDestination(shelf.transform.position);
     }
 
-    // Update is called once per frame
     void FixedUpdate() {
         //Go to the shelf
         if (Vector3.Distance(transform.position, shelf.transform.position) < 2 && !waiting) {
@@ -84,10 +83,19 @@ public class AICustomer : MonoBehaviour {
                 DisplayPayment();
 
                 //Take item
-                item = shelf.item;
-                shelf.item = null;
-                item.transform.SetParent(transform);
-                item.transform.localPosition = Vector3.up * 1.25f;
+                if (shelf.item.GetComponent<Product>().amount > 1) {
+                    shelf.item.GetComponent<Product>().product.asset.InstantiateAsync(transform).Completed += (go) => {
+                        item = go.Result;
+                        item.transform.localPosition = Vector3.up * 1.25f;
+                    };
+                    shelf.item.GetComponent<Product>().amount--;
+                }
+                else {
+                    item = shelf.item;
+                    shelf.item = null;
+                    item.transform.SetParent(transform);
+                    item.transform.localPosition = Vector3.up * 1.25f;
+                }
                 Leave();
             }
         }

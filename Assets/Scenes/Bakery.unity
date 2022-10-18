@@ -1423,7 +1423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910368265}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4999998, y: 1, z: 3.5}
+  m_LocalPosition: {x: 3.43, y: 1, z: 3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1828,14 +1828,27 @@ MonoBehaviour:
   dayTime: 1
   reputation: 0
   money: 50
+  test:
+  - minigameAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    launchTime: 0
+    endTime: 0
   productsList:
   - {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
   - {fileID: 11400000, guid: d2795e055d8efb148bc9be5cc3d57189, type: 2}
-  ingredientList:
-  - {fileID: 11400000, guid: 87c0bc81c6539db4ea33957134096477, type: 2}
-  - {fileID: 11400000, guid: 5af1800da671f5547aa8e2c1c88e07f6, type: 2}
-  - {fileID: 11400000, guid: 07f8dd253acba2940a38e6213ebc559c, type: 2}
-  maxStock: 0
+  - {fileID: 11400000, guid: b385cb65c0fcb4746a398cb5f2936710, type: 2}
+  - {fileID: 11400000, guid: 44e7f2d61d97cf44f8ef217cd95a35ed, type: 2}
+  ingredientLists:
+  - ingredient: {fileID: 11400000, guid: 5634a38850114db43849021ec4b79bbe, type: 2}
+    amount: 0
+  - ingredient: {fileID: 11400000, guid: bc9600cf78bfdfc4ab858897b7325c8f, type: 2}
+    amount: 0
+  - ingredient: {fileID: 11400000, guid: 0df0ca16d75623a43b0c2718542710bc, type: 2}
+    amount: 0
+  maxStock: 20
   currentStock: 0
 --- !u!4 &1518738142
 Transform:
@@ -2242,7 +2255,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1794994735
 Transform:
@@ -2339,7 +2352,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1865099026
 Transform:
@@ -2548,7 +2561,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2072890944
 Transform:

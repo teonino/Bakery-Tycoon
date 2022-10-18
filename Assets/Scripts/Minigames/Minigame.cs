@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 public abstract class Minigame : MonoBehaviour {
 
     [SerializeField] protected CraftingStationType craftingStationRequired;
+    //public AssetReference minigameAsset;
     protected WorkstationManager workplacePanel;
     protected PlayerController controller;
     protected float launchTime;
@@ -21,6 +22,7 @@ public abstract class Minigame : MonoBehaviour {
     protected void End() {
         endTime = Time.time;
         DirtyCraftingStation();
+        Addressables.ReleaseInstance(gameObject);
         workplacePanel.MinigameComplete();
     }
 

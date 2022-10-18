@@ -18,7 +18,7 @@ public class Warehouse : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
 
         stockText.SetText("");
-        foreach (StockIngredientSO stockIngredient in gameManager.ingredientList) {
+        foreach (StockIngredient stockIngredient in gameManager.ingredientLists) {
             if(stockIngredient.amount > 0)
                 stockText.text += stockIngredient.ingredient.name + " x" + stockIngredient.amount + "\n";
         }

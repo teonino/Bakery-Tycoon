@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5172159094784514686}
-  - component: {fileID: 4744275194156224612}
+  - component: {fileID: -368521761680204147}
   - component: {fileID: 5172159094784514684}
   - component: {fileID: 5172159094784514687}
   m_Layer: 5
-  m_Name: TestMinigame 1
+  m_Name: CutPaste
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4744275194156224612
+--- !u!114 &-368521761680204147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,11 +49,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5172159094784514681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf33e581a5493d84cafd02687b82f4fe, type: 3}
+  m_Script: {fileID: 11500000, guid: d38943a4389ee464a9e151583c9b0dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  craftingStationRequired: {fileID: 0}
-  craftingStationUsed: 5
+  craftingStationRequired: 0
+  nbIterationAimed: 3
+  text: {fileID: 7472390042607475840}
 --- !u!222 &5172159094784514684
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -158,7 +159,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press A to create bread
+  m_text: Press A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
