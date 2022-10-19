@@ -4,50 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class AmmountManager : MonoBehaviour
-{
-    [SerializeField] private int AmmountToBuy;
-    private bool MinusButton;
-    private bool PlusButton;
-    [SerializeField] private TextMeshProUGUI TextAmmount;
-    [SerializeField] private GameObject ButtonPanel;
+public class AmmountManager : MonoBehaviour {
+    [SerializeField] private int ammountToBuy;
+    [SerializeField] private TextMeshProUGUI textAmmount;
 
-    public void IncreaseDecreaseAmmount()
-    {
-        if (MinusButton)
-        {
-            if (AmmountToBuy <= 0)
-            {
-                Debug.LogWarning("variable set to 0");
-                AmmountToBuy = 0;
-            }
-            else
-            {
-                print("MinusButtonClicked");
-                AmmountToBuy -= 1;
-                TextAmmount.text = AmmountToBuy.ToString();
-            }
-        }
-        else if (PlusButton)
-        {
-            print("PlusButtonClicked");
-            AmmountToBuy += 1;
-                TextAmmount.text = AmmountToBuy.ToString();
+    public void MinusButtonIsClicked() {
+        if (ammountToBuy > 0) {
+            ammountToBuy -= 1;
+            textAmmount.text = ammountToBuy.ToString();
         }
     }
 
-    public void MinusButtonIsClicked()
-    {
-        MinusButton = true;
-        PlusButton = false;
-        IncreaseDecreaseAmmount();
+    public void PlusButtonIsClicked() {
+        ammountToBuy += 1;
+        textAmmount.text = ammountToBuy.ToString();
     }
 
-    public void PlusButtonIsClicked()
-    {
-        MinusButton = false;
-        PlusButton = true;
-        IncreaseDecreaseAmmount();
-    }
-
+    public int GetAmount() => ammountToBuy;
 }

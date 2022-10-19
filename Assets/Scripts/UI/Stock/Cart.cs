@@ -21,7 +21,9 @@ public class Cart : MonoBehaviour {
 
     void Start() {
         gameManager = FindObjectOfType<GameManager>();
+    }
 
+    public void InitCart() {
         string newText = "";
         foreach (KeyValuePair<IngredientSO, int> stock in cart) {
             if (stock.Value > 0) {
@@ -30,8 +32,9 @@ public class Cart : MonoBehaviour {
             }
             orderSumary.SetText(newText);
         }
-        totalCostText.SetText(cost + "€");
     }
+
+    public void ClearText() => orderSumary.text = "";
 
     public void Order() {
         //Check if the order can be stocked
@@ -45,19 +48,6 @@ public class Cart : MonoBehaviour {
             }
 
             deliveryManager.Reset();
-            DestroyPanel();
         }
-    }
-
-
-    public void Quit(InputAction.CallbackContext context) {
-        DestroyPanel();
-    }
-
-    private void DestroyPanel() {
-        gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-        gameManager.playerController.playerInput.UI.Quit.performed += deliveryManager.Quit;
-        if (gameObject)
-            Addressables.ReleaseInstance(gameObject);
     }
 }

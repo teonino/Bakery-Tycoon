@@ -7,21 +7,22 @@ using UnityEngine.InputSystem;
 
 public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
-    [SerializeField] private AssetReference cartAsset;
+    [SerializeField] private AssetReference ingredientRackAsset;
     [SerializeField] private AssetReference stockAsset;
+    [SerializeField] private GameObject content;
+    [SerializeField] private Cart cartPanel;
 
     private GameManager gameManager;
     private List<GameObject> ingredientButtonList;
+    private List<GameObject> ingredientRackList;
     private int nbButton = 0;
 
-    public Computer computer;
     public Dictionary<IngredientSO, int> cart;
     float weightCart = 0;
 
     void Start() {
         //Get references
         gameManager = FindObjectOfType<GameManager>();
-        ingredientButtonList = new List<GameObject>();
         cart = new Dictionary<IngredientSO, int>();
 
         //Manage Inputs
@@ -33,27 +34,39 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
 
         //Instantiate buttons
+        ingredientRackList = new List<GameObject>();
+        ingredientButtonList = new List<GameObject>();
         for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
-            ingredientButtonAsset.InstantiateAsync(transform).Completed += (go) => { 
-                go.Result.GetComponent<DeliveryButton>().stockmanager = this;
+            ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
+                go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
                 go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.ingredientLists[nbButton].ingredient);
                 ingredientButtonList.Add(go.Result);
+                nbButton++;
                 SetupButtons();
             };
+
+            if (i % 4 == 0) {
+                ingredientRackAsset.InstantiateAsync(content.transform).Completed += (go) => {
+                    ingredientRackList.Add(go.Result);
+                    SetupButtons();
+                };
+            }
         }
     }
 
-    public void AddIngredient(IngredientSO ingredient) {
-        cart[ingredient]++;
-        weightCart += ingredient.weight;
+    public void AddIngredient(IngredientSO ingredient, int amount) {
+        cart[ingredient] += amount;
+        weightCart += ingredient.weight * amount;
+        DisplayCart();
     }
 
     void SetupButtons() {
-        if(nbButton == gameManager.GetLenghtIngredients() - 1) {
-            for(int i = 0; i < gameManager.GetLenghtIngredients(); i++)
-                ingredientButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 90 * (i % 4), -40 - (110 * (i / 4)) , 0);
+        if (ingredientRackList.Count > 0 && nbButton == gameManager.GetLenghtIngredients()) {
+            for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
+                ingredientButtonList[i].transform.SetParent(ingredientRackList[i / 4].transform);
+                ingredientButtonList[i].transform.localScale = Vector3.one;
+            }
         }
-        nbButton++;
     }
 
     private void InitCart() {
@@ -64,19 +77,18 @@ public class DeliveryManager : MonoBehaviour {
 
     public void Reset() {
         cart.Clear();
+        cartPanel.ClearText();
         InitCart();
         weightCart = 0;
     }
 
     public void DisplayCart() {
-        cartAsset.InstantiateAsync(transform).Completed += (go) => {
-            Cart currentCart = go.Result.GetComponent<Cart>();
-            currentCart.cart = cart;
-            currentCart.cartWeight = weightCart;
-            currentCart.deliveryManager = this;
-            gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-            gameManager.playerController.playerInput.UI.Quit.performed += currentCart.Quit;
-        };
+        Cart currentCart = cartPanel;
+        currentCart.cart = cart;
+        currentCart.cartWeight = weightCart;
+        currentCart.deliveryManager = this;
+        currentCart.InitCart();
+
     }
 
     public void DisplayStock() {
