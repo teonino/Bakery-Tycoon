@@ -7,14 +7,14 @@ using UnityEngine.InputSystem;
 public class Computer : Interactable
 {
     [SerializeField] private GameObject mainCanvas;
-    [SerializeField] private AssetReference stockPanelAsset;
-
-    private GameObject stockPanel;
+    //[SerializeField] private AssetReference computerPanelAsset;
+    [SerializeField] private GameObject computerPanelAsset;
 
     public override void Effect() {
-        stockPanelAsset.InstantiateAsync(mainCanvas.transform).Completed += (go) => {
-            stockPanel = go.Result;
-            go.Result.GetComponent<DeliveryManager>().computer = this;
-        };
+        computerPanelAsset.SetActive(true);
+        //computerPanelAsset.InstantiateAsync(mainCanvas.transform).Completed += (go) => {
+        //    go.Result.GetComponent<DeliveryManager>().computer = this;
+        //    mainCanvas.GetComponent<TabsManagement>().DifferentPanel.Add(go.Result.GetComponentInChildren<DeliveryManager>().gameObject);
+        //};
     }
 }
