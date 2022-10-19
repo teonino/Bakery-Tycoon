@@ -86,9 +86,18 @@ public class WorkstationManager : MonoBehaviour {
                 };
             //Create product
             else {
-                currentProduct.asset.InstantiateAsync().Completed += (go) => {
-                    workplace.CloseWorkplace(go.Result);
-                };
+                if (currentProduct.pasteAsset == null) {
+                    currentProduct.asset.InstantiateAsync().Completed += (go) => {
+                        workplace.CloseWorkplace(go.Result);
+                    };
+                }
+                else {
+                    ProductSO registerProduct = currentProduct;
+                    currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
+                        go.Result.GetComponent<Product>().product = registerProduct;
+                        workplace.CloseWorkplace(go.Result);
+                    };
+                }
 
                 RemoveIngredients(currentProduct);
                 currentMinigame = 0;

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class AddButter : Minigame
 {
     public TextMeshProUGUI text;
-    // Start is called before the first frame update
 
     new void Start() {
         base.Start();
@@ -22,6 +21,15 @@ public class AddButter : Minigame
         controller.playerInput.AddButter.W.performed += W;
         controller.playerInput.AddButter.X.performed += X;
         controller.playerInput.AddButter.C.performed += C;
+
+        controller.playerInput.AddButter.Z.Disable();
+        controller.playerInput.AddButter.E.Disable();
+        controller.playerInput.AddButter.Q.Disable();
+        controller.playerInput.AddButter.S.Disable();
+        controller.playerInput.AddButter.D.Disable();
+        controller.playerInput.AddButter.W.Disable();
+        controller.playerInput.AddButter.X.Disable();
+        controller.playerInput.AddButter.C.Disable();
     }
 
     private void A(InputAction.CallbackContext context) {

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,6 +9,7 @@ public class ProductSO : ScriptableObject {
     public float price;
     public int nbCreated;
     public float recipePrice;
+    public AssetReference pasteAsset;
     public bool unlocked;
     public AssetReference asset;
     public Texture image;
@@ -21,6 +21,5 @@ public class ProductSO : ScriptableObject {
 
     [Space(10)]
     [Header("Minigames")]
-    //public List<Minigame> minigames;
     public List<MinigameInfo> minigames;
 }
