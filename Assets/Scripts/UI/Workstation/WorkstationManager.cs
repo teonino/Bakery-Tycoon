@@ -92,9 +92,9 @@ public class WorkstationManager : MonoBehaviour {
                     };
                 }
                 else {
-                    ProductSO go = currentProduct;
+                    ProductSO gos = currentProduct;
                     currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
-                        go.Result.GetComponent<Product>().product = currentProduct;
+                        go.Result.GetComponent<Product>().product = gos;
                         workplace.CloseWorkplace(go.Result);
                     };
                 }
