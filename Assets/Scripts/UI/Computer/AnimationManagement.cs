@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class AnimationManagement : MonoBehaviour
-{
+public class AnimationManagement : MonoBehaviour {
     [Header("GameObject")]
     [SerializeField] private Button button;
     [Header("Animator")]
@@ -13,32 +12,23 @@ public class AnimationManagement : MonoBehaviour
     [Header("Boolean")]
     [SerializeField] private bool isDisplayed = false;
 
-    public void DisplayMenu()
-    {
-        if (isDisplayed)
-        {
-
+    public void DisplayMenu() {
+        if (isDisplayed) {
             PriceAnimationTree.SetTrigger("beingFolded");
-            Debug.Log("MenuFolded");
             isDisplayed = false;
 
         }
-        else
-        {
+        else {
 
             PriceAnimationTree.SetTrigger("beingDisplayed");
-            Debug.Log("MenuDisplayed");
             isDisplayed = true;
         }
 
     }
 
-    /*public void TriggerAnimation()
-    {
+    /*public void TriggerAnimation()    {
         PriceAnimationTree.SetTrigger("beingFolded");
         isDisplayed = false;
         Debug.Log("Function Triggered");
-    }
-    */
-
+    }    */
 }

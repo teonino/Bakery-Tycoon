@@ -47,7 +47,7 @@ public class Cart : MonoBehaviour {
                 }
             }
 
-            deliveryManager.Reset();
+            deliveryManager.ResetCart();
         }
     }
 }

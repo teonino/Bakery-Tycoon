@@ -14,9 +14,8 @@ public class IngredientDescription : MonoBehaviour {
 
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public IngredientSO ingredient;
-    // Start is called before the first frame update
+
     void Start() {
-        //TODO : Add controller
         image.texture = ingredient.image;
         title.SetText(ingredient.name);
         price.SetText(ingredient.price + "€ / U");

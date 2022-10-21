@@ -26,7 +26,18 @@ public class AICustomer : MonoBehaviour {
         manager = FindObjectOfType<GameManager>();
 
         //Set product
-        product = manager.productsList[Random.Range(0, manager.GetLenghtProducts())];
+        List<ProductSO> doableProduct = new List<ProductSO>();
+        foreach (ProductSO product in manager.productsList) { //Go through all product
+            bool doable = true;
+            foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
+                if (manager.GetIngredientAmount(ingredient) == 0)
+                    doable = false;
+
+            if (doable)
+                doableProduct.Add(product);
+        }
+        if (doableProduct.Count != 0)
+            product = doableProduct[Random.Range(0, doableProduct.Count)];
 
         //Check shelves
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
@@ -44,18 +55,30 @@ public class AICustomer : MonoBehaviour {
         shelf.occupied = true;
 
         //Instantiate panel that display the requested product
-        assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
-            productCanvas = go.Result;
-            productCanvas.transform.SetParent(transform);
-            productCanvas.transform.position = transform.position + Vector3.up * 2;
-            productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(product.name);
-        };
+        if (product) {
+            assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
+
+                productCanvas = go.Result;
+                productCanvas.transform.SetParent(transform);
+                productCanvas.transform.position = transform.position + Vector3.up * 2;
+                productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(product.name);
+            };
+        }
     }
 
 
+
+
     void Start() {
-        spawnPosition = transform.position;
-        agent.SetDestination(shelf.transform.position);
+        if (product) {
+            spawnPosition = transform.position;
+            agent.SetDestination(shelf.transform.position);
+        }
+        else {
+            spawner.nbCustomer--;
+            shelf.occupied = false;
+            Addressables.ReleaseInstance(gameObject);
+        }
     }
 
     void FixedUpdate() {
@@ -74,7 +97,7 @@ public class AICustomer : MonoBehaviour {
         }
 
         //Buy item and leave
-        if (shelf.item && waiting &&!leaving) {
+        if (shelf.item && waiting && !leaving) {
             if (shelf.item.GetComponent<Product>().GetName() == product.name) {
                 //Stop waiting
                 StopAllCoroutines();
@@ -103,7 +126,7 @@ public class AICustomer : MonoBehaviour {
 
     private IEnumerator CustomerWaiting(float time) {
         yield return new WaitForSeconds(time);
-        
+
         Leave();
     }
 

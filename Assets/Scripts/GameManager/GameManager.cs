@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour {
     public DayTime dayTime;
     public float reputation = 0;
     public float money = 0;
-    public List<MinigameInfo> test;
 
     [Space(10)]
     public List<ProductSO> productsList;

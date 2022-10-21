@@ -39,7 +39,7 @@ public class TabsManagement : MonoBehaviour
 
     public void ShowAmafoodPanel()
     {
-        DifferentPanel[3].transform.SetAsLastSibling();
+        DifferentPanel[1].transform.SetAsLastSibling();
         ResetTheColor();
         //Tabs[3].GetComponent<Image>().color = SelectedTabsColor;
     }

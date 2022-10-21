@@ -8,9 +8,9 @@ using UnityEngine.InputSystem;
 public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference ingredientRackAsset;
-    [SerializeField] private AssetReference stockAsset;
     [SerializeField] private GameObject content;
     [SerializeField] private Cart cartPanel;
+    [SerializeField] private GameObject computerPanel;
 
     private GameManager gameManager;
     private List<GameObject> ingredientButtonList;
@@ -20,22 +20,23 @@ public class DeliveryManager : MonoBehaviour {
     public Dictionary<IngredientSO, int> cart;
     float weightCart = 0;
 
-    void Start() {
-        //Get references
+    void Awake() {
         gameManager = FindObjectOfType<GameManager>();
-        cart = new Dictionary<IngredientSO, int>();
+        ingredientRackList = new List<GameObject>();
+        ingredientButtonList = new List<GameObject>();
+    }
 
+    private void OnEnable() {
         //Manage Inputs
         gameManager.playerController.DisableInput();
         gameManager.playerController.playerInput.UI.Enable();
         gameManager.playerController.playerInput.UI.Quit.performed += Quit;
 
         //Init Cart
-        InitCart();
+        if (cart == null)
+            InitCart();
 
         //Instantiate buttons
-        ingredientRackList = new List<GameObject>();
-        ingredientButtonList = new List<GameObject>();
         for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
@@ -70,17 +71,12 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     private void InitCart() {
+        cart = new Dictionary<IngredientSO, int>();
         foreach (StockIngredient stockIngredient in gameManager.ingredientLists) {
             cart.Add(stockIngredient.ingredient, 0);
         }
     }
 
-    public void Reset() {
-        cart.Clear();
-        cartPanel.ClearText();
-        InitCart();
-        weightCart = 0;
-    }
 
     public void DisplayCart() {
         Cart currentCart = cartPanel;
@@ -88,24 +84,48 @@ public class DeliveryManager : MonoBehaviour {
         currentCart.cartWeight = weightCart;
         currentCart.deliveryManager = this;
         currentCart.InitCart();
-
     }
 
-    public void DisplayStock() {
-        stockAsset.InstantiateAsync(transform).Completed += (go) => {
-            go.Result.GetComponent<Warehouse>().deliveryManager = this;
-            gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-            gameManager.playerController.playerInput.UI.Quit.performed += go.Result.GetComponent<Warehouse>().Quit;
-        };
+
+    //public void DisplayStock() {
+    //    stockAsset.InstantiateAsync(transform).Completed += (go) => {
+    //        go.Result.GetComponent<Warehouse>().deliveryManager = this;
+    //        gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
+    //        gameManager.playerController.playerInput.UI.Quit.performed += go.Result.GetComponent<Warehouse>().Quit;
+    //    };
+    //}
+
+
+    public void ResetCart() {
+        cart.Clear();
+        cartPanel.ClearText();
+        InitCart();
+        weightCart = 0;
+    }
+
+
+    public void Reset(bool resetCart) {
+        nbButton = 0;
+
+        foreach (GameObject go in ingredientButtonList)
+            Addressables.ReleaseInstance(go);
+        ingredientButtonList.Clear();
+
+        foreach (GameObject go in ingredientRackList)
+            Addressables.ReleaseInstance(go);
+        ingredientRackList.Clear();
+
+        if (resetCart)
+            ResetCart();
     }
 
     public void Quit(InputAction.CallbackContext context) {
         gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
         gameManager.playerController.playerInput.UI.Disable();
         gameManager.playerController.EnableInput();
-        foreach (GameObject go in ingredientButtonList)
-            Addressables.ReleaseInstance(go);
-        if (gameObject)
-            Addressables.ReleaseInstance(gameObject);
+
+        Reset(false);
+
+        computerPanel.SetActive(false);
     }
 }
