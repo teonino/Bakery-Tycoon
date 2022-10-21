@@ -15,7 +15,7 @@ public class DeliveryButton : MonoBehaviour {
     void Start() {
         GetComponentInChildren<TextMeshProUGUI>().SetText(ingredient.name);
         GetComponentInChildren<RawImage>().texture = ingredient.image;
-        GetComponentInChildren<Button>().onClick.AddListener(delegate { 
+        button.onClick.AddListener(delegate { 
             descriptionPanel.InstantiateAsync(deliveryManager.transform.parent).Completed += (go) => {
                 go.Result.GetComponent<IngredientDescription>().deliveryManager = deliveryManager;
                 go.Result.GetComponent<IngredientDescription>().ingredient = ingredient;
