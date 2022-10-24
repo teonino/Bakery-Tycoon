@@ -6,32 +6,46 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     [Header("Global variables")]
     [HideInInspector]
-    public PlayerController playerController;
-    public DayTime dayTime;
-    public float reputation = 0;
-    public float money = 0;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private float reputation;
+    [SerializeField] private float money;
 
+    [Header("Day Variable")]
+    [SerializeField] private DayTime dayTime;
+    [SerializeField] private int morningToDay;
+    [SerializeField] private int dayToEvening;
+
+    [Header("Products & Ingredients list")]
     [Space(10)]
-    public List<ProductSO> productsList;
+    [SerializeField] private List<ProductSO> productsList;
     [Space(10)]
-    public List<StockIngredient> ingredientLists;
+    [SerializeField] private List<StockIngredient> ingredientLists;
 
     [Header("Stocks")]
-    public int maxStock;
-    public int currentStock;
+    [SerializeField] private int maxStock;
+    [SerializeField] private int currentStock;
 
     private void Start() {
         playerController = FindObjectOfType<PlayerController>();
 
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
-        foreach (StockIngredient stockIngredient in ingredientLists) 
+        foreach (StockIngredient stockIngredient in ingredientLists)
             stockIngredient.amount = 0;
-        foreach (ProductSO product in productsList) 
+        foreach (ProductSO product in productsList)
             product.price = product.initialPrice;
-        
+
+        StartCoroutine(Day());
     }
+
+    private IEnumerator Day() {
+        yield return new WaitForSeconds(morningToDay);
+        dayTime++;
+        if (dayTime != DayTime.Evening)
+            StartCoroutine(Day());
+    }
+
     public int GetIngredientAmount(IngredientSO ingredient) {
-        foreach (StockIngredient stock in ingredientLists) 
+        foreach (StockIngredient stock in ingredientLists)
             if (ingredient == stock.ingredient)
                 return stock.amount;
 
@@ -39,11 +53,22 @@ public class GameManager : MonoBehaviour {
     }
 
     public void RemoveIngredientStock(IngredientSO ingredient, int amount) {
-        foreach (StockIngredient stock in ingredientLists) 
+        foreach (StockIngredient stock in ingredientLists)
             if (ingredient == stock.ingredient)
                 stock.amount -= amount;
     }
 
-    public int GetLenghtProducts() => productsList.Count;
-    public int GetLenghtIngredients() => ingredientLists.Count;
+    public PlayerController GetPlayerController() => playerController;
+    public List<ProductSO> GetProductList() => productsList;
+    public List<StockIngredient> GetIngredientList() => ingredientLists;
+    public int GetProductsLenght() => productsList.Count;
+    public int GetIngredientsLenght() => ingredientLists.Count;
+
+    public DayTime GetDayTime() => dayTime;
+    public float GetReputation() => reputation;
+    public float GetMoney() => money;
+    public float AddMoney(float value) => money += value;
+    public float RemoveMoney(float value) => money -= value;
+    public float GetCurrentStock() => currentStock;
+    public float GetMaxStock() => maxStock;
 }

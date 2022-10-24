@@ -21,12 +21,12 @@ public class WorkstationManager : MonoBehaviour {
         workplace = FindObjectOfType<Workstation>();
         productButtonList = new List<GameObject>();
 
-        for (int i = 0; i < gameManager.GetLenghtProducts(); i++) {
+        for (int i = 0; i < gameManager.GetProductsLenght(); i++) {
             productButtonAsset.InstantiateAsync(transform).Completed += (go) => {
                 WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
                 button.workplacePanel = this;
-                button.SetProduct(gameManager.productsList[nbButton]);
-                button.requirementMet = CheckRequirement(gameManager.productsList[nbButton]);
+                button.SetProduct(gameManager.GetProductList()[nbButton]);
+                button.requirementMet = CheckRequirement(gameManager.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
                 SetupButtons();
             };
@@ -65,8 +65,8 @@ public class WorkstationManager : MonoBehaviour {
 
     //Once enough button created, we position them
     private void SetupButtons() {
-        if (nbButton == gameManager.GetLenghtProducts() - 1) {
-            for (int i = 0; i < gameManager.GetLenghtProducts(); i++)
+        if (nbButton == gameManager.GetProductsLenght() - 1) {
+            for (int i = 0; i < gameManager.GetProductsLenght(); i++)
                 productButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 110 * (i % 4), -20 - (110 * (i / 4)), 0);
         }
         nbButton++;

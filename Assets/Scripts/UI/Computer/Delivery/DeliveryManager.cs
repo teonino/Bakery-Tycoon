@@ -13,6 +13,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private GameObject computerPanel;
 
     private GameManager gameManager;
+    private PlayerController playerController;
     private GameObject content;
     private List<GameObject> ingredientButtonList;
     private List<GameObject> ingredientRackList;
@@ -28,14 +29,15 @@ public class DeliveryManager : MonoBehaviour {
         ingredientRackList = new List<GameObject>();
         ingredientButtonList = new List<GameObject>();
 
-        lenght = gameManager.GetLenghtIngredients();
+        lenght = gameManager.GetIngredientsLenght();
+        playerController = gameManager.GetPlayerController();
     }
 
     private void OnEnable() {
         //Manage Inputs
-        gameManager.playerController.DisableInput();
-        gameManager.playerController.playerInput.UI.Enable();
-        gameManager.playerController.playerInput.UI.Quit.performed += Quit;
+        playerController.DisableInput();
+        playerController.playerInput.UI.Enable();
+        playerController.playerInput.UI.Quit.performed += Quit;
 
         //Init Cart
         if (cart == null)
@@ -45,7 +47,7 @@ public class DeliveryManager : MonoBehaviour {
         for (int i = 0; i < lenght; i++) {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.ingredientLists[nbButton].ingredient);
+                go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.GetIngredientList()[nbButton].ingredient);
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();
@@ -78,7 +80,7 @@ public class DeliveryManager : MonoBehaviour {
 
     private void InitCart() {
         cart = new Dictionary<IngredientSO, int>();
-        foreach (StockIngredient stockIngredient in gameManager.ingredientLists) {
+        foreach (StockIngredient stockIngredient in gameManager.GetIngredientList()) {
             cart.Add(stockIngredient.ingredient, 0);
         }
     }
@@ -126,9 +128,9 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     public void Quit(InputAction.CallbackContext context) {
-        gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-        gameManager.playerController.playerInput.UI.Disable();
-        gameManager.playerController.EnableInput();
+        playerController.playerInput.UI.Quit.performed -= Quit;
+        playerController.playerInput.UI.Disable();
+        playerController.EnableInput();
 
         Reset(false);
 

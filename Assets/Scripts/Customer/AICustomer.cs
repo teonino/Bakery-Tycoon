@@ -27,7 +27,7 @@ public class AICustomer : MonoBehaviour {
 
         //Set product
         List<ProductSO> doableProduct = new List<ProductSO>();
-        foreach (ProductSO product in manager.productsList) { //Go through all product
+        foreach (ProductSO product in manager.GetProductList()) { //Go through all product
             bool doable = true;
             foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
                 if (manager.GetIngredientAmount(ingredient) <= 0)
@@ -161,7 +161,7 @@ public class AICustomer : MonoBehaviour {
             StartCoroutine(DisplayPaymentCoroutine(go.Result));
             product = null;
         };
-        manager.money += product.price;
+        manager.AddMoney(product.price);
     }
 
     private IEnumerator DisplayPaymentCoroutine(GameObject go) {

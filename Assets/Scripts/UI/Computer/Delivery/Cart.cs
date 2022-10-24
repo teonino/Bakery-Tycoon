@@ -38,10 +38,10 @@ public class Cart : MonoBehaviour {
 
     public void Order() {
         //Check if the order can be stocked
-        if (cartWeight > 0 && cartWeight + gameManager.currentStock <= gameManager.maxStock) {
+        if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
             foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                 if (stock.Value > 0) {
-                    foreach (StockIngredient stockIngredient in gameManager.ingredientLists)
+                    foreach (StockIngredient stockIngredient in gameManager.GetIngredientList())
                         if (stockIngredient.ingredient == stock.Key)
                             stockIngredient.amount += stock.Value;
                 }

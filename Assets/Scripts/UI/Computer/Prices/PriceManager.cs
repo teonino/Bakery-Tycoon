@@ -12,6 +12,7 @@ public class PriceManager : MonoBehaviour {
     [SerializeField] private GameObject computerPanel;
 
     private GameManager gameManager;
+    private PlayerController playerController;
     private GameObject content;
     private List<GameObject> productButtonList;
     private List<GameObject> productRackList;
@@ -25,19 +26,20 @@ public class PriceManager : MonoBehaviour {
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
 
-        lenght = gameManager.GetLenghtProducts();
+        lenght = gameManager.GetProductsLenght();
+        playerController = gameManager.GetPlayerController();
     }
 
     private void OnEnable() {
         //Manage Inputs
-        gameManager.playerController.DisableInput();
-        gameManager.playerController.playerInput.UI.Enable();
-        gameManager.playerController.playerInput.UI.Quit.performed += Quit;
+        playerController.DisableInput();
+        playerController.playerInput.UI.Enable();
+        playerController.playerInput.UI.Quit.performed += Quit;
 
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<PriceButton>().SetProduct(gameManager.productsList[nbButton]);
+                go.Result.GetComponent<PriceButton>().SetProduct(gameManager.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();
@@ -74,9 +76,9 @@ public class PriceManager : MonoBehaviour {
     }
 
     public void Quit(InputAction.CallbackContext context) {
-        gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-        gameManager.playerController.playerInput.UI.Disable();
-        gameManager.playerController.EnableInput();
+        playerController.playerInput.UI.Quit.performed -= Quit;
+        playerController.playerInput.UI.Disable();
+        playerController.EnableInput();
 
         Reset();
 

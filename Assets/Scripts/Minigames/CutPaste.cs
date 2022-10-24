@@ -15,8 +15,6 @@ public class CutPaste : Minigame {
         base.Start();
 
         controller.playerInput.CutPaste.Enable();
-
-
         controller.playerInput.CutPaste.S.Disable();
         controller.playerInput.CutPaste.C.Disable();
     }
