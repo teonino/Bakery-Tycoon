@@ -15,9 +15,7 @@ public class CutPaste : Minigame {
         base.Start();
 
         controller.playerInput.CutPaste.Enable();
-        controller.playerInput.CutPaste.A.performed += Q;
-        controller.playerInput.CutPaste.S.performed += S;
-        controller.playerInput.CutPaste.C.performed += C;
+
 
         controller.playerInput.CutPaste.S.Disable();
         controller.playerInput.CutPaste.C.Disable();
@@ -45,13 +43,23 @@ public class CutPaste : Minigame {
             text.SetText("Press A");
 
             if (nbIteration == nbIterationAimed) {
+
                 controller.playerInput.CutPaste.Disable();
-                controller.playerInput.CutPaste.A.performed -= Q;
-                controller.playerInput.CutPaste.S.performed -= S;
-                controller.playerInput.CutPaste.C.performed -= C;
                 End();
                 text.SetText("Well played!");
             }
         }
+    }
+
+    public override void EnableInputs() {
+        controller.playerInput.CutPaste.A.performed += Q;
+        controller.playerInput.CutPaste.S.performed += S;
+        controller.playerInput.CutPaste.C.performed += C;
+    }
+
+    public override void DisableInputs() {
+        controller.playerInput.CutPaste.A.performed -= Q;
+        controller.playerInput.CutPaste.S.performed -= S;
+        controller.playerInput.CutPaste.C.performed -= C;
     }
 }

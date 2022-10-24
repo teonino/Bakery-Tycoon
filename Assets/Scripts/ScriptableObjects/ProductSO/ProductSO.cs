@@ -6,7 +6,9 @@ using UnityEngine.AddressableAssets;
 public class ProductSO : ScriptableObject {
     [Header("Global variables")]
     public new string name;
+    public float initialPrice;
     public float price;
+    public float cookingTime;
     public int nbCreated;
     public float recipePrice;
     public AssetReference pasteAsset;

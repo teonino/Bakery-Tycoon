@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour {
+
     [SerializeField] private float duration;
-    private CraftingStation craftingStation;
+    public UnityEvent onDestroy;
+
     private float timeElapsed = 0;
 
     // Start is called before the first frame update
@@ -16,11 +19,10 @@ public class ProgressBar : MonoBehaviour {
         timeElapsed += Time.deltaTime;
 
         if (timeElapsed > duration) {
+            onDestroy.Invoke();
             Addressables.ReleaseInstance(transform.parent.gameObject);
-            craftingStation.Clean();
         }
     }
 
     public void SetDuration(int duration) => this.duration = duration;
-    public void SetCraftingStation(CraftingStation craftingStation) => this.craftingStation = craftingStation;
 }

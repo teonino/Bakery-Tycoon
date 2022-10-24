@@ -30,7 +30,7 @@ public class AICustomer : MonoBehaviour {
         foreach (ProductSO product in manager.productsList) { //Go through all product
             bool doable = true;
             foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
-                if (manager.GetIngredientAmount(ingredient) == 0)
+                if (manager.GetIngredientAmount(ingredient) <= 0)
                     doable = false;
 
             if (doable)
@@ -38,24 +38,39 @@ public class AICustomer : MonoBehaviour {
         }
         if (doableProduct.Count != 0)
             product = doableProduct[Random.Range(0, doableProduct.Count)];
+        else {
+
+        }
+
+        //IF NO PRODUCT => CHECK CHELVES ITEM
 
         //Check shelves
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
         foreach (Shelf shelf in shelves) {
-            if (shelf.item == null) { //Go to an empty shelf 
+
+            if (shelf.item) { // Go to a shelf with the requested item
+                if (product) {
+                    if (shelf.item.GetComponent<Product>().GetName() == product.name) { //If the requested item is already displayed 
+                        this.shelf = shelf;
+                    }
+                }
+                else {
+                    product = shelf.item.GetComponent<Product>().product;
+                    this.shelf = shelf;
+                }
+            }
+            else { //Go to an empty shelf 
                 if (this.shelf == null && !shelf.occupied)
                     this.shelf = shelf;
             }
-            else if (shelf.item.GetComponent<Product>().GetName() == product.name) { //If the requested item is already displayed
-                this.shelf = shelf;
-            }
         }
 
-        //Set the shelf as occupied
-        shelf.occupied = true;
-
-        //Instantiate panel that display the requested product
         if (product) {
+            //Set the shelf as occupied
+            shelf.occupied = true;
+
+            //Instantiate panel that display the requested product
+
             assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
 
                 productCanvas = go.Result;
@@ -76,7 +91,6 @@ public class AICustomer : MonoBehaviour {
         }
         else {
             spawner.nbCustomer--;
-            shelf.occupied = false;
             Addressables.ReleaseInstance(gameObject);
         }
     }
@@ -87,6 +101,7 @@ public class AICustomer : MonoBehaviour {
             waiting = true;
             StartCoroutine(CustomerWaiting(waitingTime));
         }
+
 
         //Exit the bakery
         if (Vector3.Distance(transform.position, spawnPosition) < 2 && leaving) {
@@ -126,7 +141,6 @@ public class AICustomer : MonoBehaviour {
 
     private IEnumerator CustomerWaiting(float time) {
         yield return new WaitForSeconds(time);
-
         Leave();
     }
 

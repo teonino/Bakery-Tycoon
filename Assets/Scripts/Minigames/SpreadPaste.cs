@@ -14,11 +14,6 @@ public class SpreadPaste : Minigame {
         base.Start();
 
         controller.playerInput.SpreadPaste.Enable();
-        controller.playerInput.SpreadPaste.Q.performed += Q;
-        controller.playerInput.SpreadPaste.Z.performed += Z;
-        controller.playerInput.SpreadPaste.D.performed += D;
-        controller.playerInput.SpreadPaste.X.performed += X;
-
         controller.playerInput.SpreadPaste.Z.Disable();
         controller.playerInput.SpreadPaste.D.Disable();
         controller.playerInput.SpreadPaste.X.Disable();
@@ -56,14 +51,23 @@ public class SpreadPaste : Minigame {
             text.SetText("Press A");
 
             if (nbIteration == nbIterationAimed) {
-                controller.playerInput.SpreadPaste.Q.performed -= Q;
-                controller.playerInput.SpreadPaste.Z.performed -= Z;
-                controller.playerInput.SpreadPaste.D.performed -= D;
-                controller.playerInput.SpreadPaste.X.performed -= X;
                 controller.playerInput.SpreadPaste.Disable();
                 End();
-                text.SetText("Well played!");
             }
         }
+    }
+
+    public override void EnableInputs() {
+        controller.playerInput.SpreadPaste.Q.performed += Q;
+        controller.playerInput.SpreadPaste.Z.performed += Z;
+        controller.playerInput.SpreadPaste.D.performed += D;
+        controller.playerInput.SpreadPaste.X.performed += X;
+    }
+
+    public override void DisableInputs() {
+        controller.playerInput.SpreadPaste.Q.performed -= Q;
+        controller.playerInput.SpreadPaste.Z.performed -= Z;
+        controller.playerInput.SpreadPaste.D.performed -= D;
+        controller.playerInput.SpreadPaste.X.performed -= X;
     }
 }

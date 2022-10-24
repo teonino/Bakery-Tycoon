@@ -16,18 +16,26 @@ public class AddSeeds : Minigame
         base.Start();
         text.SetText("Click " + nbClick + " time");
         controller.playerInput.AddSeeds.Enable();
-        controller.playerInput.AddSeeds.AddSeed.performed += AddSeed;
+        
     }
 
     public void AddSeed(InputAction.CallbackContext context) {
         if (context.performed) {
             click++;
             if (click == nbClick) {
-                controller.playerInput.AddSeeds.AddSeed.performed -= AddSeed;
+                
                 controller.playerInput.AddSeeds.Disable();
                 End();
             }
             text.SetText("Click " + (nbClick - click) + " time");
         }
+    }
+
+    public override void EnableInputs() {
+        controller.playerInput.AddSeeds.AddSeed.performed += AddSeed;
+    }
+
+    public override void DisableInputs() {
+        controller.playerInput.AddSeeds.AddSeed.performed -= AddSeed;
     }
 }

@@ -4,14 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AddButter : Minigame
-{
+public class AddButter : Minigame {
     public TextMeshProUGUI text;
 
-    new void Start() {
-        base.Start();
-        controller.playerInput.AddButter.Enable();
-
+    public override void EnableInputs() {
         controller.playerInput.AddButter.A.performed += A;
         controller.playerInput.AddButter.Z.performed += Z;
         controller.playerInput.AddButter.E.performed += E;
@@ -21,7 +17,23 @@ public class AddButter : Minigame
         controller.playerInput.AddButter.W.performed += W;
         controller.playerInput.AddButter.X.performed += X;
         controller.playerInput.AddButter.C.performed += C;
+    }
 
+    public override void DisableInputs() {
+        controller.playerInput.AddButter.A.performed -= A;
+        controller.playerInput.AddButter.Z.performed -= Z;
+        controller.playerInput.AddButter.E.performed -= E;
+        controller.playerInput.AddButter.Q.performed -= Q;
+        controller.playerInput.AddButter.S.performed -= S;
+        controller.playerInput.AddButter.D.performed -= D;
+        controller.playerInput.AddButter.W.performed -= W;
+        controller.playerInput.AddButter.X.performed -= X;
+        controller.playerInput.AddButter.C.performed -= C;
+    }
+
+    new void Start() {
+        base.Start();
+        controller.playerInput.AddButter.Enable();
         controller.playerInput.AddButter.Z.Disable();
         controller.playerInput.AddButter.E.Disable();
         controller.playerInput.AddButter.Q.Disable();
@@ -92,16 +104,6 @@ public class AddButter : Minigame
     private void C(InputAction.CallbackContext context) {
         if (context.performed) {
             controller.playerInput.AddButter.C.Disable();
-
-            controller.playerInput.AddButter.A.performed -= A;
-            controller.playerInput.AddButter.Z.performed -= Z;
-            controller.playerInput.AddButter.E.performed -= E;
-            controller.playerInput.AddButter.Q.performed -= Q;
-            controller.playerInput.AddButter.S.performed -= S;
-            controller.playerInput.AddButter.D.performed -= D;
-            controller.playerInput.AddButter.W.performed -= W;
-            controller.playerInput.AddButter.X.performed -= X;
-            controller.playerInput.AddButter.C.performed -= C;
             controller.playerInput.AddButter.Disable();
             End();
         }

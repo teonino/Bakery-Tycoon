@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,12 @@ public abstract class Minigame : MonoBehaviour {
         workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
         controller = FindObjectOfType<PlayerController>();
         launchTime = Time.time;
+        EnableInputs();
     }
 
     protected void End() {
         endTime = Time.time;
+        DisableInputs();
         DirtyCraftingStation();
         Addressables.ReleaseInstance(gameObject);
         workplacePanel.MinigameComplete();
@@ -41,4 +44,7 @@ public abstract class Minigame : MonoBehaviour {
         if (go != null)
             go.GetComponent<CraftingStation>().AddDirt();
     }
+
+    public abstract void EnableInputs();
+    public abstract void DisableInputs();
 }

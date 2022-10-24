@@ -4,26 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference ingredientRackAsset;
-    [SerializeField] private GameObject content;
     [SerializeField] private Cart cartPanel;
     [SerializeField] private GameObject computerPanel;
 
     private GameManager gameManager;
+    private GameObject content;
     private List<GameObject> ingredientButtonList;
     private List<GameObject> ingredientRackList;
     private int nbButton = 0;
+    private int lenght;
 
     public Dictionary<IngredientSO, int> cart;
     float weightCart = 0;
 
     void Awake() {
         gameManager = FindObjectOfType<GameManager>();
+        content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         ingredientRackList = new List<GameObject>();
         ingredientButtonList = new List<GameObject>();
+
+        lenght = gameManager.GetLenghtIngredients();
     }
 
     private void OnEnable() {
@@ -37,7 +42,7 @@ public class DeliveryManager : MonoBehaviour {
             InitCart();
 
         //Instantiate buttons
-        for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
+        for (int i = 0; i < lenght; i++) {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
                 go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.ingredientLists[nbButton].ingredient);
@@ -62,9 +67,10 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     void SetupButtons() {
-        if (ingredientRackList.Count > 0 && nbButton == gameManager.GetLenghtIngredients()) {
-            for (int i = 0; i < gameManager.GetLenghtIngredients(); i++) {
-                ingredientButtonList[i].transform.SetParent(ingredientRackList[i / 4].transform);
+        if (ingredientRackList.Count > 0 && nbButton == lenght) {
+            int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.x / ingredientButtonList[0].GetComponent<RectTransform>().rect.x) - 1;
+            for (int i = 0; i < lenght; i++) {
+                ingredientButtonList[i].transform.SetParent(ingredientRackList[i / maxButtonInRack].transform);
                 ingredientButtonList[i].transform.localScale = Vector3.one;
             }
         }

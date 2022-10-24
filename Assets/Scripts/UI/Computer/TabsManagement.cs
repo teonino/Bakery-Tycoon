@@ -25,7 +25,7 @@ public class TabsManagement : MonoBehaviour
 
     public void ShowHiringPanel()
     {
-        DifferentPanel[1].transform.SetAsLastSibling();
+        DifferentPanel[3].transform.SetAsLastSibling();
         ResetTheColor();
         //Tabs[1].GetComponent<Image>().color = SelectedTabsColor;
     }

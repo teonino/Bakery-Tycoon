@@ -24,23 +24,24 @@ public class GameManager : MonoBehaviour {
         playerController = FindObjectOfType<PlayerController>();
 
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
-        foreach (StockIngredient stockIngredient in ingredientLists) {
+        foreach (StockIngredient stockIngredient in ingredientLists) 
             stockIngredient.amount = 0;
-        }
+        foreach (ProductSO product in productsList) 
+            product.price = product.initialPrice;
+        
     }
     public int GetIngredientAmount(IngredientSO ingredient) {
-        foreach (StockIngredient stock in ingredientLists) {
+        foreach (StockIngredient stock in ingredientLists) 
             if (ingredient == stock.ingredient)
                 return stock.amount;
-        }
+
         return -1;
     }
 
     public void RemoveIngredientStock(IngredientSO ingredient, int amount) {
-        foreach (StockIngredient stock in ingredientLists) {
+        foreach (StockIngredient stock in ingredientLists) 
             if (ingredient == stock.ingredient)
                 stock.amount -= amount;
-        }
     }
 
     public int GetLenghtProducts() => productsList.Count;

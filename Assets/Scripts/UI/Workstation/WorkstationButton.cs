@@ -16,7 +16,9 @@ public class WorkstationButton : MonoBehaviour {
         GetComponentInChildren<TextMeshProUGUI>().SetText(product.name);
         GetComponentInChildren<RawImage>().texture = product.image;
 
+        //REMOVE FOR BUILD
         requirementMet = true;
+
         if (!requirementMet) {
             GetComponent<Button>().enabled = false; // if requirement are not met, disable button
             productRequirementPanel.SetActive(true);

@@ -11,7 +11,8 @@ public class WorkstationManager : MonoBehaviour {
     private List<GameObject> productButtonList;
     private Workstation workplace;
     private int nbButton = 0;
-    private int currentMinigame = 0;
+    private int currentMinigameCounter = 0;
+    private Minigame currentMinigame;
     public ProductSO currentProduct;
 
     //Create buttons
@@ -80,9 +81,10 @@ public class WorkstationManager : MonoBehaviour {
     private void LaunchMinigame() {
         if (currentProduct) {
             //Launch minigame
-            if (currentMinigame != currentProduct.minigames.Count)
-                currentProduct.minigames[currentMinigame].minigameAsset.InstantiateAsync(transform).Completed += (go) => {
-                    go.Result.name = " Panel " + currentMinigame;
+            if (currentMinigameCounter != currentProduct.minigames.Count)
+                currentProduct.minigames[currentMinigameCounter].minigameAsset.InstantiateAsync(transform).Completed += (go) => {
+                    go.Result.name = " Panel " + currentMinigameCounter;
+                    currentMinigame = go.Result.GetComponent<Minigame>();
                 };
             //Create product
             else {
@@ -100,7 +102,7 @@ public class WorkstationManager : MonoBehaviour {
                 }
 
                 RemoveIngredients(currentProduct);
-                currentMinigame = 0;
+                currentMinigameCounter = 0;
                 currentProduct = null;
             }
         }
@@ -113,12 +115,14 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     public void ResetManager() {
-        currentMinigame = 0;
+        currentMinigame.DisableInputs();
+        currentMinigameCounter = 0;
         currentProduct = null;
     }
 
     public void MinigameComplete() {
-        currentMinigame++;
+        currentMinigame = null;
+        currentMinigameCounter++;
         LaunchMinigame();
     }
 
