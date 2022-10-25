@@ -13,7 +13,7 @@ public class Workstation : Interactable {
     private GameObject workplacePanel;
 
     public override void Effect() {
-        if (!playerController.itemHolded) {
+        if (!playerController.itemHolded && gameManager.GetDayTime() != DayTime.Evening) {
             playerController.DisableInput();
 
             workplacePanelAsset.InstantiateAsync(mainCanvas.transform).Completed += (go) => {

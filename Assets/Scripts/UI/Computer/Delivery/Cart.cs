@@ -15,6 +15,7 @@ public class Cart : MonoBehaviour {
     public DeliveryManager deliveryManager;
     public Dictionary<IngredientSO, int> cart;
     public float cartWeight;
+    public float cartCost;
 
     private GameManager gameManager;
     private float cost = 0;
@@ -37,17 +38,21 @@ public class Cart : MonoBehaviour {
     public void ClearText() => orderSumary.text = "";
 
     public void Order() {
-        //Check if the order can be stocked
+        //Check if the order can be stocked && bought
         if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
-            foreach (KeyValuePair<IngredientSO, int> stock in cart) {
-                if (stock.Value > 0) {
-                    foreach (StockIngredient stockIngredient in gameManager.GetIngredientList())
-                        if (stockIngredient.ingredient == stock.Key)
-                            stockIngredient.amount += stock.Value;
+            if (cartCost < gameManager.GetMoney()) {
+                foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                    if (stock.Value > 0) {
+                        foreach (StockIngredient stockIngredient in gameManager.GetIngredientList())
+                            if (stockIngredient.ingredient == stock.Key)
+                                stockIngredient.amount += stock.Value;
+                    }
                 }
-            }
-
-            deliveryManager.ResetCart();
+                gameManager.RemoveMoney(cartCost);
+                Clear();
+            }          
         }
     }
+
+    public void Clear() => deliveryManager.ResetCart();
 }

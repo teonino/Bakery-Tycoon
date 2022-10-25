@@ -230,7 +230,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 2
-  playerController: {fileID: 0}
+  onDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3133713444070271932
 MonoBehaviour:
   m_ObjectHideFlags: 0

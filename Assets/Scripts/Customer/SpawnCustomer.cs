@@ -6,31 +6,36 @@ using UnityEngine.AddressableAssets;
 public class SpawnCustomer : MonoBehaviour {
     [Header("Spawn attributes")]
     [SerializeField] private bool enableSpawn;
-    [SerializeField] private int minDelaySpawn = 3;
-    [SerializeField] private int maxDelaySpawn = 5;
+    [SerializeField] private int minDelaySpawn;
+    [SerializeField] private int maxDelaySpawn;
+    [SerializeField] private int nbCustomer = 0;
+    [SerializeField] private int nbCustomerMax = 5;
     [SerializeField] private AssetReference customerAsset;
+    [SerializeField] private AssetReference regularCustomerAsset;
 
-    public int nbCustomer = 0;
-    private List<Shelf> shelves;
+    private GameManager gameManager;
 
     void Start() {
-        shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
+        gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));
     }
 
     private IEnumerator SpawnDelay(int time) {
         yield return new WaitForSeconds(time);
-        Spawn();
-    }
-
-    private void Spawn() {
-        //Spawn a customer
-        if (enableSpawn && nbCustomer <= shelves.Count) {
-            customerAsset.InstantiateAsync(transform);
-            nbCustomer++;
-        }
-
-        //Start SpawnDelay again
+        InstantiateCustomer();
         StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));
     }
+
+    private void InstantiateCustomer() {
+        //Spawn a customer
+        if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day) {
+            if (Random.Range(1, 10) == 1)
+                regularCustomerAsset.InstantiateAsync(transform);
+            else
+                customerAsset.InstantiateAsync(transform);
+            nbCustomer++;
+        }
+    }
+
+    public void RemoveCustomer() => nbCustomer--;
 }

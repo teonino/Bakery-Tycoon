@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -9,11 +10,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float reputation;
     [SerializeField] private float money;
+    [SerializeField] private TextMeshProUGUI moneyTxt;
 
     [Header("Day Variable")]
     [SerializeField] private DayTime dayTime;
-    [SerializeField] private int morningToDay;
-    [SerializeField] private int dayToEvening;
+    [SerializeField] private TextMeshProUGUI dayTimeTxt;
 
     [Header("Products & Ingredients list")]
     [Space(10)]
@@ -28,20 +29,37 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         playerController = FindObjectOfType<PlayerController>();
 
+        moneyTxt.SetText(money + "€");
+        dayTimeTxt.SetText(GetDayTxt());
+
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
         foreach (StockIngredient stockIngredient in ingredientLists)
             stockIngredient.amount = 0;
         foreach (ProductSO product in productsList)
             product.price = product.initialPrice;
-
-        StartCoroutine(Day());
     }
 
-    private IEnumerator Day() {
-        yield return new WaitForSeconds(morningToDay);
+    private string GetDayTxt() {
+        string s = "";
+        switch (dayTime) {
+            case DayTime.Morning:
+                s = "Morning";
+                break;
+            case DayTime.Day:
+                s = "Day";
+                break;
+            case DayTime.Evening:
+                s = "Evening";
+                break;
+            default:
+                break;  
+        }
+        return s;
+    }
+
+    public void SetDayTime() {
         dayTime++;
-        if (dayTime != DayTime.Evening)
-            StartCoroutine(Day());
+        dayTimeTxt.SetText(GetDayTxt());
     }
 
     public int GetIngredientAmount(IngredientSO ingredient) {
@@ -66,9 +84,19 @@ public class GameManager : MonoBehaviour {
 
     public DayTime GetDayTime() => dayTime;
     public float GetReputation() => reputation;
+    public void AddReputation(float value) {
+        reputation += value;
+        //update ui
+    }
     public float GetMoney() => money;
-    public float AddMoney(float value) => money += value;
-    public float RemoveMoney(float value) => money -= value;
+    public void AddMoney(float value) {
+        money += value;
+        moneyTxt.SetText(money + "€");
+    }
+    public void RemoveMoney(float value) {
+        money -= value;
+        moneyTxt.SetText(money + "€");
+    }
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
 }
