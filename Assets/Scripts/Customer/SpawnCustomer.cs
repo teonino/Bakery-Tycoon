@@ -29,12 +29,50 @@ public class SpawnCustomer : MonoBehaviour {
     private void InstantiateCustomer() {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day) {
-            if (Random.Range(1, 10) == 1)
-                regularCustomerAsset.InstantiateAsync(transform);
-            else
-                customerAsset.InstantiateAsync(transform);
-            nbCustomer++;
+            if (CheckProducts()) {
+                nbCustomer++;
+                if (Random.Range(1, 10) == 1) {
+                    regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
+                        go.Result.name = "RegularCustomer " + nbCustomer; 
+                        go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
+                    };
+                }
+                else {
+                    customerAsset.InstantiateAsync(transform).Completed += (go) => {
+                        go.Result.name = "Customer " + nbCustomer;
+                        go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
+                    };
+                }
+            }
         }
+    }
+
+    public bool CheckProducts() {
+        List<ProductSO> doableProduct = new List<ProductSO>();
+        foreach (ProductSO product in gameManager.GetProductList()) { //Go through all product
+            bool doable = true;
+            foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
+                if (gameManager.GetIngredientAmount(ingredient) <= 0)
+                    doable = false;
+
+            if (doable)
+                return true;
+        }
+        return false;
+    }
+
+    public ProductSO GetRandomProduct() {
+        List<ProductSO> doableProduct = new List<ProductSO>();
+        foreach (ProductSO product in gameManager.GetProductList()) { //Go through all product
+            bool doable = true;
+            foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
+                if (gameManager.GetIngredientAmount(ingredient) <= 0)
+                    doable = false;
+
+            if (doable)
+                doableProduct.Add(product);
+        }
+        return doableProduct[Random.Range(0, doableProduct.Count)]; ;
     }
 
     public void RemoveCustomer() => nbCustomer--;
