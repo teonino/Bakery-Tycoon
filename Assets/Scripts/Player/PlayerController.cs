@@ -21,13 +21,13 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
-        Debug.DrawRay(transform.position + Vector3.down / 2, transform.forward * interactionDistance, Color.green);
+        Debug.DrawRay(transform.position + Vector3.down / 4, transform.forward * interactionDistance, Color.green);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
         if (context.performed) {
             RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position + Vector3.down / 2, transform.forward, out hitInfo, interactionDistance) && hitInfo.collider.GetComponent<Interactable>())
+            if (Physics.Raycast(transform.position + Vector3.down / 4, transform.forward, out hitInfo, interactionDistance) && hitInfo.collider.GetComponent<Interactable>())
                 hitInfo.collider.GetComponent<Interactable>().Effect();
         }
     }

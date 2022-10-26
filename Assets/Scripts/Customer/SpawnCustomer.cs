@@ -28,21 +28,19 @@ public class SpawnCustomer : MonoBehaviour {
 
     private void InstantiateCustomer() {
         //Spawn a customer
-        if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day) {
-            if (CheckProducts()) {
-                nbCustomer++;
-                if (Random.Range(1, 10) == 1) {
-                    regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
-                        go.Result.name = "RegularCustomer " + nbCustomer; 
-                        go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
-                    };
-                }
-                else {
-                    customerAsset.InstantiateAsync(transform).Completed += (go) => {
-                        go.Result.name = "Customer " + nbCustomer;
-                        go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
-                    };
-                }
+        if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day && CheckProducts()) {
+            nbCustomer++;
+            if (Random.Range(1, 2) == 1) {
+                regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
+                    go.Result.name = "RegularCustomer " + nbCustomer;
+                    go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
+                };
+            }
+            else {
+                customerAsset.InstantiateAsync(transform).Completed += (go) => {
+                    go.Result.name = "Customer " + nbCustomer;
+                    go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
+                };
             }
         }
     }

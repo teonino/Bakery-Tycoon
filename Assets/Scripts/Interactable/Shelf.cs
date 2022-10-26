@@ -25,8 +25,6 @@ public class Shelf : Interactable {
     }
 
     public void ForwardQueue(int index) {
-        print("Forward queue init ... ");
-        PrintQueue();
         for (int i = index; i < queueCustomer.Count - 1; i++) {
             if (queueCustomer[i + 1].customer) {
                 queueCustomer[i].customer = queueCustomer[i + 1].customer;
@@ -35,8 +33,6 @@ public class Shelf : Interactable {
             }
         }
         queueCustomer[queueCustomer.Count - 1].customer = null;
-        print("Forward queue end ... ");
-        PrintQueue();
     }
 
     public void RemoveCustomerInQueue(AICustomer customer) {

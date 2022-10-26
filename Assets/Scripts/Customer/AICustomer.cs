@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 
-public class AICustomer : MonoBehaviour {
+public class AICustomer : Interactable {
     [SerializeField] private AssetReference assetProductCanvas;
     [SerializeField] private AssetReference assetPaymentCanvas;
     [SerializeField] private float waitingTime = 5f; //Time before customer leaves after ordering
@@ -57,7 +57,7 @@ public class AICustomer : MonoBehaviour {
         }
 
         //Buy item and leave
-        if (agent.remainingDistance < 1 && shelf.item && waiting && shelf.IsFirstInQueue(this)) {
+        if (Vector3.Distance(transform.position, shelf.transform.position) < 2 && shelf.item && waiting && shelf.IsFirstInQueue(this)) {
             if (shelf.item.GetComponent<Product>().GetName() == requestedProduct.name) {
                 //Stop waiting
                 StopAllCoroutines();
@@ -164,4 +164,9 @@ public class AICustomer : MonoBehaviour {
         Addressables.ReleaseInstance(go);
     }
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
+
+    public override void Effect() {
+        if (regular && sitting)
+            print("Can talk");
+    }
 }
