@@ -682,12 +682,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e8f7b1175e9ae46840b8d4a90648ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productButtonAsset:
-    m_AssetGUID: 
+  gameManager: {fileID: 1518738141}
+  productButton:
+    m_AssetGUID: fe39657e326e5524aab7e3b42112775b
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  currentProduct: {fileID: 0}
+  product: {fileID: 0}
 --- !u!224 &145737054 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2702172031203121073, guid: db1dd9e2061406e4a898fd6e08512b08, type: 3}
@@ -3382,12 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7454880a28bf9304eb3d1d04cd3550f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 0}
-  workplacePanelAsset:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  workplacePanel: {fileID: 140247371}
 --- !u!1 &587967748
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,7 +5396,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9030153103960638822, guid: 0411f435937229b4399f1b193deccb8c, type: 3}
   m_PrefabInstance: {fileID: 1935073713}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 827186570}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -7049,7 +7045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.3088379, y: 488.23438}
+  m_AnchoredPosition: {x: -1.30896, y: 488.2343}
   m_SizeDelta: {x: 903.191, y: -935.6185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1091054853
@@ -9719,7 +9715,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7694454478987537356, guid: 0411f435937229b4399f1b193deccb8c, type: 3}
   m_PrefabInstance: {fileID: 1935073713}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1458513594}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -9970,16 +9966,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797243df07326ed4db6a9e82406d1bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  dayTime: 1
   reputation: 0
   money: 0
-  dayTime: 1
-  morningToDay: 0
-  dayToEvening: 0
-  productsList: []
-  ingredientLists: []
-  maxStock: 0
-  currentStock: 0
+  products:
+  - {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
+  - {fileID: 11400000, guid: d2795e055d8efb148bc9be5cc3d57189, type: 2}
 --- !u!4 &1518738142
 Transform:
   m_ObjectHideFlags: 0
@@ -10382,7 +10374,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 109324873247126072, guid: 0411f435937229b4399f1b193deccb8c, type: 3}
   m_PrefabInstance: {fileID: 1935073713}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1645979670}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a5e72fea378e14395a936a22c8e8a9, type: 3}
@@ -11870,7 +11862,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1371728821057837264, guid: 0411f435937229b4399f1b193deccb8c, type: 3}
   m_PrefabInstance: {fileID: 1935073713}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1795468820}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
