@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     [Header("Global variables")]
-    [HideInInspector]
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private float reputation;
-    [SerializeField] private float money;
     [SerializeField] private TextMeshProUGUI moneyTxt;
+    [SerializeField] private TextMeshProUGUI reputationTxt;
 
     [Header("Day Variable")]
     [SerializeField] private DayTime dayTime;
@@ -26,15 +24,19 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private int maxStock;
     [SerializeField] private int currentStock;
 
+    private float money;
+    private float reputation;
+
     private void Start() {
         playerController = FindObjectOfType<PlayerController>();
 
         moneyTxt.SetText(money + "€");
         dayTimeTxt.SetText(GetDayTxt());
+        reputationTxt.SetText("Reputation : " + reputation);
 
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
-        foreach (StockIngredient stockIngredient in ingredientLists)
-            stockIngredient.amount = 0;
+        //foreach (StockIngredient stockIngredient in ingredientLists)
+        //    stockIngredient.amount = 0;
         foreach (ProductSO product in productsList)
             product.price = product.initialPrice;
     }
@@ -86,7 +88,7 @@ public class GameManager : MonoBehaviour {
     public float GetReputation() => reputation;
     public void AddReputation(float value) {
         reputation += value;
-        //update ui
+        reputationTxt.SetText("Reputation : " + reputation);
     }
     public float GetMoney() => money;
     public void AddMoney(float value) {

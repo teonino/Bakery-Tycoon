@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class AICustomer : Interactable {
     [SerializeField] private AssetReference assetProductCanvas;
     [SerializeField] private AssetReference assetPaymentCanvas;
+    [SerializeField] private AssetReference assetDialoguePanel;
     [SerializeField] private float waitingTime = 5f; //Time before customer leaves after ordering
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private bool regular = false;
@@ -15,7 +16,6 @@ public class AICustomer : Interactable {
     private GameObject productCanvas; //Stores gameobject to release instance after
     private GameObject item;
     private SpawnCustomer spawner;
-    private GameManager manager;
     public ProductSO requestedProduct;
     private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private Shelf shelf;
@@ -25,9 +25,9 @@ public class AICustomer : Interactable {
     private bool leaving = false;
     private bool sitting = false;
 
-    private void Awake() {
+    private new void Awake() {
+        base.Awake();
         spawner = FindObjectOfType<SpawnCustomer>();
-        manager = FindObjectOfType<GameManager>();
         shelf = FindObjectOfType<Shelf>();
 
         //Check Queue positions
@@ -57,7 +57,7 @@ public class AICustomer : Interactable {
         }
 
         //Buy item and leave
-        if (Vector3.Distance(transform.position, shelf.transform.position) < 2 && shelf.item && waiting && shelf.IsFirstInQueue(this)) {
+        if (Vector2.Distance(transform.position, shelf.transform.position) < 2 && shelf.item && waiting && shelf.IsFirstInQueue(this)) {
             if (shelf.item.GetComponent<Product>().GetName() == requestedProduct.name) {
                 //Stop waiting
                 StopAllCoroutines();
@@ -96,6 +96,9 @@ public class AICustomer : Interactable {
                         Leave();
                 }
             }
+        }
+        if(sitting && Vector2.Distance(transform.position, chair.transform.position) < 1) {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         }
 
         //Exit the bakery
@@ -155,8 +158,8 @@ public class AICustomer : Interactable {
             StartCoroutine(DisplayPaymentCoroutine(go.Result));
             requestedProduct = null;
         };
-        manager.AddMoney(totalPrice);
-        manager.AddReputation(item.GetComponent<Product>().quality);
+        gameManager.AddMoney(totalPrice);
+        gameManager.AddReputation(item.GetComponent<Product>().quality);
     }
 
     private IEnumerator DisplayPaymentCoroutine(GameObject go) {
@@ -166,7 +169,11 @@ public class AICustomer : Interactable {
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
     public override void Effect() {
-        if (regular && sitting)
-            print("Can talk");
+        //if (regular && sitting) {
+        playerController.DisableInput();
+            assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => 
+                go.Result.GetComponent<DialogueManager>().SetDialogue(1);
+            Time.timeScale = 0;
+        //}
     }
 }

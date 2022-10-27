@@ -4,19 +4,11 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
-public class Computer : Interactable
-{
+public class Computer : Interactable {
     [SerializeField] private GameObject mainCanvas;
     //[SerializeField] private AssetReference computerPanelAsset;
     [SerializeField] private GameObject computerPanelAsset;
-    [SerializeField] private IngredientSO product;
 
-    public override void Effect() {
-        computerPanelAsset.SetActive(true);
-        product.price++;
-        //computerPanelAsset.InstantiateAsync(mainCanvas.transform).Completed += (go) => {
-        //    go.Result.GetComponent<DeliveryManager>().computer = this;
-        //    mainCanvas.GetComponent<TabsManagement>().DifferentPanel.Add(go.Result.GetComponentInChildren<DeliveryManager>().gameObject);
-        //};
-    }
+    public override void Effect() => computerPanelAsset.SetActive(true);
+
 }
