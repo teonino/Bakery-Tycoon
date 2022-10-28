@@ -30,7 +30,7 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (Random.Range(0, 10) == 0) {
+            if (Random.Range(0, 1) == 0) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomer;
                     go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private int maxStock;
     [SerializeField] private int currentStock;
 
-    private float money;
+    private float money = 100;
     private float reputation;
 
     private void Start() {
@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour {
         reputationTxt.SetText("Reputation : " + reputation);
 
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
-        //foreach (StockIngredient stockIngredient in ingredientLists)
-        //    stockIngredient.amount = 0;
+        foreach (StockIngredient stockIngredient in ingredientLists)
+            stockIngredient.amount = 0;
         foreach (ProductSO product in productsList)
             product.price = product.initialPrice;
     }
