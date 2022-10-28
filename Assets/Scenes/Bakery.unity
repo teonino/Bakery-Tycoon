@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44949442, g: 0.49649101, b: 0.55914664, a: 1}
+  m_IndirectSpecularColor: {r: 0.44949418, g: 0.4964906, b: 0.5591459, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1047,6 +1047,14 @@ PrefabInstance:
     - target: {fileID: 1502549149879746947, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502549149879746947, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502549149879746973, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
@@ -2547,6 +2555,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1502549149879746947, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502549149879746973, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
 --- !u!114 &1402461746 stripped
@@ -3284,10 +3300,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpawn: 1
-  minDelaySpawn: 5
-  maxDelaySpawn: 10
+  minDelaySpawn: 3
+  maxDelaySpawn: 7
   nbCustomer: 0
-  nbCustomerMax: 1
+  nbCustomerMax: 4
+  spawnRateRegularCustomer: 10
   customerAsset:
     m_AssetGUID: 709ccf299c167e64f8207d58a794bdf4
     m_SubObjectName: 

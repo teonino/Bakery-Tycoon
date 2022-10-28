@@ -10,6 +10,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private int maxDelaySpawn;
     [SerializeField] private int nbCustomer = 0;
     [SerializeField] private int nbCustomerMax = 5;
+    [SerializeField] private int spawnRateRegularCustomer = 10;
     [SerializeField] private AssetReference customerAsset;
     [SerializeField] private AssetReference regularCustomerAsset;
 
@@ -30,7 +31,7 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (Random.Range(0, 1) == 0) {
+            if (Random.Range(0, spawnRateRegularCustomer) == 0) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomer;
                     go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
