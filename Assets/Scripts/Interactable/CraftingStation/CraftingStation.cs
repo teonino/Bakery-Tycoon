@@ -39,7 +39,8 @@ public class CraftingStation : Interactable {
                 progressBar.InstantiateAsync(transform).Completed += (go) => {
                     ProgressBar progressBarScript = go.Result.GetComponentInChildren<ProgressBar>();
 
-                    go.Result.transform.localPosition = Vector3.up;
+                    go.Result.transform.localPosition = Vector3.up * 2;
+                    go.Result.transform.localRotation = Quaternion.Euler(0, 180, 0);
                     progressBarScript.SetDuration(dirty / 10);
                     progressBarScript.onDestroy.AddListener(Clean);
                 };
@@ -49,7 +50,8 @@ public class CraftingStation : Interactable {
 
     private IEnumerator CookingTime(Product product) {
         progressBar.InstantiateAsync(transform).Completed += (go) => {
-            go.Result.transform.localPosition = Vector3.up;
+            go.Result.transform.localPosition = Vector3.up * 2;
+            go.Result.transform.localRotation = Quaternion.Euler(0, 180, 0);
             go.Result.GetComponentInChildren<ProgressBar>().SetDuration((int)product.product.cookingTime);
 
         };
@@ -60,7 +62,8 @@ public class CraftingStation : Interactable {
     private void CreateProduct(Product product) {
         itemInStation = product.product;
         productReady.InstantiateAsync(transform).Completed += (go) => {
-            go.Result.transform.localPosition = Vector3.up;
+            go.Result.transform.localPosition = Vector3.up * 2;
+            go.Result.transform.localRotation = Quaternion.Euler(0,180,0);
             productReadyUI = go.Result;
         };
     }
