@@ -30,7 +30,7 @@ public class BuildingMode : Interactable {
     }
 
     public void Quit(CallbackContext context) {
-        if (context.performed) {
+        if (context.performed && !selectedGo) {
             playerController.playerInput.Building.Disable();
             playerController.EnableInput();
             mainCamera.SetActive(true);
