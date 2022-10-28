@@ -7,11 +7,13 @@ using UnityEngine.AddressableAssets;
 public class Shelf : Interactable {
     public GameObject item;
     private List<QueueShelf> queueCustomer;
+    public GameObject itemPosition;
 
     private void Start() {
         queueCustomer = new List<QueueShelf>();
         foreach (Transform child in transform)
-            queueCustomer.Add(child.GetComponent<QueueShelf>());
+            if (child.GetComponent<QueueShelf>())
+                queueCustomer.Add(child.GetComponent<QueueShelf>());
     }
 
     public void GetAvailableQueuePosition(AICustomer customer) {
@@ -60,7 +62,7 @@ public class Shelf : Interactable {
             playerController.itemHolded.transform.SetParent(transform);
             item = playerController.itemHolded;
             playerController.itemHolded = null;
-            item.transform.localPosition = new Vector3(0, (transform.localScale.y / 2) + (item.transform.localScale.y / 2), 0);
+            item.transform.localPosition = itemPosition.transform.localPosition;
         }
         else if (!playerController.itemHolded && item) {
             Transform arm = playerController.gameObject.transform.GetChild(0);
