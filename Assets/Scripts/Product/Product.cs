@@ -5,10 +5,9 @@ using UnityEngine;
 public class Product : MonoBehaviour
 {
     public ProductSO product;
+    public int quality;
     public int amount;
 
     public string GetName() => product.name;
     public float GetPrice() => product.price;
-
-
 }

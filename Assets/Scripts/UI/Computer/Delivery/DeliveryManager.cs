@@ -19,9 +19,10 @@ public class DeliveryManager : MonoBehaviour {
     private List<GameObject> ingredientRackList;
     private int nbButton = 0;
     private int lenght;
+    private float cartWeight = 0;
+    private float cartCost = 0;
 
     public Dictionary<IngredientSO, int> cart;
-    float weightCart = 0;
 
     void Awake() {
         gameManager = FindObjectOfType<GameManager>();
@@ -64,7 +65,8 @@ public class DeliveryManager : MonoBehaviour {
 
     public void AddIngredient(IngredientSO ingredient, int amount) {
         cart[ingredient] += amount;
-        weightCart += ingredient.weight * amount;
+        cartWeight += ingredient.weight * amount;
+        cartCost += ingredient.price * amount;
         DisplayCart();
     }
 
@@ -89,7 +91,8 @@ public class DeliveryManager : MonoBehaviour {
     public void DisplayCart() {
         Cart currentCart = cartPanel;
         currentCart.cart = cart;
-        currentCart.cartWeight = weightCart;
+        currentCart.cartWeight = cartWeight;
+        currentCart.cartCost = cartCost;
         currentCart.deliveryManager = this;
         currentCart.InitCart();
     }
@@ -108,7 +111,8 @@ public class DeliveryManager : MonoBehaviour {
         cart.Clear();
         cartPanel.ClearText();
         InitCart();
-        weightCart = 0;
+        cartWeight = 0;
+        cartCost = 0;
     }
 
 

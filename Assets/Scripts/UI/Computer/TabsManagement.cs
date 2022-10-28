@@ -15,6 +15,9 @@ public class TabsManagement : MonoBehaviour
     [SerializeField] private Color SelectedTabsColor;
     [SerializeField] private Color NormalTabsColor;
 
+    private void OnEnable() {
+        
+    }
 
     public void ShowPricePanel()
     {

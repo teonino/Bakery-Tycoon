@@ -10,29 +10,28 @@ public class CraftingStation : Interactable {
 
     [SerializeField] private int dirty = 0;
     [SerializeField] private AssetReference progressBar;
+    [SerializeField] private AssetReference productReady;
 
-    private ProductSO item;
-
-    public void AddDirt() {
-        dirty++;
-    }
+    private ProductSO itemInStation;
+    private GameObject productReadyUI;
 
     public override void Effect() {
-        if (playerController.itemHolded && playerController.itemHolded.tag == "Paste") {
+        if (playerController.itemHolded && playerController.itemHolded.tag == "Paste" && !itemInStation) {
             Product p = playerController.itemHolded.GetComponent<Product>();
             Addressables.ReleaseInstance(playerController.itemHolded);
             StartCoroutine(CookingTime(p));
         }
-        else if (item && !playerController.itemHolded) {
-            item.asset.InstantiateAsync().Completed += (go) => {
+        else if (itemInStation && !playerController.itemHolded) {
+            itemInStation.asset.InstantiateAsync().Completed += (go) => {
                 Transform arm = playerController.gameObject.transform.GetChild(0);
                 playerController.itemHolded = go.Result;
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
             };
-            item = null;
+            Addressables.ReleaseInstance(productReadyUI);
+            itemInStation = null;
         }
-        else {
+        else if (gameManager.GetDayTime() == DayTime.Evening) {
             //Check cleanness
             if (dirty > 20) {
                 //Launch Animation
@@ -59,11 +58,17 @@ public class CraftingStation : Interactable {
     }
 
     private void CreateProduct(Product product) {
-        item = product.product;
+        itemInStation = product.product;
+        productReady.InstantiateAsync(transform).Completed += (go) => {
+            go.Result.transform.localPosition = Vector3.up;
+            productReadyUI = go.Result;
+        };
     }
 
     public void Clean() {
         dirty = 0;
         playerController.EnableInput();
     }
+
+    public void AddDirt() => dirty++;
 }

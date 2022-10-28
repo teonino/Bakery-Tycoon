@@ -6,17 +6,16 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public class Workstation : Interactable {
-    [SerializeField] private GameObject mainCanvas;
     [SerializeField] private AssetReference workplacePanelAsset;
 
     private WorkstationManager manager;
     private GameObject workplacePanel;
 
     public override void Effect() {
-        if (!playerController.itemHolded) {
+        if (!playerController.itemHolded && gameManager.GetDayTime() != DayTime.Evening) {
             playerController.DisableInput();
 
-            workplacePanelAsset.InstantiateAsync(mainCanvas.transform).Completed += (go) => {
+            workplacePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
                 manager = go.Result.GetComponent<WorkstationManager>();
                 workplacePanel = go.Result;
             };
