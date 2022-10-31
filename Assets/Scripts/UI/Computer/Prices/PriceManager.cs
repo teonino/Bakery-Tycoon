@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
@@ -30,7 +31,7 @@ public class PriceManager : MonoBehaviour {
         playerController = gameManager.GetPlayerController();
     }
 
-    private void OnEnable() {
+    private void Start() {
         //Manage Inputs
         playerController.DisableInput();
         playerController.playerInput.UI.Enable();
@@ -56,10 +57,36 @@ public class PriceManager : MonoBehaviour {
 
     private void SetupButtons() {
         if (productRackList.Count > 0 && nbButton == lenght) {
-            int maxButtonInRack = (int) Math.Floor(content.GetComponent<RectTransform>().rect.x / productButtonList[0].GetComponent<RectTransform>().rect.x) - 1;
+            int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.x / productButtonList[0].GetComponent<RectTransform>().rect.x) - 1;
             for (int i = 0; i < lenght; i++) {
                 productButtonList[i].transform.SetParent(productRackList[i / maxButtonInRack].transform);
                 productButtonList[i].transform.localScale = Vector3.one;
+            }
+
+            for (int i = 0; i < lenght; i++) {
+                Navigation navButton = productButtonList[i].GetComponentInChildren<Button>().navigation;
+                Navigation navInputField = productButtonList[i].GetComponentInChildren<TMP_InputField>().navigation;
+
+                navButton.mode = navInputField.mode = Navigation.Mode.Explicit;
+
+                if(i < 4) {
+                    //navInputField.selectOnUp = PriceTabButton;
+                }
+
+                if (i - 5 >= 0)
+                    navInputField.selectOnUp = productButtonList[i - 5].GetComponentInChildren<Button>();
+                if (i + 5 < lenght)
+                    navButton.selectOnDown = productButtonList[i + 5].GetComponentInChildren<TMP_InputField>();
+                if (i + 1 < lenght) {
+                    navButton.selectOnRight = productButtonList[i + 1].GetComponentInChildren<Button>();
+                    navInputField.selectOnRight = productButtonList[i + 1].GetComponentInChildren<TMP_InputField>();
+                }
+                if (i - 1 >= 0) {
+                    navButton.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<Button>();
+                    navInputField.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<TMP_InputField>();
+                }
+                productButtonList[i].GetComponentInChildren<Button>().navigation = navButton;
+                productButtonList[i].GetComponentInChildren<TMP_InputField>().navigation = navInputField;
             }
         }
     }

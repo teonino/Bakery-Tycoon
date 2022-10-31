@@ -15,8 +15,12 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private AssetReference regularCustomerAsset;
 
     private GameManager gameManager;
+    List<ProductSO> doableProduct;
+    List<ProductSO> availableProduct;
 
     void Start() {
+        doableProduct = new List<ProductSO>();
+        availableProduct = new List<ProductSO>();
         gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));
     }
@@ -47,9 +51,9 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     public bool CheckProducts() {
-        List<ProductSO> doableProduct = new List<ProductSO>();
+        bool doable;
         foreach (ProductSO product in gameManager.GetProductList()) { //Go through all product
-            bool doable = true;
+            doable = true;
             foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
                 if (gameManager.GetIngredientAmount(ingredient) <= 0)
                     doable = false;
@@ -57,22 +61,23 @@ public class SpawnCustomer : MonoBehaviour {
             if (doable)
                 return true;
         }
-        return false;
+
+        bool hasItem = false;
+        List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
+        foreach (Shelf shelf in shelves) {
+            if (shelf.GetItem()) {
+                hasItem = true;
+                availableProduct.Add(shelf.GetItem().GetComponent<Product>().product);
+            }
+        }
+        return hasItem;
     }
 
     public ProductSO GetRandomProduct() {
-        List<ProductSO> doableProduct = new List<ProductSO>();
-        foreach (ProductSO product in gameManager.GetProductList()) { //Go through all product
-            bool doable = true;
-            foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
-                if (gameManager.GetIngredientAmount(ingredient) <= 0)
-                    doable = false;
-
-            if (doable)
-                doableProduct.Add(product);
-        }
-        return doableProduct[Random.Range(0, doableProduct.Count)]; ;
+        if (doableProduct.Count > 0) 
+            return doableProduct[Random.Range(0, doableProduct.Count)];
+        else 
+            return availableProduct[Random.Range(0, availableProduct.Count)];
     }
-
     public void RemoveCustomer() => nbCustomer--;
 }

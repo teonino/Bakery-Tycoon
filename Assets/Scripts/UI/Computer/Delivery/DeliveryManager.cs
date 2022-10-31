@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -32,9 +33,10 @@ public class DeliveryManager : MonoBehaviour {
 
         lenght = gameManager.GetIngredientsLenght();
         playerController = gameManager.GetPlayerController();
+
     }
 
-    private void OnEnable() {
+    private void Start() {
         //Manage Inputs
         playerController.DisableInput();
         playerController.playerInput.UI.Enable();
@@ -49,6 +51,7 @@ public class DeliveryManager : MonoBehaviour {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
                 go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.GetIngredientList()[nbButton].ingredient);
+                go.Result.name = "Delivery Button " + gameManager.GetIngredientList()[nbButton].ingredient;
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();

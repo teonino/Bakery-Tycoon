@@ -18,7 +18,7 @@ public class Cart : MonoBehaviour {
     public float cartCost;
 
     private GameManager gameManager;
-    private float cost = 0;
+    private float cost = 0; //will be used to display total cost of cart
 
     void Start() {
         gameManager = FindObjectOfType<GameManager>();
@@ -40,7 +40,7 @@ public class Cart : MonoBehaviour {
     public void Order() {
         //Check if the order can be stocked && bought
         if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
-            if (cartCost < gameManager.GetMoney()) {
+            if (cartCost <= gameManager.GetMoney()) {
                 foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                     if (stock.Value > 0) {
                         foreach (StockIngredient stockIngredient in gameManager.GetIngredientList())
@@ -50,9 +50,13 @@ public class Cart : MonoBehaviour {
                 }
                 gameManager.RemoveMoney(cartCost);
                 Clear();
-            }          
+            }
         }
     }
 
-    public void Clear() => deliveryManager.ResetCart();
+    public void Clear() {
+        cartCost = 0;
+        if (deliveryManager)
+            deliveryManager.ResetCart();
+    }
 }

@@ -18,7 +18,7 @@ public class AICustomer : Interactable {
     private SpawnCustomer spawner;
     public ProductSO requestedProduct;
     private Vector3 spawnPosition; //Return to the exit once customer is leaving
-    private Shelf shelf;
+    private MainShelf shelf;
     private Chair chair;
     public bool inQueue = false;
     private bool waiting = false;
@@ -28,7 +28,7 @@ public class AICustomer : Interactable {
     private new void Awake() {
         base.Awake();
         spawner = FindObjectOfType<SpawnCustomer>();
-        shelf = FindObjectOfType<Shelf>();
+        shelf = FindObjectOfType<MainShelf>();
 
         //Check Queue positions
         shelf.GetAvailableQueuePosition(this);
@@ -57,15 +57,15 @@ public class AICustomer : Interactable {
         }
 
         //Buy item and leave
-        if (Vector2.Distance(transform.position, shelf.transform.position) < 2 && shelf.item && waiting && shelf.IsFirstInQueue(this)) {
-            if (shelf.item.GetComponent<Product>().GetName() == requestedProduct.name) {
+        if (Vector2.Distance(transform.position, shelf.transform.position) < 2 && shelf.GetItem() && waiting && shelf.IsFirstInQueue(this)) {
+            if (shelf.GetItem().GetComponent<Product>().GetName() == requestedProduct.name && shelf.GetItem().GetComponent<Product>().tag != "Paste") {
                 //Stop waiting
                 StopAllCoroutines();
                 //Take item
-                if (shelf.item.GetComponent<Product>().amount > 1) {
-                    shelf.item.GetComponent<Product>().product.asset.InstantiateAsync(transform).Completed += (go) => {
+                if (shelf.GetItem().GetComponent<Product>().amount > 1) {
+                    shelf.GetItem().GetComponent<Product>().product.asset.InstantiateAsync(transform).Completed += (go) => {
                         item = go.Result;
-                        item.GetComponent<Product>().quality = shelf.item.GetComponent<Product>().quality;
+                        item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
                         item.transform.localPosition = Vector3.up * 1.25f;
 
                         DisplayPayment();
@@ -77,14 +77,14 @@ public class AICustomer : Interactable {
                         else
                             Leave();
                     };
-                    shelf.item.GetComponent<Product>().amount--;
+                    shelf.GetItem().GetComponent<Product>().amount--;
                 }
                 else {
-                    item = shelf.item;
+                    item = shelf.GetItem();
                     item.transform.SetParent(transform);
                     item.transform.localPosition = Vector3.up * 1.25f;
-                    item.GetComponent<Product>().quality = shelf.item.GetComponent<Product>().quality;
-                    shelf.item = null;
+                    item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
+                    shelf.RemoveItem();
 
                     DisplayPayment();
                     if (productCanvas)

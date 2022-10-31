@@ -73,7 +73,7 @@ public class BuildingMode : Interactable {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, Mathf.Infinity, currentRaycastlayer))
                 selectedGo.transform.position = new Vector3(
                     RoundToNearestGrid(hit.point.x),
-                    selectedGo.transform.localScale.y / 2 + hit.point.y,
+                    selectedGo.transform.localScale.y / 2,
                     RoundToNearestGrid(hit.point.z));
         }
     }

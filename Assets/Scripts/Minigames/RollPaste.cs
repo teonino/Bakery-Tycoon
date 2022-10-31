@@ -12,24 +12,24 @@ public class RollPaste : Minigame
     new void Start() {
         base.Start();
 
-        controller.playerInput.RollPaste.Enable();
+        playerController.playerInput.RollPaste.Enable();
         text.SetText(distance + " remaining");
     }
 
     private void Roll(InputAction.CallbackContext context) {
-        distance -= Mathf.Abs((int)controller.playerInput.RollPaste.Roll.ReadValue<float>());
+        distance -= Mathf.Abs((int)playerController.playerInput.RollPaste.Roll.ReadValue<float>());
         text.SetText(distance + " remaining");
         if (distance < 0) {
-            controller.playerInput.RollPaste.Disable();
+            playerController.playerInput.RollPaste.Disable();
             End();
         }
     }
 
     public override void EnableInputs() {
-        controller.playerInput.RollPaste.Roll.performed += Roll;
+        playerController.playerInput.RollPaste.Roll.performed += Roll;
     }
 
     public override void DisableInputs() {
-        controller.playerInput.RollPaste.Roll.performed -= Roll;
+        playerController.playerInput.RollPaste.Roll.performed -= Roll;
     }
 }

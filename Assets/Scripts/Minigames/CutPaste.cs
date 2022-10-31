@@ -3,61 +3,43 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class CutPaste : Minigame {
-    public int nbIterationAimed = 3;
-    public TextMeshProUGUI text;
-
-    int nbIteration = 0;
-
+    [SerializeField] private int valuePerTap = 10;
+    [SerializeField] private int valueLost = 1;
+    [SerializeField] private int aimedValue = 50;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Slider slider;
 
     new void Start() {
         base.Start();
+        slider.maxValue = aimedValue;
+        playerController.playerInput.CutPaste.Enable();
 
-        controller.playerInput.CutPaste.Enable();
-        controller.playerInput.CutPaste.S.Disable();
-        controller.playerInput.CutPaste.C.Disable();
+        InputAction action = playerController.playerInput.CutPaste.CutPasteAction;
+        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+        text.SetText("Spam " + char.ToUpper(inputName[0]) + inputName.Substring(1));
     }
 
-    private void Q(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.CutPaste.A.Disable();
-            controller.playerInput.CutPaste.S.Enable();
-            text.SetText("Press S");
-        }
-    }
-    private void S(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.CutPaste.S.Disable();
-            controller.playerInput.CutPaste.C.Enable();
-            text.SetText("Press C");
-        }
-    }
-    private void C(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.CutPaste.C.Disable();
-            controller.playerInput.CutPaste.A.Enable();
-            nbIteration++;
-            text.SetText("Press A");
+    void Update() => slider.value -= Time.deltaTime * valueLost;
 
-            if (nbIteration == nbIterationAimed) {
-
-                controller.playerInput.CutPaste.Disable();
+    private void CutPasteAction(InputAction.CallbackContext context) {
+        if (context.performed) {
+            slider.value += valuePerTap;
+            if (slider.value >= aimedValue) {
+                playerController.playerInput.CutPaste.Disable();
                 End();
-                text.SetText("Well played!");
             }
         }
     }
 
     public override void EnableInputs() {
-        controller.playerInput.CutPaste.A.performed += Q;
-        controller.playerInput.CutPaste.S.performed += S;
-        controller.playerInput.CutPaste.C.performed += C;
+        playerController.playerInput.CutPaste.CutPasteAction.performed += CutPasteAction;
     }
 
     public override void DisableInputs() {
-        controller.playerInput.CutPaste.A.performed -= Q;
-        controller.playerInput.CutPaste.S.performed -= S;
-        controller.playerInput.CutPaste.C.performed -= C;
+        playerController.playerInput.CutPaste.CutPasteAction.performed -= CutPasteAction;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 
 public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference productButtonAsset;
@@ -28,7 +29,7 @@ public class WorkstationManager : MonoBehaviour {
                 button.SetProduct(gameManager.GetProductList()[nbButton]);
                 button.requirementMet = CheckRequirement(gameManager.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
-                SetupButtons();
+                SetupButtons(button.gameObject);
             };
         }
     }
@@ -64,11 +65,14 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     //Once enough button created, we position them
-    private void SetupButtons() {
+    private void SetupButtons(GameObject button) {
         if (nbButton == gameManager.GetProductsLenght() - 1) {
             for (int i = 0; i < gameManager.GetProductsLenght(); i++)
                 productButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 110 * (i % 4), -20 - (110 * (i / 4)), 0);
         }
+
+        if(nbButton == 0)
+            EventSystem.current.SetSelectedGameObject(button.gameObject);
         nbButton++;
     }
 

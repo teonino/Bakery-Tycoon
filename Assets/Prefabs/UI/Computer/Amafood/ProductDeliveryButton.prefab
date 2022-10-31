@@ -346,14 +346,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9845ad35c3001414db1e2182cf85e3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 0}
   button: {fileID: 2826856891211640428}
   descriptionPanel:
     m_AssetGUID: 052dcb8a8158dca4180cdfd4911cd504
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  stockmanager: {fileID: 0}
+  ingredient: {fileID: 0}
+  deliveryManager: {fileID: 0}
 --- !u!1001 &5447789336908440300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -449,6 +449,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3440015068309534867, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440015068309534867, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440015068309534867, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 225c74f45f724324abfeeda26760af26, type: 3}
 --- !u!224 &5785025551322223154 stripped
@@ -482,9 +494,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.5261339, g: 0.9528302, b: 0.4719206, a: 1}
+    m_HighlightedColor: {r: 0.39030322, g: 0.7169812, b: 0.34834465, a: 1}
+    m_PressedColor: {r: 0.38111815, g: 0.6792453, b: 0.34282663, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
