@@ -36,11 +36,16 @@ public class DeliveryManager : MonoBehaviour {
 
     }
 
+    private void OnEnable() {
+        if (gameObject.activeSelf) {
+            //Manage Inputs
+            playerController.DisableInput();
+            playerController.playerInput.UI.Enable();
+            playerController.playerInput.UI.Quit.performed += Quit;
+        }
+    }
+
     private void Start() {
-        //Manage Inputs
-        playerController.DisableInput();
-        playerController.playerInput.UI.Enable();
-        playerController.playerInput.UI.Quit.performed += Quit;
 
         //Init Cart
         if (cart == null)
@@ -66,11 +71,18 @@ public class DeliveryManager : MonoBehaviour {
         }
     }
 
-    public void AddIngredient(IngredientSO ingredient, int amount) {
-        cart[ingredient] += amount;
-        cartWeight += ingredient.weight * amount;
-        cartCost += ingredient.price * amount;
+    public void SetIngredient(IngredientSO ingredient, int amount) {
+        cart[ingredient] = amount;
+        CalculateCartCostAndWeight();
         DisplayCart();
+    }
+
+    private void CalculateCartCostAndWeight() {
+        cartCost = cartWeight = 0;
+        foreach (KeyValuePair<IngredientSO,int> ingredient in cart) {
+            cartCost += ingredient.Key.price * ingredient.Value;
+            cartWeight += ingredient.Key.weight * ingredient.Value;
+        }
     }
 
     void SetupButtons() {
@@ -138,8 +150,6 @@ public class DeliveryManager : MonoBehaviour {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
         playerController.EnableInput();
-
-        Reset(false);
 
         computerPanel.SetActive(false);
     }

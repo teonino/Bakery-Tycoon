@@ -14,7 +14,7 @@ public class PriceButton : MonoBehaviour {
     [SerializeField] RawImage image;
 
     public void SetPrice() {
-        product.price = (float) Math.Round(float.Parse(priceText.text), 1);
+        product.price = (int) Math.Round(float.Parse(priceText.text), 0);
     }
 
     public void SetProduct(ProductSO product) {

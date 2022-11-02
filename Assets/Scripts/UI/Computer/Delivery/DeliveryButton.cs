@@ -17,13 +17,16 @@ public class DeliveryButton : MonoBehaviour {
         computerManager = FindObjectOfType<ComputerManager>();
         GetComponentInChildren<TextMeshProUGUI>().SetText(ingredient.name);
         GetComponentInChildren<RawImage>().texture = ingredient.image;
-        button.onClick.AddListener(delegate { 
+        button.onClick.AddListener(delegate {
             descriptionPanel.InstantiateAsync(deliveryManager.transform.parent).Completed += (go) => {
                 computerManager.lastButton = gameObject.GetComponentInChildren<Button>().gameObject;
                 go.Result.GetComponent<IngredientDescription>().computerManager = computerManager;
                 go.Result.GetComponent<IngredientDescription>().deliveryManager = deliveryManager;
                 go.Result.GetComponent<IngredientDescription>().ingredient = ingredient;
-            }; 
+                Cart cart = FindObjectOfType<Cart>();
+                if (cart.cart != null && cart.cart.ContainsKey(ingredient))
+                    go.Result.GetComponent<IngredientDescription>().nbIngredient = cart.cart[ingredient];
+            };
         });
     }
 

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.HID.HID;
+using UnityEngine.UI;
 
 public class Cart : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;

@@ -10,6 +10,7 @@ public class IngredientDescription : MonoBehaviour {
     [SerializeField] private RawImage image;
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI amounText;
     [SerializeField] private TextMeshProUGUI price;
     [SerializeField] private AmmountManager amount;
     [SerializeField] private GameObject startButton;
@@ -17,19 +18,21 @@ public class IngredientDescription : MonoBehaviour {
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public ComputerManager computerManager;
     [HideInInspector] public IngredientSO ingredient;
+    [HideInInspector] public int nbIngredient;
 
     void Start() {
         image.texture = ingredient.image;
         title.SetText(ingredient.name);
         price.SetText(ingredient.price + "€ / U");
         description.SetText(ingredient.description);
+        amounText.SetText(nbIngredient + "");
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(startButton);
     }
 
     public void Quit() {
         computerManager.SetEventSystemToLastButton();
-        deliveryManager.AddIngredient(ingredient,amount.GetAmount());
+        deliveryManager.SetIngredient(ingredient, amount.GetAmount());
         Addressables.ReleaseInstance(gameObject);
     }
 }

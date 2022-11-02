@@ -59,18 +59,17 @@ public class SpawnCustomer : MonoBehaviour {
                     doable = false;
 
             if (doable)
-                return true;
+                doableProduct.Add(product);
         }
 
-        bool hasItem = false;
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
         foreach (Shelf shelf in shelves) {
             if (shelf.GetItem()) {
-                hasItem = true;
                 availableProduct.Add(shelf.GetItem().GetComponent<Product>().product);
             }
         }
-        return hasItem;
+
+        return doableProduct.Count > 0 || availableProduct.Count > 0;
     }
 
     public ProductSO GetRandomProduct() {

@@ -11,9 +11,11 @@ public class PriceManager : MonoBehaviour {
     [SerializeField] private AssetReference productButtonAsset;
     [SerializeField] private AssetReference productRackAsset;
     [SerializeField] private GameObject computerPanel;
+    [SerializeField] private GameObject priceButtonPanel;
 
     private GameManager gameManager;
     private PlayerController playerController;
+    private InputFieldControllerManager inputFieldControllerManager;
     private GameObject content;
     private List<GameObject> productButtonList;
     private List<GameObject> productRackList;
@@ -23,6 +25,7 @@ public class PriceManager : MonoBehaviour {
     // Start is called before the first frame update
     void Awake() {
         gameManager = FindObjectOfType<GameManager>();
+        inputFieldControllerManager = FindObjectOfType<InputFieldControllerManager>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
@@ -41,6 +44,7 @@ public class PriceManager : MonoBehaviour {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
                 go.Result.GetComponent<PriceButton>().SetProduct(gameManager.GetProductList()[nbButton]);
+                inputFieldControllerManager.listInputField.Add(go.Result.GetComponentInChildren<TMP_InputField>());
                 productButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();
@@ -69,9 +73,8 @@ public class PriceManager : MonoBehaviour {
 
                 navButton.mode = navInputField.mode = Navigation.Mode.Explicit;
 
-                if(i < 4) {
-                    //navInputField.selectOnUp = PriceTabButton;
-                }
+                if(i < 4) 
+                    navInputField.selectOnUp = priceButtonPanel.GetComponent<Button>();
 
                 if (i - 5 >= 0)
                     navInputField.selectOnUp = productButtonList[i - 5].GetComponentInChildren<Button>();
@@ -85,8 +88,12 @@ public class PriceManager : MonoBehaviour {
                     navButton.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<Button>();
                     navInputField.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<TMP_InputField>();
                 }
+
                 productButtonList[i].GetComponentInChildren<Button>().navigation = navButton;
                 productButtonList[i].GetComponentInChildren<TMP_InputField>().navigation = navInputField;
+
+                //Set OnSelect to trigger movement cooldown
+                productButtonList[i].GetComponentInChildren<TMP_InputField>().onSelect.AddListener(delegate { inputFieldControllerManager.OnSelection(); });
             }
         }
     }

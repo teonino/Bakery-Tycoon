@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private InputType inputType;
 
     private PlayerMovements playerMovements;
-    public PlayerInput playerInput { get; private set; }
+    public PlayerInput playerInput { get; set; }
     public GameObject itemHolded;
 
     // Start is called before the first frame update
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public InputType GetInputType() => inputType;
+    public InputType SetInputType(InputType value) => inputType = value;
     public string GetInput(InputAction action) {
         print(action.controls[0].ToString());
         string[] s = action.controls[0].ToString().Split("/");
