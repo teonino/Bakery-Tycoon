@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
     [Header("Products & Ingredients list")]
     [Space(10)]
     [SerializeField] private List<ProductSO> productsList;
-    private Dictionary<ProductSO, int> productPrices;
+    private Dictionary<string, int> productPrices;
     [Space(10)]
     [SerializeField] private List<StockIngredient> ingredientLists;
 
@@ -29,9 +29,9 @@ public class GameManager : MonoBehaviour {
     private float reputation;
 
     private void Awake() {
-        productPrices = new Dictionary<ProductSO, int>();
+        productPrices = new Dictionary<string, int>();
         foreach (ProductSO product in productsList) 
-            productPrices.Add(product, product.price);
+            productPrices.Add(product.name, product.price);
 
         playerController = FindObjectOfType<PlayerController>();
 
@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour {
 
     public PlayerController GetPlayerController() => playerController;
     public List<ProductSO> GetProductList() => productsList;
-    public int GetProductPrice(ProductSO product) => productPrices[product];
-    public int SetProductPrice(ProductSO product, int value) => productPrices[product] = value;
+    public int GetProductPrice(ProductSO product) => productPrices[product.name];
+    public int SetProductPrice(ProductSO product, int value) => productPrices[product.name] = value;
     public List<StockIngredient> GetIngredientList() => ingredientLists;
     public int GetProductsLenght() => productsList.Count;
     public int GetIngredientsLenght() => ingredientLists.Count;

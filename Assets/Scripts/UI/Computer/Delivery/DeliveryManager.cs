@@ -79,7 +79,7 @@ public class DeliveryManager : MonoBehaviour {
 
     private void CalculateCartCostAndWeight() {
         cartCost = cartWeight = 0;
-        foreach (KeyValuePair<IngredientSO,int> ingredient in cart) {
+        foreach (KeyValuePair<IngredientSO, int> ingredient in cart) {
             cartCost += ingredient.Key.price * ingredient.Value;
             cartWeight += ingredient.Key.weight * ingredient.Value;
         }

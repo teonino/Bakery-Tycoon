@@ -62,11 +62,30 @@ public class AICustomer : Interactable {
                 //Stop waiting
                 StopAllCoroutines();
                 //Take item
-                if (shelf.GetItem().GetComponent<Product>().amount > 1) {
-                    shelf.GetItem().GetComponent<Product>().productSO.asset.InstantiateAsync(transform).Completed += (go) => {
-                        item = go.Result;
-                        item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
+                if (!item) {
+                    if (shelf.GetItem().GetComponent<Product>().amount > 1) {
+                        shelf.GetItem().GetComponent<Product>().productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                            item = go.Result;
+                            item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
+                            item.transform.localPosition = Vector3.up * 1.25f;
+
+                            DisplayPayment();
+                            if (productCanvas)
+                                Addressables.ReleaseInstance(productCanvas);
+
+                            if (regular)
+                                Sit();
+                            else
+                                Leave();
+                        };
+                        shelf.GetItem().GetComponent<Product>().amount--;
+                    }
+                    else {
+                        item = shelf.GetItem();
+                        item.transform.SetParent(transform);
                         item.transform.localPosition = Vector3.up * 1.25f;
+                        item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
+                        shelf.RemoveItem();
 
                         DisplayPayment();
                         if (productCanvas)
@@ -76,24 +95,7 @@ public class AICustomer : Interactable {
                             Sit();
                         else
                             Leave();
-                    };
-                    shelf.GetItem().GetComponent<Product>().amount--;
-                }
-                else {
-                    item = shelf.GetItem();
-                    item.transform.SetParent(transform);
-                    item.transform.localPosition = Vector3.up * 1.25f;
-                    item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
-                    shelf.RemoveItem();
-
-                    DisplayPayment();
-                    if (productCanvas)
-                        Addressables.ReleaseInstance(productCanvas);
-
-                    if (regular)
-                        Sit();
-                    else
-                        Leave();
+                    }
                 }
             }
         }
