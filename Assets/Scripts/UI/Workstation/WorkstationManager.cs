@@ -100,7 +100,7 @@ public class WorkstationManager : MonoBehaviour {
                 else {
                     ProductSO gos = currentProduct;
                     currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
-                        go.Result.GetComponent<Product>().product = gos;
+                        go.Result.GetComponent<Product>().productSO = gos;
                         workplace.CloseWorkplace(go.Result);
                     };
                 }

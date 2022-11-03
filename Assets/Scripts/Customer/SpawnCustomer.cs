@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 public class SpawnCustomer : MonoBehaviour {
     [Header("Spawn attributes")]
     [SerializeField] private bool enableSpawn;
+    [SerializeField] private bool enableSpawnRegularCustomer;
     [SerializeField] private int minDelaySpawn;
     [SerializeField] private int maxDelaySpawn;
     [SerializeField] private int nbCustomer = 0;
@@ -35,7 +36,7 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (Random.Range(0, spawnRateRegularCustomer) == 0) {
+            if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomer;
                     go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
@@ -65,7 +66,7 @@ public class SpawnCustomer : MonoBehaviour {
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
         foreach (Shelf shelf in shelves) {
             if (shelf.GetItem()) {
-                availableProduct.Add(shelf.GetItem().GetComponent<Product>().product);
+                availableProduct.Add(shelf.GetItem().GetComponent<Product>().productSO);
             }
         }
 

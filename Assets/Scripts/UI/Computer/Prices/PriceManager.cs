@@ -34,12 +34,14 @@ public class PriceManager : MonoBehaviour {
         playerController = gameManager.GetPlayerController();
     }
 
-    private void Start() {
+    private void OnEnable() {
         //Manage Inputs
         playerController.DisableInput();
         playerController.playerInput.UI.Enable();
         playerController.playerInput.UI.Quit.performed += Quit;
+    }
 
+    private void Start() {
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
@@ -69,31 +71,22 @@ public class PriceManager : MonoBehaviour {
 
             for (int i = 0; i < lenght; i++) {
                 Navigation navButton = productButtonList[i].GetComponentInChildren<Button>().navigation;
-                Navigation navInputField = productButtonList[i].GetComponentInChildren<TMP_InputField>().navigation;
 
-                navButton.mode = navInputField.mode = Navigation.Mode.Explicit;
+                navButton.mode = Navigation.Mode.Explicit;
 
                 if(i < 4) 
-                    navInputField.selectOnUp = priceButtonPanel.GetComponent<Button>();
+                    navButton.selectOnUp = priceButtonPanel.GetComponent<Button>();
 
-                if (i - 5 >= 0)
-                    navInputField.selectOnUp = productButtonList[i - 5].GetComponentInChildren<Button>();
                 if (i + 5 < lenght)
                     navButton.selectOnDown = productButtonList[i + 5].GetComponentInChildren<TMP_InputField>();
                 if (i + 1 < lenght) {
                     navButton.selectOnRight = productButtonList[i + 1].GetComponentInChildren<Button>();
-                    navInputField.selectOnRight = productButtonList[i + 1].GetComponentInChildren<TMP_InputField>();
                 }
                 if (i - 1 >= 0) {
                     navButton.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<Button>();
-                    navInputField.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<TMP_InputField>();
                 }
 
                 productButtonList[i].GetComponentInChildren<Button>().navigation = navButton;
-                productButtonList[i].GetComponentInChildren<TMP_InputField>().navigation = navInputField;
-
-                //Set OnSelect to trigger movement cooldown
-                productButtonList[i].GetComponentInChildren<TMP_InputField>().onSelect.AddListener(delegate { inputFieldControllerManager.OnSelection(); });
             }
         }
     }
@@ -113,8 +106,6 @@ public class PriceManager : MonoBehaviour {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
         playerController.EnableInput();
-
-        Reset();
 
         computerPanel.SetActive(false);
     }

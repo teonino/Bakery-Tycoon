@@ -52,15 +52,15 @@ public class CraftingStation : Interactable {
         progressBar.InstantiateAsync(transform).Completed += (go) => {
             go.Result.transform.localPosition = Vector3.up * 2;
             go.Result.transform.localRotation = Quaternion.Euler(0, 180, 0);
-            go.Result.GetComponentInChildren<ProgressBar>().SetDuration((int)product.product.cookingTime);
+            go.Result.GetComponentInChildren<ProgressBar>().SetDuration((int)product.productSO.cookingTime);
 
         };
-        yield return new WaitForSeconds(product.product.cookingTime);
+        yield return new WaitForSeconds(product.productSO.cookingTime);
         CreateProduct(product);
     }
 
     private void CreateProduct(Product product) {
-        itemInStation = product.product;
+        itemInStation = product.productSO;
         productReady.InstantiateAsync(transform).Completed += (go) => {
             go.Result.transform.localPosition = Vector3.up * 2;
             go.Result.transform.localRotation = Quaternion.Euler(0,180,0);

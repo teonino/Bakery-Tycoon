@@ -63,7 +63,7 @@ public class AICustomer : Interactable {
                 StopAllCoroutines();
                 //Take item
                 if (shelf.GetItem().GetComponent<Product>().amount > 1) {
-                    shelf.GetItem().GetComponent<Product>().product.asset.InstantiateAsync(transform).Completed += (go) => {
+                    shelf.GetItem().GetComponent<Product>().productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                         item = go.Result;
                         item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
                         item.transform.localPosition = Vector3.up * 1.25f;
@@ -97,7 +97,7 @@ public class AICustomer : Interactable {
                 }
             }
         }
-        if(sitting && Vector2.Distance(transform.position, chair.transform.position) < 1) {
+        if (sitting && Vector2.Distance(transform.position, chair.transform.position) < 1) {
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         }
 
@@ -151,7 +151,7 @@ public class AICustomer : Interactable {
 
     //Display the payement
     public void DisplayPayment() {
-        float totalPrice = item.GetComponent<Product>().GetPrice() + item.GetComponent<Product>().GetPrice() * item.GetComponent<Product>().quality / 100;
+        float totalPrice = gameManager.GetProductPrice(item.GetComponent<Product>().productSO) + gameManager.GetProductPrice(item.GetComponent<Product>().productSO) * item.GetComponent<Product>().quality / 100;
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = shelf.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + totalPrice + "€";
@@ -169,11 +169,11 @@ public class AICustomer : Interactable {
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
     public override void Effect() {
-        //if (regular && sitting) {
+        if (regular && sitting && false) {
         playerController.DisableInput();
-            assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => 
-                go.Result.GetComponent<DialogueManager>().SetDialogue(1);
-            Time.timeScale = 0;
-        //}
+        assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
+            go.Result.GetComponent<DialogueManager>().SetDialogue(1);
+        Time.timeScale = 0;
+        }
     }
 }

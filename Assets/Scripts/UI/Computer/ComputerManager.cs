@@ -10,9 +10,13 @@ public class ComputerManager : MonoBehaviour
 
     [HideInInspector] public GameObject lastButton;
 
-    private void Start() {
+    private void OnEnable() {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(startButton);
+    }
+
+    public void RegisterCurrentSelectedButton() {
+        lastButton = EventSystem.current.currentSelectedGameObject;
     }
 
     public void SetEventSystemToLastButton() {

@@ -182,7 +182,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""69b24343-039d-48e5-88e3-d98e0f3513e0"",
-                    ""path"": ""<XInputController>/buttonWest"",
+                    ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -292,15 +292,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""f353727a-bfab-4766-8c97-72cefb51b5b3"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -358,61 +349,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""DPAD"",
-                    ""id"": ""e79de3fa-d88c-4024-9b13-f13eba83604f"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""cc3d3856-8b37-424d-a3ec-993a9751cb7d"",
-                    ""path"": ""<XInputController>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""ab47e0c9-ec16-4636-8230-2b1a0af60e10"",
-                    ""path"": ""<XInputController>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f3354f28-94c6-428e-b604-045cf27c2cc6"",
-                    ""path"": ""<XInputController>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""416d0cc6-93d4-4f8e-9f10-feead4eed2a0"",
-                    ""path"": ""<XInputController>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -715,10 +651,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""2a77045c-e556-4930-9476-39a991673936"",
             ""actions"": [
                 {
-                    ""name"": ""Roll"",
+                    ""name"": ""RollPasteAction"",
                     ""type"": ""Value"",
-                    ""id"": ""9255a8d2-305c-4539-947b-c83ccd22fb3d"",
-                    ""expectedControlType"": ""Axis"",
+                    ""id"": ""1dac96ba-9f53-4391-a674-5a15567ba27e"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -726,13 +662,151 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""30ad9510-1981-40a8-884c-f157b32eed3d"",
-                    ""path"": ""<Mouse>/scroll/y"",
+                    ""name"": ""Joystick"",
+                    ""id"": ""bd012439-0e46-4e75-85bc-8de0967371a5"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Roll"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""00aeeed8-cc4f-4028-9ff7-4a761d4c3fe2"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2ebac584-eaf4-4666-b8b9-fc74fec939e6"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""43883835-be7a-4f82-8bda-44700f9ed4e9"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""52ba4b39-b992-4ba3-9b56-902221eacdbe"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""LeftRightAction"",
+                    ""id"": ""97288f26-074f-4aa5-8648-62c3aa5a7038"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b4b675df-e767-4410-a366-d22f2d32b565"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""efc4f3e5-55e3-4ef8-a3e8-cdca0035876a"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""64bc01f5-9afc-48b8-94c6-13b294de7af7"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""3894c0f2-1962-40c6-9e3c-a29dff58b805"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RollPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""AddItems"",
+            ""id"": ""9fd56c07-fbba-4744-8c34-1eb08047e60b"",
+            ""actions"": [
+                {
+                    ""name"": ""AddItemsAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e5da248-9d5e-4120-95df-c781a37b188a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e717c75d-fb18-48b1-adf0-35f43b5f4e74"",
+                    ""path"": ""<XInputController>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddItemsAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53815827-1d00-471e-a47a-8d960c3d911a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AddItemsAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -777,7 +851,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
-        m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
         // SpreadPaste
         m_SpreadPaste = asset.FindActionMap("SpreadPaste", throwIfNotFound: true);
         m_SpreadPaste_SpreadPasteAction = m_SpreadPaste.FindAction("SpreadPasteAction", throwIfNotFound: true);
@@ -800,7 +873,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_AddSeeds_AddSeed = m_AddSeeds.FindAction("AddSeed", throwIfNotFound: true);
         // RollPaste
         m_RollPaste = asset.FindActionMap("RollPaste", throwIfNotFound: true);
-        m_RollPaste_Roll = m_RollPaste.FindAction("Roll", throwIfNotFound: true);
+        m_RollPaste_RollPasteAction = m_RollPaste.FindAction("RollPasteAction", throwIfNotFound: true);
+        // AddItems
+        m_AddItems = asset.FindActionMap("AddItems", throwIfNotFound: true);
+        m_AddItems_AddItemsAction = m_AddItems.FindAction("AddItemsAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -945,7 +1021,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Quit;
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_Point;
-    private readonly InputAction m_UI_Move;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
@@ -953,7 +1028,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Quit => m_Wrapper.m_UI_Quit;
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @Point => m_Wrapper.m_UI_Point;
-        public InputAction @Move => m_Wrapper.m_UI_Move;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -972,9 +1046,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
-                @Move.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -988,9 +1059,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -1195,12 +1263,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // RollPaste
     private readonly InputActionMap m_RollPaste;
     private IRollPasteActions m_RollPasteActionsCallbackInterface;
-    private readonly InputAction m_RollPaste_Roll;
+    private readonly InputAction m_RollPaste_RollPasteAction;
     public struct RollPasteActions
     {
         private @PlayerInput m_Wrapper;
         public RollPasteActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Roll => m_Wrapper.m_RollPaste_Roll;
+        public InputAction @RollPasteAction => m_Wrapper.m_RollPaste_RollPasteAction;
         public InputActionMap Get() { return m_Wrapper.m_RollPaste; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1210,20 +1278,53 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_RollPasteActionsCallbackInterface != null)
             {
-                @Roll.started -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRoll;
-                @Roll.performed -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRoll;
-                @Roll.canceled -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRoll;
+                @RollPasteAction.started -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRollPasteAction;
+                @RollPasteAction.performed -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRollPasteAction;
+                @RollPasteAction.canceled -= m_Wrapper.m_RollPasteActionsCallbackInterface.OnRollPasteAction;
             }
             m_Wrapper.m_RollPasteActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Roll.started += instance.OnRoll;
-                @Roll.performed += instance.OnRoll;
-                @Roll.canceled += instance.OnRoll;
+                @RollPasteAction.started += instance.OnRollPasteAction;
+                @RollPasteAction.performed += instance.OnRollPasteAction;
+                @RollPasteAction.canceled += instance.OnRollPasteAction;
             }
         }
     }
     public RollPasteActions @RollPaste => new RollPasteActions(this);
+
+    // AddItems
+    private readonly InputActionMap m_AddItems;
+    private IAddItemsActions m_AddItemsActionsCallbackInterface;
+    private readonly InputAction m_AddItems_AddItemsAction;
+    public struct AddItemsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AddItemsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddItemsAction => m_Wrapper.m_AddItems_AddItemsAction;
+        public InputActionMap Get() { return m_Wrapper.m_AddItems; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AddItemsActions set) { return set.Get(); }
+        public void SetCallbacks(IAddItemsActions instance)
+        {
+            if (m_Wrapper.m_AddItemsActionsCallbackInterface != null)
+            {
+                @AddItemsAction.started -= m_Wrapper.m_AddItemsActionsCallbackInterface.OnAddItemsAction;
+                @AddItemsAction.performed -= m_Wrapper.m_AddItemsActionsCallbackInterface.OnAddItemsAction;
+                @AddItemsAction.canceled -= m_Wrapper.m_AddItemsActionsCallbackInterface.OnAddItemsAction;
+            }
+            m_Wrapper.m_AddItemsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @AddItemsAction.started += instance.OnAddItemsAction;
+                @AddItemsAction.performed += instance.OnAddItemsAction;
+                @AddItemsAction.canceled += instance.OnAddItemsAction;
+            }
+        }
+    }
+    public AddItemsActions @AddItems => new AddItemsActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -1257,7 +1358,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnQuit(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
     }
     public interface ISpreadPasteActions
     {
@@ -1285,6 +1385,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IRollPasteActions
     {
-        void OnRoll(InputAction.CallbackContext context);
+        void OnRollPasteAction(InputAction.CallbackContext context);
+    }
+    public interface IAddItemsActions
+    {
+        void OnAddItemsAction(InputAction.CallbackContext context);
     }
 }

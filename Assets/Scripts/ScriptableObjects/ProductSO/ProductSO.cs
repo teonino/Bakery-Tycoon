@@ -6,15 +6,14 @@ using UnityEngine.AddressableAssets;
 public class ProductSO : ScriptableObject {
     [Header("Global variables")]
     public new string name;
-    public int initialPrice;
     public int price;
     public float cookingTime;
     public int nbCreated;
     public float recipePrice;
-    public AssetReference pasteAsset;
-    public bool unlocked;
     public AssetReference asset;
     public Texture image;
+    public AssetReference pasteAsset;
+    public bool unlocked;
 
     [Space(10)]
     [Header("Requirement")]

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     [Header("Products & Ingredients list")]
     [Space(10)]
     [SerializeField] private List<ProductSO> productsList;
+    private Dictionary<ProductSO, int> productPrices;
     [Space(10)]
     [SerializeField] private List<StockIngredient> ingredientLists;
 
@@ -27,7 +28,11 @@ public class GameManager : MonoBehaviour {
     private float money = 100;
     private float reputation;
 
-    private void Start() {
+    private void Awake() {
+        productPrices = new Dictionary<ProductSO, int>();
+        foreach (ProductSO product in productsList) 
+            productPrices.Add(product, product.price);
+
         playerController = FindObjectOfType<PlayerController>();
 
         moneyTxt.SetText(money + "€");
@@ -37,8 +42,6 @@ public class GameManager : MonoBehaviour {
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
         foreach (StockIngredient stockIngredient in ingredientLists)
             stockIngredient.amount = 0;
-        foreach (ProductSO product in productsList)
-            product.price = product.initialPrice;
     }
 
     private string GetDayTxt() {
@@ -80,6 +83,8 @@ public class GameManager : MonoBehaviour {
 
     public PlayerController GetPlayerController() => playerController;
     public List<ProductSO> GetProductList() => productsList;
+    public int GetProductPrice(ProductSO product) => productPrices[product];
+    public int SetProductPrice(ProductSO product, int value) => productPrices[product] = value;
     public List<StockIngredient> GetIngredientList() => ingredientLists;
     public int GetProductsLenght() => productsList.Count;
     public int GetIngredientsLenght() => ingredientLists.Count;

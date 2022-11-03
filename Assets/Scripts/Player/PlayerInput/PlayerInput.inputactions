@@ -160,7 +160,7 @@
                 {
                     "name": "",
                     "id": "69b24343-039d-48e5-88e3-d98e0f3513e0",
-                    "path": "<XInputController>/buttonWest",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -270,15 +270,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "f353727a-bfab-4766-8c97-72cefb51b5b3",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -336,61 +327,6 @@
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "DPAD",
-                    "id": "e79de3fa-d88c-4024-9b13-f13eba83604f",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "cc3d3856-8b37-424d-a3ec-993a9751cb7d",
-                    "path": "<XInputController>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "ab47e0c9-ec16-4636-8230-2b1a0af60e10",
-                    "path": "<XInputController>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "f3354f28-94c6-428e-b604-045cf27c2cc6",
-                    "path": "<XInputController>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "416d0cc6-93d4-4f8e-9f10-feead4eed2a0",
-                    "path": "<XInputController>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },
@@ -693,10 +629,10 @@
             "id": "2a77045c-e556-4930-9476-39a991673936",
             "actions": [
                 {
-                    "name": "Roll",
+                    "name": "RollPasteAction",
                     "type": "Value",
-                    "id": "9255a8d2-305c-4539-947b-c83ccd22fb3d",
-                    "expectedControlType": "Axis",
+                    "id": "1dac96ba-9f53-4391-a674-5a15567ba27e",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -704,13 +640,151 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "30ad9510-1981-40a8-884c-f157b32eed3d",
-                    "path": "<Mouse>/scroll/y",
+                    "name": "Joystick",
+                    "id": "bd012439-0e46-4e75-85bc-8de0967371a5",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Roll",
+                    "action": "RollPasteAction",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "00aeeed8-cc4f-4028-9ff7-4a761d4c3fe2",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "2ebac584-eaf4-4666-b8b9-fc74fec939e6",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "43883835-be7a-4f82-8bda-44700f9ed4e9",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "52ba4b39-b992-4ba3-9b56-902221eacdbe",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "LeftRightAction",
+                    "id": "97288f26-074f-4aa5-8648-62c3aa5a7038",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RollPasteAction",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "b4b675df-e767-4410-a366-d22f2d32b565",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "efc4f3e5-55e3-4ef8-a3e8-cdca0035876a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "64bc01f5-9afc-48b8-94c6-13b294de7af7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "3894c0f2-1962-40c6-9e3c-a29dff58b805",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RollPasteAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "AddItems",
+            "id": "9fd56c07-fbba-4744-8c34-1eb08047e60b",
+            "actions": [
+                {
+                    "name": "AddItemsAction",
+                    "type": "Button",
+                    "id": "9e5da248-9d5e-4120-95df-c781a37b188a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e717c75d-fb18-48b1-adf0-35f43b5f4e74",
+                    "path": "<XInputController>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AddItemsAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53815827-1d00-471e-a47a-8d960c3d911a",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AddItemsAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

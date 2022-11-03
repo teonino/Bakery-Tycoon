@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Product : MonoBehaviour
 {
-    public ProductSO product;
+    public ProductSO productSO;
     public int quality;
     public int amount;
 
-    public string GetName() => product.name;
-    public float GetPrice() => product.price;
+    public string GetName() => productSO.name;
+    public float GetPrice() => productSO.price;
 }
