@@ -17,6 +17,7 @@ public class WorkstationButton : MonoBehaviour {
         GetComponentInChildren<RawImage>().texture = product.image;
 
         //requirementMet = true;
+
         if (!requirementMet) {
             GetComponent<Button>().enabled = false; // if requirement are not met, disable button
             productRequirementPanel.SetActive(true);

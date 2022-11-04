@@ -4,21 +4,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.HID.HID;
+using UnityEngine.UI;
 
 public class Cart : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
-    [SerializeField] private Button orderButton;
 
-    [HideInInspector]
-    public DeliveryManager deliveryManager;
-    public Dictionary<IngredientSO, int> cart;
-    public float cartWeight;
-    public float cartCost;
+    [HideInInspector] public DeliveryManager deliveryManager;
+    [HideInInspector] public Dictionary<IngredientSO, int> cart;
+    [HideInInspector] public float cartWeight;
+    [HideInInspector] public float cartCost;
 
     private GameManager gameManager;
-    private float cost = 0;
+    private float cost = 0; //will be used to display total cost of cart
 
     void Start() {
         gameManager = FindObjectOfType<GameManager>();
@@ -33,14 +31,15 @@ public class Cart : MonoBehaviour {
             }
             orderSumary.SetText(newText);
         }
+        totalCostText.SetText("Total : " + cartCost + "€");
     }
 
-    public void ClearText() => orderSumary.text = "";
+    public void ClearText() { orderSumary.SetText(""); totalCostText.SetText(""); }
 
     public void Order() {
         //Check if the order can be stocked && bought
         if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
-            if (cartCost < gameManager.GetMoney()) {
+            if (cartCost <= gameManager.GetMoney()) {
                 foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                     if (stock.Value > 0) {
                         foreach (StockIngredient stockIngredient in gameManager.GetIngredientList())
@@ -50,9 +49,13 @@ public class Cart : MonoBehaviour {
                 }
                 gameManager.RemoveMoney(cartCost);
                 Clear();
-            }          
+            }
         }
     }
 
-    public void Clear() => deliveryManager.ResetCart();
+    public void Clear() {
+        cartCost = 0;
+        if (deliveryManager)
+            deliveryManager.ResetCart();
+    }
 }

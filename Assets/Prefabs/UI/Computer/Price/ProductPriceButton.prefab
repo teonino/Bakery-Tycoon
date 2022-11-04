@@ -247,10 +247,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 7827657288123829376}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -258,7 +258,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6179246, g: 1, b: 0.6969282, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -282,14 +282,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 3
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 2
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 3
+  m_CharacterValidation: 2
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -301,7 +301,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3070041820011721509}
+        m_TargetAssemblyTypeName: PriceButton, Assembly-CSharp
+        m_MethodName: test
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -734,6 +746,11 @@ MonoBehaviour:
   product: {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
   priceText: {fileID: 5063628982824254917}
   image: {fileID: 4794421682071675149}
+  virtualkeyboard:
+    m_AssetGUID: 534d13f0c1308a34ab35f29b49add896
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!1001 &5447789336908440300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -829,10 +846,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8741052040191027029, guid: 225c74f45f724324abfeeda26760af26, type: 3}
-      propertyPath: m_text
-      value: Set Price
+    - target: {fileID: 2826856891211640428, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 2826856891211640428, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 5063628982824254917}
+    - target: {fileID: 2826856891211640428, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3070041820011721509}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 225c74f45f724324abfeeda26760af26, type: 3}
 --- !u!224 &5785025551322223154 stripped
@@ -840,75 +865,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2004917256916054238, guid: 225c74f45f724324abfeeda26760af26, type: 3}
   m_PrefabInstance: {fileID: 5447789336908440300}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5865667891767012459 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1944823140068183687, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+--- !u!114 &7827657288123829376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2826856891211640428, guid: 225c74f45f724324abfeeda26760af26, type: 3}
   m_PrefabInstance: {fileID: 5447789336908440300}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2826856891211640428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865667891767012459}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 7216751166858861183}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3070041820011721509}
-        m_TargetAssemblyTypeName: PriceButton, Assembly-CSharp
-        m_MethodName: SetPrice
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7216751166858861183 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3440015068309534867, guid: 225c74f45f724324abfeeda26760af26, type: 3}
-  m_PrefabInstance: {fileID: 5447789336908440300}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865667891767012459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

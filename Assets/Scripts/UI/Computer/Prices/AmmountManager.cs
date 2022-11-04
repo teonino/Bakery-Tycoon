@@ -5,8 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 
 public class AmmountManager : MonoBehaviour {
+    [SerializeField] private IngredientDescription ingredientDescription;
     [SerializeField] private int ammountToBuy;
     [SerializeField] private TextMeshProUGUI textAmmount;
+
+    private void Start() {
+        ammountToBuy = ingredientDescription.nbIngredient;
+    }
 
     public void MinusButtonIsClicked() {
         if (ammountToBuy > 0) {

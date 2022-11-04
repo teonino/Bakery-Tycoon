@@ -3,71 +3,42 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SpreadPaste : Minigame {
-    public int nbIterationAimed = 3;
-    public TextMeshProUGUI text;
-
-    int nbIteration = 0;
+    [SerializeField] private float timeAimed = 3;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Slider slider;
 
     new void Start() {
         base.Start();
+        slider.maxValue = timeAimed;
+        playerController.playerInput.SpreadPaste.Enable();
 
-        controller.playerInput.SpreadPaste.Enable();
-        controller.playerInput.SpreadPaste.Z.Disable();
-        controller.playerInput.SpreadPaste.D.Disable();
-        controller.playerInput.SpreadPaste.X.Disable();
+        InputAction action = playerController.playerInput.SpreadPaste.SpreadPasteAction;
+        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+        text.SetText("Hold " + char.ToUpper(inputName[0]) + inputName.Substring(1));
     }
 
-    private void Q(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.SpreadPaste.Q.Disable();
-            controller.playerInput.SpreadPaste.Z.Enable();
-            text.SetText("Press Z");
-        }
-    }
 
-    private void Z(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.SpreadPaste.Z.Disable();
-            controller.playerInput.SpreadPaste.D.Enable();
-            text.SetText("Press D");
-        }
-    }
+    private void Update() {
+        if (playerController.playerInput.SpreadPaste.SpreadPasteAction.ReadValue<float>() > 0) {
+            slider.value += Time.deltaTime;
 
-    private void D(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.SpreadPaste.D.Disable();
-            controller.playerInput.SpreadPaste.X.Enable();
-            text.SetText("Press X");
-        }
-    }
-
-    private void X(InputAction.CallbackContext context) {
-        if (context.performed) {
-            controller.playerInput.SpreadPaste.X.Disable();
-            controller.playerInput.SpreadPaste.Q.Enable();
-            nbIteration++;
-            text.SetText("Press A");
-
-            if (nbIteration == nbIterationAimed) {
-                controller.playerInput.SpreadPaste.Disable();
+            if (slider.value >= timeAimed) {
+                playerController.playerInput.SpreadPaste.Disable();
                 End();
             }
+        }
+        else {
+            slider.value -= Time.deltaTime / 2;
         }
     }
 
     public override void EnableInputs() {
-        controller.playerInput.SpreadPaste.Q.performed += Q;
-        controller.playerInput.SpreadPaste.Z.performed += Z;
-        controller.playerInput.SpreadPaste.D.performed += D;
-        controller.playerInput.SpreadPaste.X.performed += X;
     }
 
     public override void DisableInputs() {
-        controller.playerInput.SpreadPaste.Q.performed -= Q;
-        controller.playerInput.SpreadPaste.Z.performed -= Z;
-        controller.playerInput.SpreadPaste.D.performed -= D;
-        controller.playerInput.SpreadPaste.X.performed -= X;
     }
 }

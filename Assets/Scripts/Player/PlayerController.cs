@@ -5,16 +5,33 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] float interactionDistance;
-    public PlayerInput playerInput { get; private set; }
-    private PlayerMovements playerMovements;
+    [SerializeField] private InputType inputType;
 
+    private PlayerMovements playerMovements;
+    public PlayerInput playerInput { get; set; }
     public GameObject itemHolded;
 
     // Start is called before the first frame update
     void Awake() {
         playerInput = new PlayerInput();
-        playerMovements = GetComponent<PlayerMovements>();
+        if (inputType == InputType.Gamepad) {
+            playerInput.devices = new InputDevice[] { Gamepad.all[0] };
+            playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
+        } else {
+            playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
+            playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
+        }
+
         EnableInput();
+        playerMovements = GetComponent<PlayerMovements>();
+    }
+
+    public InputType GetInputType() => inputType;
+    public InputType SetInputType(InputType value) => inputType = value;
+    public string GetInput(InputAction action) {
+        print(action.controls[0].ToString());
+        string[] s = action.controls[0].ToString().Split("/");
+        return s[s.Length - 1];
     }
 
     // Update is called once per frame

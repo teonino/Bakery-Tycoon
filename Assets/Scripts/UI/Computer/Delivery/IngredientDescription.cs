@@ -4,26 +4,35 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class IngredientDescription : MonoBehaviour {
     [SerializeField] private RawImage image;
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI amounText;
     [SerializeField] private TextMeshProUGUI price;
     [SerializeField] private AmmountManager amount;
+    [SerializeField] private GameObject startButton;
 
     [HideInInspector] public DeliveryManager deliveryManager;
+    [HideInInspector] public ComputerManager computerManager;
     [HideInInspector] public IngredientSO ingredient;
+    [HideInInspector] public int nbIngredient;
 
     void Start() {
         image.texture = ingredient.image;
         title.SetText(ingredient.name);
         price.SetText(ingredient.price + "€ / U");
         description.SetText(ingredient.description);
+        amounText.SetText(nbIngredient + "");
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(startButton);
     }
 
     public void Quit() {
-        deliveryManager.AddIngredient(ingredient,amount.GetAmount());
+        computerManager.SetEventSystemToLastButton();
+        deliveryManager.SetIngredient(ingredient, amount.GetAmount());
         Addressables.ReleaseInstance(gameObject);
     }
 }

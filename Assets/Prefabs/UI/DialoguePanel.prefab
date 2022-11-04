@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9107807065307938}
   - component: {fileID: 9107807065307937}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: VerticalLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 9107807207507291}
   - component: {fileID: 9107807207507292}
   m_Layer: 5
-  m_Name: f
+  m_Name: Choice 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,10 +101,10 @@ RectTransform:
   m_Father: {fileID: 9107807065307938}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 860, y: -199.86678}
-  m_SizeDelta: {x: 1720, y: 60.853283}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9107807207507290
 MonoBehaviour:
@@ -162,6 +162,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  dialogueManager: {fileID: 0}
   nextDialogueID: 0
   relationReward: 0
 --- !u!222 &9107807207507291
@@ -219,7 +220,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.45
+  m_fontSize: 62.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -294,10 +295,10 @@ RectTransform:
   m_Father: {fileID: 9107807065307938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 860, y: 0}
-  m_SizeDelta: {x: 1720, y: 165.44014}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &9107807405898210
 CanvasRenderer:
@@ -354,7 +355,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.4
+  m_fontSize: 40.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -409,7 +410,7 @@ GameObject:
   - component: {fileID: 9107807507966113}
   - component: {fileID: 9107807507966114}
   m_Layer: 5
-  m_Name: f (2)
+  m_Name: Choice 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,10 +431,10 @@ RectTransform:
   m_Father: {fileID: 9107807065307938}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 860, y: -329.57333}
-  m_SizeDelta: {x: 1720, y: 60.853283}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9107807507966112
 MonoBehaviour:
@@ -491,6 +492,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  dialogueManager: {fileID: 0}
   nextDialogueID: 0
   relationReward: 0
 --- !u!222 &9107807507966113
@@ -550,7 +552,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.45
+  m_fontSize: 62.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -700,7 +702,7 @@ GameObject:
   - component: {fileID: 9107808823163713}
   - component: {fileID: 9107808823163714}
   m_Layer: 5
-  m_Name: f (1)
+  m_Name: Choice 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -721,10 +723,10 @@ RectTransform:
   m_Father: {fileID: 9107807065307938}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 860, y: -264.72006}
-  m_SizeDelta: {x: 1720, y: 60.853283}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9107808823163712
 MonoBehaviour:
@@ -782,6 +784,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  dialogueManager: {fileID: 0}
   nextDialogueID: 0
   relationReward: 0
 --- !u!222 &9107808823163713
@@ -839,7 +842,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.45
+  m_fontSize: 62.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

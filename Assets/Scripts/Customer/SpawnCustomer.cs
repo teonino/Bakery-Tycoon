@@ -6,16 +6,22 @@ using UnityEngine.AddressableAssets;
 public class SpawnCustomer : MonoBehaviour {
     [Header("Spawn attributes")]
     [SerializeField] private bool enableSpawn;
+    [SerializeField] private bool enableSpawnRegularCustomer;
     [SerializeField] private int minDelaySpawn;
     [SerializeField] private int maxDelaySpawn;
     [SerializeField] private int nbCustomer = 0;
     [SerializeField] private int nbCustomerMax = 5;
+    [SerializeField] private int spawnRateRegularCustomer = 10;
     [SerializeField] private AssetReference customerAsset;
     [SerializeField] private AssetReference regularCustomerAsset;
 
     private GameManager gameManager;
+    List<ProductSO> doableProduct;
+    List<ProductSO> availableProduct;
 
     void Start() {
+        doableProduct = new List<ProductSO>();
+        availableProduct = new List<ProductSO>();
         gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));
     }
@@ -30,7 +36,7 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (Random.Range(0, 1) == 0) {
+            if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomer;
                     go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
@@ -46,23 +52,9 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     public bool CheckProducts() {
-        List<ProductSO> doableProduct = new List<ProductSO>();
+        bool doable;
         foreach (ProductSO product in gameManager.GetProductList()) { //Go through all product
-            bool doable = true;
-            foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
-                if (gameManager.GetIngredientAmount(ingredient) <= 0)
-                    doable = false;
-
-            if (doable)
-                return true;
-        }
-        return false;
-    }
-
-    public ProductSO GetRandomProduct() {
-        List<ProductSO> doableProduct = new List<ProductSO>();
-        foreach (ProductSO product in gameManager.GetProductList()) { //Go through all product
-            bool doable = true;
+            doable = true;
             foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
                 if (gameManager.GetIngredientAmount(ingredient) <= 0)
                     doable = false;
@@ -70,8 +62,22 @@ public class SpawnCustomer : MonoBehaviour {
             if (doable)
                 doableProduct.Add(product);
         }
-        return doableProduct[Random.Range(0, doableProduct.Count)]; ;
+
+        List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
+        foreach (Shelf shelf in shelves) {
+            if (shelf.GetItem()) {
+                availableProduct.Add(shelf.GetItem().GetComponent<Product>().productSO);
+            }
+        }
+
+        return doableProduct.Count > 0 || availableProduct.Count > 0;
     }
 
+    public ProductSO GetRandomProduct() {
+        if (doableProduct.Count > 0) 
+            return doableProduct[Random.Range(0, doableProduct.Count)];
+        else 
+            return availableProduct[Random.Range(0, availableProduct.Count)];
+    }
     public void RemoveCustomer() => nbCustomer--;
 }

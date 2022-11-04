@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -32,13 +33,19 @@ public class DeliveryManager : MonoBehaviour {
 
         lenght = gameManager.GetIngredientsLenght();
         playerController = gameManager.GetPlayerController();
+
     }
 
     private void OnEnable() {
-        //Manage Inputs
-        playerController.DisableInput();
-        playerController.playerInput.UI.Enable();
-        playerController.playerInput.UI.Quit.performed += Quit;
+        if (gameObject.activeSelf) {
+            //Manage Inputs
+            playerController.DisableInput();
+            playerController.playerInput.UI.Enable();
+            playerController.playerInput.UI.Quit.performed += Quit;
+        }
+    }
+
+    private void Start() {
 
         //Init Cart
         if (cart == null)
@@ -49,6 +56,7 @@ public class DeliveryManager : MonoBehaviour {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
                 go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.GetIngredientList()[nbButton].ingredient);
+                go.Result.name = "Delivery Button " + gameManager.GetIngredientList()[nbButton].ingredient;
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();
@@ -63,19 +71,28 @@ public class DeliveryManager : MonoBehaviour {
         }
     }
 
-    public void AddIngredient(IngredientSO ingredient, int amount) {
-        cart[ingredient] += amount;
-        cartWeight += ingredient.weight * amount;
-        cartCost += ingredient.price * amount;
+    public void SetIngredient(IngredientSO ingredient, int amount) {
+        cart[ingredient] = amount;
+        CalculateCartCostAndWeight();
         DisplayCart();
+    }
+
+    private void CalculateCartCostAndWeight() {
+        cartCost = cartWeight = 0;
+        foreach (KeyValuePair<IngredientSO, int> ingredient in cart) {
+            cartCost += ingredient.Key.price * ingredient.Value;
+            cartWeight += ingredient.Key.weight * ingredient.Value;
+        }
     }
 
     void SetupButtons() {
         if (ingredientRackList.Count > 0 && nbButton == lenght) {
             int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.x / ingredientButtonList[0].GetComponent<RectTransform>().rect.x) - 1;
             for (int i = 0; i < lenght; i++) {
-                ingredientButtonList[i].transform.SetParent(ingredientRackList[i / maxButtonInRack].transform);
-                ingredientButtonList[i].transform.localScale = Vector3.one;
+                if (i / maxButtonInRack < ingredientRackList.Count) {
+                    ingredientButtonList[i].transform.SetParent(ingredientRackList[i / maxButtonInRack].transform);
+                    ingredientButtonList[i].transform.localScale = Vector3.one;
+                }
             }
         }
     }
@@ -135,8 +152,6 @@ public class DeliveryManager : MonoBehaviour {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
         playerController.EnableInput();
-
-        Reset(false);
 
         computerPanel.SetActive(false);
     }
