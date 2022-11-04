@@ -9,10 +9,12 @@ public class BuildingMode : Interactable {
     [SerializeField] private GameObject buildingCamera;
     [SerializeField] private LayerMask pickUpLayer;
     [SerializeField] private LayerMask putDownLayer;
+    [SerializeField] private Material collidingMaterial;
     [SerializeField] private float snapValue;
 
     private LayerMask currentRaycastlayer;
     private LayerMask intitialGoLayer;
+    private Material initialGoMaterial;
 
     private GameObject selectedGo;
 
@@ -51,6 +53,7 @@ public class BuildingMode : Interactable {
                 selectedGo.AddComponent<CheckCollision>();
                 selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 selectedGo.GetComponent<Collider>().isTrigger = true;
+                selectedGo.GetComponent<CheckCollision>().collidingMaterial = collidingMaterial;
                 print(selectedGo.name);
             }
             else {
@@ -62,8 +65,6 @@ public class BuildingMode : Interactable {
                     selectedGo.GetComponent<Collider>().isTrigger = false;
                     selectedGo = null;
                 }
-                else
-                    print("Colliding");
             }
     }
 

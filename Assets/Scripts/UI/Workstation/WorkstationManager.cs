@@ -14,7 +14,7 @@ public class WorkstationManager : MonoBehaviour {
     private int nbButton = 0;
     private int currentMinigameCounter = 0;
     private Minigame currentMinigame;
-    public ProductSO currentProduct;
+    [HideInInspector] public ProductSO currentProduct;
 
     //Create buttons
     private void Start() {
@@ -41,19 +41,13 @@ public class WorkstationManager : MonoBehaviour {
         //Check Crafting Station
         if (product.hoven && requirementMet) { // If hoven is a requirement and requirementMet is still true
             requirementMet = false;
-            foreach (CraftingStation craftingStation in craftingStations) {
-                if (craftingStation.type == CraftingStationType.Hoven) {
-                    requirementMet = true;
-                }
-            }
+            foreach (CraftingStation craftingStation in craftingStations) 
+                if (craftingStation.type == CraftingStationType.Hoven) requirementMet = true;
         }
 
         //Check Ingredients
-        foreach (IngredientSO ingredient in product.ingredients) {
-            if (gameManager.GetIngredientAmount(ingredient) == 0) {
-                requirementMet = false;
-            }
-        }
+        foreach (IngredientSO ingredient in product.ingredients) 
+            if (gameManager.GetIngredientAmount(ingredient) == 0) requirementMet = false;
 
         return requirementMet;
     }

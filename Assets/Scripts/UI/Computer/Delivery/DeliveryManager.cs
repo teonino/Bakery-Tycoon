@@ -89,8 +89,10 @@ public class DeliveryManager : MonoBehaviour {
         if (ingredientRackList.Count > 0 && nbButton == lenght) {
             int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.x / ingredientButtonList[0].GetComponent<RectTransform>().rect.x) - 1;
             for (int i = 0; i < lenght; i++) {
-                ingredientButtonList[i].transform.SetParent(ingredientRackList[i / maxButtonInRack].transform);
-                ingredientButtonList[i].transform.localScale = Vector3.one;
+                if (i / maxButtonInRack < ingredientRackList.Count) {
+                    ingredientButtonList[i].transform.SetParent(ingredientRackList[i / maxButtonInRack].transform);
+                    ingredientButtonList[i].transform.localScale = Vector3.one;
+                }
             }
         }
     }

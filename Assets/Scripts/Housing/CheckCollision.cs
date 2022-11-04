@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class CheckCollision : MonoBehaviour {
     public int nbObjectInCollision = 0;
+    public Material collidingMaterial;
+    public Material initialMaterial;
+
+    private void Awake() {
+        initialMaterial = GetComponent<MeshRenderer>().material;
+    }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag != "Floor") {
             nbObjectInCollision++;
             print("Trigger : " +nbObjectInCollision + " / " + other.name);
+            GetComponent<MeshRenderer>().material = collidingMaterial;
         }
     }
 
@@ -16,6 +23,8 @@ public class CheckCollision : MonoBehaviour {
         if (other.tag != "Floor") {
             nbObjectInCollision--;
             print("Trigger : " + nbObjectInCollision + " / " + other.name);
+            if(nbObjectInCollision == 0) 
+                GetComponent<MeshRenderer>().material = initialMaterial;
         }
     }
 

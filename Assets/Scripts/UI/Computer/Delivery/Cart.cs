@@ -9,13 +9,11 @@ using UnityEngine.UI;
 public class Cart : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
-    [SerializeField] private Button orderButton;
 
-    [HideInInspector]
-    public DeliveryManager deliveryManager;
-    public Dictionary<IngredientSO, int> cart;
-    public float cartWeight;
-    public float cartCost;
+    [HideInInspector] public DeliveryManager deliveryManager;
+    [HideInInspector] public Dictionary<IngredientSO, int> cart;
+    [HideInInspector] public float cartWeight;
+    [HideInInspector] public float cartCost;
 
     private GameManager gameManager;
     private float cost = 0; //will be used to display total cost of cart
@@ -33,9 +31,10 @@ public class Cart : MonoBehaviour {
             }
             orderSumary.SetText(newText);
         }
+        totalCostText.SetText("Total : " + cartCost + "€");
     }
 
-    public void ClearText() => orderSumary.text = "";
+    public void ClearText() { orderSumary.SetText(""); totalCostText.SetText(""); }
 
     public void Order() {
         //Check if the order can be stocked && bought
