@@ -39,16 +39,22 @@ public class SpawnCustomer : MonoBehaviour {
             if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomer;
-                    go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
+                    SetCustomer(go.Result.GetComponent<AICustomer>());
                 };
             }
             else {
                 customerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "Customer " + nbCustomer;
-                    go.Result.GetComponent<AICustomer>().requestedProduct = GetRandomProduct();
+                    SetCustomer(go.Result.GetComponent<AICustomer>());
                 };
             }
         }
+    }
+
+    private void SetCustomer(AICustomer customer) {
+        customer.requestedProduct = GetRandomProduct();
+        doableProduct.Clear();
+        availableProduct.Clear();
     }
 
     public bool CheckProducts() {
@@ -74,9 +80,9 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     public ProductSO GetRandomProduct() {
-        if (doableProduct.Count > 0) 
+        if (doableProduct.Count > 0)
             return doableProduct[Random.Range(0, doableProduct.Count)];
-        else 
+        else
             return availableProduct[Random.Range(0, availableProduct.Count)];
     }
     public void RemoveCustomer() => nbCustomer--;

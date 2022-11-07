@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 
 public class Workstation : Interactable {
     [SerializeField] private AssetReference workplacePanelAsset;
+    [Header("Debug parameters")]
+    [SerializeField] private bool skipRequirement = false;
+    [SerializeField] private bool skipMinigame = false;
 
     private WorkstationManager manager;
     private GameObject workplacePanel;
@@ -17,6 +20,8 @@ public class Workstation : Interactable {
 
             workplacePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
                 manager = go.Result.GetComponent<WorkstationManager>();
+                manager.skipRequirement = skipRequirement;
+                manager.skipMinigame = skipMinigame;
                 workplacePanel = go.Result;
             };
 
@@ -28,9 +33,7 @@ public class Workstation : Interactable {
     //Function when player quit the workstation by themself
     public void Quit(InputAction.CallbackContext context) {
         if (context.performed) {
-            if (manager.currentProduct) {
-                manager.ResetManager();
-            }
+            manager.ResetManager();
             playerController.playerInput.UI.Quit.performed -= Quit;
             playerController.playerInput.UI.Disable();
             playerController.EnableInput();
@@ -46,7 +49,7 @@ public class Workstation : Interactable {
         playerController.itemHolded = go;
         playerController.itemHolded.transform.SetParent(arm); //the arm of the player becomes the parent
         playerController.itemHolded.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
-        playerController.EnableInput(); 
+        playerController.EnableInput();
         if (workplacePanel)
             Addressables.ReleaseInstance(workplacePanel);
     }

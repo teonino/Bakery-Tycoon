@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -26,7 +23,7 @@ public abstract class Minigame : MonoBehaviour {
         DisableInputs();
         DirtyCraftingStation();
         Addressables.ReleaseInstance(gameObject);
-        workplacePanel.MinigameComplete();
+        workplacePanel.MinigameComplete(Random.Range(1, 101));
     }
 
     protected float GetTimer() => endTime - launchTime; //Return time taken to complete the minigame

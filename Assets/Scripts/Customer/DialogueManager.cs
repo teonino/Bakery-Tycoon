@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
@@ -20,6 +21,9 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void SetDialogue(int id) {
+        for(int i = 0; i < playerAnswersTxt.Count; i++)
+            playerAnswersTxt[i].gameObject.SetActive(false);
+
         playerAnswers = new List<ValueTuple<string, int, int>>();
         try {
             StreamReader s = new StreamReader("Assets\\Dialogues\\classeur" + id + ".csv");
@@ -35,19 +39,26 @@ public class DialogueManager : MonoBehaviour {
                     }
                 }
             }
+            s.Close();
         }
         catch (Exception e) {
-            print("Error while setting text in DialogueManager ... " + e.Message);
+            print("Error, Dialoge Manager... " + e.Message);
         }
 
         npcSpeechTxt.SetText(npcSpeech);
+
         for (int i = 0; i < playerAnswers.Count; i++) {
             DialogueButton button = playerAnswersTxt[i].GetComponent<DialogueButton>();
 
             playerAnswersTxt[i].SetText(playerAnswers[i].Item1);
+            playerAnswersTxt[i].gameObject.SetActive(true);
             button.dialogueManager = this;
             button.SetNextDialogueID(playerAnswers[i].Item2);
             button.SetRelationReward(playerAnswers[i].Item3);
+
+            if (i == 0 && gameManager.GetInputType() == InputType.Gamepad) {
+                gameManager.SetEventSystemToStartButton(button.gameObject);
+            }
         }
     }
 

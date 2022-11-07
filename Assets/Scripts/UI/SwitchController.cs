@@ -13,7 +13,7 @@ public class SwitchController : MonoBehaviour {
     }
 
     public void SwitchCurrentController() {
-        if (gameManager.GetPlayerController().GetInputType() == InputType.Gamepad) {
+        if (gameManager.IsGamepad()) {
             if (InputSystem.devices.Count > 0) {
                 gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
                 gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");

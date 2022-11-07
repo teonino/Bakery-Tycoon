@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
     [Header("Global variables")]
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private int maxStock;
     [SerializeField] private int currentStock;
 
+    private GameObject lastButton;
     private float money = 100;
     private float reputation;
 
@@ -81,6 +83,20 @@ public class GameManager : MonoBehaviour {
                 stock.amount -= amount;
     }
 
+    public void SetEventSystemToStartButton(GameObject startButton) {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(startButton);
+    }
+
+    public void RegisterCurrentSelectedButton() {
+        lastButton = EventSystem.current.currentSelectedGameObject;
+    }
+
+    public void SetEventSystemToLastButton() {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(lastButton);
+    }
+
     public PlayerController GetPlayerController() => playerController;
     public List<ProductSO> GetProductList() => productsList;
     public int GetProductPrice(ProductSO product) => productPrices[product.name];
@@ -88,6 +104,8 @@ public class GameManager : MonoBehaviour {
     public List<StockIngredient> GetIngredientList() => ingredientLists;
     public int GetProductsLenght() => productsList.Count;
     public int GetIngredientsLenght() => ingredientLists.Count;
+    public InputType GetInputType() => playerController.GetInputType();
+    public bool IsGamepad() => playerController.GetInputType() == InputType.Gamepad;
 
     public DayTime GetDayTime() => dayTime;
     public float GetReputation() => reputation;

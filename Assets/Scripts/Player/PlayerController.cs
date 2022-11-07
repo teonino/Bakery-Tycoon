@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 
     private PlayerMovements playerMovements;
     public PlayerInput playerInput { get; set; }
-    public GameObject itemHolded;
+    [HideInInspector] public GameObject itemHolded;
 
     // Start is called before the first frame update
     void Awake() {
@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour {
         if (inputType == InputType.Gamepad) {
             playerInput.devices = new InputDevice[] { Gamepad.all[0] };
             playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
-        } else {
+        }
+        else {
             playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
             playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
         }
@@ -38,14 +39,20 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
+
         Debug.DrawRay(transform.position + Vector3.down / 4, transform.forward * interactionDistance, Color.green);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
         if (context.performed) {
-            RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position + Vector3.down / 4, transform.forward, out hitInfo, interactionDistance) && hitInfo.collider.GetComponent<Interactable>())
-                hitInfo.collider.GetComponent<Interactable>().Effect();
+            RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.down / 4, transform.forward, interactionDistance);
+            bool interactableFound = false;
+            for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
+                if (hitInfo[i].collider.GetComponent<Interactable>()) {
+                    hitInfo[i].collider.GetComponent<Interactable>().Effect();
+                    interactableFound = true;
+                }
+            }
         }
     }
 

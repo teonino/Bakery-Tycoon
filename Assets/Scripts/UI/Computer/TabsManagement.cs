@@ -8,16 +8,22 @@ public class TabsManagement : MonoBehaviour {
     public List<GameObject> differentPanel;
 
     [Header("Tabs")]
-    [SerializeField] private List<Button> Tabs;
+    [SerializeField] private List<Button> tabs;
 
     [Header("Tab Color")]
-    [SerializeField] private Color SelectedTabsColor;
-    [SerializeField] private Color NormalTabsColor;
+    [SerializeField] private Color selectedTabsColor;
+    [SerializeField] private Color normalTabsColor;
 
     private GameObject currentPanel;
+    private GameManager gameManager;
 
     private void OnEnable() {
+        gameManager = FindObjectOfType<GameManager>();
         currentPanel = differentPanel[1];
+
+        if (gameManager.IsGamepad()) {
+            gameManager.SetEventSystemToStartButton(tabs[0].gameObject);
+        }
     }
 
     public void ShowPricePanel() {

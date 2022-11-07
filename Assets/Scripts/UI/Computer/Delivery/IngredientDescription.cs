@@ -16,7 +16,7 @@ public class IngredientDescription : MonoBehaviour {
     [SerializeField] private GameObject startButton;
 
     [HideInInspector] public DeliveryManager deliveryManager;
-    [HideInInspector] public ComputerManager computerManager;
+    [HideInInspector] public GameManager gameManager;
     [HideInInspector] public IngredientSO ingredient;
     [HideInInspector] public int nbIngredient;
 
@@ -26,13 +26,11 @@ public class IngredientDescription : MonoBehaviour {
         price.SetText(ingredient.price + "€ / U");
         description.SetText(ingredient.description);
         amounText.SetText(nbIngredient + "");
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(startButton);
+        gameManager.SetEventSystemToStartButton(startButton);
     }
 
     public void Quit() {
-        computerManager.SetEventSystemToLastButton();
-        deliveryManager.SetIngredient(ingredient, amount.GetAmount());
+        gameManager.SetEventSystemToLastButton();
         Addressables.ReleaseInstance(gameObject);
     }
 }
