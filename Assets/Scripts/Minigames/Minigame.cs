@@ -6,12 +6,14 @@ public abstract class Minigame : MonoBehaviour {
     [SerializeField] protected CraftingStationType craftingStationRequired;
     //public AssetReference minigameAsset;
     protected WorkstationManager workplacePanel;
+    protected GameManager gameManager;
     protected PlayerController playerController;
     protected float launchTime;
     protected float endTime;
 
     // Start is called before the first frame update
     protected void Start() {
+        gameManager = FindObjectOfType<GameManager>();
         workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
         playerController = FindObjectOfType<PlayerController>();
         launchTime = Time.time;

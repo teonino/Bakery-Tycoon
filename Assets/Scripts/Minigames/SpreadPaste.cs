@@ -12,12 +12,17 @@ public class SpreadPaste : Minigame {
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Slider slider;
     [SerializeField] private Image sliderFiller;
+    [SerializeField] private GameObject validZone;
 
     private float timeInZone = 0;
     new void Start() {
         base.Start();
         slider.maxValue = timeAimed;
-        playerController.playerInput.SpreadPaste.Enable();
+
+        validZone.GetComponent<RectTransform>().anchorMin = new Vector2(minValue, 0);
+        validZone.GetComponent<RectTransform>().anchorMax = new Vector2(maxValue, 1);
+        validZone.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
+        validZone.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
 
         InputAction action = playerController.playerInput.SpreadPaste.SpreadPasteAction;
         string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
@@ -31,7 +36,6 @@ public class SpreadPaste : Minigame {
             slider.value += Time.deltaTime;
 
             if (timeInZone >= timeAimed) {
-                playerController.playerInput.SpreadPaste.Disable();
                 End();
             }
         }
@@ -48,8 +52,10 @@ public class SpreadPaste : Minigame {
     }
 
     public override void EnableInputs() {
+        playerController.playerInput.SpreadPaste.Enable();
     }
 
     public override void DisableInputs() {
+        playerController.playerInput.SpreadPaste.Disable();
     }
 }

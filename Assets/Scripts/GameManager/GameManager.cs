@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour {
     [Header("Global variables")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private InputType inputType;
     [SerializeField] private TextMeshProUGUI moneyTxt;
     [SerializeField] private TextMeshProUGUI reputationTxt;
 
@@ -32,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
     private void Awake() {
         productPrices = new Dictionary<string, int>();
-        foreach (ProductSO product in productsList) 
+        foreach (ProductSO product in productsList)
             productPrices.Add(product.name, product.price);
 
         playerController = FindObjectOfType<PlayerController>();
@@ -44,6 +46,17 @@ public class GameManager : MonoBehaviour {
         //ONLY FOR UNITY USES, REMOVE FOR BUILD
         foreach (StockIngredient stockIngredient in ingredientLists)
             stockIngredient.amount = 0;
+    }
+
+    private void Start() {
+        if (inputType == InputType.Gamepad && Gamepad.all.Count > 0) {
+            playerController.playerInput.devices = new InputDevice[] { Gamepad.all[0] };
+            playerController.playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
+        }
+        else if (inputType == InputType.KeyboardMouse && InputSystem.devices.Count > 0 && InputSystem.devices.Count > 0) {
+            playerController.playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
+            playerController.playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
+        }
     }
 
     private string GetDayTxt() {
@@ -59,7 +72,7 @@ public class GameManager : MonoBehaviour {
                 s = "Evening";
                 break;
             default:
-                break;  
+                break;
         }
         return s;
     }
@@ -104,8 +117,9 @@ public class GameManager : MonoBehaviour {
     public List<StockIngredient> GetIngredientList() => ingredientLists;
     public int GetProductsLenght() => productsList.Count;
     public int GetIngredientsLenght() => ingredientLists.Count;
-    public InputType GetInputType() => playerController.GetInputType();
-    public bool IsGamepad() => playerController.GetInputType() == InputType.Gamepad;
+    public InputType GetInputType() => inputType;
+    public InputType SetInputType(InputType value) => inputType = value;
+    public bool IsGamepad() => inputType == InputType.Gamepad;
 
     public DayTime GetDayTime() => dayTime;
     public float GetReputation() => reputation;

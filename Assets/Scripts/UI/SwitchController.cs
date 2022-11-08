@@ -17,7 +17,7 @@ public class SwitchController : MonoBehaviour {
             if (InputSystem.devices.Count > 0) {
                 gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
                 gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
-                gameManager.GetPlayerController().SetInputType(InputType.KeyboardMouse);
+                gameManager.SetInputType(InputType.KeyboardMouse);
                 textButton.SetText("KeyboardMouse");
             }
         }
@@ -25,7 +25,7 @@ public class SwitchController : MonoBehaviour {
             if (Gamepad.all.Count > 0) {
                 gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Gamepad.all[0] };
                 gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
-                gameManager.GetPlayerController().SetInputType(InputType.Gamepad);
+                gameManager.SetInputType(InputType.Gamepad);
                 textButton.SetText("Gamepad");
             }
         }

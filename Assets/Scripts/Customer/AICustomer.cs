@@ -14,14 +14,15 @@ public class AICustomer : Interactable {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private bool regular = false;
 
+    [HideInInspector] public ProductSO requestedProduct;
+    [HideInInspector] public bool inQueue = false;
+
     private GameObject productCanvas; //Stores gameobject to release instance after
     private GameObject item;
     private SpawnCustomer spawner;
-    public ProductSO requestedProduct;
     private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private MainShelf shelf;
     private Chair chair;
-    [HideInInspector] public bool inQueue = false;
     private bool waiting = false;
     private bool leaving = false;
     private bool sitting = false;
@@ -179,7 +180,7 @@ public class AICustomer : Interactable {
         if (regular && canInteract) {
             playerController.DisableInput();
             assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
-                go.Result.GetComponent<DialogueManager>().SetDialogue(1);
+                go.Result.GetComponent<DialogueManager>().GetDialogues(1);
             Time.timeScale = 0;
         }
     }

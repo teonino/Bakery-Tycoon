@@ -6,18 +6,19 @@ using UnityEngine.UI;
 
 public class DialogueButton : Button {
     public DialogueManager dialogueManager;
-    public int nextDialogueID;
+    public Dialogue nextDialogue;
     public int relationReward;
 
     public void NextDialogue() {
-        print("Id : " + nextDialogueID + " / Relation : " + relationReward);
+        if (relationReward != 0)
+            print("Relation : " + relationReward);
 
-        if (nextDialogueID != 0)
-            dialogueManager.SetDialogue(nextDialogueID);
-        else 
+        if (!string.IsNullOrEmpty(nextDialogue.npcSpeech))
+            dialogueManager.SetDialogue(nextDialogue);
+        else
             dialogueManager.Destroy();
     }
 
-    public void SetNextDialogueID(int value) => nextDialogueID = value;
+    public void SetNextDialogue(Dialogue dialogue) => nextDialogue = dialogue;
     public void SetRelationReward(int value) => relationReward = value;
 }

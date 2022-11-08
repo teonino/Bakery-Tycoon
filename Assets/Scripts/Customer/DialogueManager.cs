@@ -12,31 +12,39 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] TextMeshProUGUI npcSpeechTxt;
     [SerializeField] List<TextMeshProUGUI> playerAnswersTxt;
 
-    private string npcSpeech;
-    private List<ValueTuple<string, int, int>> playerAnswers; //string = player answer / int = next dialogue id / int = relation earned
+    private Dialogue dialogue;
     private GameManager gameManager;
 
     private void Awake() {
         gameManager = FindObjectOfType<GameManager>();
+        dialogue = new Dialogue();
     }
 
-    public void SetDialogue(int id) {
-        for(int i = 0; i < playerAnswersTxt.Count; i++)
-            playerAnswersTxt[i].gameObject.SetActive(false);
-
-        playerAnswers = new List<ValueTuple<string, int, int>>();
+    public void GetDialogues(int id) {
         try {
             StreamReader s = new StreamReader("Assets\\Dialogues\\classeur" + id + ".csv");
+
+            int answerDialogueId = 0;
+            bool npcSpeechNext = true;
+            Dialogue currentDialogue = dialogue;
             while (!s.EndOfStream) {
                 string line = s.ReadLine();
-                string[] values = line.Split(";");
-                npcSpeech = values[0]; //Get NPC sppeech
 
-                for (int i = 1; i < values.Length; i++) {
-                    string[] answers = values[i].Split("/");
-                    for (int j = 0; j < answers.Length; j += 3) {
-                        playerAnswers.Add(new ValueTuple<string, int, int>(answers[j], int.Parse(answers[j + 1]), int.Parse(answers[j + 2])));
-                    }
+                if (line == "") {
+                    currentDialogue = dialogue.answers[answerDialogueId].nextDialogue;
+                    answerDialogueId++;
+                    npcSpeechNext = true;
+                }
+                else if (npcSpeechNext) {
+                    currentDialogue.npcSpeech = line;
+                    npcSpeechNext = false;
+                }
+                else {
+                    string[] values = line.Split("/");
+                    if (values.Length == 2)
+                        currentDialogue.answers.Add(new Answer(values[0], int.Parse(values[1]), new Dialogue()));
+                    else
+                        currentDialogue.answers.Add(new Answer(values[0], 0, new Dialogue()));
                 }
             }
             s.Close();
@@ -45,16 +53,23 @@ public class DialogueManager : MonoBehaviour {
             print("Error, Dialoge Manager... " + e.Message);
         }
 
-        npcSpeechTxt.SetText(npcSpeech);
+        SetDialogue(dialogue);
+    }
 
-        for (int i = 0; i < playerAnswers.Count; i++) {
+    public void SetDialogue(Dialogue dialogue) {
+        for (int i = 0; i < playerAnswersTxt.Count; i++)
+            playerAnswersTxt[i].gameObject.SetActive(false);
+
+        npcSpeechTxt.SetText(dialogue.npcSpeech);
+
+        for (int i = 0; i < dialogue.answers.Count; i++) {
             DialogueButton button = playerAnswersTxt[i].GetComponent<DialogueButton>();
 
-            playerAnswersTxt[i].SetText(playerAnswers[i].Item1);
+            playerAnswersTxt[i].SetText(dialogue.answers[i].answerText);
             playerAnswersTxt[i].gameObject.SetActive(true);
             button.dialogueManager = this;
-            button.SetNextDialogueID(playerAnswers[i].Item2);
-            button.SetRelationReward(playerAnswers[i].Item3);
+            button.SetNextDialogue(dialogue.answers[i].nextDialogue);
+            button.SetRelationReward(dialogue.answers[i].relation);
 
             if (i == 0 && gameManager.GetInputType() == InputType.Gamepad) {
                 gameManager.SetEventSystemToStartButton(button.gameObject);
