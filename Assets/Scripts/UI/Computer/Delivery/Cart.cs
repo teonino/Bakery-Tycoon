@@ -13,7 +13,7 @@ public class Cart : MonoBehaviour {
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public Dictionary<IngredientSO, int> cart;
     [HideInInspector] public float cartWeight;
-    [HideInInspector] public float cartCost;
+    [HideInInspector] public int cartCost;
 
     private GameManager gameManager;
     private float cost = 0; //will be used to display total cost of cart

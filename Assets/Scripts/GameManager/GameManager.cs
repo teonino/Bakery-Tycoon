@@ -28,24 +28,28 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private int maxStock;
     [SerializeField] private int currentStock;
 
+    private DayStatistics dayStatistics;
+
     private GameObject lastButton;
     private float money = 100;
     private float reputation;
 
     private void Awake() {
+        //Set product list for prices
         productPrices = new Dictionary<string, int>();
         foreach (ProductSO product in productsList)
             productPrices.Add(product.name, product.price);
 
+        //Get player Controller
         playerController = FindObjectOfType<PlayerController>();
 
+        //Set UI textes
         moneyTxt.SetText(money + "€");
         dayTimeTxt.SetText(GetDayTxt());
         reputationTxt.SetText("Reputation : " + reputation);
 
-        //ONLY FOR UNITY USES, REMOVE FOR BUILD
-        foreach (StockIngredient stockIngredient in ingredientLists)
-            stockIngredient.amount = 0;
+        //Set Statistic class
+        dayStatistics = new DayStatistics(this);
     }
 
     private void Start() {
@@ -128,14 +132,18 @@ public class GameManager : MonoBehaviour {
         reputationTxt.SetText("Reputation : " + reputation);
     }
     public float GetMoney() => money;
-    public void AddMoney(float value) {
+    public void AddMoney(int value) {
         money += value;
+        dayStatistics.AddMoney(value);
         moneyTxt.SetText(money + "€");
     }
-    public void RemoveMoney(float value) {
+    public void RemoveMoney(int value) {
         money -= value;
+        dayStatistics.RemoveMoney(value);
         moneyTxt.SetText(money + "€");
     }
+
+    public void AddProductSold(ProductSO product) => dayStatistics.AddProductSold(product);
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
 }

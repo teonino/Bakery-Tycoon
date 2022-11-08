@@ -21,7 +21,7 @@ public class DeliveryManager : MonoBehaviour {
     private int nbButton = 0;
     private int lenght;
     private float cartWeight = 0;
-    private float cartCost = 0;
+    private int cartCost = 0;
 
     public Dictionary<IngredientSO, int> cart;
 
@@ -77,7 +77,8 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     private void CalculateCartCostAndWeight() {
-        cartCost = cartWeight = 0;
+        cartCost = 0;
+        cartWeight = 0;
         foreach (KeyValuePair<IngredientSO, int> ingredient in cart) {
             cartCost += ingredient.Key.price * ingredient.Value;
             cartWeight += ingredient.Key.weight * ingredient.Value;

@@ -213,6 +213,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""c7cbfd53-a637-4a4c-9895-0243cd39799c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -257,6 +266,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fd6b644-32b0-4b5b-9ebe-57933a9fd0d7"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -708,6 +728,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_Quit = m_Building.FindAction("Quit", throwIfNotFound: true);
         m_Building_Select = m_Building.FindAction("Select", throwIfNotFound: true);
+        m_Building_Move = m_Building.FindAction("Move", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
@@ -833,12 +854,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IBuildingActions m_BuildingActionsCallbackInterface;
     private readonly InputAction m_Building_Quit;
     private readonly InputAction m_Building_Select;
+    private readonly InputAction m_Building_Move;
     public struct BuildingActions
     {
         private @PlayerInput m_Wrapper;
         public BuildingActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Quit => m_Wrapper.m_Building_Quit;
         public InputAction @Select => m_Wrapper.m_Building_Select;
+        public InputAction @Move => m_Wrapper.m_Building_Move;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -854,6 +877,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Select.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSelect;
+                @Move.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -864,6 +890,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -1142,6 +1171,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnQuit(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
