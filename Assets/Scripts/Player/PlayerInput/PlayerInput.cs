@@ -292,6 +292,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""AnyKeyPressed"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c2b4dad-7333-42f3-bf26-3c997d72564c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -347,6 +356,61 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa604c1a-887b-45db-a437-8338d720610d"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AnyKeyPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e98ac63d-3020-489a-ab46-3f0fe50773ed"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AnyKeyPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90ad4b06-57c9-4829-aa58-a3987796b7b5"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AnyKeyPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3faf262-4414-4d55-b68f-01302313ebdc"",
+                    ""path"": ""<Mouse>/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AnyKeyPressed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d70d94e1-830b-445c-9a4d-09476e9b8247"",
+                    ""path"": ""<Mouse>/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AnyKeyPressed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -713,6 +777,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
+        m_UI_AnyKeyPressed = m_UI.FindAction("AnyKeyPressed", throwIfNotFound: true);
         // SpreadPaste
         m_SpreadPaste = asset.FindActionMap("SpreadPaste", throwIfNotFound: true);
         m_SpreadPaste_SpreadPasteAction = m_SpreadPaste.FindAction("SpreadPasteAction", throwIfNotFound: true);
@@ -875,6 +940,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Quit;
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_Point;
+    private readonly InputAction m_UI_AnyKeyPressed;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
@@ -882,6 +948,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Quit => m_Wrapper.m_UI_Quit;
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @Point => m_Wrapper.m_UI_Point;
+        public InputAction @AnyKeyPressed => m_Wrapper.m_UI_AnyKeyPressed;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -900,6 +967,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @AnyKeyPressed.started -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyKeyPressed;
+                @AnyKeyPressed.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyKeyPressed;
+                @AnyKeyPressed.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyKeyPressed;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -913,6 +983,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
+                @AnyKeyPressed.started += instance.OnAnyKeyPressed;
+                @AnyKeyPressed.performed += instance.OnAnyKeyPressed;
+                @AnyKeyPressed.canceled += instance.OnAnyKeyPressed;
             }
         }
     }
@@ -1148,6 +1221,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnQuit(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
+        void OnAnyKeyPressed(InputAction.CallbackContext context);
     }
     public interface ISpreadPasteActions
     {
