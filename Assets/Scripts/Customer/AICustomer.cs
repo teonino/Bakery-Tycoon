@@ -10,20 +10,23 @@ public class AICustomer : Interactable {
     [SerializeField] private AssetReference assetPaymentCanvas;
     [SerializeField] private AssetReference assetDialoguePanel;
     [SerializeField] private float waitingTime = 5f; //Time before customer leaves after ordering
+    [SerializeField] private float waitingTimeSitting = 10f; //Time before customer leaves after sitting
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private bool regular = false;
+
+    [HideInInspector] public ProductSO requestedProduct;
+    [HideInInspector] public bool inQueue = false;
 
     private GameObject productCanvas; //Stores gameobject to release instance after
     private GameObject item;
     private SpawnCustomer spawner;
-    public ProductSO requestedProduct;
     private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private MainShelf shelf;
     private Chair chair;
-    public bool inQueue = false;
     private bool waiting = false;
     private bool leaving = false;
     private bool sitting = false;
+    private bool canInteract = false;
 
     private new void Awake() {
         base.Awake();
@@ -57,7 +60,7 @@ public class AICustomer : Interactable {
         }
 
         //Buy item and leave
-        if (Vector2.Distance(transform.position, shelf.transform.position) < 2 && shelf.GetItem() && waiting && shelf.IsFirstInQueue(this)) {
+        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.GetItem() && waiting && shelf.IsFirstInQueue(this)) {
             if (shelf.GetItem().GetComponent<Product>().GetName() == requestedProduct.name && shelf.GetItem().GetComponent<Product>().tag != "Paste") {
                 //Stop waiting
                 StopAllCoroutines();
@@ -99,12 +102,14 @@ public class AICustomer : Interactable {
                 }
             }
         }
-        if (sitting && Vector2.Distance(transform.position, chair.transform.position) < 1) {
+        if (sitting && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1) {
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+            StartCoroutine(CustomerWaiting(waitingTimeSitting));
+            canInteract = true;
         }
 
         //Exit the bakery
-        if (Vector3.Distance(transform.position, spawnPosition) < 4 && leaving)
+        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(spawnPosition.x, spawnPosition.z)) < 4 && leaving)
             DestroyCustomer();
     }
 
@@ -127,21 +132,21 @@ public class AICustomer : Interactable {
                 this.chair = chair;
                 this.chair.ocuppied = true;
                 sitting = true;
-                waiting = leaving = false;
+                leaving = false;
                 agent.SetDestination(chair.transform.position);
             }
         }
         if (inQueue)
             shelf.RemoveCustomerInQueue(this);
 
-        if (!this.chair)
+        if (!chair)
             Leave();
     }
 
     //Remove product panel + exit bakery
     private void Leave() {
         leaving = true;
-        waiting = sitting = false;
+        waiting = sitting = canInteract = false;
 
         if (inQueue)
             shelf.RemoveCustomerInQueue(this);
@@ -171,11 +176,12 @@ public class AICustomer : Interactable {
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
     public override void Effect() {
-        if (regular && sitting && false) {
-        playerController.DisableInput();
-        assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
-            go.Result.GetComponent<DialogueManager>().SetDialogue(1);
-        Time.timeScale = 0;
+        canInteract = true;
+        if (regular && canInteract) {
+            playerController.DisableInput();
+            assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
+                go.Result.GetComponent<DialogueManager>().GetDialogues(1);
+            Time.timeScale = 0;
         }
     }
 }

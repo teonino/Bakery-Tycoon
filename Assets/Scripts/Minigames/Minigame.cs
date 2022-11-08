@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -9,12 +6,14 @@ public abstract class Minigame : MonoBehaviour {
     [SerializeField] protected CraftingStationType craftingStationRequired;
     //public AssetReference minigameAsset;
     protected WorkstationManager workplacePanel;
+    protected GameManager gameManager;
     protected PlayerController playerController;
     protected float launchTime;
     protected float endTime;
 
     // Start is called before the first frame update
     protected void Start() {
+        gameManager = FindObjectOfType<GameManager>();
         workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
         playerController = FindObjectOfType<PlayerController>();
         launchTime = Time.time;
@@ -26,7 +25,7 @@ public abstract class Minigame : MonoBehaviour {
         DisableInputs();
         DirtyCraftingStation();
         Addressables.ReleaseInstance(gameObject);
-        workplacePanel.MinigameComplete();
+        workplacePanel.MinigameComplete(Random.Range(1, 101));
     }
 
     protected float GetTimer() => endTime - launchTime; //Return time taken to complete the minigame

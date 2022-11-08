@@ -11,16 +11,16 @@ public class DeliveryButton : MonoBehaviour {
     [SerializeField] private IngredientSO ingredient;
     [HideInInspector] public DeliveryManager deliveryManager;
 
-    private ComputerManager computerManager;
+    private GameManager gameManager;
     //Start is called before the first frame update
     void Start() {
-        computerManager = FindObjectOfType<ComputerManager>();
+        gameManager = FindObjectOfType<GameManager>();
         GetComponentInChildren<TextMeshProUGUI>().SetText(ingredient.name);
         GetComponentInChildren<RawImage>().texture = ingredient.image;
         button.onClick.AddListener(delegate {
             descriptionPanel.InstantiateAsync(deliveryManager.transform).Completed += (go) => {
-                computerManager.lastButton = gameObject.GetComponentInChildren<Button>().gameObject;
-                go.Result.GetComponent<IngredientDescription>().computerManager = computerManager;
+                gameManager.RegisterCurrentSelectedButton(); //gameObject.GetComponentInChildren<Button>().gameObject
+                go.Result.GetComponent<IngredientDescription>().gameManager = gameManager;
                 go.Result.GetComponent<IngredientDescription>().deliveryManager = deliveryManager;
                 go.Result.GetComponent<IngredientDescription>().ingredient = ingredient;
                 Cart cart = FindObjectOfType<Cart>();

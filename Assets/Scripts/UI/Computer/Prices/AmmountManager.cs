@@ -6,24 +6,28 @@ using TMPro;
 
 public class AmmountManager : MonoBehaviour {
     [SerializeField] private IngredientDescription ingredientDescription;
-    [SerializeField] private int ammountToBuy;
+    [SerializeField] private int amountToBuy;
     [SerializeField] private TextMeshProUGUI textAmmount;
+    [SerializeField] private DeliveryManager deliveryManager;
 
     private void Start() {
-        ammountToBuy = ingredientDescription.nbIngredient;
+        deliveryManager = FindObjectOfType<DeliveryManager>();
+        amountToBuy = ingredientDescription.nbIngredient;
     }
 
     public void MinusButtonIsClicked() {
-        if (ammountToBuy > 0) {
-            ammountToBuy -= 1;
-            textAmmount.text = ammountToBuy.ToString();
+        if (amountToBuy > 0) {
+            amountToBuy -= 1;
+            deliveryManager.SetIngredient(ingredientDescription.ingredient, amountToBuy);
+            textAmmount.text = amountToBuy.ToString();
         }
     }
 
     public void PlusButtonIsClicked() {
-        ammountToBuy += 1;
-        textAmmount.text = ammountToBuy.ToString();
+        amountToBuy += 1;
+        deliveryManager.SetIngredient(ingredientDescription.ingredient, amountToBuy);
+        textAmmount.text = amountToBuy.ToString();
     }
 
-    public int GetAmount() => ammountToBuy;
+    public int GetAmount() => amountToBuy;
 }

@@ -27,7 +27,7 @@ public class RollPaste : Minigame {
 
     new void Start() {
         base.Start();
-        inputType = playerController.GetInputType();
+        inputType = gameManager.GetInputType();
 
         if (inputType == InputType.Gamepad)
             text.SetText("Rotate your Joystick");
@@ -65,7 +65,6 @@ public class RollPaste : Minigame {
             if (joyStickInput != lastJoyStickInput && joyStickInput != Vector2.zero) {
                 lastJoyStickInput = joyStickInput;
                 nbOscilation++;
-                print(nbOscilation);
                 if (nbOscilation >= nbOscilationAimed)
                     End();
             }

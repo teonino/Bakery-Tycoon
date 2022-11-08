@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.AddressableAssets;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class VirtualKeyboard : MonoBehaviour
@@ -18,13 +17,12 @@ public class VirtualKeyboard : MonoBehaviour
     private GameManager gameManager;
 
     private void OnEnable() {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(firstButton);
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.SetEventSystemToStartButton(firstButton);
     }
 
     private void Start() {
         productImage.texture = product.image;
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     public void AddNumber(string number) {

@@ -46,7 +46,6 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     private void Start() {
-
         //Init Cart
         if (cart == null)
             InitCart();
