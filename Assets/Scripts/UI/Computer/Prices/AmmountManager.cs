@@ -18,16 +18,23 @@ public class AmmountManager : MonoBehaviour {
     public void MinusButtonIsClicked() {
         if (amountToBuy > 0) {
             amountToBuy -= 1;
-            deliveryManager.SetIngredient(ingredientDescription.ingredient, amountToBuy);
-            textAmmount.text = amountToBuy.ToString();
+            SetIngredientsInCart();
         }
     }
 
     public void PlusButtonIsClicked() {
         amountToBuy += 1;
+        SetIngredientsInCart();
+    }
+
+    private void SetIngredientsInCart() {
         deliveryManager.SetIngredient(ingredientDescription.ingredient, amountToBuy);
         textAmmount.text = amountToBuy.ToString();
     }
 
     public int GetAmount() => amountToBuy;
+    public void ResetAmount() {
+        amountToBuy = 0;
+        textAmmount.text = amountToBuy.ToString();
+    }
 }

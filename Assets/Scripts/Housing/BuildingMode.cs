@@ -48,6 +48,9 @@ public class BuildingMode : Interactable {
 
     public void Quit(CallbackContext context) {
         if (context.performed && !selectedGo) {
+            if (gameManager.IsGamepad()) {
+                Addressables.ReleaseInstance(cursorObject);
+            }
             playerController.playerInput.Building.Disable();
             playerController.EnableInput();
             mainCamera.SetActive(true);

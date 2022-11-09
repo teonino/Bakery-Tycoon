@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
+using Unity;
 public class DayStatistics {
     Dictionary<ProductSO, int> productsSold;
     GameManager gameManager;
@@ -45,7 +46,10 @@ public class DayStatistics {
     }
 
     public void AddProductSold(ProductSO product) {
-        productsSold[product]++;
+        if (productsSold.ContainsKey(product)) {
+            Console.WriteLine(product.name + " / " + productsSold[product]);
+            productsSold[product]++;
+        }
     }
 
     public StockIngredient GetLowestIngredient() {

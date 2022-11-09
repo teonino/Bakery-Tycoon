@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
-    [SerializeField] float interactionDistance;
+    [SerializeField] private float interactionDistance;
 
-private PlayerMovements playerMovements;
-    public PlayerInput playerInput { get; set; }
+    private PlayerMovements playerMovements;
+
+    [HideInInspector] public PlayerInput playerInput;
     [HideInInspector] public GameObject itemHolded;
 
     // Start is called before the first frame update

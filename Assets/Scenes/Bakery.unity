@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 59351933}
   - component: {fileID: 59351935}
   - component: {fileID: 59351934}
+  - component: {fileID: 59351936}
   m_Layer: 5
   m_Name: DayTimeTxt
   m_TagString: Untagged
@@ -439,6 +440,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 59351932}
   m_CullTransparentMesh: 1
+--- !u!114 &59351936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59351932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7489fea6d00ef4fb6a24daf44580a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &100045350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,7 +1380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8762402543640223053, guid: 3d89bdc94b2cf9c4bb1b347dbbcaf2f0, type: 3}
       propertyPath: skipCookingTime
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d89bdc94b2cf9c4bb1b347dbbcaf2f0, type: 3}
@@ -1391,7 +1404,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -1726,9 +1739,8 @@ MonoBehaviour:
   daySystemEnable: 0
   startLightRotation: 20
   endLightRotation: 160
-  morningTime: 10
-  dayTime: 30
-  timeElapsed: 0
+  morningDuration: 5
+  dayDuration: 5
 --- !u!114 &705507997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1900,7 +1912,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -1964,6 +1976,7 @@ GameObject:
   - component: {fileID: 873318856}
   - component: {fileID: 873318858}
   - component: {fileID: 873318857}
+  - component: {fileID: 873318859}
   m_Layer: 5
   m_Name: MoneyTxt
   m_TagString: Untagged
@@ -2088,6 +2101,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873318855}
   m_CullTransparentMesh: 1
+--- !u!114 &873318859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873318855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84de80306db29f042868591e9d47e28b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,7 +2206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -2438,7 +2463,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -2733,7 +2758,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -2795,7 +2820,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -3171,12 +3196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797243df07326ed4db6a9e82406d1bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 1646374480}
-  inputType: 1
-  moneyTxt: {fileID: 873318857}
-  reputationTxt: {fileID: 1901227364}
-  dayTime: 1
-  dayTimeTxt: {fileID: 59351934}
+  inputType: 0
   productsList:
   - {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
   - {fileID: 11400000, guid: b385cb65c0fcb4746a398cb5f2936710, type: 2}
@@ -3188,13 +3208,13 @@ MonoBehaviour:
   - ingredient: {fileID: 11400000, guid: bc9600cf78bfdfc4ab858897b7325c8f, type: 2}
     amount: 0
   - ingredient: {fileID: 11400000, guid: 0df0ca16d75623a43b0c2718542710bc, type: 2}
-    amount: 50
+    amount: 0
   - ingredient: {fileID: 11400000, guid: fc06532ee3d7df34da736f29fd63ffc5, type: 2}
     amount: 0
   - ingredient: {fileID: 11400000, guid: 5502bc9fb42c66442b501824465adac4, type: 2}
     amount: 0
   maxStock: 999
-  currentStock: 0
+  dayTime: 1
 --- !u!4 &1518738142
 Transform:
   m_ObjectHideFlags: 0
@@ -3219,7 +3239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -3281,7 +3301,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -3348,7 +3368,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -3406,17 +3426,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1502549149879746946, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
   m_PrefabInstance: {fileID: 275262188}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1646374480 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5313063522346035568, guid: 892b854692e4f294fa6b2b2739817e79, type: 3}
-  m_PrefabInstance: {fileID: 5313063522851407648}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99d77d8e96ec7a248b5229b93d9c645e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1677535360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1968948611426313606, guid: d982b717e6a38fe4a9238ca889ba7e85, type: 3}
@@ -3446,7 +3455,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -3515,6 +3524,7 @@ GameObject:
   - component: {fileID: 1901227363}
   - component: {fileID: 1901227365}
   - component: {fileID: 1901227364}
+  - component: {fileID: 1901227366}
   m_Layer: 5
   m_Name: ReputationTxt
   m_TagString: Untagged
@@ -3641,6 +3651,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901227362}
   m_CullTransparentMesh: 1
+--- !u!114 &1901227366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901227362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec8c441c81c14748a887d14f4ca5600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1923078592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3650,7 +3672,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -3852,7 +3874,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -4164,7 +4186,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7143577301200490853, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
@@ -4267,7 +4289,7 @@ MonoBehaviour:
   maxDelaySpawn: 7
   nbCustomer: 0
   nbCustomerMax: 4
-  spawnRateRegularCustomer: 1
+  spawnRateRegularCustomer: 10
   customerAsset:
     m_AssetGUID: 709ccf299c167e64f8207d58a794bdf4
     m_SubObjectName: 
@@ -4418,7 +4440,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6472967232472770799, guid: f3c270f6515d8a24ba9b346043db7296, type: 3}
       propertyPath: debugAsset.m_AssetGUID
-      value: 5380f4b6d6bce77488d9707be36c5664
+      value: 77dc272637fa76d489bb43f8fff4c28c
       objectReference: {fileID: 0}
     - target: {fileID: 7727111268999537777, guid: f3c270f6515d8a24ba9b346043db7296, type: 3}
       propertyPath: m_Name

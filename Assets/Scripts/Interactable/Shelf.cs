@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 public class Shelf : Interactable {
     public GameObject item;
     public GameObject itemPosition;
-
+    public bool spawnAsset;
     public AssetReference debugAsset;
 
     public override void Effect() {
@@ -26,7 +26,7 @@ public class Shelf : Interactable {
             playerController.itemHolded.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
         }
 
-        if (playerController.itemHolded == null && item == null)
+        if (playerController.itemHolded == null && item == null && spawnAsset)
             debugAsset.InstantiateAsync(transform).Completed += (go) => {
                 item = go.Result;
                 item.transform.position = itemPosition.transform.position;

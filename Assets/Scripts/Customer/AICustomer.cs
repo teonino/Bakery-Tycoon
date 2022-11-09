@@ -44,7 +44,8 @@ public class AICustomer : Interactable {
                 productCanvas = go.Result;
                 productCanvas.transform.SetParent(transform);
                 productCanvas.transform.position = transform.position + Vector3.up * 2;
-                productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
+                if (requestedProduct)
+                    productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
             };
             spawnPosition = transform.position;
         }
@@ -70,8 +71,6 @@ public class AICustomer : Interactable {
                         shelf.GetItem().GetComponent<Product>().productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
                             TakeItem();
-
-
                         };
                         shelf.GetItem().GetComponent<Product>().amount--;
                     }
@@ -84,7 +83,7 @@ public class AICustomer : Interactable {
                 }
             }
         }
-        if (sitting && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1) {
+        if (sitting && chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1) {
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             StartCoroutine(CustomerWaiting(waitingTimeSitting));
             canInteract = true;

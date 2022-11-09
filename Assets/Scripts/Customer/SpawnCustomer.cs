@@ -34,7 +34,7 @@ public class SpawnCustomer : MonoBehaviour {
 
     private void InstantiateCustomer() {
         //Spawn a customer
-        if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.GetDayTime() == DayTime.Day && CheckProducts()) {
+        if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.dayTime == DayTime.Day && CheckProducts()) {
             nbCustomer++;
             if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {

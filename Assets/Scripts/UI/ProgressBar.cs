@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class ProgressBar : MonoBehaviour {
 
     [SerializeField] private float duration;
-    public UnityEvent onDestroy;
+    public Action onDestroy;
 
     private float timeElapsed = 0;
 
@@ -19,7 +19,8 @@ public class ProgressBar : MonoBehaviour {
         timeElapsed += Time.deltaTime;
 
         if (timeElapsed > duration) {
-            onDestroy.Invoke();
+            if (onDestroy != null)
+                onDestroy.Invoke();
             Addressables.ReleaseInstance(transform.parent.gameObject);
         }
     }

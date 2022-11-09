@@ -23,7 +23,7 @@ public class DeliveryButton : MonoBehaviour {
                 go.Result.GetComponent<IngredientDescription>().gameManager = gameManager;
                 go.Result.GetComponent<IngredientDescription>().deliveryManager = deliveryManager;
                 go.Result.GetComponent<IngredientDescription>().ingredient = ingredient;
-                Cart cart = FindObjectOfType<Cart>();
+                CartUI cart = FindObjectOfType<CartUI>();
                 if (cart.cart != null && cart.cart.ContainsKey(ingredient))
                     go.Result.GetComponent<IngredientDescription>().nbIngredient = cart.cart[ingredient];
             };
