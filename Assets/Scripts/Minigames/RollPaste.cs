@@ -29,13 +29,15 @@ public class RollPaste : Minigame {
         base.Start();
         inputType = gameManager.GetInputType();
 
-        if (inputType == InputType.Gamepad)
-            text.SetText("Rotate your Joystick");
+        if (inputType == InputType.Gamepad) {
+            string inputName = GetControl(playerController.playerInput.RollPaste.RollPasteAction);
+            text.SetText("Rotate your " + inputName);
+        }
         else {
             InputAction action = playerController.playerInput.RollPaste.RollPasteAction;
-            string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-            string inputNameTwo = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[1])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-            text.SetText("Spam : " + inputName + " & " + inputNameTwo);
+            string inputName = GetControl(playerController.playerInput.RollPaste.RollPasteAction, 0);
+            string inputNameTwo = GetControl(playerController.playerInput.RollPaste.RollPasteAction, 1);
+            text.SetText("Spam alternavely : " + inputName + " & " + inputNameTwo);
         }
     }
 

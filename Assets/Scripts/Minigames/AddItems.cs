@@ -12,9 +12,8 @@ public class AddItems : Minigame
 
     private new void Start() {
         base.Start();
-        
-        InputAction action = playerController.playerInput.AddItems.AddItemsAction;
-        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+        string inputName = GetControl(playerController.playerInput.AddItems.AddItemsAction);
         text.SetText("Press " + char.ToUpper(inputName[0]) + inputName.Substring(1));
     }
 

@@ -55,7 +55,7 @@ public class DayManager : MonoBehaviour {
         return s;
     }
 
-    private void Updateday() {
+    public void Updateday() {
         gameManager.dayTime++;
         updateDayTimeUI(GetDay());
     }

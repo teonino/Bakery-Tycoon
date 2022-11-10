@@ -48,7 +48,7 @@ public class BuildingMode : Interactable {
 
     public void Quit(CallbackContext context) {
         if (context.performed && !selectedGo) {
-            if (gameManager.IsGamepad()) {
+            if (cursorObject) {
                 Addressables.ReleaseInstance(cursorObject);
             }
             playerController.playerInput.Building.Disable();
@@ -76,8 +76,9 @@ public class BuildingMode : Interactable {
                 selectedGo.layer = 3;
                 selectedGo.AddComponent<CheckCollision>();
                 selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                selectedGo.GetComponent<Collider>().isTrigger = true;
                 selectedGo.GetComponent<CheckCollision>().collidingMaterial = collidingMaterial;
+
+                ChangeColliderSize(true);
             }
             else {
                 if (selectedGo.GetComponent<CheckCollision>().nbObjectInCollision == 0) {
@@ -85,35 +86,52 @@ public class BuildingMode : Interactable {
                     selectedGo.layer = intitialGoLayer;
                     Destroy(selectedGo.GetComponent<CheckCollision>());
                     Destroy(selectedGo.GetComponent<Rigidbody>());
-                    selectedGo.GetComponent<Collider>().isTrigger = false;
+
+                    ChangeColliderSize(false);
+
                     selectedGo = null;
                 }
             }
         }
     }
 
+    private void ChangeColliderSize(bool remove) {
+        if (selectedGo.TryGetComponent(out BoxCollider boxCol))
+            if (remove)
+                boxCol.size -= Vector3.one * 0.1f;
+            else
+                boxCol.size += Vector3.one * 0.1f;
+        else if (selectedGo.TryGetComponent(out CapsuleCollider capCol))
+            if (remove)
+                capCol.radius -= 0.1f;
+            else
+                capCol.radius += 0.1f;
+        else if (selectedGo.TryGetComponent(out SphereCollider spheCol))
+            if (remove)
+                spheCol.radius -= 0.1f;
+            else
+                spheCol.radius += 0.1f;
+    }
+
     private void FixedUpdate() {
         if (inBuildingMode) {
             if (gameManager.IsGamepad() && cursorObject) {
                 cursorObject.transform.Translate(gameManager.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                SnapGameObject(cursorObject.transform.position);
+            }
+            else
+                SnapGameObject(Mouse.current.position.ReadValue());
+        }
+    }
 
-                if (selectedGo) {
-                    RaycastHit hit;
-                    if (Physics.Raycast(Camera.main.ScreenPointToRay(cursorObject.transform.position), out hit, Mathf.Infinity, currentRaycastlayer))
-                        selectedGo.transform.position = new Vector3(
-                            RoundToNearestGrid(hit.point.x),
-                            selectedGo.transform.localScale.y / 2,
-                            RoundToNearestGrid(hit.point.z));
-                }
-            }
-            else if (selectedGo) {
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, Mathf.Infinity, currentRaycastlayer))
-                    selectedGo.transform.position = new Vector3(
-                        RoundToNearestGrid(hit.point.x),
-                        selectedGo.transform.localScale.y / 2,
-                        RoundToNearestGrid(hit.point.z));
-            }
+    private void SnapGameObject(Vector3 pos) {
+        if (selectedGo) {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer))
+                selectedGo.transform.position = new Vector3(
+                    RoundToNearestGrid(hit.point.x),
+                    selectedGo.transform.localScale.y / 2,
+                    RoundToNearestGrid(hit.point.z));
         }
     }
 

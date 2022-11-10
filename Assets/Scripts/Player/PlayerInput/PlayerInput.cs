@@ -127,7 +127,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""54beb43f-d3c9-43d1-8f45-332888248a9f"",
-                    ""path"": ""<XInputController>/dpad/up"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -138,7 +138,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""a9d9e432-e438-446d-bf44-0dcea52c6383"",
-                    ""path"": ""<XInputController>/dpad/down"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -149,7 +149,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""b3cc2781-dcfe-422b-ac61-965290b7e854"",
-                    ""path"": ""<XInputController>/dpad/left"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -160,7 +160,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""2f604800-6da5-40f7-84a4-cddd409c7bb7"",
-                    ""path"": ""<XInputController>/dpad/right"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -183,6 +183,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""69b24343-039d-48e5-88e3-d98e0f3513e0"",
                     ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e669ec6-ecd9-49f9-a1e6-2b34962ebbe8"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -262,6 +273,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""ab2823d9-8049-479f-8932-8a8413c95784"",
                     ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df2f8a6e-636d-415c-a644-1bad3c605c74"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -361,6 +383,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""26e25cde-6c7a-40f1-939b-0ca301080a18"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""59851724-5934-4c91-a37d-8cc734a3b943"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
@@ -408,6 +441,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""SpreadPasteAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72617cb1-b1cc-406b-82a3-1453b4b8654e"",
+                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SpreadPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -439,40 +483,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""322d8a94-0fec-406c-8bf0-dc4db42599e8"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""id"": ""e5345c42-9d59-476b-905e-c29aa6311dca"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""BurnTopAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""AddSeeds"",
-            ""id"": ""62cbf4d2-01e9-40f1-a409-b07a38225eab"",
-            ""actions"": [
-                {
-                    ""name"": ""AddSeed"",
-                    ""type"": ""Button"",
-                    ""id"": ""d09ae8d0-915a-40c4-b579-6e6450f3b016"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""aa9204d6-87b8-4297-a107-e42c44ca2cdf"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""AddSeed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -623,7 +639,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e717c75d-fb18-48b1-adf0-35f43b5f4e74"",
-                    ""path"": ""<XInputController>/leftStick/down"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -691,6 +707,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""CutPasteAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca262e6d-bed5-4831-9847-9df849ea0e91"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CutPasteAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -701,7 +728,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""bindingGroup"": ""Gamepad"",
             ""devices"": [
                 {
-                    ""devicePath"": ""<XInputController>"",
+                    ""devicePath"": ""<Gamepad>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
@@ -740,9 +767,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // BurnTop
         m_BurnTop = asset.FindActionMap("BurnTop", throwIfNotFound: true);
         m_BurnTop_BurnTopAction = m_BurnTop.FindAction("BurnTopAction", throwIfNotFound: true);
-        // AddSeeds
-        m_AddSeeds = asset.FindActionMap("AddSeeds", throwIfNotFound: true);
-        m_AddSeeds_AddSeed = m_AddSeeds.FindAction("AddSeed", throwIfNotFound: true);
         // RollPaste
         m_RollPaste = asset.FindActionMap("RollPaste", throwIfNotFound: true);
         m_RollPaste_RollPasteAction = m_RollPaste.FindAction("RollPasteAction", throwIfNotFound: true);
@@ -1013,39 +1037,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public BurnTopActions @BurnTop => new BurnTopActions(this);
 
-    // AddSeeds
-    private readonly InputActionMap m_AddSeeds;
-    private IAddSeedsActions m_AddSeedsActionsCallbackInterface;
-    private readonly InputAction m_AddSeeds_AddSeed;
-    public struct AddSeedsActions
-    {
-        private @PlayerInput m_Wrapper;
-        public AddSeedsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @AddSeed => m_Wrapper.m_AddSeeds_AddSeed;
-        public InputActionMap Get() { return m_Wrapper.m_AddSeeds; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(AddSeedsActions set) { return set.Get(); }
-        public void SetCallbacks(IAddSeedsActions instance)
-        {
-            if (m_Wrapper.m_AddSeedsActionsCallbackInterface != null)
-            {
-                @AddSeed.started -= m_Wrapper.m_AddSeedsActionsCallbackInterface.OnAddSeed;
-                @AddSeed.performed -= m_Wrapper.m_AddSeedsActionsCallbackInterface.OnAddSeed;
-                @AddSeed.canceled -= m_Wrapper.m_AddSeedsActionsCallbackInterface.OnAddSeed;
-            }
-            m_Wrapper.m_AddSeedsActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @AddSeed.started += instance.OnAddSeed;
-                @AddSeed.performed += instance.OnAddSeed;
-                @AddSeed.canceled += instance.OnAddSeed;
-            }
-        }
-    }
-    public AddSeedsActions @AddSeeds => new AddSeedsActions(this);
-
     // RollPaste
     private readonly InputActionMap m_RollPaste;
     private IRollPasteActions m_RollPasteActionsCallbackInterface;
@@ -1186,10 +1177,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IBurnTopActions
     {
         void OnBurnTopAction(InputAction.CallbackContext context);
-    }
-    public interface IAddSeedsActions
-    {
-        void OnAddSeed(InputAction.CallbackContext context);
     }
     public interface IRollPasteActions
     {

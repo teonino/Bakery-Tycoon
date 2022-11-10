@@ -22,10 +22,8 @@ public class CutPaste : Minigame {
 
         SetRandomValidZonePosition();
 
-        InputAction action = playerController.playerInput.CutPaste.CutPasteAction;
-        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-
-        text.SetText("Tap " + char.ToUpper(inputName[0]) + inputName.Substring(1) +" in timing");
+        string inputName = GetControl(playerController.playerInput.CutPaste.CutPasteAction);
+        text.SetText("Tap " + char.ToUpper(inputName[0]) + inputName.Substring(1) + " in timing");
     }
 
     // Update is called once per frame

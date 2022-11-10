@@ -6,38 +6,31 @@ public class CheckCollision : MonoBehaviour {
     public int nbObjectInCollision = 0;
     public Material collidingMaterial;
     public Material initialMaterial;
+    private Mesh mesh;
 
     private void Awake() {
         initialMaterial = GetComponent<MeshRenderer>().material;
+        mesh = gameObject.GetComponent<MeshFilter>().mesh;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag != "Floor") {
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag != "Floor") {
+            
+            //Vector3[] vertices = mesh.vertices;
+            //for (int i = 0; i < vertices.Length; i++) {
+            //    if (collision.collider.bounds.Contains(vertices[i]))
+            //        print("yes");
+            //}
+
             nbObjectInCollision++;
-            print("Trigger : " +nbObjectInCollision + " / " + other.name);
             GetComponent<MeshRenderer>().material = collidingMaterial;
         }
     }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.tag != "Floor") {
+    private void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.tag != "Floor") {
             nbObjectInCollision--;
-            print("Trigger : " + nbObjectInCollision + " / " + other.name);
-            if(nbObjectInCollision == 0) 
+            if (nbObjectInCollision == 0)
                 GetComponent<MeshRenderer>().material = initialMaterial;
         }
     }
-
-    //private void OnCollisionEnter(Collision collision) {
-    //    if (collision.collider.tag != "Floor") {
-    //        nbObjectInCollision--;
-    //        print("Collision : " + nbObjectInCollision + " / " + collision.collider.name);
-    //    }
-    //}
-    //private void OnCollisionExit(Collision collision) {
-    //    if (collision.collider.tag != "Floor") {
-    //        nbObjectInCollision++;
-    //        print("Collision : " + nbObjectInCollision + " / " + collision.collider.name);
-    //    }
-    //}
 }
