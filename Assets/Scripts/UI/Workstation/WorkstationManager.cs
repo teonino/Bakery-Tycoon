@@ -41,18 +41,18 @@ public class WorkstationManager : MonoBehaviour {
         if (skipRequirement) return true;
 
         bool requirementMet = true;
-        List<CraftingStation> craftingStations = new List<CraftingStation>(FindObjectsOfType<CraftingStation>());
 
         //Check Crafting Station
-        if (product.hoven && requirementMet) { // If hoven is a requirement and requirementMet is still true
+        List<CraftingStation> craftingStations = new List<CraftingStation>(FindObjectsOfType<CraftingStation>());
+        if (requirementMet) {
             requirementMet = false;
             foreach (CraftingStation craftingStation in craftingStations)
-                if (craftingStation.type == CraftingStationType.Hoven) requirementMet = true;
+                if (craftingStation.type == product.craftStationRequired) requirementMet = true;
         }
 
         //Check Ingredients
         foreach (IngredientSO ingredient in product.ingredients)
-            if (gameManager.GetIngredientAmount(ingredient) == 0) requirementMet = false;
+            if (gameManager.GetIngredientAmount(ingredient) <= 0) requirementMet = false;
 
         return requirementMet;
     }
@@ -91,7 +91,7 @@ public class WorkstationManager : MonoBehaviour {
                 };
             //Create product
             else {
-                if (currentProduct.pasteAsset == null) {
+                if (!currentProduct.hasPaste) {
                     currentProduct.asset.InstantiateAsync().Completed += (go) => {
                         if (currentMinigameCounter == 0)
                             go.Result.GetComponent<Product>().quality = 0;

@@ -20,7 +20,7 @@ public class CraftingStation : Interactable {
     private GameObject productReadyUI;
 
     public override void Effect() {
-        if (playerController.itemHolded && playerController.itemHolded.tag == "Paste" && !itemInStation) {
+        if (playerController.itemHolded && playerController.itemHolded.tag == "Paste" && !itemInStation && playerController.itemHolded.GetComponent<Product>().GetCraftingStation() == type) {
             itemInStation = playerController.itemHolded;
             itemInStation.transform.parent = transform;
             itemInStation.transform.position = Vector3.zero;

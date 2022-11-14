@@ -4,8 +4,5 @@ using UnityEngine;
 
 public enum CraftingStationType {
     Hoven, 
-    CuttingBoard,
-    Worktable,
-    CoffeeMachine,
-    TeaMachine
+    Fryer,
 }

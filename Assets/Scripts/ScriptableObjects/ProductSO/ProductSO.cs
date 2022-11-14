@@ -7,20 +7,24 @@ public class ProductSO : ScriptableObject {
     [Header("Global variables")]
     public new string name;
     public int price;
-    public float cookingTime;
-    public int nbCreated;
     public float recipePrice;
-    public AssetReference asset;
-    public Texture image;
-    public AssetReference pasteAsset;
+    public int nbCreated;
+    public float cookingTime;
     public bool unlocked;
+    public Texture image;
+    public AssetReference asset;
 
-    [Space(10)]
+    [Space(5)]
+    [Header("Paste")]
+    public bool hasPaste;
+    public AssetReference pasteAsset = null;
+
+    [Space(5)]
     [Header("Requirement")]
-    public bool hoven;
+    public CraftingStationType craftStationRequired;
     public List<IngredientSO> ingredients;
 
-    [Space(10)]
+    [Space(5)]
     [Header("Minigames")]
     public List<MinigameInfo> minigames;
 }
