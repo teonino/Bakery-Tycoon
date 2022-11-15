@@ -33,17 +33,19 @@ public class BuildingMode : Interactable {
     }
 
     public override void Effect() {
-        playerController.DisableInput();
-        playerController.playerInput.Building.Enable();
+        if (gameManager.dayTime == DayTime.Morning) {
+            playerController.DisableInput();
+            playerController.playerInput.Building.Enable();
 
-        if (gameManager.IsGamepad()) {
-            cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
-                cursorObject = go.Result;
-            };
+            if (gameManager.IsGamepad()) {
+                cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
+                    cursorObject = go.Result;
+                };
+            }
+            inBuildingMode = true;
+            mainCamera.SetActive(false);
+            buildingCamera.SetActive(true);
         }
-        inBuildingMode = true;
-        mainCamera.SetActive(false);
-        buildingCamera.SetActive(true);
     }
 
     public void Quit(CallbackContext context) {

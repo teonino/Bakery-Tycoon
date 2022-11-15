@@ -53,6 +53,7 @@ public class SpawnCustomer : MonoBehaviour {
 
     private void SetCustomer(AICustomer customer) {
         customer.requestedProduct = GetRandomProduct();
+        customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
     }

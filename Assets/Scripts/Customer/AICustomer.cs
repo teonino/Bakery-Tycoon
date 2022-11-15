@@ -37,7 +37,7 @@ public class AICustomer : Interactable {
         shelf.GetAvailableQueuePosition(this);
     }
 
-    void Start() {
+    public void InitCustomer() {
         if (inQueue) {
             //Instantiate panel that display the requested product
             assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
@@ -46,6 +46,8 @@ public class AICustomer : Interactable {
                 productCanvas.transform.position = transform.position + Vector3.up * 2;
                 if (requestedProduct)
                     productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
+                else
+                    print("requestedProductNull");
             };
             spawnPosition = transform.position;
         }

@@ -12,6 +12,8 @@ public class SaveManagerEditor : Editor {
         if (GUILayout.Button("Generate JSON"))
             saveManager.Save();
         if (GUILayout.Button("Load JSON"))
-            saveManager.Load("Asset/Save/Savefile");
+            saveManager.Load("Assets/Save/Savefile.json");
+        if (GUILayout.Button("Unload JSON"))
+            DestroyImmediate(GameObject.FindGameObjectWithTag("Level"));
     }
 }
