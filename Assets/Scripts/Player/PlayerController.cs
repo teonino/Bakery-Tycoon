@@ -30,12 +30,12 @@ public class PlayerController : MonoBehaviour {
         if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
 
-        Debug.DrawRay(transform.position + Vector3.down / 4, transform.forward * interactionDistance, Color.green);
+        Debug.DrawRay(transform.position + Vector3.down / 2, transform.forward * interactionDistance, Color.green);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
         if (context.performed) {
-            RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.down / 4, transform.forward, interactionDistance);
+            RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.down / 2, transform.forward, interactionDistance);
             bool interactableFound = false;
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
                 if (hitInfo[i].collider.GetComponent<Interactable>()) {
