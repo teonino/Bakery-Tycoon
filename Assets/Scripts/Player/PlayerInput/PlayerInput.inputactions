@@ -312,6 +312,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "AnyKeyPressed",
+                    "type": "Button",
+                    "id": "6c2b4dad-7333-42f3-bf26-3c997d72564c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -378,6 +387,61 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa604c1a-887b-45db-a437-8338d720610d",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AnyKeyPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e98ac63d-3020-489a-ab46-3f0fe50773ed",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AnyKeyPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90ad4b06-57c9-4829-aa58-a3987796b7b5",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AnyKeyPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3faf262-4414-4d55-b68f-01302313ebdc",
+                    "path": "<Mouse>/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AnyKeyPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d70d94e1-830b-445c-9a4d-09476e9b8247",
+                    "path": "<Mouse>/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AnyKeyPressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
