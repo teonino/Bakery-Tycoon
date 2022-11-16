@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 
 public abstract class Minigame : MonoBehaviour {
 
@@ -42,6 +43,18 @@ public abstract class Minigame : MonoBehaviour {
 
         if (go != null)
             go.GetComponent<CraftingStation>().AddDirt();
+    }
+
+    protected string GetControl(InputAction action, int index = 0) {
+        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[index])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+        foreach (char c in inputName)
+            inputName = inputName.Replace(" ", string.Empty);
+
+        if (gameManager.IsGamepad())
+            return Gamepad.current[inputName].displayName;
+        else
+            return Keyboard.current[inputName].displayName;
     }
 
     public abstract void EnableInputs();

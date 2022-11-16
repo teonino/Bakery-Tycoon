@@ -7,17 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour {
-    [Header("Global variables")]
-    [SerializeField] private PlayerController playerController;
     [SerializeField] private InputType inputType;
-    [SerializeField] private TextMeshProUGUI moneyTxt;
-    [SerializeField] private TextMeshProUGUI reputationTxt;
-
-    [Header("Day Variable")]
-    [SerializeField] private DayTime dayTime;
-    [SerializeField] private TextMeshProUGUI dayTimeTxt;
-
-    [Header("Products & Ingredients list")]
     [Space(10)]
     [SerializeField] private List<ProductSO> productsList;
     private Dictionary<string, int> productPrices;
@@ -26,26 +16,32 @@ public class GameManager : MonoBehaviour {
 
     [Header("Stocks")]
     [SerializeField] private int maxStock;
-    [SerializeField] private int currentStock;
 
+    public DayTime dayTime;
+    
+    private int currentStock;
+    private PlayerController playerController;
+    private Action<int> updateMoneyUI, updateReputationUI;
+    private DayStatistics dayStatistics;
     private GameObject lastButton;
-    private float money = 100;
-    private float reputation;
+    private int money = 100;
+    private int reputation;
 
     private void Awake() {
+        //Set product list for prices
         productPrices = new Dictionary<string, int>();
         foreach (ProductSO product in productsList)
             productPrices.Add(product.name, product.price);
 
+        //Get player Controller
         playerController = FindObjectOfType<PlayerController>();
 
-        moneyTxt.SetText(money + "€");
-        dayTimeTxt.SetText(GetDayTxt());
-        reputationTxt.SetText("Reputation : " + reputation);
+        //Set UI textes
+        updateMoneyUI = FindObjectOfType<MoneyUI>().SetMoney;
+        updateReputationUI = FindObjectOfType<ReputationUI>().SetReputation;
 
-        //ONLY FOR UNITY USES, REMOVE FOR BUILD
-        foreach (StockIngredient stockIngredient in ingredientLists)
-            stockIngredient.amount = 0;
+        //Set Statistic class
+        dayStatistics = new DayStatistics(this);
     }
 
     private void Start() {
@@ -57,29 +53,9 @@ public class GameManager : MonoBehaviour {
             playerController.playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
         }
-    }
 
-    private string GetDayTxt() {
-        string s = "";
-        switch (dayTime) {
-            case DayTime.Morning:
-                s = "Morning";
-                break;
-            case DayTime.Day:
-                s = "Day";
-                break;
-            case DayTime.Evening:
-                s = "Evening";
-                break;
-            default:
-                break;
-        }
-        return s;
-    }
-
-    public void SetDayTime() {
-        dayTime++;
-        dayTimeTxt.SetText(GetDayTxt());
+        updateMoneyUI(money);
+        updateReputationUI(reputation);
     }
 
     public int GetIngredientAmount(IngredientSO ingredient) {
@@ -120,22 +96,24 @@ public class GameManager : MonoBehaviour {
     public InputType GetInputType() => inputType;
     public InputType SetInputType(InputType value) => inputType = value;
     public bool IsGamepad() => inputType == InputType.Gamepad;
-
-    public DayTime GetDayTime() => dayTime;
     public float GetReputation() => reputation;
-    public void AddReputation(float value) {
+    public void AddReputation(int value) {
         reputation += value;
-        reputationTxt.SetText("Reputation : " + reputation);
+        updateReputationUI(reputation);
     }
     public float GetMoney() => money;
-    public void AddMoney(float value) {
+    public void AddMoney(int value) {
         money += value;
-        moneyTxt.SetText(money + "€");
+        dayStatistics.AddMoney(value);
+        updateMoneyUI(money);
     }
-    public void RemoveMoney(float value) {
+    public void RemoveMoney(int value) {
         money -= value;
-        moneyTxt.SetText(money + "€");
+        dayStatistics.RemoveMoney(value);
+        updateMoneyUI(money);
     }
+
+    public void AddProductSold(ProductSO product) => dayStatistics.AddProductSold(product);
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
 }

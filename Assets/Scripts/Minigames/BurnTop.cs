@@ -16,8 +16,7 @@ public class BurnTop : Minigame {
         base.Start();
         slider.maxValue = aimedValue;
 
-        InputAction action = playerController.playerInput.BurnTop.BurnTopAction;
-        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        string inputName = GetControl(playerController.playerInput.BurnTop.BurnTopAction);
 
         text.SetText("Spam " + char.ToUpper(inputName[0]) + inputName.Substring(1));
     }

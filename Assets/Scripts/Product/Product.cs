@@ -10,4 +10,5 @@ public class Product : MonoBehaviour
 
     public string GetName() => productSO.name;
     public float GetPrice() => productSO.price;
+    public CraftingStationType GetCraftingStation() => productSO.craftStationRequired;
 }

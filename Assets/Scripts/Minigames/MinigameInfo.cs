@@ -11,8 +11,8 @@ public class MinigameInfo {
 
     [Header("Minigame Parameters")]
     [Space(10)]
-    public float launchTime;
-    public float endTime;
+    [HideInInspector] public float launchTime;
+    [HideInInspector] public float endTime;
 
     public MinigameInfo(float launchTime, float endTime) {
         this.launchTime = launchTime;

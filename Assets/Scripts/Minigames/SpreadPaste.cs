@@ -24,9 +24,7 @@ public class SpreadPaste : Minigame {
         validZone.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
         validZone.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
 
-        InputAction action = playerController.playerInput.SpreadPaste.SpreadPasteAction;
-        string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[0])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-
+        string inputName = GetControl(playerController.playerInput.SpreadPaste.SpreadPasteAction);
         text.SetText("Hold " + char.ToUpper(inputName[0]) + inputName.Substring(1));
     }
 

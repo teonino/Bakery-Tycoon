@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference ingredientRackAsset;
-    [SerializeField] private Cart cartPanel;
+    [SerializeField] private CartUI cartPanel;
     [SerializeField] private GameObject computerPanel;
 
     private GameManager gameManager;
@@ -21,9 +21,12 @@ public class DeliveryManager : MonoBehaviour {
     private int nbButton = 0;
     private int lenght;
     private float cartWeight = 0;
-    private float cartCost = 0;
+    private int cartCost = 0;
+    private GameObject ingredientDescriptionPanel;
 
     public Dictionary<IngredientSO, int> cart;
+
+
 
     void Awake() {
         gameManager = FindObjectOfType<GameManager>();
@@ -55,7 +58,6 @@ public class DeliveryManager : MonoBehaviour {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
                 go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.GetIngredientList()[nbButton].ingredient);
-                go.Result.name = "Delivery Button " + gameManager.GetIngredientList()[nbButton].ingredient;
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();
@@ -77,7 +79,8 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     private void CalculateCartCostAndWeight() {
-        cartCost = cartWeight = 0;
+        cartCost = 0;
+        cartWeight = 0;
         foreach (KeyValuePair<IngredientSO, int> ingredient in cart) {
             cartCost += ingredient.Key.price * ingredient.Value;
             cartWeight += ingredient.Key.weight * ingredient.Value;
@@ -105,7 +108,7 @@ public class DeliveryManager : MonoBehaviour {
 
 
     public void DisplayCart() {
-        Cart currentCart = cartPanel;
+        CartUI currentCart = cartPanel;
         currentCart.cart = cart;
         currentCart.cartWeight = cartWeight;
         currentCart.cartCost = cartCost;
@@ -129,6 +132,8 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
         cartWeight = 0;
         cartCost = 0;
+        if (ingredientDescriptionPanel)
+            ingredientDescriptionPanel.GetComponentInChildren<AmmountManager>().ResetAmount();
     }
 
 
@@ -147,11 +152,16 @@ public class DeliveryManager : MonoBehaviour {
             ResetCart();
     }
 
+    public void SetIngredientDescriptionPanel(GameObject go) {
+        ingredientDescriptionPanel = go;
+    }
+
     public void Quit(InputAction.CallbackContext context) {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
         playerController.EnableInput();
-
+        if (ingredientDescriptionPanel)
+            Addressables.ReleaseInstance(ingredientDescriptionPanel);
         computerPanel.SetActive(false);
     }
 }

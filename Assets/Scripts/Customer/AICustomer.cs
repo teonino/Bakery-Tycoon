@@ -37,14 +37,17 @@ public class AICustomer : Interactable {
         shelf.GetAvailableQueuePosition(this);
     }
 
-    void Start() {
+    public void InitCustomer() {
         if (inQueue) {
             //Instantiate panel that display the requested product
             assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
                 productCanvas = go.Result;
                 productCanvas.transform.SetParent(transform);
                 productCanvas.transform.position = transform.position + Vector3.up * 2;
-                productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
+                if (requestedProduct)
+                    productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
+                else
+                    print("requestedProductNull");
             };
             spawnPosition = transform.position;
         }
@@ -69,40 +72,20 @@ public class AICustomer : Interactable {
                     if (shelf.GetItem().GetComponent<Product>().amount > 1) {
                         shelf.GetItem().GetComponent<Product>().productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
-                            item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
-                            item.transform.localPosition = Vector3.up * 1.25f;
-
-                            DisplayPayment();
-                            if (productCanvas)
-                                Addressables.ReleaseInstance(productCanvas);
-
-                            if (regular)
-                                Sit();
-                            else
-                                Leave();
+                            TakeItem();
                         };
                         shelf.GetItem().GetComponent<Product>().amount--;
                     }
                     else {
                         item = shelf.GetItem();
                         item.transform.SetParent(transform);
-                        item.transform.localPosition = Vector3.up * 1.25f;
-                        item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
+                        TakeItem();
                         shelf.RemoveItem();
-
-                        DisplayPayment();
-                        if (productCanvas)
-                            Addressables.ReleaseInstance(productCanvas);
-
-                        if (regular)
-                            Sit();
-                        else
-                            Leave();
                     }
                 }
             }
         }
-        if (sitting && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1) {
+        if (sitting && chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1) {
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             StartCoroutine(CustomerWaiting(waitingTimeSitting));
             canInteract = true;
@@ -111,6 +94,19 @@ public class AICustomer : Interactable {
         //Exit the bakery
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(spawnPosition.x, spawnPosition.z)) < 4 && leaving)
             DestroyCustomer();
+    }
+
+    public void TakeItem() {
+        item.transform.localPosition = Vector3.up * 1.25f;
+        item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
+        gameManager.AddProductSold(item.GetComponent<Product>().productSO);
+        DisplayPayment();
+        if (productCanvas)
+            Addressables.ReleaseInstance(productCanvas);
+        if (regular)
+            Sit();
+        else
+            Leave();
     }
 
     private void DestroyCustomer() {
@@ -158,7 +154,7 @@ public class AICustomer : Interactable {
 
     //Display the payement
     public void DisplayPayment() {
-        float totalPrice = gameManager.GetProductPrice(item.GetComponent<Product>().productSO) + gameManager.GetProductPrice(item.GetComponent<Product>().productSO) * item.GetComponent<Product>().quality / 100;
+        int totalPrice = gameManager.GetProductPrice(item.GetComponent<Product>().productSO) + gameManager.GetProductPrice(item.GetComponent<Product>().productSO) * item.GetComponent<Product>().quality / 100;
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = shelf.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + totalPrice + "€";
