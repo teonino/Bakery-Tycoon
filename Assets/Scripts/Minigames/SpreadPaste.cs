@@ -30,13 +30,11 @@ public class SpreadPaste : Minigame {
 
 
     private void Update() {
-        if (playerController.playerInput.SpreadPaste.SpreadPasteAction.ReadValue<float>() > 0) {
-            slider.value += Time.deltaTime;
-
-            if (timeInZone >= timeAimed) {
-                End();
-            }
+        if (timeInZone >= timeAimed) {
+            End();
         }
+        if (playerController.playerInput.SpreadPaste.SpreadPasteAction.ReadValue<float>() > 0) 
+            slider.value += Time.deltaTime;
         else 
             slider.value -= Time.deltaTime / 2;
 
@@ -44,9 +42,8 @@ public class SpreadPaste : Minigame {
             timeInZone += Time.deltaTime;
             sliderFiller.color = Color.green;
         }
-        else {
+        else 
             sliderFiller.color = Color.blue;
-        }
     }
 
     public override void EnableInputs() {

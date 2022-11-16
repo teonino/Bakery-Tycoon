@@ -1,9 +1,12 @@
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class SaveManager : MonoBehaviour {
+    public List<FurnitureSO> furnitures;
     private Transform level;
     private string filepath = "Assets\\Save\\Savefile.json";
 
@@ -89,7 +92,7 @@ public class SaveManager : MonoBehaviour {
                     currentChildCount = 0;
                 }
                 else {
-                    obj = (GameObject)Resources.Load("Furniture/" + data, typeof(GameObject));
+                    obj = GetGameObject(data.objectName);
                     currentChildCount++;
                 }
 
@@ -114,5 +117,14 @@ public class SaveManager : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public GameObject GetGameObject(string name) {
+        GameObject returnObject = null;
+        foreach (FurnitureSO furniture in furnitures) {
+            if (furniture.name == name)
+                returnObject = furniture.asset;
+        }
+        return returnObject;
     }
 }
