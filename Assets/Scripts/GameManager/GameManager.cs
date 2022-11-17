@@ -3,22 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour {
     [SerializeField] private InputType inputType;
-    [Space(10)]
+    [SerializeField] private AssetReference pausePanelAsset;
     [SerializeField] private List<ProductSO> productsList;
-    private Dictionary<string, int> productPrices;
-    [Space(10)]
     [SerializeField] private List<StockIngredient> ingredientLists;
-
     [Header("Stocks")]
     [SerializeField] private int maxStock;
 
-    public DayTime dayTime;
-    
+    [HideInInspector] public DayTime dayTime = DayTime.Morning;
+    private Dictionary<string, int> productPrices;
     private int currentStock;
     private PlayerController playerController;
     private Action<int> updateMoneyUI, updateReputationUI;
@@ -26,6 +24,7 @@ public class GameManager : MonoBehaviour {
     private GameObject lastButton;
     private int money = 100;
     private int reputation;
+    private GameObject pausePanel;
 
     private void Awake() {
         //Set product list for prices
@@ -56,6 +55,16 @@ public class GameManager : MonoBehaviour {
 
         updateMoneyUI(money);
         updateReputationUI(reputation);
+    }
+
+    public void Pause() {
+        if (!pausePanel)
+            pausePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
+                pausePanel = go.Result;
+                pausePanel.SetActive(true);
+            };
+        else
+            pausePanel.SetActive(true);
     }
 
     public int GetIngredientAmount(IngredientSO ingredient) {

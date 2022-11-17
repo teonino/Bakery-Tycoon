@@ -8,13 +8,24 @@ using UnityEngine.UI;
 public class WorkstationButton : MonoBehaviour {
     [SerializeField] private ProductSO product;
     [SerializeField] private GameObject productRequirementPanel;
+    [SerializeField] private RawImage image;
+    [SerializeField] private TextMeshProUGUI productIngredientsText;
+    [SerializeField] private TextMeshProUGUI productCreatedText;
 
-    public WorkstationManager workplacePanel;
-    public bool requirementMet;
+    [HideInInspector] public WorkstationManager workplacePanel;
+    [HideInInspector] public bool requirementMet;
 
     private void Start() {
-        GetComponentInChildren<TextMeshProUGUI>().SetText(product.name);
-        GetComponentInChildren<RawImage>().texture = product.image;
+        productCreatedText.SetText(product.name + " x"+product.nbCreated);
+        image.texture = product.image;
+
+        productIngredientsText.SetText("Ingredients :\n");
+        for (int i = 0; i < product.ingredients.Count; i++) {
+            productIngredientsText.text += "    " + product.ingredients[i].name;
+            if (i < product.ingredients.Count - 1) 
+                productIngredientsText.text += ",\n";
+        }
+        productIngredientsText.text += "\nCrafting station :\n    " + product.craftStationRequired.ToString();
 
         if (!requirementMet) {
             GetComponent<Button>().enabled = false; // if requirement are not met, disable button

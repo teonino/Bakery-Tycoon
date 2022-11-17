@@ -45,6 +45,10 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+    private void OnPause(InputAction.CallbackContext context) {
+        FindObjectOfType<GameManager>().Pause();
+        DisableInput();
+    }
 
     public void EnableInput() {
         playerInput.Player.Enable();
@@ -55,5 +59,6 @@ public class PlayerController : MonoBehaviour {
     }
     private void OnEnable() {
         playerInput.Player.Interact.performed += OnInterract;
+        playerInput.Player.Pause.performed += OnPause;
     }
 }

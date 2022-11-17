@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum CraftingStationType {
-    Hoven, 
+    Hoven,
     Fryer,
 }

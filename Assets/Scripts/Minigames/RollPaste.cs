@@ -11,6 +11,7 @@ public class RollPaste : Minigame {
     [SerializeField] private float checkAngleTime = 0.1f;
     [SerializeField] private int spinRows = 10;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI feedbackText;
 
     private Vector2 joyStickInput = Vector2.zero;
     private Vector2 lastJoyStickInput = Vector2.zero;
@@ -32,12 +33,14 @@ public class RollPaste : Minigame {
         if (inputType == InputType.Gamepad) {
             string inputName = GetControl(playerController.playerInput.RollPaste.RollPasteAction);
             text.SetText("Rotate your " + inputName);
+            feedbackText.SetText("Spin remaining : " + nbSpinRequired);
         }
         else {
             InputAction action = playerController.playerInput.RollPaste.RollPasteAction;
             string inputName = GetControl(playerController.playerInput.RollPaste.RollPasteAction, 0);
             string inputNameTwo = GetControl(playerController.playerInput.RollPaste.RollPasteAction, 1);
             text.SetText("Spam alternavely : " + inputName + " & " + inputNameTwo);
+            feedbackText.SetText("Remaining : " + nbOscilationAimed);
         }
     }
 
@@ -56,7 +59,7 @@ public class RollPaste : Minigame {
                 spinning = false;
 
             if (spinning) {
-                print("Spin : " + ++nbSpin);
+                feedbackText.SetText("Spin remaining : " + (nbSpinRequired - ++nbSpin));
                 spinCounter = 0;
             }
 
@@ -66,7 +69,7 @@ public class RollPaste : Minigame {
         else {
             if (joyStickInput != lastJoyStickInput && joyStickInput != Vector2.zero) {
                 lastJoyStickInput = joyStickInput;
-                nbOscilation++;
+                feedbackText.SetText("Remaining : " + (nbOscilationAimed - ++nbOscilation));
                 if (nbOscilation >= nbOscilationAimed)
                     End();
             }
