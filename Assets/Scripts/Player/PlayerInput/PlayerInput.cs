@@ -235,6 +235,45 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Pause"",
+            ""id"": ""6a5a6ca7-3bde-4ff0-b850-4c87fb908a62"",
+            ""actions"": [
+                {
+                    ""name"": ""Unpause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ddab65e-39f3-4f46-ab4b-784079efd230"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a0c24241-fb5e-4d1e-af4b-a855f76f7154"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b759dc79-d7e2-4877-b83a-3858c2522dd9"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Building"",
             ""id"": ""6ad8660a-8a33-4654-8768-79f81f54fef0"",
             ""actions"": [
@@ -815,45 +854,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Pause"",
-            ""id"": ""6a5a6ca7-3bde-4ff0-b850-4c87fb908a62"",
-            ""actions"": [
-                {
-                    ""name"": ""Unpause"",
-                    ""type"": ""Button"",
-                    ""id"": ""4ddab65e-39f3-4f46-ab4b-784079efd230"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""a0c24241-fb5e-4d1e-af4b-a855f76f7154"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Unpause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b759dc79-d7e2-4877-b83a-3858c2522dd9"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Unpause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -886,6 +886,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        // Pause
+        m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
+        m_Pause_Unpause = m_Pause.FindAction("Unpause", throwIfNotFound: true);
         // Building
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_Quit = m_Building.FindAction("Quit", throwIfNotFound: true);
@@ -912,9 +915,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // CutPaste
         m_CutPaste = asset.FindActionMap("CutPaste", throwIfNotFound: true);
         m_CutPaste_CutPasteAction = m_CutPaste.FindAction("CutPasteAction", throwIfNotFound: true);
-        // Pause
-        m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
-        m_Pause_Unpause = m_Pause.FindAction("Unpause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1019,6 +1019,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Pause
+    private readonly InputActionMap m_Pause;
+    private IPauseActions m_PauseActionsCallbackInterface;
+    private readonly InputAction m_Pause_Unpause;
+    public struct PauseActions
+    {
+        private @PlayerInput m_Wrapper;
+        public PauseActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Unpause => m_Wrapper.m_Pause_Unpause;
+        public InputActionMap Get() { return m_Wrapper.m_Pause; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseActions set) { return set.Get(); }
+        public void SetCallbacks(IPauseActions instance)
+        {
+            if (m_Wrapper.m_PauseActionsCallbackInterface != null)
+            {
+                @Unpause.started -= m_Wrapper.m_PauseActionsCallbackInterface.OnUnpause;
+                @Unpause.performed -= m_Wrapper.m_PauseActionsCallbackInterface.OnUnpause;
+                @Unpause.canceled -= m_Wrapper.m_PauseActionsCallbackInterface.OnUnpause;
+            }
+            m_Wrapper.m_PauseActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Unpause.started += instance.OnUnpause;
+                @Unpause.performed += instance.OnUnpause;
+                @Unpause.canceled += instance.OnUnpause;
+            }
+        }
+    }
+    public PauseActions @Pause => new PauseActions(this);
 
     // Building
     private readonly InputActionMap m_Building;
@@ -1290,39 +1323,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CutPasteActions @CutPaste => new CutPasteActions(this);
-
-    // Pause
-    private readonly InputActionMap m_Pause;
-    private IPauseActions m_PauseActionsCallbackInterface;
-    private readonly InputAction m_Pause_Unpause;
-    public struct PauseActions
-    {
-        private @PlayerInput m_Wrapper;
-        public PauseActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Unpause => m_Wrapper.m_Pause_Unpause;
-        public InputActionMap Get() { return m_Wrapper.m_Pause; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PauseActions set) { return set.Get(); }
-        public void SetCallbacks(IPauseActions instance)
-        {
-            if (m_Wrapper.m_PauseActionsCallbackInterface != null)
-            {
-                @Unpause.started -= m_Wrapper.m_PauseActionsCallbackInterface.OnUnpause;
-                @Unpause.performed -= m_Wrapper.m_PauseActionsCallbackInterface.OnUnpause;
-                @Unpause.canceled -= m_Wrapper.m_PauseActionsCallbackInterface.OnUnpause;
-            }
-            m_Wrapper.m_PauseActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Unpause.started += instance.OnUnpause;
-                @Unpause.performed += instance.OnUnpause;
-                @Unpause.canceled += instance.OnUnpause;
-            }
-        }
-    }
-    public PauseActions @Pause => new PauseActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -1346,6 +1346,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IPauseActions
+    {
+        void OnUnpause(InputAction.CallbackContext context);
     }
     public interface IBuildingActions
     {
@@ -1379,9 +1383,5 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface ICutPasteActions
     {
         void OnCutPasteAction(InputAction.CallbackContext context);
-    }
-    public interface IPauseActions
-    {
-        void OnUnpause(InputAction.CallbackContext context);
     }
 }

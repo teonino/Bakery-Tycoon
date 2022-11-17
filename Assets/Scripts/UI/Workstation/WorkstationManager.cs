@@ -112,22 +112,18 @@ public class WorkstationManager : MonoBehaviour {
             else {
                 if (!currentProduct.hasPaste) {
                     currentProduct.asset.InstantiateAsync().Completed += (go) => {
-                        if (currentMinigameCounter == 0)
-                            go.Result.GetComponent<Product>().quality = 0;
-                        else
+                        if (currentMinigameCounter >= 0)
                             go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
                         workplace.CloseWorkplace(go.Result);
                         ResetManager();
                     };
                 }
                 else {
-                    ProductSO gos = currentProduct;
+                    ProductSO tmpProduct = currentProduct;
                     currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
-                        if (currentMinigameCounter == 0)
-                            go.Result.GetComponent<Product>().quality = 0;
-                        else
+                        if (currentMinigameCounter > 0)
                             go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
-                        go.Result.GetComponent<Product>().productSO = gos;
+                        go.Result.GetComponent<Product>().SetProduct(tmpProduct);
                         workplace.CloseWorkplace(go.Result);
                         ResetManager();
                     };
