@@ -4,19 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference productButtonAsset;
-    public bool skipRequirement = false;
-    public bool skipMinigame = false;
+    [SerializeField] private AssetReference productRackAsset;
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
+    private List<GameObject> productRackList;
     private Workstation workplace;
     private int nbButton = 0;
     private int currentMinigameCounter = 0;
     private Minigame currentMinigame;
     private int itemQuality = 0;
+    private GameObject content;
+    private int lenght;
+
+    [HideInInspector] public bool skipRequirement = false;
+    [HideInInspector] public bool skipMinigame = false;
     [HideInInspector] public ProductSO currentProduct;
 
     //Create buttons
@@ -24,16 +30,27 @@ public class WorkstationManager : MonoBehaviour {
         gameManager = FindObjectOfType<GameManager>();
         workplace = FindObjectOfType<Workstation>();
         productButtonList = new List<GameObject>();
+        productRackList = new List<GameObject>();
+        content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+        lenght = gameManager.GetProductsLenght();
 
-        for (int i = 0; i < gameManager.GetProductsLenght(); i++) {
-            productButtonAsset.InstantiateAsync(transform).Completed += (go) => {
+        for (int i = 0; i < lenght; i++) {
+            productButtonAsset.InstantiateAsync().Completed += (go) => {
                 WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
                 button.workplacePanel = this;
                 button.SetProduct(gameManager.GetProductList()[nbButton]);
                 button.requirementMet = CheckRequirement(gameManager.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
-                SetupButtons(button.gameObject);
+                nbButton++;
+                SetupButtons();
             };
+
+            if (i % 4 == 0) {
+                productRackAsset.InstantiateAsync(content.transform).Completed += (go) => {
+                    productRackList.Add(go.Result);
+                    SetupButtons();
+                };
+            }
         }
     }
 
@@ -64,15 +81,19 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     //Once enough button created, we position them
-    private void SetupButtons(GameObject button) {
-        if (nbButton == gameManager.GetProductsLenght() - 1) {
-            for (int i = 0; i < gameManager.GetProductsLenght(); i++)
-                productButtonList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(20 + 110 * (i % 4), -20 - (110 * (i / 4)), 0);
+    private void SetupButtons() {
+        if (productButtonList.Count > 0 && nbButton == lenght) {
+            int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.width / productButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            for (int i = 0; i < lenght; i++)
+                if (i / maxButtonInRack < productRackList.Count) {
+                    productButtonList[i].transform.SetParent(productRackList[i / maxButtonInRack].transform);
+                    productButtonList[i].transform.localScale = Vector3.one;
+                }
+            if (gameManager.IsGamepad())
+                gameManager.SetEventSystemToStartButton(productButtonList[0]);
+            else
+                gameManager.SetEventSystemToStartButton(null);
         }
-
-        if (nbButton == 0 && gameManager.IsGamepad())
-            gameManager.SetEventSystemToStartButton(button.gameObject);
-        nbButton++;
     }
 
     public void SetProduct(ProductSO product) {
@@ -93,22 +114,18 @@ public class WorkstationManager : MonoBehaviour {
             else {
                 if (!currentProduct.hasPaste) {
                     currentProduct.asset.InstantiateAsync().Completed += (go) => {
-                        if (currentMinigameCounter == 0)
-                            go.Result.GetComponent<Product>().quality = 0;
-                        else
+                        if (currentMinigameCounter >= 0)
                             go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
                         workplace.CloseWorkplace(go.Result);
                         ResetManager();
                     };
                 }
                 else {
-                    ProductSO gos = currentProduct;
+                    ProductSO tmpProduct = currentProduct;
                     currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
-                        if (currentMinigameCounter == 0)
-                            go.Result.GetComponent<Product>().quality = 0;
-                        else
+                        if (currentMinigameCounter > 0)
                             go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
-                        go.Result.GetComponent<Product>().productSO = gos;
+                        go.Result.GetComponent<Product>().SetProduct(tmpProduct);
                         workplace.CloseWorkplace(go.Result);
                         ResetManager();
                     };

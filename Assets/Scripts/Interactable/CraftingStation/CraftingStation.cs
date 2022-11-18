@@ -33,6 +33,7 @@ public class CraftingStation : Interactable {
                 Transform arm = playerController.gameObject.transform.GetChild(0);
                 playerController.itemHolded = go.Result;
                 go.Result.GetComponent<Product>().quality = itemInStation.GetComponent<Product>().quality;
+                go.Result.GetComponent<Product>().amount = itemInStation.GetComponent<Product>().amount;
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
                 itemInStation = null;

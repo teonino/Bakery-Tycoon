@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 public abstract class Minigame : MonoBehaviour {
 
     [SerializeField] protected CraftingStationType craftingStationRequired;
+    [SerializeField] protected float minTime;
+    [SerializeField] protected float maxTime;
+    [SerializeField] protected float step;
     //public AssetReference minigameAsset;
     protected WorkstationManager workplacePanel;
     protected GameManager gameManager;
@@ -26,10 +29,16 @@ public abstract class Minigame : MonoBehaviour {
         DisableInputs();
         DirtyCraftingStation();
         Addressables.ReleaseInstance(gameObject);
-        workplacePanel.MinigameComplete(Random.Range(1, 101));
+        workplacePanel.MinigameComplete(GetQuality());
     }
 
-    protected float GetTimer() => endTime - launchTime; //Return time taken to complete the minigame
+    private int GetQuality() {
+         float time = endTime - launchTime;
+
+        if (time < minTime) return 100;
+        else if (time > maxTime) return 10;
+        else return Mathf.RoundToInt((maxTime - minTime) * (maxTime - minTime) * 10 - (time - minTime) / step * (maxTime - minTime));
+    }
 
     protected void DirtyCraftingStation() {
         GameObject go = null;
