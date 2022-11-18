@@ -23,6 +23,7 @@ public class AICustomer : Interactable {
     private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private MainShelf shelf;
     private Chair chair;
+    private int conversationRemaining = 2;
     private bool waiting = false;
     private bool leaving = false;
     private bool sitting = false;
@@ -172,12 +173,14 @@ public class AICustomer : Interactable {
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
     public override void Effect() {
-        canInteract = true;
-        if (regular && canInteract) {
+        if (conversationRemaining > 0 && regular && canInteract) {
             playerController.DisableInput();
             assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
                 go.Result.GetComponent<DialogueManager>().GetDialogues(1);
             Time.timeScale = 0;
+            conversationRemaining--;
         }
     }
 }
+
+

@@ -43,4 +43,9 @@ public class PriceButton : MonoBehaviour {
         priceText.text = gameManager.GetProductPrice(product) + "";
         gameManager.SetEventSystemToLastButton();
     }
+
+    public void CheckPrice() {
+        if (priceText.text.ToString().Contains("-"))
+            priceText.text = priceText.text.ToString().Replace("-", "");
+    }
 }

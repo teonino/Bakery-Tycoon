@@ -4,10 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TabsManagement : MonoBehaviour {
-    [Header("Menu Panel")]
-    public List<GameObject> differentPanel;
-
-    [Header("Tabs")]
+    public List<GameObject> panels;
     [SerializeField] private List<Button> tabs;
 
     [Header("Tab Color")]
@@ -17,9 +14,9 @@ public class TabsManagement : MonoBehaviour {
     private GameObject currentPanel;
     private GameManager gameManager;
 
-    private void OnEnable() {
+    private void Start() {
         gameManager = FindObjectOfType<GameManager>();
-        currentPanel = differentPanel[1];
+        currentPanel = panels[0];
 
         if (gameManager.IsGamepad()) {
             gameManager.SetEventSystemToStartButton(tabs[0].gameObject);
@@ -28,37 +25,35 @@ public class TabsManagement : MonoBehaviour {
 
     public void ShowPricePanel() {
         currentPanel.SetActive(false);
-        differentPanel[0].SetActive(true);
-        currentPanel = differentPanel[0];
+        panels[0].SetActive(true);
+        currentPanel = panels[0];
         ResetTheColor();
-        //Tabs[0].GetComponent<Image>().color = SelectedTabsColor;
     }
 
     public void ShowHiringPanel() {
-        differentPanel[3].SetActive(true);
+        panels[3].SetActive(true);
         ResetTheColor();
-        //Tabs[1].GetComponent<Image>().color = SelectedTabsColor;
     }
 
     public void ShowIakePanel() {
-        differentPanel[2].SetActive(true);
+        currentPanel.SetActive(false);
+        panels[2].SetActive(true);
+        currentPanel = panels[2];
         ResetTheColor();
-        //Tabs[2].GetComponent<Image>().color = SelectedTabsColor;
     }
 
     public void ShowAmafoodPanel() {
         currentPanel.SetActive(false);
-        differentPanel[1].SetActive(true);
-        currentPanel = differentPanel[1];
+        panels[1].SetActive(true);
+        currentPanel = panels[1];
         ResetTheColor();
-        //Tabs[3].GetComponent<Image>().color = SelectedTabsColor;
     }
 
     public void ShowDetailsPanelProduct() {
-        differentPanel[4].transform.SetAsLastSibling();
+        panels[4].transform.SetAsLastSibling();
     }
     public void ShowYourCartPanel() {
-        differentPanel[5].transform.SetAsLastSibling();
+        panels[5].transform.SetAsLastSibling();
     }
 
     public void ResetTheColor() {

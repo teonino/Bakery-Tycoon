@@ -16,15 +16,15 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private int maxStock;
 
     [HideInInspector] public DayTime dayTime = DayTime.Morning;
-    private Dictionary<string, int> productPrices;
-    private int currentStock;
-    private PlayerController playerController;
     private Action<int> updateMoneyUI, updateReputationUI;
+    private Dictionary<string, int> productPrices;
+    private PlayerController playerController;
     private DayStatistics dayStatistics;
     private GameObject lastButton;
+    private GameObject pausePanel;
     private int money = 100;
     private int reputation;
-    private GameObject pausePanel;
+    private int currentStock;
 
     private void Awake() {
         //Set product list for prices

@@ -91,6 +91,8 @@ public class WorkstationManager : MonoBehaviour {
                 }
             if (gameManager.IsGamepad())
                 gameManager.SetEventSystemToStartButton(productButtonList[0]);
+            else
+                gameManager.SetEventSystemToStartButton(null);
         }
     }
 

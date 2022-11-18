@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour {
+    [SerializeField] private GameObject resumeButton;
     GameManager gameManager;
 
     private void OnEnable() {
         Time.timeScale = 0f;
         gameManager.GetPlayerController().playerInput.Pause.Enable();
+        if (gameManager.IsGamepad())
+            gameManager.SetEventSystemToStartButton(resumeButton);
+        else
+            gameManager.SetEventSystemToStartButton(null);
     }
 
     private void Awake() {
