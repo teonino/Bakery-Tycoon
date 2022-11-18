@@ -14,7 +14,7 @@ public class CheckCollision : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag != "Floor") {
+        if (collision.gameObject.tag != "Floor" && collision.gameObject.tag != "Wall") {
             
             //Vector3[] vertices = mesh.vertices;
             //for (int i = 0; i < vertices.Length; i++) {
@@ -27,7 +27,7 @@ public class CheckCollision : MonoBehaviour {
         }
     }
     private void OnCollisionExit(Collision collision) {
-        if (collision.gameObject.tag != "Floor") {
+        if (collision.gameObject.tag != "Floor" && collision.gameObject.tag != "Wall") {
             nbObjectInCollision--;
             if (nbObjectInCollision == 0)
                 GetComponent<MeshRenderer>().material = initialMaterial;
