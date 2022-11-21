@@ -56,6 +56,20 @@ public class TabsManagement : MonoBehaviour {
         panels[5].transform.SetAsLastSibling();
     }
 
+    public void ShowYourAccountPanel() {
+        currentPanel.SetActive(false);
+        panels[3].SetActive(true);
+        currentPanel = panels[3];
+        ResetTheColor();
+    }
+
+    public void ShowStatisticPanel() {
+        currentPanel.SetActive(false);
+        panels[4].SetActive(true);
+        currentPanel = panels[4];
+        ResetTheColor();
+    }
+
     public void ResetTheColor() {
         //for (int i = 0; i < Tabs.Count; i++)
         //{
