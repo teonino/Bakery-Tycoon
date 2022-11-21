@@ -124,8 +124,8 @@ public class WorkstationManager : MonoBehaviour {
                     ProductSO tmpProduct = currentProduct;
                     currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
                         if (currentMinigameCounter > 0)
-                            go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
-                        go.Result.GetComponent<Product>().SetProduct(tmpProduct);
+                            go.Result.GetComponent<ProductHolder>().product.quality = itemQuality / currentMinigameCounter;
+                        go.Result.GetComponent<ProductHolder>().product.SetProduct(tmpProduct);
                         workplace.CloseWorkplace(go.Result);
                         ResetManager();
                     };

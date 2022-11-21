@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Product : MonoBehaviour
-{
+[System.Serializable]
+public class Product {
     public ProductSO productSO;
     public int quality;
     public int amount;
@@ -15,4 +15,16 @@ public class Product : MonoBehaviour
     public string GetName() => productSO.name;
     public float GetPrice() => productSO.price;
     public CraftingStationType GetCraftingStation() => productSO.craftStationRequired;
+
+    public Product(Product product) {
+        this.productSO = product.productSO;
+        this.quality = product.quality;
+        this.amount = product.amount;
+    }
+
+    public Product() {
+        this.productSO = null;
+        this.quality = 0;
+        this.amount = 0;
+    }
 }

@@ -19,6 +19,7 @@ public class AICustomer : Interactable {
 
     private GameObject productCanvas; //Stores gameobject to release instance after
     private GameObject item;
+    private GameObject paymentCanvasGO;
     private SpawnCustomer spawner;
     private Vector3 spawnPosition; //Return to the exit once customer is leaving
     private MainShelf shelf;
@@ -28,6 +29,7 @@ public class AICustomer : Interactable {
     private bool leaving = false;
     private bool sitting = false;
     private bool canInteract = false;
+    private Coroutine waitingCoroutine;
 
     private new void Awake() {
         base.Awake();
@@ -60,22 +62,22 @@ public class AICustomer : Interactable {
         //Go to the Queue
         if (agent.remainingDistance < 1 && !waiting) {
             waiting = true;
-            StartCoroutine(CustomerWaiting(waitingTime));
+            waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime));
         }
 
         //Buy item and leave
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.GetItem() && waiting && shelf.IsFirstInQueue(this)) {
-            if (shelf.GetItem().GetComponent<Product>().GetName() == requestedProduct.name && shelf.GetItem().GetComponent<Product>().tag != "Paste") {
+            if (shelf.GetItem().GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && shelf.GetItem().GetComponent<ProductHolder>().tag != "Paste") {
                 //Stop waiting
-                StopAllCoroutines();
+                StopCoroutine(waitingCoroutine);
                 //Take item
                 if (!item) {
-                    if (shelf.GetItem().GetComponent<Product>().amount > 1) {
-                        shelf.GetItem().GetComponent<Product>().productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                    if (shelf.GetItem().GetComponent<ProductHolder>().product.amount > 1) {
+                        shelf.GetItem().GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
                             TakeItem();
                         };
-                        shelf.GetItem().GetComponent<Product>().amount--;
+                        shelf.GetItem().GetComponent<ProductHolder>().product.amount--;
                     }
                     else {
                         item = shelf.GetItem();
@@ -99,15 +101,17 @@ public class AICustomer : Interactable {
 
     public void TakeItem() {
         item.transform.localPosition = Vector3.up * 1.25f;
-        item.GetComponent<Product>().quality = shelf.GetItem().GetComponent<Product>().quality;
-        gameManager.AddProductSold(item.GetComponent<Product>().productSO);
-        DisplayPayment();
+        item.GetComponent<ProductHolder>().product.quality = shelf.GetItem().GetComponent<ProductHolder>().product.quality;
+        gameManager.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
+
         if (productCanvas)
             Addressables.ReleaseInstance(productCanvas);
         if (regular)
             Sit();
         else
             Leave();
+
+        DisplayPayment();
     }
 
     private void DestroyCustomer() {
@@ -155,21 +159,18 @@ public class AICustomer : Interactable {
 
     //Display the payement
     public void DisplayPayment() {
-        int totalPrice = gameManager.GetProductPrice(item.GetComponent<Product>().productSO) + gameManager.GetProductPrice(item.GetComponent<Product>().productSO) * item.GetComponent<Product>().quality / 100;
+        int totalPrice = gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO) + gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO) * item.GetComponent<ProductHolder>().product.quality / 100;
+
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = shelf.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + totalPrice + "€";
-            StartCoroutine(DisplayPaymentCoroutine(go.Result));
             requestedProduct = null;
         };
+
         gameManager.AddMoney(totalPrice);
-        gameManager.AddReputation(item.GetComponent<Product>().quality);
+        gameManager.AddReputation(item.GetComponent<ProductHolder>().product.quality);
     }
 
-    private IEnumerator DisplayPaymentCoroutine(GameObject go) {
-        yield return new WaitForSeconds(2);
-        Addressables.ReleaseInstance(go);
-    }
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
     public override void Effect() {

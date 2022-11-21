@@ -73,7 +73,7 @@ public class SpawnCustomer : MonoBehaviour {
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
         foreach (Shelf shelf in shelves) {
             if (shelf.GetItem()) {
-                availableProduct.Add(shelf.GetItem().GetComponent<Product>().productSO);
+                availableProduct.Add(shelf.GetItem().GetComponent<ProductHolder>().product.productSO);
             }
         }
 

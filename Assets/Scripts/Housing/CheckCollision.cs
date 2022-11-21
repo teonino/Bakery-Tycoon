@@ -15,13 +15,6 @@ public class CheckCollision : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag != "Floor" && collision.gameObject.tag != "Wall") {
-            
-            //Vector3[] vertices = mesh.vertices;
-            //for (int i = 0; i < vertices.Length; i++) {
-            //    if (collision.collider.bounds.Contains(vertices[i]))
-            //        print("yes");
-            //}
-
             nbObjectInCollision++;
             GetComponent<MeshRenderer>().material = collidingMaterial;
         }

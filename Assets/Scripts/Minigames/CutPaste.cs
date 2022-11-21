@@ -31,13 +31,6 @@ public class CutPaste : Minigame {
         if (slider.value == slider.maxValue || slider.value == slider.minValue)  
             sliderValueChange *= -1;
 
-        //if (slider.value >= minValue && slider.value <= maxValue) {
-        //    sliderFiller.color = Color.green;
-        //}
-        //else {
-        //    sliderFiller.color = Color.blue;
-        //}
-
         slider.value += Time.deltaTime * sliderValueChange;
     }
 

@@ -8,20 +8,28 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour {
 
-    [SerializeField] private float duration;
+    [SerializeField] Slider readySlider;
+    [SerializeField] Slider burningSlider;
+    [SerializeField] Image readyFill;
+    [SerializeField] Image burningFill;
+    private float duration;
+    private float burnDuration = 5;
     public Action onDestroy;
+    public bool burned = false;
 
     private float timeElapsed = 0;
 
-    // Start is called before the first frame update
     void Update() {
-        GetComponent<Slider>().value = Mathf.Lerp(0, 1, timeElapsed / duration);
         timeElapsed += Time.deltaTime;
-
+        readySlider.value = Mathf.Lerp(0, 1, timeElapsed / duration);
         if (timeElapsed > duration) {
-            if (onDestroy != null)
-                onDestroy.Invoke();
-            Addressables.ReleaseInstance(transform.parent.gameObject);
+            readyFill.color = Color.green;
+            burningSlider.gameObject.SetActive(true);
+            burningSlider.value = Mathf.Lerp(0, 1, (timeElapsed - duration) / burnDuration);
+            if (timeElapsed > duration + burnDuration) {
+                burned = true;
+                //Reduce reputation
+            }
         }
     }
 
