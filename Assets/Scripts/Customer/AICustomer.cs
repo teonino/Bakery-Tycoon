@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,163 +7,79 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 
 public class AICustomer : Interactable {
-    [SerializeField] private AssetReference assetProductCanvas;
-    [SerializeField] private AssetReference assetPaymentCanvas;
-    [SerializeField] private AssetReference assetDialoguePanel;
-    [SerializeField] private float waitingTime = 5f; //Time before customer leaves after ordering
-    [SerializeField] private float waitingTimeSitting = 10f; //Time before customer leaves after sitting
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private bool regular = false;
+    [SerializeField] protected AssetReference assetProductCanvas;
+    [SerializeField] protected AssetReference assetPaymentCanvas;
+    [SerializeField] protected float waitingTime = 5f; 
+    [SerializeField] protected NavMeshAgent agent;
 
     [HideInInspector] public ProductSO requestedProduct;
-    [HideInInspector] public bool inQueue = false;
 
-    private GameObject productCanvas; //Stores gameobject to release instance after
-    private GameObject item;
-    private GameObject paymentCanvasGO;
-    private SpawnCustomer spawner;
-    private Vector3 spawnPosition; //Return to the exit once customer is leaving
-    private MainShelf shelf;
-    private Chair chair;
-    private int conversationRemaining = 2;
-    private bool waiting = false;
-    private bool leaving = false;
-    private bool sitting = false;
-    private bool canInteract = false;
-    private Coroutine waitingCoroutine;
+    public AIState state = AIState.idle;
+    protected GameObject productCanvas; 
+    protected GameObject item;
+    protected SpawnCustomer spawner;
+    protected Vector3 spawnPosition; 
+    protected Coroutine waitingCoroutine;
 
-    private new void Awake() {
+    protected new void Awake() {
         base.Awake();
+        gameManager = FindObjectOfType<GameManager>();
         spawner = FindObjectOfType<SpawnCustomer>();
-        shelf = FindObjectOfType<MainShelf>();
-
-        //Check Queue positions
-        shelf.GetAvailableQueuePosition(this);
     }
 
     public void InitCustomer() {
-        if (inQueue) {
-            //Instantiate panel that display the requested product
-            assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
-                productCanvas = go.Result;
-                productCanvas.transform.SetParent(transform);
-                productCanvas.transform.position = transform.position + Vector3.up * 2;
-                if (requestedProduct)
-                    productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
-                else
-                    print("requestedProductNull");
-            };
-            spawnPosition = transform.position;
-        }
-        else
-            DestroyCustomer();
+        assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
+            productCanvas = go.Result;
+            productCanvas.transform.SetParent(transform);
+            productCanvas.transform.position = transform.position + Vector3.up * 2;
+            if (requestedProduct)
+                productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
+            else
+                print("requestedProductNull");
+        };
+        spawnPosition = transform.position;
     }
 
-    void FixedUpdate() {
-        //Go to the Queue
-        if (agent.remainingDistance < 1 && !waiting) {
-            waiting = true;
-            waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime));
-        }
-
-        //Buy item and leave
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.GetItem() && waiting && shelf.IsFirstInQueue(this)) {
-            if (shelf.GetItem().GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && shelf.GetItem().GetComponent<ProductHolder>().tag != "Paste") {
-                //Stop waiting
-                StopCoroutine(waitingCoroutine);
-                //Take item
-                if (!item) {
-                    if (shelf.GetItem().GetComponent<ProductHolder>().product.amount > 1) {
-                        shelf.GetItem().GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
-                            item = go.Result;
-                            TakeItem();
-                        };
-                        shelf.GetItem().GetComponent<ProductHolder>().product.amount--;
-                    }
-                    else {
-                        item = shelf.GetItem();
-                        item.transform.SetParent(transform);
-                        TakeItem();
-                        shelf.RemoveItem();
-                    }
-                }
-            }
-        }
-        if (sitting && chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1) {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-            StartCoroutine(CustomerWaiting(waitingTimeSitting));
-            canInteract = true;
-        }
-
+    protected void FixedUpdate() {
         //Exit the bakery
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(spawnPosition.x, spawnPosition.z)) < 4 && leaving)
+        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(spawnPosition.x, spawnPosition.z)) < 2 && state == AIState.leaving)
             DestroyCustomer();
     }
 
-    public void TakeItem() {
+    public void TakeItem(ProductHolder product, GameObject displayGo) {
         item.transform.localPosition = Vector3.up * 1.25f;
-        item.GetComponent<ProductHolder>().product.quality = shelf.GetItem().GetComponent<ProductHolder>().product.quality;
-        gameManager.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
+        item.GetComponent<ProductHolder>().product.quality = product.product.quality;
 
+        gameManager.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
         if (productCanvas)
             Addressables.ReleaseInstance(productCanvas);
-        if (regular)
-            Sit();
-        else
-            Leave();
-
-        DisplayPayment();
+        DisplayPayment(displayGo);
     }
 
-    private void DestroyCustomer() {
+    protected void DestroyCustomer() {
         if (item)
             Addressables.ReleaseInstance(item);
         spawner.RemoveCustomer();
         Addressables.ReleaseInstance(gameObject);
     }
 
-    private IEnumerator CustomerWaiting(float time) {
+    protected IEnumerator CustomerWaiting(float time, Action leavingFunction) {
         yield return new WaitForSeconds(time);
-        Leave();
-    }
-    private void Sit() {
-        List<Table> tables = new List<Table>(FindObjectsOfType<Table>());
-        foreach (Table table in tables) {
-            Chair chair = table.GetChairAvailable();
-            if (chair) {
-                this.chair = chair;
-                this.chair.ocuppied = true;
-                sitting = true;
-                leaving = false;
-                agent.SetDestination(chair.transform.position);
-            }
-        }
-        if (inQueue)
-            shelf.RemoveCustomerInQueue(this);
-
-        if (!chair)
-            Leave();
+        leavingFunction.Invoke();
     }
 
     //Remove product panel + exit bakery
-    private void Leave() {
-        leaving = true;
-        waiting = sitting = canInteract = false;
-
-        if (inQueue)
-            shelf.RemoveCustomerInQueue(this);
-        if (chair)
-            chair.ocuppied = false;
-
+    protected void Leave() {
+        state = AIState.leaving;
         agent.SetDestination(spawnPosition);
     }
 
     //Display the payement
-    public void DisplayPayment() {
+    public void DisplayPayment(GameObject displayGO) {
         int totalPrice = gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO) + gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO) * item.GetComponent<ProductHolder>().product.quality / 100;
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
-            go.Result.transform.position = shelf.transform.position + Vector3.up * 2;
+            go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + totalPrice + "€";
             requestedProduct = null;
         };
@@ -174,13 +91,7 @@ public class AICustomer : Interactable {
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
     public override void Effect() {
-        if (conversationRemaining > 0 && regular && canInteract) {
-            playerController.DisableInput();
-            assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
-                go.Result.GetComponent<DialogueManager>().GetDialogues(1);
-            Time.timeScale = 0;
-            conversationRemaining--;
-        }
+
     }
 }
 

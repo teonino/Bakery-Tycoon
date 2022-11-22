@@ -80,17 +80,17 @@ public class BuildingMode : Interactable {
                 selectedGo = hit.collider.gameObject;
                 intitialGoLayer = selectedGo.layer;
                 selectedGo.layer = 3;
-                selectedGo.AddComponent<CheckCollision>();
+                selectedGo.AddComponent<CheckCollisionManager>();
                 selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                selectedGo.GetComponent<CheckCollision>().collidingMaterial = collidingMaterial;
+                selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
 
                 ChangeColliderSize(true);
             }
             else {
-                if (selectedGo.GetComponent<CheckCollision>().nbObjectInCollision == 0) {
+                if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
                     currentRaycastlayer = pickUpLayer;
                     selectedGo.layer = intitialGoLayer;
-                    Destroy(selectedGo.GetComponent<CheckCollision>());
+                    Destroy(selectedGo.GetComponent<CheckCollisionManager>());
                     Destroy(selectedGo.GetComponent<Rigidbody>());
 
                     ChangeColliderSize(false);

@@ -15,11 +15,17 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private AssetReference customerAsset;
     [SerializeField] private AssetReference regularCustomerAsset;
 
+    private int nbCustomerSpawned = 0;
+    private Chair currentChair;
+    private Table currentTable;
+    private int indexChair = 0;
     private GameManager gameManager;
-    List<ProductSO> doableProduct;
-    List<ProductSO> availableProduct;
+    private List<ProductSO> doableProduct;
+    private List<ProductSO> availableProduct;
+    private List<Table> tables;
 
     void Start() {
+        tables = new List<Table>(FindObjectsOfType<Table>());
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
         gameManager = FindObjectOfType<GameManager>();
@@ -36,19 +42,34 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.dayTime == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0) {
+            if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0 && CheckChairs()) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
-                    go.Result.name = "RegularCustomer " + nbCustomer;
-                    SetCustomer(go.Result.GetComponent<AICustomer>());
+                    go.Result.name = "RegularCustomer " + nbCustomerSpawned;
+                    SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>());
+                    nbCustomerSpawned++;
                 };
             }
             else {
                 customerAsset.InstantiateAsync(transform).Completed += (go) => {
-                    go.Result.name = "Customer " + nbCustomer;
+                    go.Result.name = "Customer " + nbCustomerSpawned;
                     SetCustomer(go.Result.GetComponent<AICustomer>());
+                    nbCustomerSpawned++;
                 };
             }
         }
+    }
+
+    private bool CheckChairs() {
+        foreach(Table table in tables) {
+            indexChair = table.GetChairAvailable();
+            if (indexChair >= 0)
+                currentChair = table.chairs[indexChair];
+        }
+        if (currentChair) {
+            currentTable = currentChair.table;
+            return true;
+        }
+        return false;
     }
 
     private void SetCustomer(AICustomer customer) {
@@ -56,6 +77,18 @@ public class SpawnCustomer : MonoBehaviour {
         customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
+    }
+
+    private void SetRegularCustomer(AIRegularCustomer customer) {
+        customer.chair = currentChair;
+        customer.chair.ocuppied = true;
+        customer.chair.customer = customer;
+        customer.indexChair = indexChair;
+        customer.table = currentTable;
+        indexChair = 0;
+        currentChair = null;
+        currentTable = null;
+        SetCustomer(customer);
     }
 
     public bool CheckProducts() {

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class QueueShelf : MonoBehaviour
 {
-    public AICustomer customer;
+    public AIRandomCustomer customer;
 }

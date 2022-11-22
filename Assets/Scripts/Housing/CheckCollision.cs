@@ -3,27 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckCollision : MonoBehaviour {
-    public int nbObjectInCollision = 0;
-    public Material collidingMaterial;
-    public Material initialMaterial;
-    private Mesh mesh;
-
-    private void Awake() {
-        initialMaterial = GetComponent<MeshRenderer>().material;
-        mesh = gameObject.GetComponent<MeshFilter>().mesh;
-    }
+    public CheckCollisionManager manager;
+    public int nbCollision = 0;
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag != "Floor" && collision.gameObject.tag != "Wall") {
-            nbObjectInCollision++;
-            GetComponent<MeshRenderer>().material = collidingMaterial;
+            nbCollision++;
+            manager.CheckNbCollision();
+
         }
     }
+
     private void OnCollisionExit(Collision collision) {
         if (collision.gameObject.tag != "Floor" && collision.gameObject.tag != "Wall") {
-            nbObjectInCollision--;
-            if (nbObjectInCollision == 0)
-                GetComponent<MeshRenderer>().material = initialMaterial;
+            nbCollision--;
+            manager.CheckNbCollision();
         }
     }
 }
