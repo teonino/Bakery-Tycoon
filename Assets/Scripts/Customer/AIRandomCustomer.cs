@@ -19,6 +19,7 @@ public class AIRandomCustomer : AICustomer {
             base.InitCustomer();
         else
             DestroyCustomer();
+
         state = AIState.moving;
     }
 

@@ -7,7 +7,8 @@ using UnityEngine.AI;
 
 public class AIRegularCustomer : AICustomer {
 
-    [SerializeField] private AssetReference assetDialoguePanel;
+    [SerializeField] private AssetReference dialoguePanelAsset;
+    [SerializeField] private AssetReference plateAsset;
 
     public Chair chair;
     public int indexChair;
@@ -69,12 +70,17 @@ public class AIRegularCustomer : AICustomer {
         state = AIState.leaving;
         if (chair)
             chair.ocuppied = false;
+
+        plateAsset.InstantiateAsync(table.itemPositions[indexChair].transform).Completed += (go) => {
+            go.Result.transform.localPosition = Vector3.zero;
+            table.items[indexChair] = go.Result;
+        };
     }
 
     public override void Effect() {
         if (conversationRemaining > 0 && state == AIState.canInteract) {
             gameManager.GetPlayerController().DisableInput();
-            assetDialoguePanel.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
+            dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
                 go.Result.GetComponent<DialogueManager>().GetDialogues(1);
             Time.timeScale = 0;
             conversationRemaining--;

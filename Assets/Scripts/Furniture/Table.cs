@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Table : Interactable {
     [SerializeField] public List<Chair> chairs;
-    [SerializeField] private List<GameObject> itemPositions;
+    [SerializeField] public List<GameObject> itemPositions;
 
     public List<GameObject> items;
 
@@ -62,7 +62,7 @@ public class Table : Interactable {
 
         //Can only put item if a customer request it
         for (int i = 0; i < chairs.Count; i++) {
-            if (chairs[i].customer && go) {
+            if (chairs[i].customer && go && go.GetComponent<ProductHolder>()) {
                 if (chairs[i].customer.state != AIState.canInteract && chairs[i].customer.requestedProduct.name == go.GetComponent<ProductHolder>().product.GetName()) {
                     items[i] = go;
                     go = null;

@@ -52,7 +52,7 @@ public class SpawnCustomer : MonoBehaviour {
             else {
                 customerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "Customer " + nbCustomerSpawned;
-                    SetCustomer(go.Result.GetComponent<AICustomer>());
+                    SetCustomer(go.Result.GetComponent<AIRandomCustomer>());
                     nbCustomerSpawned++;
                 };
             }
@@ -72,7 +72,7 @@ public class SpawnCustomer : MonoBehaviour {
         return false;
     }
 
-    private void SetCustomer(AICustomer customer) {
+    private void SetCustomer(AIRandomCustomer customer) {
         customer.requestedProduct = GetRandomProduct();
         customer.InitCustomer();
         doableProduct.Clear();
@@ -88,7 +88,10 @@ public class SpawnCustomer : MonoBehaviour {
         indexChair = 0;
         currentChair = null;
         currentTable = null;
-        SetCustomer(customer);
+        customer.requestedProduct = GetRandomProduct();
+        customer.InitCustomer();
+        doableProduct.Clear();
+        availableProduct.Clear();
     }
 
     public bool CheckProducts() {
@@ -105,7 +108,7 @@ public class SpawnCustomer : MonoBehaviour {
 
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
         foreach (Shelf shelf in shelves) {
-            if (shelf.GetItem()) {
+            if (shelf.GetItem() && shelf.GetItem().tag != "Plate") {
                 availableProduct.Add(shelf.GetItem().GetComponent<ProductHolder>().product.productSO);
             }
         }
