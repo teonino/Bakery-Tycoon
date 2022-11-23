@@ -257,7 +257,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5993127738987492284}
         m_TargetAssemblyTypeName: AmmountManager, Assembly-CSharp
         m_MethodName: PlusButtonIsClicked
         m_Mode: 1
@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 2998586778979957096}
   - component: {fileID: 6853632900600411993}
   - component: {fileID: 6637630064786684082}
+  - component: {fileID: 5993127738987492284}
   m_Layer: 5
   m_Name: AmmountPanel
   m_TagString: Untagged
@@ -348,6 +349,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5993127738987492284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225094370604305230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b7b2d601c45646820360f8dfb2b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountToBuy: 0
+  textAmmount: {fileID: 2917346432714721691}
+  deliveryManager: {fileID: 0}
 --- !u!1 &1630370993542360430
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2123071597615869577}
   - component: {fileID: 1136092761192620243}
-  - component: {fileID: 9100371934735090793}
+  - component: {fileID: 7268768061073336976}
   m_Layer: 5
   m_Name: Stars (2)
   m_TagString: Untagged
@@ -394,7 +410,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630370993542360430}
   m_CullTransparentMesh: 1
---- !u!114 &9100371934735090793
+--- !u!114 &7268768061073336976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,27 +419,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1630370993542360430}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: 112a9f670134dbe4ca7fbb14e4e143c9, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &1644925336277472118
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2186045456430166329}
   - component: {fileID: 8202839698888792039}
-  - component: {fileID: 5539444474081920634}
+  - component: {fileID: 6388189685122776711}
   m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
@@ -816,7 +829,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6242351315588289990}
   m_CullTransparentMesh: 1
---- !u!114 &5539444474081920634
+--- !u!114 &6388189685122776711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -825,27 +838,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 6242351315588289990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: 112a9f670134dbe4ca7fbb14e4e143c9, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &6771586033702295363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,7 +1107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5828061697781070818}
   - component: {fileID: 4773276549275165329}
-  - component: {fileID: 1584348861387884115}
+  - component: {fileID: 4189617303901315157}
   m_Layer: 5
   m_Name: Stars (1)
   m_TagString: Untagged
@@ -1133,7 +1143,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7498050262802320095}
   m_CullTransparentMesh: 1
---- !u!114 &1584348861387884115
+--- !u!114 &4189617303901315157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1142,27 +1152,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7498050262802320095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: 112a9f670134dbe4ca7fbb14e4e143c9, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &7692815263413019079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,7 +1292,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5993127738987492284}
         m_TargetAssemblyTypeName: AmmountManager, Assembly-CSharp
         m_MethodName: MinusButtonIsClicked
         m_Mode: 1
@@ -1576,4 +1583,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   ingredient: {fileID: 0}
+  stockText: {fileID: 3822480988184576228}
+  priceText: {fileID: 4303416423619707415}
+  productImage: {fileID: 4794421682071675149}
   deliveryManager: {fileID: 0}

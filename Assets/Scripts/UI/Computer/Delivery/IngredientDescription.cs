@@ -27,7 +27,6 @@ public class IngredientDescription : MonoBehaviour {
         description.SetText(ingredient.description);
         amounText.SetText(nbIngredient + "");
         gameManager.SetEventSystemToStartButton(startButton);
-        deliveryManager.SetIngredientDescriptionPanel(gameObject);
     }
 
     public void Quit() {

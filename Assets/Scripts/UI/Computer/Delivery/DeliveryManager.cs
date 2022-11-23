@@ -22,7 +22,6 @@ public class DeliveryManager : MonoBehaviour {
     private int lenght;
     private float cartWeight = 0;
     private int cartCost = 0;
-    private GameObject ingredientDescriptionPanel;
 
     public Dictionary<IngredientSO, int> cart;
 
@@ -132,8 +131,8 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
         cartWeight = 0;
         cartCost = 0;
-        if (ingredientDescriptionPanel)
-            ingredientDescriptionPanel.GetComponentInChildren<AmmountManager>().ResetAmount();
+        foreach(GameObject go in ingredientButtonList)
+            go.GetComponentInChildren<AmmountManager>().ResetAmount();
     }
 
 
@@ -152,16 +151,10 @@ public class DeliveryManager : MonoBehaviour {
             ResetCart();
     }
 
-    public void SetIngredientDescriptionPanel(GameObject go) {
-        ingredientDescriptionPanel = go;
-    }
-
     public void Quit(InputAction.CallbackContext context) {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
         playerController.EnableInput();
-        if (ingredientDescriptionPanel)
-            Addressables.ReleaseInstance(ingredientDescriptionPanel);
         computerPanel.SetActive(false);
     }
 }

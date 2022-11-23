@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference productButtonAsset;
     [SerializeField] private AssetReference productRackAsset;
+    [SerializeField] private TextMeshProUGUI stockListText;
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
@@ -20,6 +22,7 @@ public class WorkstationManager : MonoBehaviour {
     private int itemQuality = 0;
     private GameObject content;
     private int lenght;
+    private int maxButtonInRack;
 
     [HideInInspector] public bool skipRequirement = false;
     [HideInInspector] public bool skipMinigame = false;
@@ -33,7 +36,7 @@ public class WorkstationManager : MonoBehaviour {
         productRackList = new List<GameObject>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         lenght = gameManager.GetProductsLenght();
-
+        
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
@@ -42,15 +45,15 @@ public class WorkstationManager : MonoBehaviour {
                 button.requirementMet = CheckRequirement(gameManager.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
                 nbButton++;
-                SetupButtons();
+                SetupRacks();
             };
+        }
 
-            if (i % 4 == 0) {
-                productRackAsset.InstantiateAsync(content.transform).Completed += (go) => {
-                    productRackList.Add(go.Result);
-                    SetupButtons();
-                };
-            }
+        //Setup Stock
+        stockListText.SetText("");
+        List<StockIngredient> stocks = gameManager.GetIngredientList();
+        foreach (StockIngredient stock in stocks) {
+            stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
         }
     }
 
@@ -81,14 +84,29 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     //Once enough button created, we position them
-    private void SetupButtons() {
+    private void SetupRacks() {
         if (productButtonList.Count > 0 && nbButton == lenght) {
-            int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.width / productButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
-            for (int i = 0; i < lenght; i++)
+            maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.width / productButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            for (int i = 0; i < productButtonList.Count; i++) {
+                if (i % maxButtonInRack == 0) {
+                    productRackAsset.InstantiateAsync(content.transform).Completed += (go) => {
+                        productRackList.Add(go.Result);
+                        SetupButton();
+                    };
+                }
+            }
+        }
+    }
+
+    private void SetupButton() {
+        if (productRackList.Count == productButtonList.Count / maxButtonInRack) {
+            for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < productRackList.Count) {
                     productButtonList[i].transform.SetParent(productRackList[i / maxButtonInRack].transform);
                     productButtonList[i].transform.localScale = Vector3.one;
                 }
+            }
+
             if (gameManager.IsGamepad())
                 gameManager.SetEventSystemToStartButton(productButtonList[0]);
             else
@@ -169,6 +187,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void OnDestroy() {
         foreach (GameObject go in productButtonList)
-            Addressables.ReleaseInstance(go);
+            if (go)
+                Addressables.ReleaseInstance(go);
     }
 }
