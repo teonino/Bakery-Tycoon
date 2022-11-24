@@ -19,7 +19,7 @@ public class CameraSwitch : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            cam.transform.position = new Vector3.Lerp(CameraMainRoomPosition.transform.position, CameraStorageRoomPosition.transform.position, lerpRange);
+            //cam.transform.position = new Vector3.Lerp(CameraMainRoomPosition.transform.position, CameraStorageRoomPosition.transform.position, lerpRange);
         }
         print("Storage");
     }
