@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8650891744751930208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.75, y: 1, z: 4.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7472337980670739144}
@@ -48,8 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737fe383455f27249876babd7644365f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  buildingCamera: {fileID: 0}
   pickUpLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -71,7 +69,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8650891744751930208}
-  m_Mesh: {fileID: 8741449976765857406, guid: f2abb93ebfec4514ab105141bcfbcd59, type: 3}
+  m_Mesh: {fileID: 4134458003971577368, guid: 66d04ae34e3f5564b96678718fb745ff, type: 3}
 --- !u!23 &8650891744751930213
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -125,8 +123,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0007095, y: 0.64639485, z: 1}
-  m_Center: {x: -0.000000029802322, y: 0.32680255, z: 0}
+  m_Size: {x: 0.52899504, y: 0.64639485, z: 0.52059364}
+  m_Center: {x: 0.006285906, y: 0.32680255, z: 0.016185284}
 --- !u!1001 &1401518375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,6 +135,10 @@ PrefabInstance:
     - target: {fileID: 1542179197736154871, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: lookCamera
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3454719780001809862, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5963754054195472204, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_SizeDelta.x
