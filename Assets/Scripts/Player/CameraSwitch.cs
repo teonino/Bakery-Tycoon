@@ -20,12 +20,12 @@ public class CameraSwitch : MonoBehaviour
     {
         if (CameraIsMoving == 1)
         {
-            lerpRatio += 1.25f * Time.deltaTime;
+            lerpRatio += 1.0f * Time.deltaTime;
             cam.transform.position = Vector3.Lerp(cam.transform.position, CameraStorageRoomPosition.transform.position, lerpRatio);
         }
         else if (CameraIsMoving == 2)
         {
-            lerpRatio += 1.25f * Time.deltaTime;
+            lerpRatio += 1.0f * Time.deltaTime;
             cam.transform.position = Vector3.Lerp(cam.transform.position, CameraMainRoomPosition.transform.position, lerpRatio);
         }
     }
