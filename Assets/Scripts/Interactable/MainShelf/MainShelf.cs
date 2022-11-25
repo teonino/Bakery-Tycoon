@@ -13,7 +13,7 @@ public class MainShelf : Shelf {
                 queueCustomer.Add(child.GetComponent<QueueShelf>());
     }
 
-    public void GetAvailableQueuePosition(AICustomer customer) {
+    public void GetAvailableQueuePosition(AIRandomCustomer customer) {
         foreach (QueueShelf queuePosition in queueCustomer) {
             if (!queuePosition.customer && !customer.inQueue) {
                 queuePosition.customer = customer;

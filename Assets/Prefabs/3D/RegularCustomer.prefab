@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7689946208896448924}
-  - component: {fileID: 8152154696559590367}
+  - component: {fileID: -6711247576841526447}
   - component: {fileID: 8224689622529937741}
   - component: {fileID: 4166041302804398183}
   - component: {fileID: 76043606779514469}
@@ -31,13 +31,13 @@ Transform:
   m_GameObject: {fileID: 3406051452953038548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.25, y: 1.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8152154696559590367
+--- !u!114 &-6711247576841526447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3406051452953038548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 922e235baf31adb4d8080a747860286c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6daf6d4e78794f448985d81c47a2db49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   assetProductCanvas:
@@ -59,17 +59,23 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  assetDialoguePanel:
+  waitingTime: 10
+  agent: {fileID: 8224689622529937741}
+  requestedProduct: {fileID: 0}
+  state: 0
+  dialoguePanelAsset:
     m_AssetGUID: 2ae4103b4b5e5274ab53f63cea860809
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  waitingTime: 15
-  waitingTimeSitting: 10
-  agent: {fileID: 8224689622529937741}
-  regular: 1
-  requestedProduct: {fileID: 0}
-  inQueue: 0
+  plateAsset:
+    m_AssetGUID: e4c125e2a7eeda84c9e60d4140b1e27f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  chair: {fileID: 0}
+  indexChair: 0
+  table: {fileID: 0}
 --- !u!195 &8224689622529937741
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -80,7 +86,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

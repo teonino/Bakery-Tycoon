@@ -590,6 +590,76 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""SpreadPasteV2"",
+            ""id"": ""e5b85c26-cb34-4ea4-8adb-cace98a48b23"",
+            ""actions"": [
+                {
+                    ""name"": ""SpreadPasteFirstAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""231b9b46-0d1f-4a98-9e47-55d0525dbd61"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpreadPasteSecondAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e047aa21-a1fe-470a-ae81-f7e5837749d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2179660d-064e-43c4-a606-f50ae589c902"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SpreadPasteFirstAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bbc25e8-d74b-45ea-a868-6da609ef7054"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""SpreadPasteFirstAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37c96b08-80ed-48a2-bbe5-88364046a92b"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SpreadPasteSecondAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c35c859b-d3b4-4b6a-8734-2b7baea17d0e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""SpreadPasteSecondAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""BurnTop"",
             ""id"": ""206dee9d-8672-4f18-98b1-d21df08131a6"",
             ""actions"": [
@@ -854,6 +924,138 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""CutPasteV2"",
+            ""id"": ""ec6d81bf-4baa-4509-9b16-2261bef4a38d"",
+            ""actions"": [
+                {
+                    ""name"": ""UpAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ca64dc5-d469-45c2-8ef4-5bf8e7bd641b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DownAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3ac9355-4379-4685-880b-7fee7d0839a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""20540c03-37e6-4e6a-b808-737bc15898ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""7bf61f55-277d-4f4a-ad47-e3d8ae982819"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1cd9eee8-defd-4ea3-b410-16fe183b8d86"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""UpAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0d6b986-4b81-4543-b7ec-44def5b72aad"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""UpAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b71f67b-2858-4b0f-a7e7-fa986f7fe515"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DownAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b1861a6-e422-4a95-8fed-9c84b47f8b9b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""DownAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8573e09-8e79-48b1-af2a-38621ed05cb0"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RightAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a3ff4f4-a361-4bd7-9646-c881a78ac880"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RightAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""969f3827-5010-4304-8ee1-1bd31bac6b92"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LeftAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e97fc0e3-48d5-49e7-b51b-abf75c34df5b"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""LeftAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -903,6 +1105,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // SpreadPaste
         m_SpreadPaste = asset.FindActionMap("SpreadPaste", throwIfNotFound: true);
         m_SpreadPaste_SpreadPasteAction = m_SpreadPaste.FindAction("SpreadPasteAction", throwIfNotFound: true);
+        // SpreadPasteV2
+        m_SpreadPasteV2 = asset.FindActionMap("SpreadPasteV2", throwIfNotFound: true);
+        m_SpreadPasteV2_SpreadPasteFirstAction = m_SpreadPasteV2.FindAction("SpreadPasteFirstAction", throwIfNotFound: true);
+        m_SpreadPasteV2_SpreadPasteSecondAction = m_SpreadPasteV2.FindAction("SpreadPasteSecondAction", throwIfNotFound: true);
         // BurnTop
         m_BurnTop = asset.FindActionMap("BurnTop", throwIfNotFound: true);
         m_BurnTop_BurnTopAction = m_BurnTop.FindAction("BurnTopAction", throwIfNotFound: true);
@@ -915,6 +1121,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // CutPaste
         m_CutPaste = asset.FindActionMap("CutPaste", throwIfNotFound: true);
         m_CutPaste_CutPasteAction = m_CutPaste.FindAction("CutPasteAction", throwIfNotFound: true);
+        // CutPasteV2
+        m_CutPasteV2 = asset.FindActionMap("CutPasteV2", throwIfNotFound: true);
+        m_CutPasteV2_UpAction = m_CutPasteV2.FindAction("UpAction", throwIfNotFound: true);
+        m_CutPasteV2_DownAction = m_CutPasteV2.FindAction("DownAction", throwIfNotFound: true);
+        m_CutPasteV2_RightAction = m_CutPasteV2.FindAction("RightAction", throwIfNotFound: true);
+        m_CutPasteV2_LeftAction = m_CutPasteV2.FindAction("LeftAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1192,6 +1404,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public SpreadPasteActions @SpreadPaste => new SpreadPasteActions(this);
 
+    // SpreadPasteV2
+    private readonly InputActionMap m_SpreadPasteV2;
+    private ISpreadPasteV2Actions m_SpreadPasteV2ActionsCallbackInterface;
+    private readonly InputAction m_SpreadPasteV2_SpreadPasteFirstAction;
+    private readonly InputAction m_SpreadPasteV2_SpreadPasteSecondAction;
+    public struct SpreadPasteV2Actions
+    {
+        private @PlayerInput m_Wrapper;
+        public SpreadPasteV2Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SpreadPasteFirstAction => m_Wrapper.m_SpreadPasteV2_SpreadPasteFirstAction;
+        public InputAction @SpreadPasteSecondAction => m_Wrapper.m_SpreadPasteV2_SpreadPasteSecondAction;
+        public InputActionMap Get() { return m_Wrapper.m_SpreadPasteV2; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SpreadPasteV2Actions set) { return set.Get(); }
+        public void SetCallbacks(ISpreadPasteV2Actions instance)
+        {
+            if (m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface != null)
+            {
+                @SpreadPasteFirstAction.started -= m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface.OnSpreadPasteFirstAction;
+                @SpreadPasteFirstAction.performed -= m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface.OnSpreadPasteFirstAction;
+                @SpreadPasteFirstAction.canceled -= m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface.OnSpreadPasteFirstAction;
+                @SpreadPasteSecondAction.started -= m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface.OnSpreadPasteSecondAction;
+                @SpreadPasteSecondAction.performed -= m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface.OnSpreadPasteSecondAction;
+                @SpreadPasteSecondAction.canceled -= m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface.OnSpreadPasteSecondAction;
+            }
+            m_Wrapper.m_SpreadPasteV2ActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @SpreadPasteFirstAction.started += instance.OnSpreadPasteFirstAction;
+                @SpreadPasteFirstAction.performed += instance.OnSpreadPasteFirstAction;
+                @SpreadPasteFirstAction.canceled += instance.OnSpreadPasteFirstAction;
+                @SpreadPasteSecondAction.started += instance.OnSpreadPasteSecondAction;
+                @SpreadPasteSecondAction.performed += instance.OnSpreadPasteSecondAction;
+                @SpreadPasteSecondAction.canceled += instance.OnSpreadPasteSecondAction;
+            }
+        }
+    }
+    public SpreadPasteV2Actions @SpreadPasteV2 => new SpreadPasteV2Actions(this);
+
     // BurnTop
     private readonly InputActionMap m_BurnTop;
     private IBurnTopActions m_BurnTopActionsCallbackInterface;
@@ -1323,6 +1576,63 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CutPasteActions @CutPaste => new CutPasteActions(this);
+
+    // CutPasteV2
+    private readonly InputActionMap m_CutPasteV2;
+    private ICutPasteV2Actions m_CutPasteV2ActionsCallbackInterface;
+    private readonly InputAction m_CutPasteV2_UpAction;
+    private readonly InputAction m_CutPasteV2_DownAction;
+    private readonly InputAction m_CutPasteV2_RightAction;
+    private readonly InputAction m_CutPasteV2_LeftAction;
+    public struct CutPasteV2Actions
+    {
+        private @PlayerInput m_Wrapper;
+        public CutPasteV2Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UpAction => m_Wrapper.m_CutPasteV2_UpAction;
+        public InputAction @DownAction => m_Wrapper.m_CutPasteV2_DownAction;
+        public InputAction @RightAction => m_Wrapper.m_CutPasteV2_RightAction;
+        public InputAction @LeftAction => m_Wrapper.m_CutPasteV2_LeftAction;
+        public InputActionMap Get() { return m_Wrapper.m_CutPasteV2; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CutPasteV2Actions set) { return set.Get(); }
+        public void SetCallbacks(ICutPasteV2Actions instance)
+        {
+            if (m_Wrapper.m_CutPasteV2ActionsCallbackInterface != null)
+            {
+                @UpAction.started -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnUpAction;
+                @UpAction.performed -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnUpAction;
+                @UpAction.canceled -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnUpAction;
+                @DownAction.started -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnDownAction;
+                @DownAction.performed -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnDownAction;
+                @DownAction.canceled -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnDownAction;
+                @RightAction.started -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnRightAction;
+                @RightAction.performed -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnRightAction;
+                @RightAction.canceled -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnRightAction;
+                @LeftAction.started -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnLeftAction;
+                @LeftAction.performed -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnLeftAction;
+                @LeftAction.canceled -= m_Wrapper.m_CutPasteV2ActionsCallbackInterface.OnLeftAction;
+            }
+            m_Wrapper.m_CutPasteV2ActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @UpAction.started += instance.OnUpAction;
+                @UpAction.performed += instance.OnUpAction;
+                @UpAction.canceled += instance.OnUpAction;
+                @DownAction.started += instance.OnDownAction;
+                @DownAction.performed += instance.OnDownAction;
+                @DownAction.canceled += instance.OnDownAction;
+                @RightAction.started += instance.OnRightAction;
+                @RightAction.performed += instance.OnRightAction;
+                @RightAction.canceled += instance.OnRightAction;
+                @LeftAction.started += instance.OnLeftAction;
+                @LeftAction.performed += instance.OnLeftAction;
+                @LeftAction.canceled += instance.OnLeftAction;
+            }
+        }
+    }
+    public CutPasteV2Actions @CutPasteV2 => new CutPasteV2Actions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -1368,6 +1678,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnSpreadPasteAction(InputAction.CallbackContext context);
     }
+    public interface ISpreadPasteV2Actions
+    {
+        void OnSpreadPasteFirstAction(InputAction.CallbackContext context);
+        void OnSpreadPasteSecondAction(InputAction.CallbackContext context);
+    }
     public interface IBurnTopActions
     {
         void OnBurnTopAction(InputAction.CallbackContext context);
@@ -1383,5 +1698,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface ICutPasteActions
     {
         void OnCutPasteAction(InputAction.CallbackContext context);
+    }
+    public interface ICutPasteV2Actions
+    {
+        void OnUpAction(InputAction.CallbackContext context);
+        void OnDownAction(InputAction.CallbackContext context);
+        void OnRightAction(InputAction.CallbackContext context);
+        void OnLeftAction(InputAction.CallbackContext context);
     }
 }

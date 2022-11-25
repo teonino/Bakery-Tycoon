@@ -3,17 +3,19 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public abstract class Minigame : MonoBehaviour {
-
+    [Header("Global parameters")]
     [SerializeField] protected CraftingStationType craftingStationRequired;
     [SerializeField] protected float minTime;
     [SerializeField] protected float maxTime;
     [SerializeField] protected float step;
-    //public AssetReference minigameAsset;
+    [Header("Minigame parameters")]
+
     protected WorkstationManager workplacePanel;
     protected GameManager gameManager;
     protected PlayerController playerController;
     protected float launchTime;
     protected float endTime;
+
 
     // Start is called before the first frame update
     protected void Start() {

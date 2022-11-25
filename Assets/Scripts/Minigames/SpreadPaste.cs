@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,15 +7,15 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class SpreadPaste : Minigame {
-    [SerializeField] private float timeAimed = 3;
-    [SerializeField] private float minValue = 0;
-    [SerializeField] private float maxValue = 0;
-    [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private Slider slider;
-    [SerializeField] private Image sliderFiller;
-    [SerializeField] private GameObject validZone;
+    [SerializeField] protected float timeAimed = 3;
+    [SerializeField] protected float minValue = 0;
+    [SerializeField] protected float maxValue = 0;
+    [SerializeField] protected TextMeshProUGUI text;
+    [SerializeField] protected Slider slider;
+    [SerializeField] protected Image sliderFiller;
+    [SerializeField] protected GameObject validZone;
 
-    private float timeInZone = 0;
+    protected float timeInZone = 0;
     new void Start() {
         base.Start();
         slider.maxValue = timeAimed;
@@ -29,20 +30,23 @@ public class SpreadPaste : Minigame {
     }
 
 
-    private void Update() {
+    private void FixedUpdate() {
+        if (playerController.playerInput.SpreadPaste.SpreadPasteAction.ReadValue<float>() > 0)
+            slider.value += Time.deltaTime;
+        slider.value -= Time.deltaTime / 3;
+
+        CheckInZone();
         if (timeInZone >= timeAimed) {
             End();
-        }
-        if (playerController.playerInput.SpreadPaste.SpreadPasteAction.ReadValue<float>() > 0) 
-            slider.value += Time.deltaTime;
-        else 
-            slider.value -= Time.deltaTime / 2;
+        }  
+    }
 
+    protected void CheckInZone() {
         if (slider.value >= minValue && slider.value <= maxValue) {
             timeInZone += Time.deltaTime;
             sliderFiller.color = Color.green;
         }
-        else 
+        else
             sliderFiller.color = Color.blue;
     }
 

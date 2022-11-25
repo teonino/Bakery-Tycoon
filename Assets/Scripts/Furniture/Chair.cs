@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class Chair : MonoBehaviour
 {
+    public AICustomer customer;
+    public Table table;
     public bool ocuppied = false;
 }

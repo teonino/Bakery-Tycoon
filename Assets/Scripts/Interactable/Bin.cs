@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 
 public class Bin : Interactable {
     public override void Effect() {
-        if (playerController.itemHolded) {
+        if (playerController.itemHolded && playerController.itemHolded.tag != "Plate") {
             Addressables.ReleaseInstance(playerController.itemHolded);
             playerController.itemHolded = null;
         }

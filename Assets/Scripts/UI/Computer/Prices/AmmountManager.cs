@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 
 public class AmmountManager : MonoBehaviour {
-    [SerializeField] private IngredientDescription ingredientDescription;
     [SerializeField] private int amountToBuy;
     [SerializeField] private TextMeshProUGUI textAmmount;
-    [SerializeField] private DeliveryManager deliveryManager;
+    [SerializeField] public DeliveryButton deliveryButton;
+    public DeliveryManager deliveryManager;
 
     private void Start() {
         deliveryManager = FindObjectOfType<DeliveryManager>();
-        amountToBuy = ingredientDescription.nbIngredient;
+        amountToBuy = deliveryButton.nbIngredient;
     }
 
     public void MinusButtonIsClicked() {
@@ -28,7 +28,7 @@ public class AmmountManager : MonoBehaviour {
     }
 
     private void SetIngredientsInCart() {
-        deliveryManager.SetIngredient(ingredientDescription.ingredient, amountToBuy);
+        deliveryManager.SetIngredient(deliveryButton.ingredient, amountToBuy);
         textAmmount.text = amountToBuy.ToString();
     }
 

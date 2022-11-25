@@ -7,8 +7,6 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class BuildingMode : Interactable {
     [Header("References")]
-    [SerializeField] private GameObject mainCamera;
-    [SerializeField] private GameObject buildingCamera;
     [SerializeField] private LayerMask pickUpLayer;
     [SerializeField] private LayerMask putDownLayer;
     [SerializeField] private Material collidingMaterial;
@@ -20,6 +18,8 @@ public class BuildingMode : Interactable {
     [SerializeField] private AssetReference cursor;
     [SerializeField] private int cursorSpeed = 1;
 
+    private GameObject mainCamera;
+    private GameObject buildingCamera;
     private LayerMask currentRaycastlayer;
     private LayerMask intitialGoLayer;
     private GameObject cursorObject;
@@ -30,6 +30,10 @@ public class BuildingMode : Interactable {
         currentRaycastlayer = pickUpLayer;
         playerController.playerInput.Building.Quit.performed += Quit;
         playerController.playerInput.Building.Select.performed += Select;
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
+        buildingCamera.SetActive(false);
     }
 
     public override void Effect() {
@@ -64,10 +68,10 @@ public class BuildingMode : Interactable {
     public void Select(CallbackContext context) {
         Ray ray;
         if (gameManager.IsGamepad()) {
-            ray = Camera.main.ScreenPointToRay(cursorObject.transform.position);
+            ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
         }
         else
-            ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(Mouse.current.position.ReadValue());
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
@@ -76,17 +80,17 @@ public class BuildingMode : Interactable {
                 selectedGo = hit.collider.gameObject;
                 intitialGoLayer = selectedGo.layer;
                 selectedGo.layer = 3;
-                selectedGo.AddComponent<CheckCollision>();
+                selectedGo.AddComponent<CheckCollisionManager>();
                 selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                selectedGo.GetComponent<CheckCollision>().collidingMaterial = collidingMaterial;
+                selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
 
                 ChangeColliderSize(true);
             }
             else {
-                if (selectedGo.GetComponent<CheckCollision>().nbObjectInCollision == 0) {
+                if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
                     currentRaycastlayer = pickUpLayer;
                     selectedGo.layer = intitialGoLayer;
-                    Destroy(selectedGo.GetComponent<CheckCollision>());
+                    Destroy(selectedGo.GetComponent<CheckCollisionManager>());
                     Destroy(selectedGo.GetComponent<Rigidbody>());
 
                     ChangeColliderSize(false);
@@ -129,10 +133,10 @@ public class BuildingMode : Interactable {
     private void SnapGameObject(Vector3 pos) {
         if (selectedGo) {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer))
+            if (Physics.Raycast(buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer))
                 selectedGo.transform.position = new Vector3(
                     RoundToNearestGrid(hit.point.x),
-                    selectedGo.transform.localScale.y / 2,
+                    hit.point.y,//selectedGo.transform.localScale.y / 2,
                     RoundToNearestGrid(hit.point.z));
         }
     }
