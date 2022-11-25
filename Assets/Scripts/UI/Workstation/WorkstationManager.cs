@@ -11,6 +11,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference productButtonAsset;
     [SerializeField] private AssetReference productRackAsset;
     [SerializeField] private TextMeshProUGUI stockListText;
+    [SerializeField] private GameObject stockPanel;
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
@@ -178,11 +179,13 @@ public class WorkstationManager : MonoBehaviour {
     private void DisableButtons() {
         foreach (GameObject go in productButtonList)
             go.SetActive(false);
+        stockPanel.SetActive(false);
     }
 
     private void EnableButtons() {
         foreach (GameObject go in productButtonList)
             go.SetActive(true);
+        stockPanel.SetActive(true);
     }
 
     private void OnDestroy() {

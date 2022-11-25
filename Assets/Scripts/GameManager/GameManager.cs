@@ -110,6 +110,10 @@ public class GameManager : MonoBehaviour {
         reputation += value;
         updateReputationUI(reputation);
     }
+    public void RemoveReputation(int value) {
+        reputation -= value;
+        updateReputationUI(reputation);
+    }
     public float GetMoney() => money;
     public void AddMoney(int value) {
         money += value;
@@ -121,8 +125,8 @@ public class GameManager : MonoBehaviour {
         dayStatistics.RemoveMoney(value);
         updateMoneyUI(money);
     }
-
     public void AddProductSold(ProductSO product) => dayStatistics.AddProductSold(product);
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
+    public DayStatistics GetDayStatistics() => dayStatistics;
 }

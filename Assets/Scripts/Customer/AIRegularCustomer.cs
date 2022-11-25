@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,20 +23,23 @@ public class AIRegularCustomer : AICustomer {
     new void FixedUpdate() {
         base.FixedUpdate();
 
-        if(chair && state == AIState.idle) {
+        if (chair && state == AIState.idle) {
             Sit();
         }
 
         //Go to the Chair
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving) {
-            state = AIState.sitting;
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-            waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+        try {
+            if (chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving) {
+                state = AIState.sitting;
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+                waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            }
+        } catch (Exception e) {
+            print(e);
         }
 
-        if (table.GetItem(false) && state == AIState.sitting) {
-            if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
-                //Stop waiting
+        if (table && table.GetItem(false) && state == AIState.sitting) {
+            if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
                 StopCoroutine(waitingCoroutine);
                 //Take item
                 if (!item) {
@@ -43,17 +47,18 @@ public class AIRegularCustomer : AICustomer {
                         table.items[indexChair].GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
                             TakeItem(table.items[indexChair].GetComponent<ProductHolder>(), table.gameObject);
+                            table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
-                            state = AIState.canInteract;
+                            state = AIState.eating;
                         };
                         table.items[indexChair].GetComponent<ProductHolder>().product.amount--;
                     }
                     else {
                         item = table.items[indexChair];
-                        item.transform.SetParent(transform);
                         TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
+                        table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                         StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
-                        state = AIState.canInteract;
+                        state = AIState.eating;
                     }
                 }
             }
@@ -65,20 +70,25 @@ public class AIRegularCustomer : AICustomer {
         state = AIState.moving;
     }
 
-    private new void Leave() {
-        base.Leave();
-        state = AIState.leaving;
+    private new void Leave() { 
         if (chair)
             chair.ocuppied = false;
 
-        plateAsset.InstantiateAsync(table.itemPositions[indexChair].transform).Completed += (go) => {
-            go.Result.transform.localPosition = Vector3.zero;
-            table.items[indexChair] = go.Result;
-        };
+        if (state == AIState.eating) {
+            plateAsset.InstantiateAsync(table.itemPositions[indexChair].transform).Completed += (go) => {
+                go.Result.transform.localPosition = Vector3.zero;
+                table.items[indexChair] = go.Result;
+            };
+            Addressables.ReleaseInstance(table.items[indexChair]);
+        } else {
+            gameManager.RemoveReputation(3);
+        }
+
+        base.Leave();
     }
 
     public override void Effect() {
-        if (conversationRemaining > 0 && state == AIState.canInteract) {
+        if (conversationRemaining > 0 && state == AIState.eating) {
             gameManager.GetPlayerController().DisableInput();
             dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
                 go.Result.GetComponent<DialogueManager>().GetDialogues(1);

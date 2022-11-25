@@ -18,23 +18,30 @@ public class DayStatistics {
         moneyEarned = moneySpent = 0;
     }
 
-    public KeyValuePair<ProductSO,int> GetMostProductSold() {
-        ProductSO product = null;
+    public KeyValuePair<string,int> GetMostProductSold() {
+        string product = "None";
         int productAmount = 0;
         foreach (KeyValuePair<ProductSO, int> productSold in productsSold) {
-            if (!product) {
-                product = productSold.Key;
+            if (product == "None") {
+                product = productSold.Key.name;
                 productAmount = productSold.Value;
             }
 
             if(productAmount < productSold.Value) {
-                product = productSold.Key;
+                product = productSold.Key.name;
                 productAmount = productSold.Value;
             }
         }
+        if(GetProductsSold() != 0)
         productAmount = productAmount / GetProductsSold();
 
-        return new KeyValuePair<ProductSO, int>(product, productAmount);
+        return new KeyValuePair<string, int>(product, productAmount);
+    }
+
+    public double GetPercentageAmongAllProduct() {
+        if (GetProductsSold() == 0)
+            return 0;
+        return GetMostProductSold().Value / GetProductsSold() * 100;
     }
 
     public int GetProductsSold() {
@@ -63,11 +70,8 @@ public class DayStatistics {
         return lowestIngredient;
     }
 
-    public void AddMoney(int value) {
-        moneyEarned += value;
-    }
-
-    public void RemoveMoney(int value) {
-        moneySpent -= value;
-    }
+    public void AddMoney(int value) => moneyEarned += value;
+    public void RemoveMoney(int value) => moneySpent += value;
+    public int GetMoneyEarned() => moneyEarned; 
+    public int GetMoneySpent() => moneySpent; 
 }

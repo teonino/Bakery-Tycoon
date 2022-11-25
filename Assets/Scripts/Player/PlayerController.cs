@@ -5,24 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float interactionDistance;
-
     private PlayerMovements playerMovements;
+    private GameObject itemHolded;
 
-    [HideInInspector] public PlayerInput playerInput;
-    [HideInInspector] public GameObject itemHolded;
+    [HideInInspector] public PlayerInput playerInput { get; private set; }
+    
 
     // Start is called before the first frame update
     void Awake() {
         playerInput = new PlayerInput();
-
-        EnableInput();
         playerMovements = GetComponent<PlayerMovements>();
-    }
-
-    public string GetInput(InputAction action) {
-        print(action.controls[0].ToString());
-        string[] s = action.controls[0].ToString().Split("/");
-        return s[s.Length - 1];
+        EnableInput();
     }
 
     // Update is called once per frame
@@ -50,8 +43,17 @@ public class PlayerController : MonoBehaviour {
         DisableInput();
     }
 
+    public void SetItemHold(GameObject go) => itemHolded = go;
+    public GameObject GetItemHold() => itemHolded;
+
     public void EnableInput() {
         playerInput.Player.Enable();
+    }
+
+    public string GetInput(InputAction action) {
+        print(action.controls[0].ToString());
+        string[] s = action.controls[0].ToString().Split("/");
+        return s[s.Length - 1];
     }
 
     public void DisableInput() {

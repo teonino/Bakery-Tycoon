@@ -15,7 +15,7 @@ public class Workstation : Interactable {
     private GameObject workplacePanel;
 
     public override void Effect() {
-        if (!playerController.itemHolded && gameManager.dayTime != DayTime.Evening) {
+        if (!playerController.GetItemHold() && gameManager.dayTime != DayTime.Evening) {
             playerController.DisableInput();
 
             workplacePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
@@ -46,9 +46,9 @@ public class Workstation : Interactable {
     public void CloseWorkplace(GameObject go) {
         Transform arm = playerController.gameObject.transform.GetChild(0);
 
-        playerController.itemHolded = go;
-        playerController.itemHolded.transform.SetParent(arm); //the arm of the player becomes the parent
-        playerController.itemHolded.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
+        playerController.SetItemHold(go);
+        playerController.GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
+        playerController.GetItemHold().transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
         playerController.EnableInput();
         if (workplacePanel)
             Addressables.ReleaseInstance(workplacePanel);

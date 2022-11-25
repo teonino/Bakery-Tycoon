@@ -18,7 +18,7 @@ public class SpawnCustomer : MonoBehaviour {
     private int nbCustomerSpawned = 0;
     private Chair currentChair;
     private Table currentTable;
-    private int indexChair = 0;
+    private int indexChair = -1;
     private GameManager gameManager;
     private List<ProductSO> doableProduct;
     private List<ProductSO> availableProduct;
@@ -85,7 +85,7 @@ public class SpawnCustomer : MonoBehaviour {
         customer.chair.customer = customer;
         customer.indexChair = indexChair;
         customer.table = currentTable;
-        indexChair = 0;
+        indexChair = -1;
         currentChair = null;
         currentTable = null;
         customer.requestedProduct = GetRandomProduct();
