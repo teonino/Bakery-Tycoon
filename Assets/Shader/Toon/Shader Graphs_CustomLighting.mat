@@ -38,6 +38,14 @@ Material:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailNormal:
+        m_Texture: {fileID: 2800000, guid: 319f5477bd48990449f060c1f54a12c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailsAlbedo:
+        m_Texture: {fileID: 2800000, guid: 037dd38dc8d7355459b36368321b7c01, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,15 +55,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 2800000, guid: 037dd38dc8d7355459b36368321b7c01, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 2800000, guid: 1d0830ef3a64e7645bedfbd61b373be4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMapChannel:
+        m_Texture: {fileID: 2800000, guid: 319f5477bd48990449f060c1f54a12c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RoughnessMap:
+        m_Texture: {fileID: 2800000, guid: 63bbf74e378f80d4886200b4f6fd62f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -64,6 +80,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SpecularMap:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_038b20f0355e4251aa9bc00da7603d5e_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_071f33d006d34a6da83beffac0ffc1f1_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_315744aa42d646018314e9c9526c1bff_Out_0:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -89,11 +117,20 @@ Material:
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
+    - _DetailsAbledoStrenght: 0
+    - _DetailsAlbedoAdjustment: 0
+    - _DetailsAppearDistance: 1
+    - _DetailsNormalDistance: 5
+    - _DetailsNormalScale: 1
+    - _DetailsNormalStrenght: 0
+    - _DetailsScale: 1
+    - _DetailsScale_1: 0
     - _DstBlend: 0
     - _EmissivePower: 1
     - _Height: 0
     - _HeightForce: 0
     - _LightProbeContribution: 2
+    - _MetallicStrenght: 1
     - _NormalStrenght: 0
     - _OutlineDepthSensitivity: 0.125
     - _OutlineNormalsSensitivity: 1
@@ -103,6 +140,7 @@ Material:
     - _ReceiveShadows: 1
     - _RedForce: 0.9
     - _RedTintActivated: 0
+    - _RougnessRatio: 0
     - _SmoothMapTiling: 0
     - _Smoothness: 0.867
     - _SrcBlend: 1
@@ -117,6 +155,7 @@ Material:
     m_Colors:
     - _EmissiveColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissiveTiling: {r: 0, g: 0, b: 0, a: 0}
+    - _GeneralTiling: {r: 1, g: 1, b: 0, a: 0}
     - _MainColor: {r: 1, g: 1, b: 1, a: 0}
     - _Metalness_tiling: {r: 0, g: 0, b: 0, a: 0}
     - _MixedShadowsColor: {r: 0.52380735, g: 0.5930185, b: 0.745283, a: 1}
