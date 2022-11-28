@@ -47,7 +47,6 @@ public class AICustomer : Interactable {
     }
 
     public void TakeItem(ProductHolder product, GameObject displayGo) {
-        item.transform.localPosition = Vector3.up * 1.25f;
         item.GetComponent<ProductHolder>().product.quality = product.product.quality;
 
         gameManager.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
@@ -85,7 +84,7 @@ public class AICustomer : Interactable {
         };
 
         gameManager.AddMoney(totalPrice);
-        gameManager.AddReputation(item.GetComponent<ProductHolder>().product.quality);
+        gameManager.AddReputation(1);
     }
 
     public void SetDestination(Vector3 position) => agent.SetDestination(position);

@@ -19,17 +19,16 @@ public class CraftingStation : Interactable {
     private GameObject progressBar;
 
     public override void Effect() {
-        if (playerController.itemHolded && playerController.itemHolded.tag == "Paste" && itemInStation == null && playerController.itemHolded.GetComponent<ProductHolder>().product.GetCraftingStation() == type) {
-            itemInStation = new Product(playerController.itemHolded.GetComponent<ProductHolder>().product);
-            Addressables.ReleaseInstance(playerController.itemHolded);
-            playerController.itemHolded = null;
-
+        if (playerController.GetItemHold() && playerController.GetItemHold().tag == "Paste" && itemInStation == null && playerController.GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type) {
+            itemInStation = new Product(playerController.GetItemHold().GetComponent<ProductHolder>().product);
+            Addressables.ReleaseInstance(playerController.GetItemHold());
+            playerController.SetItemHold(null);
             StartCoroutine(CookingTime(itemInStation));
         }
-        else if (itemInStation != null && !playerController.itemHolded && !cooking) {
+        else if (itemInStation != null && !playerController.GetItemHold() && !cooking) {
             itemInStation.productSO.asset.InstantiateAsync().Completed += (go) => {
                 Transform arm = playerController.gameObject.transform.GetChild(0);
-                playerController.itemHolded = go.Result;
+                playerController.SetItemHold(go.Result);
                 if (progressBar.GetComponent<ProgressBar>().burned)
                     go.Result.GetComponent<ProductHolder>().product.quality = 0;
                 else
@@ -49,7 +48,7 @@ public class CraftingStation : Interactable {
                     ProgressBar progressBarScript = go.Result.GetComponentInChildren<ProgressBar>();
 
                     go.Result.transform.localPosition = Vector3.up * 2;
-                    go.Result.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                    go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
                     progressBarScript.SetDuration(dirty / 10);
                     progressBarScript.onDestroy = Clean;
                 };
@@ -60,8 +59,8 @@ public class CraftingStation : Interactable {
     private IEnumerator CookingTime(Product product) {
         progressBarAsset.InstantiateAsync(transform).Completed += (go) => {
             progressBar = go.Result;
-            progressBar.transform.localPosition = Vector3.up * 2;
-            progressBar.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            go.Result.transform.localPosition = Vector3.up * 2;
+            go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
 
             if (skipCookingTime)
                 progressBar.GetComponentInChildren<ProgressBar>().SetDuration(0);

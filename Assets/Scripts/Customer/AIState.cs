@@ -4,6 +4,6 @@ public enum AIState
     moving,
     waiting,
     sitting,
-    canInteract,
+    eating,
     leaving,
 }
