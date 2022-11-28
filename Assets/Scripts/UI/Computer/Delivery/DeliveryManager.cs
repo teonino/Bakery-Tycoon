@@ -115,16 +115,6 @@ public class DeliveryManager : MonoBehaviour {
         currentCart.InitCart();
     }
 
-
-    //public void DisplayStock() {
-    //    stockAsset.InstantiateAsync(transform).Completed += (go) => {
-    //        go.Result.GetComponent<Warehouse>().deliveryManager = this;
-    //        gameManager.playerController.playerInput.UI.Quit.performed -= Quit;
-    //        gameManager.playerController.playerInput.UI.Quit.performed += go.Result.GetComponent<Warehouse>().Quit;
-    //    };
-    //}
-
-
     public void ResetCart() {
         cart.Clear();
         cartPanel.ClearText();

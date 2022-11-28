@@ -255,7 +255,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Unpause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -266,7 +266,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""KeyboardMouse"",
                     ""action"": ""Unpause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -300,6 +300,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""c7cbfd53-a637-4a4c-9895-0243cd39799c"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""f090832e-fc7f-4a0d-8f33-9140324183d0"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -371,6 +380,50 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56368b20-0269-4a54-aafc-be1a6aec8a43"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""RotateObjects"",
+                    ""id"": ""b2e5c4eb-17f2-4af4-9e66-ed19c8add108"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""5fdefbf1-93e1-403b-b8dc-e2593e4e2b2d"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""7784f02b-f0dc-4aa0-97af-64eaff0566b6"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1078,6 +1131,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""devicePath"": ""<Keyboard>"",
                     ""isOptional"": false,
                     ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
                 }
             ]
         }
@@ -1096,6 +1154,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Building_Quit = m_Building.FindAction("Quit", throwIfNotFound: true);
         m_Building_Select = m_Building.FindAction("Select", throwIfNotFound: true);
         m_Building_Move = m_Building.FindAction("Move", throwIfNotFound: true);
+        m_Building_Rotate = m_Building.FindAction("Rotate", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
@@ -1271,6 +1330,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Building_Quit;
     private readonly InputAction m_Building_Select;
     private readonly InputAction m_Building_Move;
+    private readonly InputAction m_Building_Rotate;
     public struct BuildingActions
     {
         private @PlayerInput m_Wrapper;
@@ -1278,6 +1338,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Quit => m_Wrapper.m_Building_Quit;
         public InputAction @Select => m_Wrapper.m_Building_Select;
         public InputAction @Move => m_Wrapper.m_Building_Move;
+        public InputAction @Rotate => m_Wrapper.m_Building_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1296,6 +1357,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnMove;
+                @Rotate.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -1309,6 +1373,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
         }
     }
@@ -1666,6 +1733,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnQuit(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

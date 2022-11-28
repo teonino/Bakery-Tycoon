@@ -5,4 +5,5 @@ using UnityEngine;
 public class ProductHolder : MonoBehaviour
 {
     public Product product;
+    public bool blocked = false;
 }

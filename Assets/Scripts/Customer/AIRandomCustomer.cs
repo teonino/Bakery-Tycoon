@@ -24,6 +24,7 @@ public class AIRandomCustomer : AICustomer {
     }
 
     private new void TakeItem(ProductHolder product, GameObject displayGO) {
+        item.transform.localPosition = Vector3.up * 1.25f;
         base.TakeItem(product, displayGO);
         Leave();
     }
@@ -34,6 +35,8 @@ public class AIRandomCustomer : AICustomer {
     }
 
     private new void Leave() {
+        if (!item)
+            gameManager.RemoveReputation(3);
         base.Leave();
         shelf.RemoveCustomerInQueue(this);
     }

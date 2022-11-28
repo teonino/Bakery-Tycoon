@@ -30,6 +30,7 @@ public class BuildingMode : Interactable {
         currentRaycastlayer = pickUpLayer;
         playerController.playerInput.Building.Quit.performed += Quit;
         playerController.playerInput.Building.Select.performed += Select;
+        playerController.playerInput.Building.Rotate.performed += RotateGameObject;
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
@@ -125,19 +126,30 @@ public class BuildingMode : Interactable {
                 cursorObject.transform.Translate(gameManager.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
                 SnapGameObject(cursorObject.transform.position);
             }
-            else
+            else {
                 SnapGameObject(Mouse.current.position.ReadValue());
+            }
+        }
+    }
+
+    private void RotateGameObject(InputAction.CallbackContext ctx) {
+        if (selectedGo) {
+            if (playerController.playerInput.Building.Rotate.ReadValue<float>() > 0) {
+                selectedGo.transform.Rotate(Vector3.up * 90);
+            }
+            else if (playerController.playerInput.Building.Rotate.ReadValue<float>() < 0) {
+                selectedGo.transform.Rotate(Vector3.up * -90);
+            }
         }
     }
 
     private void SnapGameObject(Vector3 pos) {
         if (selectedGo) {
             RaycastHit hit;
-            if (Physics.Raycast(buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer))
-                selectedGo.transform.position = new Vector3(
-                    RoundToNearestGrid(hit.point.x),
-                    hit.point.y,//selectedGo.transform.localScale.y / 2,
-                    RoundToNearestGrid(hit.point.z));
+            if (Physics.Raycast(buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer)) {
+                selectedGo.transform.position = hit.point;
+                selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), 0, RoundToNearestGrid(selectedGo.transform.localPosition.z));
+            }
         }
     }
 
