@@ -1,56 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraSwitch : MonoBehaviour
 {
-    private Camera cam;
-    [SerializeField] private GameObject CameraMainRoomPosition;
-    [SerializeField] private GameObject CameraStorageRoomPosition;
-    [SerializeField] private Collider TriggerMainRoom;
-    private int CameraIsMoving;
-    private float lerpRatio = 0.0f;
+    [SerializeField] private GameObject CameraObject;
 
-    private void Awake()
+    private GameManager gameManager;
+    private Quaternion rotation;
+    private void Start()
     {
-        cam = Camera.main;
+        gameManager = FindObjectOfType<GameManager>();
+        rotation = CameraObject.transform.rotation;
     }
 
     private void Update()
     {
-        if (CameraIsMoving == 1)
-        {
-            lerpRatio += 1.0f * Time.deltaTime;
-            cam.transform.position = Vector3.Lerp(cam.transform.position, CameraStorageRoomPosition.transform.position, lerpRatio);
-        }
-        else if (CameraIsMoving == 2)
-        {
-            lerpRatio += 1.0f * Time.deltaTime;
-            cam.transform.position = Vector3.Lerp(cam.transform.position, CameraMainRoomPosition.transform.position, lerpRatio);
-        }
+        rotation *= Quaternion.AngleAxis(gameManager.GetPlayerController().playerInput.Player.Camera.ReadValue<Vector2>().x * Time.deltaTime * 10, Vector3.up);
+        rotation *= Quaternion.AngleAxis(gameManager.GetPlayerController().playerInput.Player.Camera.ReadValue<Vector2>().y * Time.deltaTime * 10, Vector3.right);
+
+
+        Vector3 bounds = new Vector3(30, 180, 1);
+        rotation = ClampRotation(rotation, bounds);
+        CameraObject.transform.rotation = Quaternion.Slerp(rotation, transform.rotation, Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public static Quaternion ClampRotation(Quaternion q, Vector3 bounds)
     {
-        if(other.gameObject.tag == "Player")
-        {
-            CameraIsMoving = 1;
-            lerpRatio = 0.0f;
-        }
-        print("Storage");
+        q.x /= q.w;
+        q.y /= q.w;
+        q.z /= q.w;
+        q.w = 1.0f;
+
+        float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
+        angleX = Mathf.Clamp(angleX, 10, 30);
+        q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
+
+        float angleY = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.y);
+        angleY = Mathf.Clamp(angleY, -bounds.y, bounds.y);
+        q.y = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleY);
+
+        float angleZ = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.z);
+        angleZ = Mathf.Clamp(angleZ, -bounds.z, bounds.z);
+        q.z = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleZ);
+
+        return q;
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            CameraIsMoving = 2;
-            lerpRatio = 0.0f;
-        }
-        print("MainRoom");
-        
-    }
-
-
-
 }
