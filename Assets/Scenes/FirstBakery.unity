@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44949442, g: 0.49649101, b: 0.55914664, a: 1}
+  m_IndirectSpecularColor: {r: 0.44949883, g: 0.496495, b: 0.5591482, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1351,6 +1351,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 247133643}
     m_Modifications:
+    - target: {fileID: 1946718819, guid: 52b58c3ec4499434ca56836fa1e18037, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 14206998976207545, guid: 52b58c3ec4499434ca56836fa1e18037, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5156,7 +5160,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.6
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -5224,10 +5228,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9177f6e4df9d549b2d3b5a7a1940be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  daySystemEnable: 0
+  daySystemEnable: 1
   startLightRotation: 20
-  endLightRotation: 160
-  morningDuration: 0
+  endLightRotationMorning: 40
+  endLightRotation: 140
+  morningDuration: 2
   dayDuration: 0
 --- !u!114 &705507997
 MonoBehaviour:
@@ -15304,9 +15309,9 @@ MonoBehaviour:
   enableSpawnRegularCustomer: 1
   minDelaySpawn: 3
   maxDelaySpawn: 7
-  nbCustomer: 0
   nbCustomerMax: 4
-  spawnRateRegularCustomer: 1
+  nbCustomerPerDay: 10
+  spawnPercentRegularCustomer: 10
   customerAsset:
     m_AssetGUID: 709ccf299c167e64f8207d58a794bdf4
     m_SubObjectName: 
