@@ -5,4 +5,5 @@ using UnityEngine;
 public enum CraftingStationType {
     Hoven,
     Fryer,
+    CoffeeMachine,
 }
