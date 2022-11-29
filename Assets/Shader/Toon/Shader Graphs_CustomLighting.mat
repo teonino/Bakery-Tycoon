@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Alpha_Mask:
-        m_Texture: {fileID: 2800000, guid: 147c630272351a049ade2374e88a0af0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 958a10dec4f3a4764bb345b0aa03510b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
@@ -47,7 +47,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: 037dd38dc8d7355459b36368321b7c01, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -59,11 +59,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 037dd38dc8d7355459b36368321b7c01, type: 3}
+        m_Texture: {fileID: 2800000, guid: b8ba3923a6094cd48b85425f47fd7450, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: 1d0830ef3a64e7645bedfbd61b373be4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 45308e2aea842dd4e87bb30395d6e303, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MultiTexture:
+        m_Texture: {fileID: 2800000, guid: cd76627dadf29384fa3aacae5ba0ad10, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -75,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: 63bbf74e378f80d4886200b4f6fd62f2, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -121,6 +125,7 @@ Material:
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
+    - _CutoutSize: 8
     - _DetailsAbledoStrenght: 0
     - _DetailsAlbedoAdjustment: 0
     - _DetailsAppearDistance: 1
@@ -131,8 +136,10 @@ Material:
     - _DetailsScale_1: 0
     - _DstBlend: 0
     - _EmissivePower: 1
+    - _FallOffSize: 0.05
     - _Height: 0
     - _HeightForce: 0
+    - _IntForce: 1
     - _LightProbeContribution: 2
     - _MetallicStrenght: 1
     - _NormalStrenght: 0
@@ -152,11 +159,13 @@ Material:
     - _UseEmissive: 1
     - _UseHeight: 0
     - _UseMetallic: 0
+    - _WallThrough: 1
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
+    - _CutoutPosition: {r: 0.5, g: 0.25, b: 0, a: 0}
     - _EmissiveColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissiveTiling: {r: 0, g: 0, b: 0, a: 0}
     - _GeneralTiling: {r: 1, g: 1, b: 0, a: 0}
