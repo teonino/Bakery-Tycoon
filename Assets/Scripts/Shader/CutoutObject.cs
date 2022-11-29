@@ -4,34 +4,35 @@ using UnityEngine;
 
 public class CutoutObject : MonoBehaviour
 {
-    [SerializeField] private Transform targetObject;
-    [SerializeField] private LayerMask wallMask;
-    private Camera mainCamera;
+    [SerializeField] private List<Material> materials;
+    private Camera cam;
+    Vector3 pos = new Vector3(Screen.width/2, Screen.height/2, 0);
+    [SerializeField] private GameObject wallPanel;
 
-    private void Awake()
+    private void Start()
     {
-        mainCamera = GetComponent<Camera>();
+        cam = Camera.main;
     }
 
     private void Update()
     {
-        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
-        cutoutPos.y /= (Screen.width / Screen.height);
 
-        Vector3 offset = targetObject.position - transform.position;
-        RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
-
-        for (int i = 0; i < hitObjects.Length; i++)
+        Ray ray = cam.ScreenPointToRay(pos);
+        Debug.DrawRay(ray.origin, ray.direction * 15, Color.yellow);
+        if (Physics.Raycast(ray, out var hitInfo, 15))
         {
-            Material[] materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
-            for(int m = 0; m < materials.Length; m++)
-            {
-                materials[m].SetVector("_CutoutPos", cutoutPos);
-                materials[m].SetFloat("_CutoutSize", 0.1f);
-                materials[m].SetFloat("_FalloffSize", 0.05f);
+            print("Raycast detecte des choses");
+           if(hitInfo.collider.gameObject.name.Contains("Wall"))
+           {
+                print("Raycast détecte des walls");
+                int children = transform.childCount;
+              for (int i = 0; i < children; ++i)
+              {
+                    print("entrer dans le for");
+                    print("For loop: " + transform.GetChild(i));
+              }
             }
         }
-
     }
 
 }
