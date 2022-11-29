@@ -45,12 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797243df07326ed4db6a9e82406d1bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   inputType: 0
   pausePanelAsset:
     m_AssetGUID: df65c24aa55d1254d90baef77b62170f
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  startingMoney: 0
+  reputationExpToLvUp: 3200000064000000c8000000ee020000
   productsList:
   - {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
   - {fileID: 11400000, guid: b385cb65c0fcb4746a398cb5f2936710, type: 2}
@@ -58,6 +61,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d2795e055d8efb148bc9be5cc3d57189, type: 2}
   - {fileID: 11400000, guid: 11b8c99d4b9a73a4ba2b694c7a2f0703, type: 2}
   - {fileID: 11400000, guid: f5e5f2c5dc4eef04a99566a3a8b9d224, type: 2}
+  - {fileID: 11400000, guid: 0f13e8ccf26a0554d93294b02af156c4, type: 2}
+  - {fileID: 11400000, guid: 645f5ad4102c4fb45bde15a26ccc5df1, type: 2}
+  - {fileID: 11400000, guid: 55b9a8ecd0f021742a8e6f21e8672517, type: 2}
+  - {fileID: 11400000, guid: 7a4c312648c7ae44d8f4ff37bfbe7622, type: 2}
+  - {fileID: 11400000, guid: 5b0707e7b88c3db4293b79bb074df1e3, type: 2}
+  - {fileID: 11400000, guid: 6c9da4658c2f0e94496e9904bb836a92, type: 2}
   ingredientLists:
   - ingredient: {fileID: 11400000, guid: 5634a38850114db43849021ec4b79bbe, type: 2}
     amount: 0
@@ -71,6 +80,7 @@ MonoBehaviour:
     amount: 0
   maxStock: 999
   dayTime: 0
+  day: 1
 --- !u!114 &6599275471140418591
 MonoBehaviour:
   m_ObjectHideFlags: 0
