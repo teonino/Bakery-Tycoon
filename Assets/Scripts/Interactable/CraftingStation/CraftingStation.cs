@@ -18,6 +18,11 @@ public class CraftingStation : Interactable {
     private Product itemInStation;
     private GameObject progressBar;
 
+    private void Start() {
+        if (!gameManager.GetDebug())
+            skipCookingTime = false;
+    }
+
     public override void Effect() {
         if (playerController.GetItemHold() && playerController.GetItemHold().tag == "Paste" && itemInStation == null && playerController.GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type) {
             itemInStation = new Product(playerController.GetItemHold().GetComponent<ProductHolder>().product);

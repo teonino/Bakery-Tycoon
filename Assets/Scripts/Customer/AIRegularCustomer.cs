@@ -7,14 +7,14 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 
 public class AIRegularCustomer : AICustomer {
-
+    [Header("AI Regular Customer variables")]
     [SerializeField] private AssetReference dialoguePanelAsset;
     [SerializeField] private AssetReference plateAsset;
+    [SerializeField] private int conversationRemaining = 2;
 
-    public Chair chair;
-    public int indexChair;
-    public Table table;
-    private int conversationRemaining = 2;
+    [HideInInspector] public Chair chair;
+    [HideInInspector] public int indexChair;
+    [HideInInspector] public Table table;
 
     new void Awake() {
         base.Awake();
@@ -34,7 +34,8 @@ public class AIRegularCustomer : AICustomer {
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             print(e);
         }
 
@@ -70,7 +71,7 @@ public class AIRegularCustomer : AICustomer {
         state = AIState.moving;
     }
 
-    private new void Leave() { 
+    private new void Leave() {
         if (chair)
             chair.ocuppied = false;
 
@@ -80,7 +81,8 @@ public class AIRegularCustomer : AICustomer {
                 table.items[indexChair] = go.Result;
             };
             Addressables.ReleaseInstance(table.items[indexChair]);
-        } else {
+        }
+        else {
             gameManager.RemoveReputation(3);
         }
 

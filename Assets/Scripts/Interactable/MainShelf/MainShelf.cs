@@ -6,7 +6,8 @@ using UnityEngine.AddressableAssets;
 public class MainShelf : Shelf {
     private List<QueueShelf> queueCustomer;
 
-    private void Start() {
+    private new void Start() {
+        base.Start();
         queueCustomer = new List<QueueShelf>();
         foreach (Transform child in transform)
             if (child.GetComponent<QueueShelf>())

@@ -50,7 +50,7 @@ public class AIRandomCustomer : AICustomer {
 
         //Buy item and leave
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.item && state == AIState.waiting && shelf.IsFirstInQueue(this)) {
-            if (shelf.GetItem().GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && shelf.GetItem().GetComponent<ProductHolder>().tag != "Paste") {
+            if (shelf.GetItem().GetComponent<ProductHolder>().product.GetName() == requestedProduct.name) {
                 //Stop waiting
                 StopCoroutine(waitingCoroutine);
                 //Take item
@@ -71,7 +71,11 @@ public class AIRandomCustomer : AICustomer {
                 }
             }
         }
-
         base.FixedUpdate();
+    }
+
+    public override void Effect() {
+        StopCoroutine(waitingCoroutine);
+        Leave();
     }
 }

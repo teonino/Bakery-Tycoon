@@ -15,57 +15,38 @@ public class DayManager : MonoBehaviour {
     [SerializeField] private int dayDuration;
 
     private float timeElapsed;
-    private float duration;
+    private int duration;
     private Action<DayTime, int> updateDayTimeUI;
+    private Action displaySkipButton;
 
     void Start() {
         gameManager = FindObjectOfType<GameManager>();
         updateDayTimeUI = FindObjectOfType<DayTimeUI>().StartDayTime;
+        displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
+        displaySkipButton();
         updateDayTimeUI(gameManager.dayTime, morningDuration);
         duration = morningDuration + dayDuration;
     }
 
-    //void FixedUpdate() {
-    //    if (daySystemEnable) {
-    //        if (timeElapsed < duration) {
-    //            transform.rotation = Quaternion.Euler(Vector3.right * Mathf.Lerp(startLightRotation, endLightRotation, timeElapsed / duration));
-    //            timeElapsed += Time.deltaTime;
-
-    //            if (timeElapsed > morningDuration && gameManager.dayTime == DayTime.Morning)
-    //                Updateday();
-    //        }
-    //        else if (gameManager.dayTime == DayTime.Day)
-    //            Updateday();
-    //    }
-    //}
-
     void FixedUpdate() {
         if (daySystemEnable) {
-            if (timeElapsed > morningDuration && gameManager.dayTime == DayTime.Morning)
-                Updateday();
+            if (timeElapsed < duration) {
+                transform.rotation = Quaternion.Euler(Vector3.right * Mathf.Lerp(startLightRotation, endLightRotation, timeElapsed / duration));
+                timeElapsed += Time.deltaTime;
 
-            timeElapsed += Time.deltaTime;
-            transform.rotation = Quaternion.Euler(Vector3.right * Mathf.Lerp(startLightRotation, endLightRotationMorning, timeElapsed / duration));
+                if (timeElapsed > morningDuration && gameManager.dayTime == DayTime.Morning)
+                    Updateday();
+            }
+            else if (gameManager.dayTime == DayTime.Day)
+                Updateday();
         }
     }
 
-
     public void Updateday() {
         gameManager.dayTime++;
-        updateDayTimeUI(gameManager.dayTime, 0);
-    }
-
-    public void SetRotation(int nbCustomer, int currentCustomer, float time) {
-        if (nbCustomer == currentCustomer)
-            Updateday();
-
-        startLightRotation = endLightRotation / nbCustomer * currentCustomer;
-        if (startLightRotation == 0)
-            startLightRotation = endLightRotationMorning;
-        endLightRotationMorning = endLightRotation / nbCustomer * (currentCustomer + 1);
-
-        timeElapsed = 0;
-        duration = time;
+        if (gameManager.dayTime == DayTime.Evening)
+            displaySkipButton();
+        updateDayTimeUI(gameManager.dayTime, duration - morningDuration);
     }
 
     public int GetDayDuration() => dayDuration;

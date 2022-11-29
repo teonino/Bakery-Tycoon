@@ -14,6 +14,11 @@ public class Workstation : Interactable {
     private WorkstationManager manager;
     private GameObject workplacePanel;
 
+    private void Start() {
+        if (!gameManager.GetDebug()) 
+            skipMinigame = skipRequirement = false;
+    }
+
     public override void Effect() {
         if (!playerController.GetItemHold() && gameManager.dayTime != DayTime.Evening) {
             playerController.DisableInput();

@@ -7,18 +7,22 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 
 public class AICustomer : Interactable {
+    [Header("AI Customer References")]
     [SerializeField] protected AssetReference assetProductCanvas;
     [SerializeField] protected AssetReference assetPaymentCanvas;
-    [SerializeField] protected float waitingTime = 5f; 
     [SerializeField] protected NavMeshAgent agent;
+
+    [Header("AI Customer Variables")]
+    [SerializeField] protected float waitingTime = 5f;
+    [SerializeField] protected int saleReputation;
 
     [HideInInspector] public ProductSO requestedProduct;
 
     public AIState state = AIState.idle;
-    protected GameObject productCanvas; 
+    protected GameObject productCanvas;
     protected GameObject item;
     protected SpawnCustomer spawner;
-    protected Vector3 spawnPosition; 
+    protected Vector3 spawnPosition;
     protected Coroutine waitingCoroutine;
 
     protected new void Awake() {
@@ -85,14 +89,12 @@ public class AICustomer : Interactable {
         };
 
         gameManager.AddMoney(totalPrice);
-        gameManager.AddReputation(1);
+        gameManager.AddReputation(saleReputation);
     }
 
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
-    public override void Effect() {
-
-    }
+    public override void Effect() { }
 }
 
 

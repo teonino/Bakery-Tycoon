@@ -15,7 +15,7 @@ public class PaymentCanvasManager : MonoBehaviour {
 
         basePriceText.SetText(basePrice + "€");
         if (bonusPrice > 0)
-            bonusPriceText.SetText(bonusPrice + "€");
+            bonusPriceText.SetText("+ " +bonusPrice + "€");
         else
             bonusPriceText.SetText("");
 

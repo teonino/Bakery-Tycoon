@@ -11,6 +11,10 @@ public class StatisticUI : MonoBehaviour {
         gameManager = FindObjectOfType<GameManager>();
     }
 
+    public void Enable() {
+        gameObject.SetActive(true);
+    }
+
     private void OnEnable() {
         DayStatistics stats = gameManager.GetDayStatistics();
 

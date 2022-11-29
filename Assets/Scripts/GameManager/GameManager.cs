@@ -8,25 +8,35 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour {
+    [SerializeField] private bool debug;
     [SerializeField] private InputType inputType;
     [SerializeField] private AssetReference pausePanelAsset;
+    [SerializeField] private int startingMoney;
+    [SerializeField] private List<int> reputationExpToLvUp;
     [SerializeField] private List<ProductSO> productsList;
     [SerializeField] private List<StockIngredient> ingredientLists;
     [Header("Stocks")]
     [SerializeField] private int maxStock;
 
     [HideInInspector] public DayTime dayTime = DayTime.Morning;
-    private Action<int> updateMoneyUI, updateReputationUI;
+    [HideInInspector] public int day = 1;
+
+    private Action<int> updateMoneyUI;
+    private Action<Reputation, int> updateReputationUI;
     private Dictionary<string, int> productPrices;
+    private List<Delivery> deliveries;
     private PlayerController playerController;
     private DayStatistics dayStatistics;
     private GameObject lastButton;
     private GameObject pausePanel;
-    private int money = 100;
-    private int reputation;
+    private int money;
+    private Reputation reputation;
+    private int currentReputationLv;
     private int currentStock;
 
     private void Awake() {
+        money = startingMoney;
+
         //Set product list for prices
         productPrices = new Dictionary<string, int>();
         foreach (ProductSO product in productsList)
@@ -41,9 +51,12 @@ public class GameManager : MonoBehaviour {
 
         //Set Statistic class
         dayStatistics = new DayStatistics(this);
+        deliveries = new List<Delivery>();
+        reputation = new Reputation();
     }
 
     private void Start() {
+        //Set Input Device
         if (inputType == InputType.Gamepad && Gamepad.all.Count > 0) {
             playerController.playerInput.devices = new InputDevice[] { Gamepad.all[0] };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
@@ -53,8 +66,9 @@ public class GameManager : MonoBehaviour {
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
         }
 
+        //Set UI
         updateMoneyUI(money);
-        updateReputationUI(reputation);
+        updateReputationUI(reputation, reputationExpToLvUp[reputation.level]);
     }
 
     public void Pause() {
@@ -79,6 +93,26 @@ public class GameManager : MonoBehaviour {
         foreach (StockIngredient stock in ingredientLists)
             if (ingredient == stock.ingredient)
                 stock.amount -= amount;
+    }
+    public void AddDelivery(Delivery delivery) {
+        deliveries.Add(delivery);
+
+        if (delivery.day == 0)
+            StartCoroutine(ExpressDelivery(delivery));
+
+    }
+    private IEnumerator ExpressDelivery(Delivery delivery) {
+        yield return new WaitForSeconds(15);
+        DeliverOrder(delivery);
+    }
+
+    private void DeliverOrder(Delivery delivery) {
+        foreach (StockIngredient stockIngredient in GetIngredientList())
+            foreach (StockIngredient deliveryIngredient in delivery.ingredients)
+                if (stockIngredient.ingredient == deliveryIngredient.ingredient)
+                    stockIngredient.amount += deliveryIngredient.amount;
+        deliveries.Remove(delivery);
+        print("Order delivered !");
     }
 
     public void SetEventSystemToStartButton(GameObject startButton) {
@@ -105,14 +139,22 @@ public class GameManager : MonoBehaviour {
     public InputType GetInputType() => inputType;
     public InputType SetInputType(InputType value) => inputType = value;
     public bool IsGamepad() => inputType == InputType.Gamepad;
-    public float GetReputation() => reputation;
+    public float GetReputationExperience() => reputation.experience;
+    public int GetReputationLevel() => reputation.level;
     public void AddReputation(int value) {
-        reputation += value;
-        updateReputationUI(reputation);
+        reputation.experience += value;
+
+        if (reputation.experience > reputationExpToLvUp[reputation.level]) {
+            reputation.level++;
+            reputation.experience = 0;
+        }
+        updateReputationUI(reputation, reputationExpToLvUp[reputation.level]);
     }
     public void RemoveReputation(int value) {
-        reputation -= value;
-        updateReputationUI(reputation);
+        reputation.experience -= value;
+        if (reputation.experience < 0)
+            reputation.experience = 0;
+        updateReputationUI(reputation, reputationExpToLvUp[reputation.level]);
     }
     public float GetMoney() => money;
     public void AddMoney(int value) {
@@ -129,4 +171,5 @@ public class GameManager : MonoBehaviour {
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
     public DayStatistics GetDayStatistics() => dayStatistics;
+    public bool GetDebug() => debug;
 }

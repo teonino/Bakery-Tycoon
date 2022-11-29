@@ -5,13 +5,15 @@ using UnityEngine.AddressableAssets;
 
 public class SpawnCustomer : MonoBehaviour {
     [Header("Spawn Variables")]
+    [SerializeField] private bool debug;
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
-    [SerializeField] private int minDelaySpawn;
-    [SerializeField] private int maxDelaySpawn;
+    [Tooltip("X is minimum, Y is for maximum")]
+    [SerializeField] private List<Vector2> delaySpawn;
+    [SerializeField] private Vector2 debugDelaySpawn;
     [SerializeField] private int nbCustomerMax = 5;
-    [SerializeField] private int nbCustomerPerDay = 10;
-    [SerializeField] private int spawnPercentRegularCustomer = 10;
+    [Tooltip("1 chance out of X to spawn")]
+    [SerializeField] private int spawnChanceRegularCustomer = 10;
     [Header("References")]
     [SerializeField] private AssetReference customerAsset;
     [SerializeField] private AssetReference regularCustomerAsset;
@@ -34,6 +36,10 @@ public class SpawnCustomer : MonoBehaviour {
         availableProduct = new List<ProductSO>();
         gameManager = FindObjectOfType<GameManager>();
         dayManager = FindObjectOfType<DayManager>();
+
+        if (!gameManager.GetDebug())
+            debug = false;
+
         StartCoroutine(SpawnDelay());
     }
 
@@ -41,7 +47,10 @@ public class SpawnCustomer : MonoBehaviour {
         if (gameManager.dayTime == DayTime.Morning)
             yield return new WaitForSeconds(dayManager.GetMorningDuration());
         else {
-            randomTime = Random.Range(minDelaySpawn, maxDelaySpawn);
+            if (!debug)
+                randomTime = Random.Range(delaySpawn[gameManager.GetReputationLevel()].x, delaySpawn[gameManager.GetReputationLevel()].y);
+            else
+                randomTime = Random.Range(debugDelaySpawn.x, debugDelaySpawn.y);
 
             yield return new WaitForSeconds(randomTime);
             InstantiateCustomer();
@@ -52,9 +61,8 @@ public class SpawnCustomer : MonoBehaviour {
     private void InstantiateCustomer() {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.dayTime == DayTime.Day && CheckProducts()) {
-            dayManager.SetRotation(nbCustomerPerDay, nbCustomerSpawned, randomTime);
             nbCustomer++;
-            if (enableSpawnRegularCustomer && Random.Range(0, spawnPercentRegularCustomer) == 0 && CheckChairs()) {
+            if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0 && CheckChairs()) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomerSpawned;
                     SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>());
