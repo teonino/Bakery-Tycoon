@@ -4,35 +4,50 @@ using UnityEngine;
 
 public class CutoutObject : MonoBehaviour
 {
-    [SerializeField] private List<Material> materials;
+    private List<Color> colors;
+    private GameObject wallHit;
+
     private Camera cam;
-    Vector3 pos = new Vector3(Screen.width/2, Screen.height/2, 0);
+    Vector3 pos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
     [SerializeField] private GameObject wallPanel;
+    public float[] opacityValue;
 
     private void Start()
     {
         cam = Camera.main;
+        colors = new List<Color>();
     }
 
     private void Update()
     {
+        RaycastHit hit;
+        Physics.Raycast(cam.ScreenPointToRay(pos), out hit, 5);
 
-        Ray ray = cam.ScreenPointToRay(pos);
-        Debug.DrawRay(ray.origin, ray.direction * 15, Color.yellow);
-        if (Physics.Raycast(ray, out var hitInfo, 15))
+        if (hit.collider && hit.collider.gameObject.name.Contains("Wall"))
         {
-            print("Raycast detecte des choses");
-           if(hitInfo.collider.gameObject.name.Contains("Wall"))
-           {
-                print("Raycast détecte des walls");
-                int children = transform.childCount;
-              for (int i = 0; i < children; ++i)
-              {
-                    print("entrer dans le for");
-                    print("For loop: " + transform.GetChild(i));
-              }
+            if (hit.collider.gameObject != wallHit)
+            {
+                {
+                    wallHit = hit.collider.gameObject;
+                    foreach (Transform t in hit.transform)
+                    {
+                        Color c = t.gameObject.GetComponent<Renderer>().material.color;
+                        colors.Add(new Color(c.r, c.g, c.b, c.a));
+                        t.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (wallHit)
+            {
+                for (int i = 0; i < wallHit.transform.childCount; i++)
+                {
+                    wallHit.transform.GetChild(i).gameObject.GetComponent<Renderer>().material.color = colors[i];
+                }
+                wallHit = null;
             }
         }
     }
-
 }
