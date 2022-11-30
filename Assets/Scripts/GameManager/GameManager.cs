@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private ListProduct productsList;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private Day day;
+    [SerializeField] private Controller controller;
     [Header("Variables")]
     [SerializeField] private bool debug;
-    [SerializeField] private InputType inputType;
     [SerializeField] private int startingMoney;
     [SerializeField] private List<int> reputationExpToLvUp;
     [SerializeField] private int maxStock;
@@ -46,11 +46,11 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         //Set Input Device
-        if (inputType == InputType.Gamepad && Gamepad.all.Count > 0) {
+        if (controller.GetInputType() == InputType.Gamepad && Gamepad.all.Count > 0) {
             playerController.playerInput.devices = new InputDevice[] { Gamepad.all[0] };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
         }
-        else if (inputType == InputType.KeyboardMouse && InputSystem.devices.Count > 0 && InputSystem.devices.Count > 0) {
+        else if (controller.GetInputType() == InputType.KeyboardMouse && InputSystem.devices.Count > 0 && InputSystem.devices.Count > 0) {
             playerController.playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
         }
@@ -117,9 +117,6 @@ public class GameManager : MonoBehaviour {
     public PlayerController GetPlayerController() => playerController;
     public int GetProductPrice(ProductSO product) => productPrices[product.name];
     public int SetProductPrice(ProductSO product, int value) => productPrices[product.name] = value;
-    public InputType GetInputType() => inputType;
-    public InputType SetInputType(InputType value) => inputType = value;
-    public bool IsGamepad() => inputType == InputType.Gamepad;
     public void AddProductSold(ProductSO product) => print("yes");//dayStatistics.AddProductSold(product);
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;

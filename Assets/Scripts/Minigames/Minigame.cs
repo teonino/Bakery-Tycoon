@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public abstract class Minigame : MonoBehaviour {
     [Header("Global parameters")]
+    [SerializeField] protected Controller controller;
     [SerializeField] protected CraftingStationType craftingStationRequired;
     [SerializeField] protected float minTime;
     [SerializeField] protected float maxTime;
@@ -62,7 +63,7 @@ public abstract class Minigame : MonoBehaviour {
         foreach (char c in inputName)
             inputName = inputName.Replace(" ", string.Empty);
 
-        if (gameManager.IsGamepad())
+        if (controller.IsGamepad())
             return Gamepad.current[inputName].displayName;
         else
             return Keyboard.current[inputName].displayName;

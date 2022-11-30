@@ -14,6 +14,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private GameObject stockPanel;
     [SerializeField] private ListProduct products;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private Controller controller;
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
@@ -110,7 +111,7 @@ public class WorkstationManager : MonoBehaviour {
                 }
             }
 
-            if (gameManager.IsGamepad())
+            if (controller.IsGamepad())
                 gameManager.SetEventSystemToStartButton(productButtonList[0]);
             else
                 gameManager.SetEventSystemToStartButton(null);

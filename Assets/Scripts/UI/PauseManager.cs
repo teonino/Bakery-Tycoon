@@ -5,12 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour {
     [SerializeField] private GameObject resumeButton;
+    [SerializeField] private Controller controller;
     GameManager gameManager;
 
     private void OnEnable() {
         Time.timeScale = 0f;
         gameManager.GetPlayerController().playerInput.Pause.Enable();
-        if (gameManager.IsGamepad())
+        if (controller.IsGamepad())
             gameManager.SetEventSystemToStartButton(resumeButton);
         else
             gameManager.SetEventSystemToStartButton(null);

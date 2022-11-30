@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TabsManagement : MonoBehaviour {
     [SerializeField] private GameObject firstPanel;
     [SerializeField] private GameObject firstTab;
+    [SerializeField] private Controller controller;
 
     private GameObject currentPanel;
     private GameManager gameManager;
@@ -16,7 +17,7 @@ public class TabsManagement : MonoBehaviour {
         currentPanel = firstPanel;
         currentPanel.SetActive(true);
 
-        if (gameManager.IsGamepad()) {
+        if (controller.IsGamepad()) {
             gameManager.SetEventSystemToStartButton(firstTab);
         }
     }
