@@ -6,21 +6,25 @@ using UnityEngine;
 public class DayManager : MonoBehaviour {
 
     private GameManager gameManager;
-    
+
     [SerializeField] private bool daySystemEnable;
     [SerializeField] private int startLightRotation;
+    [SerializeField] private int endLightRotationMorning;
     [SerializeField] private int endLightRotation;
     [SerializeField] private int morningDuration;
     [SerializeField] private int dayDuration;
 
     private float timeElapsed;
     private int duration;
-    private Action<string> updateDayTimeUI;
+    private Action<DayTime, int> updateDayTimeUI;
+    private Action displaySkipButton;
 
     void Start() {
         gameManager = FindObjectOfType<GameManager>();
-        updateDayTimeUI = FindObjectOfType<DayTimeUI>().SetDayTime;
-        updateDayTimeUI(GetDay());
+        updateDayTimeUI = FindObjectOfType<DayTimeUI>().StartDayTime;
+        displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
+        displaySkipButton();
+        updateDayTimeUI(gameManager.dayTime, morningDuration);
         duration = morningDuration + dayDuration;
     }
 
@@ -37,26 +41,14 @@ public class DayManager : MonoBehaviour {
                 Updateday();
         }
     }
-    public string GetDay() {
-        string s = "";
-        switch (gameManager.dayTime) {
-            case DayTime.Morning:
-                s = "Morning";
-                break;
-            case DayTime.Day:
-                s = "Day";
-                break;
-            case DayTime.Evening:
-                s = "Evening";
-                break;
-            default:
-                break;
-        }
-        return s;
-    }
 
     public void Updateday() {
         gameManager.dayTime++;
-        updateDayTimeUI(GetDay());
+        if (gameManager.dayTime == DayTime.Evening)
+            displaySkipButton();
+        updateDayTimeUI(gameManager.dayTime, duration - morningDuration);
     }
+
+    public int GetDayDuration() => dayDuration;
+    public int GetMorningDuration() => morningDuration;
 }

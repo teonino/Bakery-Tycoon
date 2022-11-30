@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 76043606779514469}
   - component: {fileID: 749023160654707592}
   - component: {fileID: 4567141820560161017}
+  - component: {fileID: -9102531467270861973}
   m_Layer: 8
   m_Name: Customer
   m_TagString: Untagged
@@ -60,6 +61,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   waitingTime: 10
   agent: {fileID: 8224689622529937741}
+  saleReputation: 1
   requestedProduct: {fileID: 0}
   state: 0
   inQueue: 0
@@ -151,3 +153,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &-9102531467270861973
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3406051452953038548}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

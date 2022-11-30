@@ -7,4 +7,9 @@ public class StockIngredient
 {
     public IngredientSO ingredient;
     public int amount;
+
+    public StockIngredient(IngredientSO ingredient, int amount) {
+        this.ingredient = ingredient;
+        this.amount = amount;
+    }
 }

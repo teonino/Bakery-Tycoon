@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1777119119433553921}
   - component: {fileID: 891240555123078324}
   - component: {fileID: 5599915047898650870}
+  - component: {fileID: 1269250625105853589}
   m_Layer: 0
   m_Name: Sandwhich
   m_TagString: Untagged
@@ -97,3 +98,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1269250625105853589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2807096669951255299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5cca6f0130fda4298f3169aff10043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  product:
+    productSO: {fileID: 11400000, guid: 5b0707e7b88c3db4293b79bb074df1e3, type: 2}
+    quality: 0
+    amount: 0
+  blocked: 0

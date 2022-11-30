@@ -12,7 +12,11 @@ public class Product {
         productSO = product;
         amount = product.nbCreated;
     }
-    public string GetName() => productSO.name;
+    public string GetName() {
+        if (!productSO)
+            return null;
+        return productSO.name;
+    }
     public float GetPrice() => productSO.price;
     public CraftingStationType GetCraftingStation() => productSO.craftStationRequired;
 

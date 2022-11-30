@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
+    [SerializeField] private TMP_Dropdown deliveryDropdown;
 
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public Dictionary<IngredientSO, int> cart;
@@ -16,6 +18,7 @@ public class CartUI : MonoBehaviour {
     [HideInInspector] public int cartCost;
 
     private GameManager gameManager;
+    private DeliveryType deliveryType;
     private float cost = 0; //will be used to display total cost of cart
 
     void Start() {
@@ -40,16 +43,29 @@ public class CartUI : MonoBehaviour {
         //Check if the order can be stocked && bought
         if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
             if (cartCost <= gameManager.GetMoney()) {
+                Delivery delivery = new Delivery((int)deliveryType);
                 foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                     if (stock.Value > 0) {
-                        foreach (StockIngredient stockIngredient in gameManager.GetIngredientList())
-                            if (stockIngredient.ingredient == stock.Key)
-                                stockIngredient.amount += stock.Value;
+                        delivery.Add(stock.Key, stock.Value);
                     }
                 }
+                gameManager.AddDelivery(delivery);
                 gameManager.RemoveMoney(cartCost);
                 Clear();
             }
+        }
+    }
+
+    public void SetDeliveryType() {
+        switch (deliveryDropdown.value) {
+            case 0:
+                deliveryType = DeliveryType.Express; break;
+            case 1:
+                deliveryType = DeliveryType.Regular; break;
+            case 2:
+                deliveryType = DeliveryType.Late; break;
+            default:
+                break;
         }
     }
 

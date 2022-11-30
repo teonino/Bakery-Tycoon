@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 7767219833263215358}
   - component: {fileID: 7668145839957322575}
   - component: {fileID: 3662877211146813932}
+  - component: {fileID: 2524610463097123244}
   m_Layer: 0
   m_Name: Tea
   m_TagString: Untagged
@@ -267,6 +268,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -50715801782881192, guid: f515ccc840594774197495fc606210ce, type: 3}
+--- !u!114 &2524610463097123244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033118340272328750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5cca6f0130fda4298f3169aff10043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  product:
+    productSO: {fileID: 11400000, guid: 6c9da4658c2f0e94496e9904bb836a92, type: 2}
+    quality: 0
+    amount: 0
+  blocked: 0
 --- !u!1 &7386626870597935706
 GameObject:
   m_ObjectHideFlags: 0

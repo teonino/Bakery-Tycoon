@@ -7,18 +7,22 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 
 public class AICustomer : Interactable {
+    [Header("AI Customer References")]
     [SerializeField] protected AssetReference assetProductCanvas;
     [SerializeField] protected AssetReference assetPaymentCanvas;
-    [SerializeField] protected float waitingTime = 5f; 
     [SerializeField] protected NavMeshAgent agent;
+
+    [Header("AI Customer Variables")]
+    [SerializeField] protected float waitingTime = 5f;
+    [SerializeField] protected int saleReputation;
 
     [HideInInspector] public ProductSO requestedProduct;
 
     public AIState state = AIState.idle;
-    protected GameObject productCanvas; 
+    protected GameObject productCanvas;
     protected GameObject item;
     protected SpawnCustomer spawner;
-    protected Vector3 spawnPosition; 
+    protected Vector3 spawnPosition;
     protected Coroutine waitingCoroutine;
 
     protected new void Awake() {
@@ -75,23 +79,22 @@ public class AICustomer : Interactable {
 
     //Display the payement
     public void DisplayPayment(GameObject displayGO) {
-        int totalPrice = gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO) + gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO) * item.GetComponent<ProductHolder>().product.quality / 100;
+        int basePrice = gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO);
+        int totalPrice = basePrice + basePrice * item.GetComponent<ProductHolder>().product.quality / 100;
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
-            go.Result.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "+" + totalPrice + "€";
+            go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(basePrice, totalPrice - basePrice);
             requestedProduct = null;
         };
 
         gameManager.AddMoney(totalPrice);
-        gameManager.AddReputation(1);
+        gameManager.AddReputation(saleReputation);
     }
 
     public void SetDestination(Vector3 position) => agent.SetDestination(position);
 
-    public override void Effect() {
-
-    }
+    public override void Effect() { }
 }
 
 

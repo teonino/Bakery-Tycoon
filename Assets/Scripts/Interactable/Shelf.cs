@@ -10,6 +10,11 @@ public class Shelf : Interactable {
     public bool spawnAsset;
     public AssetReference debugAsset;
 
+    protected void Start() {
+        if (!gameManager.GetDebug())
+            spawnAsset = false;
+    }
+
     public override void Effect() {
         if (playerController.GetItemHold() && !item) {
             PutDownItem(playerController.GetItemHold());

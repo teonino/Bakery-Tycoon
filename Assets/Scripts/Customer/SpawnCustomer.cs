@@ -4,18 +4,22 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class SpawnCustomer : MonoBehaviour {
-    [Header("Spawn attributes")]
+    [Header("Spawn Variables")]
+    [SerializeField] private bool debug;
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
-    [SerializeField] private int minDelaySpawn;
-    [SerializeField] private int maxDelaySpawn;
-    [SerializeField] private int nbCustomer = 0;
+    [Tooltip("X is minimum, Y is for maximum")]
+    [SerializeField] private List<Vector2> delaySpawn;
+    [SerializeField] private Vector2 debugDelaySpawn;
     [SerializeField] private int nbCustomerMax = 5;
-    [SerializeField] private int spawnRateRegularCustomer = 10;
+    [Tooltip("1 chance out of X to spawn")]
+    [SerializeField] private int spawnChanceRegularCustomer = 10;
+    [Header("References")]
     [SerializeField] private AssetReference customerAsset;
     [SerializeField] private AssetReference regularCustomerAsset;
 
-    private int nbCustomerSpawned = 0;
+    private int nbCustomer = 0;
+    private int nbCustomerSpawned = 0; // only for customer's name
     private Chair currentChair;
     private Table currentTable;
     private int indexChair = -1;
@@ -23,26 +27,42 @@ public class SpawnCustomer : MonoBehaviour {
     private List<ProductSO> doableProduct;
     private List<ProductSO> availableProduct;
     private List<Table> tables;
+    private DayManager dayManager;
+    private float randomTime;
 
     void Start() {
         tables = new List<Table>(FindObjectsOfType<Table>());
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
         gameManager = FindObjectOfType<GameManager>();
-        StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));
+        dayManager = FindObjectOfType<DayManager>();
+
+        if (!gameManager.GetDebug())
+            debug = false;
+
+        StartCoroutine(SpawnDelay());
     }
 
-    private IEnumerator SpawnDelay(int time) {
-        yield return new WaitForSeconds(time);
-        InstantiateCustomer();
-        StartCoroutine(SpawnDelay(Random.Range(minDelaySpawn, maxDelaySpawn)));
+    private IEnumerator SpawnDelay() {
+        if (gameManager.dayTime == DayTime.Morning)
+            yield return new WaitForSeconds(dayManager.GetMorningDuration());
+        else {
+            if (!debug)
+                randomTime = Random.Range(delaySpawn[gameManager.GetReputationLevel()].x, delaySpawn[gameManager.GetReputationLevel()].y);
+            else
+                randomTime = Random.Range(debugDelaySpawn.x, debugDelaySpawn.y);
+
+            yield return new WaitForSeconds(randomTime);
+            InstantiateCustomer();
+        }
+        StartCoroutine(SpawnDelay());
     }
 
     private void InstantiateCustomer() {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && gameManager.dayTime == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (enableSpawnRegularCustomer && Random.Range(0, spawnRateRegularCustomer) == 0 && CheckChairs()) {
+            if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0 && CheckChairs()) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                     go.Result.name = "RegularCustomer " + nbCustomerSpawned;
                     SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>());
@@ -55,12 +75,13 @@ public class SpawnCustomer : MonoBehaviour {
                     SetCustomer(go.Result.GetComponent<AIRandomCustomer>());
                     nbCustomerSpawned++;
                 };
+
             }
         }
     }
 
     private bool CheckChairs() {
-        foreach(Table table in tables) {
+        foreach (Table table in tables) {
             indexChair = table.GetChairAvailable();
             if (indexChair >= 0)
                 currentChair = table.chairs[indexChair];
