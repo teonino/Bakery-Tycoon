@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_CustomLighting
+  m_Name: materialCouch
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -35,19 +35,19 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
-        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Alpha_Mask:
-        m_Texture: {fileID: 2800000, guid: 147c630272351a049ade2374e88a0af0, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 2800000, guid: 319f5477bd48990449f060c1f54a12c2, type: 3}
+        m_Texture: {fileID: 2800000, guid: abf311341c827fe44ad03de44cd6882e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: 037dd38dc8d7355459b36368321b7c01, type: 3}
+        m_Texture: {fileID: 2800000, guid: b75e20afb29a24842b3a46646a4778f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -59,11 +59,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 037dd38dc8d7355459b36368321b7c01, type: 3}
+        m_Texture: {fileID: 2800000, guid: b75e20afb29a24842b3a46646a4778f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: 1d0830ef3a64e7645bedfbd61b373be4, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9ae1f60312e51740a7b419fc2dc97b7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -71,7 +71,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: 319f5477bd48990449f060c1f54a12c2, type: 3}
+        m_Texture: {fileID: 2800000, guid: abf311341c827fe44ad03de44cd6882e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
@@ -125,7 +125,7 @@ Material:
     - _DetailsAlbedoAdjustment: 0
     - _DetailsAppearDistance: 1
     - _DetailsNormalDistance: 5
-    - _DetailsNormalScale: 1
+    - _DetailsNormalScale: 0
     - _DetailsNormalStrenght: 0
     - _DetailsScale: 1
     - _DetailsScale_1: 0
@@ -133,9 +133,9 @@ Material:
     - _EmissivePower: 1
     - _Height: 0
     - _HeightForce: 0
-    - _LightProbeContribution: 2
+    - _LightProbeContribution: 1
     - _MetallicStrenght: 1
-    - _NormalStrenght: 0
+    - _NormalStrenght: 1
     - _OutlineDepthSensitivity: 0.125
     - _OutlineNormalsSensitivity: 1
     - _OutlineThickness: 0
