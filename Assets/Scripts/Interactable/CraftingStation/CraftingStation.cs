@@ -6,10 +6,10 @@ using UnityEngine.AddressableAssets;
 
 public class CraftingStation : Interactable {
 
-    public CraftingStationType type;
-
-    [SerializeField] private int dirty = 0;
     [SerializeField] private AssetReference progressBarAsset;
+    [SerializeField] private Day day;
+    [SerializeField] private CraftingStationType type;
+    [SerializeField] private int dirty = 0;
 
     [Header("Debug parameters")]
     [SerializeField] private bool skipCookingTime = false;
@@ -22,6 +22,8 @@ public class CraftingStation : Interactable {
         if (!gameManager.GetDebug())
             skipCookingTime = false;
     }
+
+    public CraftingStationType GetCraftingStationType() => type;
 
     public override void Effect() {
         if (playerController.GetItemHold() && playerController.GetItemHold().tag == "Paste" && itemInStation == null && playerController.GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type) {
@@ -44,7 +46,7 @@ public class CraftingStation : Interactable {
                 Addressables.ReleaseInstance(progressBar);
             };            
         }
-        else if (gameManager.dayTime == DayTime.Evening) {
+        else if (day.GetDayTime() == DayTime.Evening) {
             //Check cleanness
             if (dirty > 20) {
                 //Launch Animation

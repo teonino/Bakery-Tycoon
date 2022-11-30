@@ -4,18 +4,18 @@ using TMPro;
 using UnityEngine;
 
 public class DayTimeUI : MonoBehaviour {
-
-    TextMeshProUGUI text;
-    int secondRemaining;
-    DayTime dayTime;
+    [SerializeField] private Day day;
+    private TextMeshProUGUI text;
+    private int duration;
 
     private void Start() {
         text = GetComponent<TextMeshProUGUI>();
+        day.SetUpdateUI(SetDay);
+        SetDay();
     }
-    public void StartDayTime(DayTime dayTime, int seconds) {
-        this.dayTime = dayTime;
-        secondRemaining = seconds;
-        if (dayTime == DayTime.Morning) {
+
+    private void SetDay() {
+        if (day.GetDayTime() == DayTime.Morning) {
             StartCoroutine(TimeRemaining());
         }
         else {
@@ -24,21 +24,28 @@ public class DayTimeUI : MonoBehaviour {
     }
 
     private IEnumerator TimeRemaining() {
-        text.SetText(GetDay() + " " + secondRemaining / 60 + ":");
-        if (secondRemaining % 60 < 10)
-            text.text += "0" + secondRemaining % 60;
+        if (day.GetDayTime() == DayTime.Morning)
+            duration = day.GetMorningDuration();
         else
-            text.text += secondRemaining % 60;
+            duration = day.GetDayDuration();
+
+        int timeRemaining = duration - day.GetTimeElapsed();
+
+        text.SetText(GetDay() + " " + timeRemaining / 60  + ":"); // Display minutes
+        if (timeRemaining % 60 < 10)
+            text.text += "0" + timeRemaining % 60;
+        else
+            text.text += timeRemaining % 60;
 
         yield return new WaitForSeconds(1);
-        secondRemaining--;
-        if (secondRemaining > 0)
+        day.AddTimeElpased(1);
+        if (day.GetTimeElapsed() > 0)
             StartCoroutine(TimeRemaining());
     }
 
     public string GetDay() {
         string s = "";
-        switch (dayTime) {
+        switch (day.GetDayTime()) {
             case DayTime.Morning:
                 s = "Morning";
                 break;

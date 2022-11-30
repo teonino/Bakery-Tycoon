@@ -5,7 +5,14 @@ using UnityEngine;
 
 public class MoneyUI : MonoBehaviour
 {
-    public void SetMoney(int money) {
-        GetComponent<TextMeshProUGUI>().SetText("Money : " + money + "€");
+    [SerializeField] private Money money;
+
+    private void Start() {
+        money.SetUpdateUI(SetMoney);
+        SetMoney();
+    }
+
+    public void SetMoney() {
+        GetComponent<TextMeshProUGUI>().SetText("Money : " + money.GetMoney() + "€");
     }
 }

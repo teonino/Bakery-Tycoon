@@ -10,6 +10,8 @@ public class BuildingMode : Interactable {
     [SerializeField] private LayerMask pickUpLayer;
     [SerializeField] private LayerMask putDownLayer;
     [SerializeField] private Material collidingMaterial;
+    [SerializeField] private Day day;
+    [SerializeField] private Controller controller;
 
     [Header("Global Parameters")]
     [SerializeField] private float snapValue;
@@ -38,11 +40,11 @@ public class BuildingMode : Interactable {
     }
 
     public override void Effect() {
-        if (gameManager.dayTime == DayTime.Morning) {
+        if (day.GetDayTime() == DayTime.Morning) {
             playerController.DisableInput();
             playerController.playerInput.Building.Enable();
 
-            if (gameManager.IsGamepad()) {
+            if (controller.IsGamepad()) {
                 cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
                     cursorObject = go.Result;
                 };
@@ -68,7 +70,7 @@ public class BuildingMode : Interactable {
 
     public void Select(CallbackContext context) {
         Ray ray;
-        if (gameManager.IsGamepad()) {
+        if (controller.IsGamepad()) {
             ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
         }
         else
@@ -122,7 +124,7 @@ public class BuildingMode : Interactable {
 
     private void FixedUpdate() {
         if (inBuildingMode) {
-            if (gameManager.IsGamepad() && cursorObject) {
+            if (controller.IsGamepad() && cursorObject) {
                 cursorObject.transform.Translate(gameManager.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
                 SnapGameObject(cursorObject.transform.position);
             }

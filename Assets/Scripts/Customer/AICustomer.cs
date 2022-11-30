@@ -11,6 +11,9 @@ public class AICustomer : Interactable {
     [SerializeField] protected AssetReference assetProductCanvas;
     [SerializeField] protected AssetReference assetPaymentCanvas;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Money money;
+    [SerializeField] protected Reputation reputation;
+    [SerializeField] protected Statistics stats;
 
     [Header("AI Customer Variables")]
     [SerializeField] protected float waitingTime = 5f;
@@ -27,7 +30,6 @@ public class AICustomer : Interactable {
 
     protected new void Awake() {
         base.Awake();
-        gameManager = FindObjectOfType<GameManager>();
         spawner = FindObjectOfType<SpawnCustomer>();
     }
 
@@ -53,7 +55,7 @@ public class AICustomer : Interactable {
     public void TakeItem(ProductHolder product, GameObject displayGo) {
         item.GetComponent<ProductHolder>().product.quality = product.product.quality;
 
-        gameManager.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
+        stats.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
         if (productCanvas)
             Addressables.ReleaseInstance(productCanvas);
         DisplayPayment(displayGo);
@@ -88,8 +90,8 @@ public class AICustomer : Interactable {
             requestedProduct = null;
         };
 
-        gameManager.AddMoney(totalPrice);
-        gameManager.AddReputation(saleReputation);
+        money.AddMoney(totalPrice);
+        reputation.AddReputation(saleReputation);
     }
 
     public void SetDestination(Vector3 position) => agent.SetDestination(position);

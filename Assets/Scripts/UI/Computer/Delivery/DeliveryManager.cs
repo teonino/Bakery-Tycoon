@@ -12,6 +12,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientRackAsset;
     [SerializeField] private CartUI cartPanel;
     [SerializeField] private GameObject computerPanel;
+    [SerializeField] private ListIngredient ingredients;
 
     private GameManager gameManager;
     private PlayerController playerController;
@@ -33,7 +34,7 @@ public class DeliveryManager : MonoBehaviour {
         ingredientRackList = new List<GameObject>();
         ingredientButtonList = new List<GameObject>();
 
-        lenght = gameManager.GetIngredientsLenght();
+        lenght = ingredients.GetIngredientLenght();
         playerController = gameManager.GetPlayerController();
 
     }
@@ -56,7 +57,7 @@ public class DeliveryManager : MonoBehaviour {
         for (int i = 0; i < lenght; i++) {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<DeliveryButton>().SetIngredient(gameManager.GetIngredientList()[nbButton].ingredient);
+                go.Result.GetComponent<DeliveryButton>().SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupButtons();
@@ -100,7 +101,7 @@ public class DeliveryManager : MonoBehaviour {
 
     private void InitCart() {
         cart = new Dictionary<IngredientSO, int>();
-        foreach (StockIngredient stockIngredient in gameManager.GetIngredientList()) {
+        foreach (StockIngredient stockIngredient in ingredients.GetIngredientList()) {
             cart.Add(stockIngredient.ingredient, 0);
         }
     }

@@ -8,51 +8,40 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour {
+    [Header("References")]
+    [SerializeField] private AssetReference pausePanelAsset;
+    [SerializeField] private ListProduct productsList;
+    [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private Day day;
+    [Header("Variables")]
     [SerializeField] private bool debug;
     [SerializeField] private InputType inputType;
-    [SerializeField] private AssetReference pausePanelAsset;
     [SerializeField] private int startingMoney;
     [SerializeField] private List<int> reputationExpToLvUp;
-    [SerializeField] private List<ProductSO> productsList;
-    [SerializeField] private List<StockIngredient> ingredientLists;
-    [Header("Stocks")]
     [SerializeField] private int maxStock;
-
-    [HideInInspector] public DayTime dayTime = DayTime.Morning;
-    [HideInInspector] public int day = 1;
 
     private Action<int> updateMoneyUI;
     private Action<Reputation, int> updateReputationUI;
     private Dictionary<string, int> productPrices;
     private List<Delivery> deliveries;
     private PlayerController playerController;
-    private DayStatistics dayStatistics;
     private GameObject lastButton;
     private GameObject pausePanel;
-    private int money;
-    private Reputation reputation;
     private int currentReputationLv;
     private int currentStock;
 
     private void Awake() {
-        money = startingMoney;
 
         //Set product list for prices
         productPrices = new Dictionary<string, int>();
-        foreach (ProductSO product in productsList)
+        foreach (ProductSO product in productsList.GetProductList())
             productPrices.Add(product.name, product.price);
 
         //Get player Controller
         playerController = FindObjectOfType<PlayerController>();
 
-        //Set UI textes
-        updateMoneyUI = FindObjectOfType<MoneyUI>().SetMoney;
-        updateReputationUI = FindObjectOfType<ReputationUI>().SetReputation;
-
         //Set Statistic class
-        dayStatistics = new DayStatistics(this);
         deliveries = new List<Delivery>();
-        reputation = new Reputation();
     }
 
     private void Start() {
@@ -65,10 +54,6 @@ public class GameManager : MonoBehaviour {
             playerController.playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
         }
-
-        //Set UI
-        updateMoneyUI(money);
-        updateReputationUI(reputation, reputationExpToLvUp[reputation.level]);
     }
 
     public void Pause() {
@@ -82,7 +67,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public int GetIngredientAmount(IngredientSO ingredient) {
-        foreach (StockIngredient stock in ingredientLists)
+        foreach (StockIngredient stock in ingredients.GetIngredientList())
             if (ingredient == stock.ingredient)
                 return stock.amount;
 
@@ -90,7 +75,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void RemoveIngredientStock(IngredientSO ingredient, int amount) {
-        foreach (StockIngredient stock in ingredientLists)
+        foreach (StockIngredient stock in ingredients.GetIngredientList())
             if (ingredient == stock.ingredient)
                 stock.amount -= amount;
     }
@@ -107,7 +92,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void DeliverOrder(Delivery delivery) {
-        foreach (StockIngredient stockIngredient in GetIngredientList())
+        foreach (StockIngredient stockIngredient in ingredients.GetIngredientList())
             foreach (StockIngredient deliveryIngredient in delivery.ingredients)
                 if (stockIngredient.ingredient == deliveryIngredient.ingredient)
                     stockIngredient.amount += deliveryIngredient.amount;
@@ -130,46 +115,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public PlayerController GetPlayerController() => playerController;
-    public List<ProductSO> GetProductList() => productsList;
     public int GetProductPrice(ProductSO product) => productPrices[product.name];
     public int SetProductPrice(ProductSO product, int value) => productPrices[product.name] = value;
-    public List<StockIngredient> GetIngredientList() => ingredientLists;
-    public int GetProductsLenght() => productsList.Count;
-    public int GetIngredientsLenght() => ingredientLists.Count;
     public InputType GetInputType() => inputType;
     public InputType SetInputType(InputType value) => inputType = value;
     public bool IsGamepad() => inputType == InputType.Gamepad;
-    public float GetReputationExperience() => reputation.experience;
-    public int GetReputationLevel() => reputation.level;
-    public void AddReputation(int value) {
-        reputation.experience += value;
-
-        if (reputation.experience > reputationExpToLvUp[reputation.level]) {
-            reputation.level++;
-            reputation.experience = 0;
-        }
-        updateReputationUI(reputation, reputationExpToLvUp[reputation.level]);
-    }
-    public void RemoveReputation(int value) {
-        reputation.experience -= value;
-        if (reputation.experience < 0)
-            reputation.experience = 0;
-        updateReputationUI(reputation, reputationExpToLvUp[reputation.level]);
-    }
-    public float GetMoney() => money;
-    public void AddMoney(int value) {
-        money += value;
-        dayStatistics.AddMoney(value);
-        updateMoneyUI(money);
-    }
-    public void RemoveMoney(int value) {
-        money -= value;
-        dayStatistics.RemoveMoney(value);
-        updateMoneyUI(money);
-    }
-    public void AddProductSold(ProductSO product) => dayStatistics.AddProductSold(product);
+    public void AddProductSold(ProductSO product) => print("yes");//dayStatistics.AddProductSold(product);
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
-    public DayStatistics GetDayStatistics() => dayStatistics;
     public bool GetDebug() => debug;
 }

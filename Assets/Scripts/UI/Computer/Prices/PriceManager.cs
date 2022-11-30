@@ -12,6 +12,7 @@ public class PriceManager : MonoBehaviour {
     [SerializeField] private AssetReference productRackAsset;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private GameObject priceButtonPanel;
+    [SerializeField] private ListProduct products;
 
     private GameManager gameManager;
     private PlayerController playerController;
@@ -30,7 +31,7 @@ public class PriceManager : MonoBehaviour {
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
 
-        lenght = gameManager.GetProductsLenght();
+        lenght = products.GetProductLenght();
         playerController = gameManager.GetPlayerController();
     }
 
@@ -45,7 +46,7 @@ public class PriceManager : MonoBehaviour {
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<PriceButton>().SetProduct(gameManager.GetProductList()[nbButton]);
+                go.Result.GetComponent<PriceButton>().SetProduct(products.GetProductList()[nbButton]);
                 inputFieldControllerManager.listInputField.Add(go.Result.GetComponentInChildren<TMP_InputField>());
                 productButtonList.Add(go.Result);
                 nbButton++;
