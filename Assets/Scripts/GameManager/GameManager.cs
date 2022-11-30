@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -20,14 +19,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private List<int> reputationExpToLvUp;
     [SerializeField] private int maxStock;
 
-    private Action<int> updateMoneyUI;
-    private Action<Reputation, int> updateReputationUI;
     private Dictionary<string, int> productPrices;
     private List<Delivery> deliveries;
     private PlayerController playerController;
     private GameObject lastButton;
     private GameObject pausePanel;
-    private int currentReputationLv;
     private int currentStock;
 
     private void Awake() {
