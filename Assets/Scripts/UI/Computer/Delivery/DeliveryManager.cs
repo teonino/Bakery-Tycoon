@@ -88,7 +88,7 @@ public class DeliveryManager : MonoBehaviour {
 
     void SetupButtons() {
         if (ingredientRackList.Count > 0 && nbButton == lenght) {
-            int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.x / ingredientButtonList[0].GetComponent<RectTransform>().rect.x) - 1;
+            int maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.x / ingredientButtonList[0].GetComponent<RectTransform>().rect.x);
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < ingredientRackList.Count) {
                     ingredientButtonList[i].transform.SetParent(ingredientRackList[i / maxButtonInRack].transform);
