@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unity;
-public class DayStatistics {
-    Dictionary<ProductSO, int> productsSold;
-    GameManager gameManager;
-    int moneySpent;
-    int moneyEarned;
+using UnityEngine;
 
-    public DayStatistics(GameManager gameManager) {
-        productsSold = new Dictionary<ProductSO, int>();
+[CreateAssetMenu(fileName = "Statistic", menuName = "Data/Statistic")]
+public class Statistics : ScriptableObject {
+    [SerializeField] private ListProduct products;
+    private Dictionary<ProductSO, int> productsSold;
+    private int moneySpent;
+    private int moneyEarned;
 
-        this.gameManager = gameManager;
-        foreach(ProductSO product in gameManager.GetProductList()) {
-            productsSold.Add(product, 0);
-        }
-
+    private void OnEnable() {
         moneyEarned = moneySpent = 0;
+        productsSold = new Dictionary<ProductSO, int>();
+        foreach (ProductSO product in products.GetProductList())
+            productsSold.Add(product, 0);
     }
 
     public KeyValuePair<string,int> GetMostProductSold() {
         string product = "None";
         int productAmount = 0;
+
         foreach (KeyValuePair<ProductSO, int> productSold in productsSold) {
             if (product == "None") {
                 product = productSold.Key.name;
@@ -59,11 +59,10 @@ public class DayStatistics {
         }
     }
 
-    public StockIngredient GetLowestIngredient() {
-        List<StockIngredient> ingredients = gameManager.GetIngredientList();
+    public StockIngredient GetLowestIngredient(ListIngredient ingredients) {
         StockIngredient lowestIngredient = null;
 
-        foreach (StockIngredient ingredient in ingredients) {
+        foreach (StockIngredient ingredient in ingredients.GetIngredientList()) {
             if (lowestIngredient == null) lowestIngredient = ingredient;
             if (ingredient.amount < lowestIngredient.amount) lowestIngredient = ingredient;
         }

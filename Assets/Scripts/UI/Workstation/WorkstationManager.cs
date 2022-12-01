@@ -12,6 +12,9 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference productRackAsset;
     [SerializeField] private TextMeshProUGUI stockListText;
     [SerializeField] private GameObject stockPanel;
+    [SerializeField] private ListProduct products;
+    [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private Controller controller;
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
@@ -36,14 +39,14 @@ public class WorkstationManager : MonoBehaviour {
         productButtonList = new List<GameObject>();
         productRackList = new List<GameObject>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
-        lenght = gameManager.GetProductsLenght();
+        lenght = products.GetProductLenght();
         
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
                 button.workplacePanel = this;
-                button.SetProduct(gameManager.GetProductList()[nbButton]);
-                button.requirementMet = CheckRequirement(gameManager.GetProductList()[nbButton]);
+                button.SetProduct(products.GetProductList()[nbButton]);
+                button.requirementMet = CheckRequirement(products.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks();
@@ -52,7 +55,7 @@ public class WorkstationManager : MonoBehaviour {
 
         //Setup Stock
         stockListText.SetText("");
-        List<StockIngredient> stocks = gameManager.GetIngredientList();
+        List<StockIngredient> stocks = ingredients.GetIngredientList();
         foreach (StockIngredient stock in stocks) {
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
         }
@@ -68,7 +71,7 @@ public class WorkstationManager : MonoBehaviour {
         if (requirementMet) {
             requirementMet = false;
             foreach (CraftingStation craftingStation in craftingStations)
-                if (craftingStation.type == product.craftStationRequired) requirementMet = true;
+                if (craftingStation.GetCraftingStationType() == product.craftStationRequired) requirementMet = true;
         }
 
         //Check Ingredients
@@ -108,7 +111,7 @@ public class WorkstationManager : MonoBehaviour {
                 }
             }
 
-            if (gameManager.IsGamepad())
+            if (controller.IsGamepad())
                 gameManager.SetEventSystemToStartButton(productButtonList[0]);
             else
                 gameManager.SetEventSystemToStartButton(null);

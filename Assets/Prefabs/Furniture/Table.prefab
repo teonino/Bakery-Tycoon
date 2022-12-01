@@ -104,9 +104,12 @@ MonoBehaviour:
   chairs:
   - {fileID: 3851233259766033079}
   - {fileID: 3851233260640695597}
-  itemPosition: {fileID: 6237457000567561661}
-  itemPosition2: {fileID: 6448870426960002861}
-  item: {fileID: 0}
+  itemPositions:
+  - {fileID: 6237457000567561661}
+  - {fileID: 6448870426960002861}
+  items:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &5772694781323115940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -195,7 +198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1502549149879746946, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1502549149879746946, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_LocalPosition.y
@@ -239,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1502549149879746947, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
@@ -272,7 +275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1502549149879746946, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1502549149879746946, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_LocalPosition.y
@@ -316,7 +319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1502549149879746947, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2391dbe8463ef046aaa29a7abc7e239, type: 3}

@@ -362,6 +362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 1946718820}
+  ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
 --- !u!1 &1946718818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,6 +2251,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   computerPanel: {fileID: 7454282495487110267}
   priceButtonPanel: {fileID: 6366519846440322164}
+  products: {fileID: 0}
 --- !u!1 &6267181262974193021
 GameObject:
   m_ObjectHideFlags: 0
@@ -3700,6 +3703,7 @@ MonoBehaviour:
   orderSumary: {fileID: 1075469456577359686}
   totalCostText: {fileID: 1200898315}
   deliveryDropdown: {fileID: 8120670151029482763}
+  money: {fileID: 11400000, guid: 2165d7b449c98dc409d632d23f2844b0, type: 2}
   deliveryManager: {fileID: 0}
   cartWeight: 0
   cartCost: 0
@@ -4064,7 +4068,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 5, y: -1395.96}
-  m_SizeDelta: {x: -10, y: 2791.92}
+  m_SizeDelta: {x: -10, y: 1750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8485775067967138506
 MonoBehaviour:
@@ -4105,6 +4109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listInputField: []
+  controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
 --- !u!1 &7454282494286736357
 GameObject:
   m_ObjectHideFlags: 0
@@ -4291,6 +4296,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   computerPanel: {fileID: 7454282495487110267}
   priceButtonPanel: {fileID: 6366519846440322164}
+  products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
 --- !u!1 &7454282494348275455
 GameObject:
   m_ObjectHideFlags: 0
@@ -4794,6 +4800,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   cartPanel: {fileID: 1656088317}
   computerPanel: {fileID: 7454282495487110267}
+  ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
 --- !u!1 &7454282494738755977
 GameObject:
   m_ObjectHideFlags: 0
@@ -4829,7 +4836,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 5, y: 0}
-  m_SizeDelta: {x: -10, y: 200}
+  m_SizeDelta: {x: -10, y: 2000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7454282494738755979
 MonoBehaviour:
@@ -6016,6 +6023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPanel: {fileID: 7454282494328690096}
   firstTab: {fileID: 6366519846440322164}
+  controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
 --- !u!1 &7454282495881813729
 GameObject:
   m_ObjectHideFlags: 0

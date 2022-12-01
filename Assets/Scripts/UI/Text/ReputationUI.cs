@@ -4,7 +4,14 @@ using TMPro;
 using UnityEngine;
 
 public class ReputationUI : MonoBehaviour {
-    public void SetReputation(Reputation reputation, int experienceNeeded) {
-        GetComponent<TextMeshProUGUI>().SetText("Reputation Lv " + reputation.level + 1  + " : " + reputation.experience + " / " + experienceNeeded);
+    [SerializeField] Reputation reputation;
+
+    private void Start() {
+        reputation.SetUpdateUI(SetReputation);
+        SetReputation();
+    }
+
+    public void SetReputation() {
+        GetComponent<TextMeshProUGUI>().SetText("Reputation Lv " + reputation.GetLevel() + 1  + " : " + reputation.GetExperience() + " / " + reputation.GetExpNeeded());
     }
 }

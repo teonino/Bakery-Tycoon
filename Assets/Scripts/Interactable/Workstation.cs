@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Workstation : Interactable {
     [SerializeField] private AssetReference workplacePanelAsset;
+    [SerializeField] private Day day;
+    [SerializeField] private DebugState debug;
     [Header("Debug parameters")]
     [SerializeField] private bool skipRequirement = false;
     [SerializeField] private bool skipMinigame = false;
@@ -15,12 +17,12 @@ public class Workstation : Interactable {
     private GameObject workplacePanel;
 
     private void Start() {
-        if (!gameManager.GetDebug()) 
+        if (!debug.GetDebug()) 
             skipMinigame = skipRequirement = false;
     }
 
     public override void Effect() {
-        if (!playerController.GetItemHold() && gameManager.dayTime != DayTime.Evening) {
+        if (!playerController.GetItemHold() && day.GetDayTime() != DayTime.Evening) {
             playerController.DisableInput();
 
             workplacePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
