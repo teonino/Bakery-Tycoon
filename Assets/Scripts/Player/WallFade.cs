@@ -10,6 +10,7 @@ public class WallFade : MonoBehaviour
     [SerializeField][Range(5f, 15f)] float time;
     private float lerpTime;
     Color fade = new Color(0, 0, 0, 0);
+    internal bool thisRoomIsActive;
 
     private void Start()
     {
@@ -21,23 +22,28 @@ public class WallFade : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.name == "Main Camera")
+        if (thisRoomIsActive)
         {
-            for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+            if (other.gameObject.name == "Main Camera")
             {
-                StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), fade));
+                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                {
+                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), fade));
+                }
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "Main Camera")
+        if (thisRoomIsActive)
         {
-            for (int i = 0; i < wallToDispawn.transform.childCount; i ++)
+            if (other.gameObject.name == "Main Camera")
             {
-                StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), colors[i]));
+                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                {
+                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), colors[i]));
+                }
             }
         }
     }
