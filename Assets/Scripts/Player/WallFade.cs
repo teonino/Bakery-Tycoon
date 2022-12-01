@@ -6,18 +6,17 @@ public class WallFade : MonoBehaviour
 {
 
     [SerializeField] private GameObject wallToDispawn;
-    private List<Color> colors;
     [SerializeField][Range(5f, 15f)] float time;
     private float lerpTime;
-    Color fade = new Color(0, 0, 0, 0);
-    internal bool thisRoomIsActive;
+    public bool thisRoomIsActive;
+    private List<Coroutine> invisibleCoroutines;
+    private List<Coroutine> visibleCoroutines;
 
     private void Start()
     {
-        colors = new List<Color>();
         lerpTime = time * Time.deltaTime;
-        foreach (Transform t in wallToDispawn.transform)
-            colors.Add(t.GetComponent<Renderer>().material.color);
+        invisibleCoroutines = new List<Coroutine>();
+        visibleCoroutines = new List<Coroutine>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,9 +25,15 @@ public class WallFade : MonoBehaviour
         {
             if (other.gameObject.name == "Main Camera")
             {
+                if (visibleCoroutines.Count > 0) {
+                    foreach (Coroutine coroutine in visibleCoroutines)
+                        StopCoroutine(coroutine);
+                    visibleCoroutines.Clear();
+                }
+
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++)
                 {
-                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), fade));
+                    invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
                 }
             }
         }
@@ -40,21 +45,26 @@ public class WallFade : MonoBehaviour
         {
             if (other.gameObject.name == "Main Camera")
             {
+                if (invisibleCoroutines.Count > 0) {
+                    foreach (Coroutine coroutine in invisibleCoroutines)
+                        StopCoroutine(coroutine);
+                    invisibleCoroutines.Clear();
+                }
+
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++)
                 {
-                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), colors[i]));
+                    visibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1)));
                 }
             }
         }
     }
 
-    private IEnumerator ChangeColor(Transform go, Color finalColor)
+    private IEnumerator ChangeColor(Transform go, float opacity)
     {
-        while (go.GetComponent<Renderer>().material.color != finalColor)
+        while (go.GetComponent<Renderer>().material.color.a != opacity)
         {
-
             Color c = go.GetComponent<Renderer>().material.color;
-            go.GetComponent<Renderer>().material.color = Color.Lerp(c, finalColor, lerpTime);
+            go.GetComponent<Renderer>().material.color = Color.Lerp(c, new Color(c.r,c.g,c.b, opacity), lerpTime);
             yield return new WaitForEndOfFrame();
         }
         yield return null;
