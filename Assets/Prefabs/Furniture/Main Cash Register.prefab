@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7058970361836024941}
   - component: {fileID: 2639597324296460156}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: QueuePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 314078408520762554}
   - component: {fileID: 4794769341609440130}
   m_Layer: 6
-  m_Name: GameObject (3)
+  m_Name: QueuePosition (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 2930712322908547891}
   - component: {fileID: 6070294135581496475}
   m_Layer: 6
-  m_Name: GameObject (2)
+  m_Name: QueuePosition (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 7256152162681717999}
   - component: {fileID: 2588072067328736695}
   m_Layer: 6
-  m_Name: GameObject (1)
+  m_Name: QueuePosition (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,7 +356,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3484529604745745594, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_Name
-      value: Main Cash Register
+      value: MainShelf
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745746245, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_RootOrder
@@ -368,15 +368,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745746245, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745746245, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745746245, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 3484529604745746245, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -441,12 +441,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   itemPosition: {fileID: 513121538209488779}
-  spawnAsset: 0
+  spawnAsset: 1
   debugAsset:
-    m_AssetGUID: 
+    m_AssetGUID: 77dc272637fa76d489bb43f8fff4c28c
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  debugState: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
 --- !u!4 &7727111268999538574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3484529604745746245, guid: a11bb8ea836c11b43a9dd5e9a23bd81a, type: 3}

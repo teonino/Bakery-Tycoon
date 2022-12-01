@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "DelaySpawnSO", menuName = "Data/DelaySpawn")]
 public class DelaySpawnCustomer : ScriptableObject {
-    private List<Vector2> delaySpawn;
+    [SerializeField] private List<Vector2> delaySpawn;
     
     public Vector2 GetDelaySpawn(int index) {
         if (index >= 0 || index < delaySpawn.Count) {

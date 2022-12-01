@@ -39,7 +39,7 @@ public class AIRegularCustomer : AICustomer {
             print(e);
         }
 
-        if ((bool)(table?.GetItem(false)) && state == AIState.sitting) {
+        if (table && table.GetItem(false) && state == AIState.sitting) {
             if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
             //if(table.items[indexChair]?.GetComponent<ProductHolder>()?.product?.productSO?.name == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") { 
                 StopCoroutine(waitingCoroutine);

@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8762402543640223041}
   - component: {fileID: 8762402543640223053}
-  - component: {fileID: 8762402543640223040}
+  - component: {fileID: 2029194075}
   m_Layer: 6
   m_Name: Fryer
   m_TagString: Untagged
@@ -220,10 +220,11 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  debugState: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
   type: 1
   dirty: 50
   skipCookingTime: 0
---- !u!65 &8762402543640223040
+--- !u!65 &2029194075
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,8 +235,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.6280244, z: 1}
+  m_Center: {x: 0, y: 0.34878728, z: 0}
 --- !u!1001 &1601389136
 PrefabInstance:
   m_ObjectHideFlags: 0
