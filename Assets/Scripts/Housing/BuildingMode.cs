@@ -36,7 +36,7 @@ public class BuildingMode : Interactable {
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
-        //buildingCamera.SetActive(false);
+        buildingCamera.SetActive(false);
     }
 
     public override void Effect() {

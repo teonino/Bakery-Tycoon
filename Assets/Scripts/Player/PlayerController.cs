@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float interactionDistance;
     [SerializeField] private Controller controller;
+    [SerializeField] private Animator animator;
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
@@ -24,8 +25,12 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     private void FixedUpdate() {
-        if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) //Prevent reset rotation
+        if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) { //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
+            animator.SetBool("isWalking", true);
+        }
+        else
+            animator.SetBool("isWalking", false);
 
         if (!controller.IsGamepad()) {
             if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)

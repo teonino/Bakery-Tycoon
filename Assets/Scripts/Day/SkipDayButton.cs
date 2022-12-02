@@ -6,16 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class SkipDayButton : MonoBehaviour
 {
-    GameManager gameManager;
+    [SerializeField] Day day;
 
-    void Start() { 
-        gameManager = FindObjectOfType<GameManager>();
-    }
     public void DisplayButton() {
         gameObject.SetActive(!gameObject.activeSelf);
     }
 
     public void SkipDay() {
+        day.NextDayPhase();
         SceneManager.LoadScene(0);
     }
 }
