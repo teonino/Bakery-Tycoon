@@ -35,8 +35,10 @@ public class VirtualKeyboard : MonoBehaviour
     }
 
     public void ConfirmNumber() {
-        gameManager.SetProductPrice(product, int.Parse(inputField.text));
-        priceButton.SetVirtualKeyboardValue();
-        Addressables.Release(gameObject);
+        if (inputField.text != "") {
+            gameManager.SetProductPrice(product, int.Parse(inputField.text));
+            priceButton.SetVirtualKeyboardValue();
+            Addressables.Release(gameObject);
+        }
     }
 }

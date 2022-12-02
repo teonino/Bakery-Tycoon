@@ -2,19 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StatisticUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI content;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private Statistics stats;
+    [SerializeField] private GameObject computerPanel;
     private GameManager gameManager;
+    private PlayerController playerController;
 
     private void Awake() {
         gameManager = FindObjectOfType<GameManager>();
+        playerController = gameManager.GetPlayerController();
     }
 
     public void Enable() {
         gameObject.SetActive(true);
+    }
+
+    private void Start() { 
+        playerController.DisableInput();
+        playerController.playerInput.UI.Enable();
+        playerController.playerInput.UI.Quit.performed += Quit;
     }
 
     private void OnEnable() {
@@ -24,5 +34,13 @@ public class StatisticUI : MonoBehaviour {
         content.text += "Money spent : " + stats.GetMoneySpent() + "\n";
         content.text += "Money won : " + stats.GetMoneyEarned() + "\n";
         content.text += "Total : " + (stats.GetMoneyEarned() - stats.GetMoneySpent()) + "\n";
+    }
+
+    public void Quit(InputAction.CallbackContext context) {
+        playerController.playerInput.UI.Quit.performed -= Quit;
+        playerController.playerInput.UI.Disable();
+        playerController.EnableInput();
+
+        computerPanel.SetActive(false);
     }
 }
