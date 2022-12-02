@@ -9,9 +9,10 @@ public class Shelf : Interactable {
     public GameObject itemPosition;
     public bool spawnAsset;
     public AssetReference debugAsset;
+    public DebugState debugState;
 
     protected void Start() {
-        if (!gameManager.GetDebug())
+        if (!debugState.GetDebug())
             spawnAsset = false;
     }
 

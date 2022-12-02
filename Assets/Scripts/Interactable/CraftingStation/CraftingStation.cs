@@ -8,6 +8,7 @@ public class CraftingStation : Interactable {
 
     [SerializeField] private AssetReference progressBarAsset;
     [SerializeField] private Day day;
+    [SerializeField] private DebugState debugState;
     [SerializeField] private CraftingStationType type;
     [SerializeField] private int dirty = 0;
 
@@ -19,7 +20,7 @@ public class CraftingStation : Interactable {
     private GameObject progressBar;
 
     private void Start() {
-        if (!gameManager.GetDebug())
+        if (!debugState.GetDebug())
             skipCookingTime = false;
     }
 

@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Day day;
     [SerializeField] private Controller controller;
     [Header("Variables")]
-    [SerializeField] private bool debug;
     [SerializeField] private int startingMoney;
     [SerializeField] private List<int> reputationExpToLvUp;
     [SerializeField] private int maxStock;
+    [SerializeField] private int timeExpressDelivery;
 
     private Dictionary<string, int> productPrices;
     private List<Delivery> deliveries;
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour {
 
     }
     private IEnumerator ExpressDelivery(Delivery delivery) {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(timeExpressDelivery);
         DeliverOrder(delivery);
     }
 
@@ -116,5 +116,4 @@ public class GameManager : MonoBehaviour {
     public void AddProductSold(ProductSO product) => print("yes");//dayStatistics.AddProductSold(product);
     public float GetCurrentStock() => currentStock;
     public float GetMaxStock() => maxStock;
-    public bool GetDebug() => debug;
 }
