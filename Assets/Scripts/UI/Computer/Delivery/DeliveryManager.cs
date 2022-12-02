@@ -13,6 +13,10 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private CartUI cartPanel;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private Controller controller;
+    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private int scrollSpeed;
+
 
     private GameManager gameManager;
     private PlayerController playerController;
@@ -26,8 +30,6 @@ public class DeliveryManager : MonoBehaviour {
 
     public Dictionary<IngredientSO, int> cart;
 
-
-
     void Awake() {
         gameManager = FindObjectOfType<GameManager>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
@@ -38,7 +40,6 @@ public class DeliveryManager : MonoBehaviour {
         playerController = gameManager.GetPlayerController();
 
     }
-
     private void OnEnable() {
         if (gameObject.activeSelf) {
             //Manage Inputs
@@ -69,6 +70,11 @@ public class DeliveryManager : MonoBehaviour {
                     SetupButtons();
                 };
             }
+        }
+    }
+    private void Update() {
+        if (controller.IsGamepad()) {
+            rectTransform.offsetMax -= new Vector2Int(0, (int)gameManager.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
         }
     }
 
@@ -122,7 +128,7 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
         cartWeight = 0;
         cartCost = 0;
-        foreach(GameObject go in ingredientButtonList)
+        foreach (GameObject go in ingredientButtonList)
             go.GetComponentInChildren<AmmountManager>().ResetAmount();
     }
 
