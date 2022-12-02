@@ -55,10 +55,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Camera"",
-                    ""type"": ""Value"",
+                    ""name"": ""AllowCameraMovement"",
+                    ""type"": ""Button"",
                     ""id"": ""23522d48-a04c-41a6-afaa-538aa046501a"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -243,12 +243,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""80bb610e-48c5-457a-9ce7-9747beafa31a"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""id"": ""f4534a6a-fa9a-4edd-8cd8-da4789ee1cf8"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Camera"",
+                    ""action"": ""AllowCameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1166,7 +1166,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
-        m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+        m_Player_AllowCameraMovement = m_Player.FindAction("AllowCameraMovement", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Unpause = m_Pause.FindAction("Unpause", throwIfNotFound: true);
@@ -1269,7 +1269,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Pause;
-    private readonly InputAction m_Player_Camera;
+    private readonly InputAction m_Player_AllowCameraMovement;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -1277,7 +1277,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputAction @Camera => m_Wrapper.m_Player_Camera;
+        public InputAction @AllowCameraMovement => m_Wrapper.m_Player_AllowCameraMovement;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1296,9 +1296,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
-                @Camera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
-                @Camera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
-                @Camera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
+                @AllowCameraMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAllowCameraMovement;
+                @AllowCameraMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAllowCameraMovement;
+                @AllowCameraMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAllowCameraMovement;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1312,9 +1312,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @Camera.started += instance.OnCamera;
-                @Camera.performed += instance.OnCamera;
-                @Camera.canceled += instance.OnCamera;
+                @AllowCameraMovement.started += instance.OnAllowCameraMovement;
+                @AllowCameraMovement.performed += instance.OnAllowCameraMovement;
+                @AllowCameraMovement.canceled += instance.OnAllowCameraMovement;
             }
         }
     }
@@ -1752,7 +1752,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnCamera(InputAction.CallbackContext context);
+        void OnAllowCameraMovement(InputAction.CallbackContext context);
     }
     public interface IPauseActions
     {
