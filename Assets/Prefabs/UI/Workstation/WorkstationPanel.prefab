@@ -156,6 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4742013319215205105}
   - component: {fileID: 8480979219260992058}
+  - component: {fileID: 7243278789201776479}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -209,6 +210,14 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!222 &7243278789201776479
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906718808688407682}
+  m_CullTransparentMesh: 1
 --- !u!1 &1263851874695548878
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +602,8 @@ MonoBehaviour:
   products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
   ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
   controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
+  rectTransform: {fileID: 4742013319215205105}
+  scrollSpeed: 2
   skipRequirement: 0
   skipMinigame: 0
   currentProduct: {fileID: 0}

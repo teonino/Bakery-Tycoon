@@ -21,6 +21,8 @@ public class Workstation : Interactable {
             skipMinigame = skipRequirement = false;
     }
 
+
+
     public override void Effect() {
         if (!playerController.GetItemHold() && day.GetDayTime() != DayTime.Evening) {
             playerController.DisableInput();

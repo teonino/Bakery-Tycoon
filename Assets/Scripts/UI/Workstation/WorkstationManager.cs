@@ -15,6 +15,8 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ListProduct products;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private Controller controller;
+    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private int scrollSpeed;
 
     private GameManager gameManager;
     private List<GameObject> productButtonList;
@@ -58,6 +60,12 @@ public class WorkstationManager : MonoBehaviour {
         List<StockIngredient> stocks = ingredients.GetIngredientList();
         foreach (StockIngredient stock in stocks) {
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
+        }
+    }
+
+    private void Update() {
+        if (controller.IsGamepad()) {
+                rectTransform.offsetMax -= new Vector2Int(0, (int)gameManager.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
         }
     }
 
