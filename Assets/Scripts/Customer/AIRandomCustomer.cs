@@ -50,22 +50,23 @@ public class AIRandomCustomer : AICustomer {
 
         //Buy item and leave
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.item && state == AIState.waiting && shelf.IsFirstInQueue(this)) {
-            if (shelf.GetItem().GetComponent<ProductHolder>().product.GetName() == requestedProduct.name) {
+            ProductHolder objectOnShelf = shelf.GetItem().GetComponent<ProductHolder>();
+            if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste") {
                 //Stop waiting
                 StopCoroutine(waitingCoroutine);
                 //Take item
                 if (!item) {
-                    if (shelf.GetItem().GetComponent<ProductHolder>().product.amount > 1) {
-                        shelf.GetItem().GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                    if (objectOnShelf.product.amount > 1) {
+                        objectOnShelf.product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
-                            TakeItem(shelf.item.GetComponent<ProductHolder>(), shelf.gameObject);
+                            TakeItem(objectOnShelf, shelf.gameObject);
                         };
-                        shelf.GetItem().GetComponent<ProductHolder>().product.amount--;
+                        objectOnShelf.product.amount--;
                     }
                     else {
                         item = shelf.GetItem();
                         item.transform.SetParent(transform);
-                        TakeItem(shelf.item.GetComponent<ProductHolder>(), shelf.gameObject);
+                        TakeItem(objectOnShelf, shelf.gameObject);
                         shelf.RemoveItem();
                     }
                 }

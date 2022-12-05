@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour {
     public CustomizableData JSonFileReader { get; private set; }
 
     private void Start() {
-        level = GameObject.FindGameObjectWithTag("Level").transform;
+        level = GameObject.FindGameObjectWithTag("Level")?.transform;
     }
 
     public void GenerateWorld() {

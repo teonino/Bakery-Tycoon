@@ -13,11 +13,11 @@ public class SwitchController : MonoBehaviour {
     }
 
     public void SwitchCurrentController() {
-        if (controller.IsGamepad()) {
+        if (TmpBuild.instance.controller.IsGamepad()) {
             if (InputSystem.devices.Count > 0) {
                 gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
                 gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
-                controller.SetInputType(InputType.KeyboardMouse);
+                TmpBuild.instance.controller.SetInputType(InputType.KeyboardMouse);
                 textButton.SetText("Keyboard & Mouse");
             }
         }
@@ -25,7 +25,7 @@ public class SwitchController : MonoBehaviour {
             if (Gamepad.all.Count > 0) {
                 gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Gamepad.all[0] };
                 gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
-                controller.SetInputType(InputType.Gamepad);
+                TmpBuild.instance.controller.SetInputType(InputType.Gamepad);
                 textButton.SetText("Gamepad");
             }
         }

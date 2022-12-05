@@ -12,6 +12,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI totalCostText;
     [SerializeField] private TMP_Dropdown deliveryDropdown;
     [SerializeField] private Money money;
+    [SerializeField] private Day day;
 
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public Dictionary<IngredientSO, int> cart;
@@ -20,7 +21,7 @@ public class CartUI : MonoBehaviour {
 
     private GameManager gameManager;
     private DeliveryType deliveryType;
-    private float cost = 0; //will be used to display total cost of cart
+    private float cost = 0;
 
     void Start() {
         gameManager = FindObjectOfType<GameManager>();
@@ -43,15 +44,16 @@ public class CartUI : MonoBehaviour {
     public void Order() {
         //Check if the order can be stocked && bought
         if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
-            if (cartCost <= money.GetMoney()) {
-                Delivery delivery = new Delivery((int)deliveryType);
+            if (cartCost <= TmpBuild.instance.money.GetMoney()) {
+                SetDeliveryType();
+                Delivery delivery = new Delivery((int)deliveryType + day.GetDayCount());
                 foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                     if (stock.Value > 0) {
                         delivery.Add(stock.Key, stock.Value);
                     }
                 }
                 gameManager.AddDelivery(delivery);
-                money.RemoveMoney(cartCost);
+                TmpBuild.instance.money.RemoveMoney(cartCost);
                 Clear();
             }
         }

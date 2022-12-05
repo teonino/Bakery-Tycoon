@@ -13,7 +13,7 @@ public class SkipDayButton : MonoBehaviour
     }
 
     public void SkipDay() {
-        day.NextDayPhase();
+        TmpBuild.instance.day.OnNewDay();
         SceneManager.LoadScene(0);
     }
 }

@@ -17,7 +17,7 @@ public class TabsManagement : MonoBehaviour {
         currentPanel = firstPanel;
         currentPanel.SetActive(true);
 
-        if (controller.IsGamepad()) {
+        if (TmpBuild.instance.controller.IsGamepad()) {
             gameManager.SetEventSystemToStartButton(firstTab);
         }
     }

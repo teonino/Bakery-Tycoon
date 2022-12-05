@@ -28,12 +28,12 @@ public class StatisticUI : MonoBehaviour {
     }
 
     private void OnEnable() {
-        content.text = "Most product solds : " + stats.GetMostProductSold().Key + " (" + stats.GetPercentageAmongAllProduct() + "%)\n";
-        content.text += "Product Solds : " + stats.GetMostProductSold().Value + "\n";
-        content.text += "Low Quantity ressources : " + stats.GetLowestIngredient(ingredients) + "\n";
-        content.text += "Money spent : " + stats.GetMoneySpent() + "\n";
-        content.text += "Money won : " + stats.GetMoneyEarned() + "\n";
-        content.text += "Total : " + (stats.GetMoneyEarned() - stats.GetMoneySpent()) + "\n";
+        content.text = "Most product solds : " + TmpBuild.instance.stats.GetMostProductSold().Key + " (" + TmpBuild.instance.stats.GetPercentageAmongAllProduct() + "%)\n";
+        content.text += "Product Solds : " + TmpBuild.instance.stats.GetMostProductSold().Value + "\n";
+        content.text += "Low Quantity ressources : " + TmpBuild.instance.stats.GetLowestIngredient(TmpBuild.instance.ingredients) + "\n";
+        content.text += "Money spent : " + TmpBuild.instance.stats.GetMoneySpent() + "\n";
+        content.text += "Money won : " + TmpBuild.instance.stats.GetMoneyEarned() + "\n";
+        content.text += "Total : " + (TmpBuild.instance.stats.GetMoneyEarned() - TmpBuild.instance.stats.GetMoneySpent()) + "\n";
     }
 
     public void Quit(InputAction.CallbackContext context) {

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1523194798024005926}
   - component: {fileID: 7740859016591945761}
   - component: {fileID: 5867682745149044229}
-  - component: {fileID: 5534984111141110202}
   m_Layer: 0
   m_Name: Bread
   m_TagString: Untagged
@@ -51,6 +50,7 @@ MonoBehaviour:
     productSO: {fileID: 11400000, guid: c3cc5fa1f4015b34ab9553657f32eb58, type: 2}
     quality: 0
     amount: 0
+  blocked: 0
 --- !u!33 &7740859016591945761
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -101,17 +101,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5534984111141110202
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6249447644425682489}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
