@@ -36,7 +36,7 @@ public class AIRandomCustomer : AICustomer {
 
     private new void Leave() {
         if (!item)
-            gameManager.RemoveReputation(3);
+            reputation.RemoveReputation(3);
         base.Leave();
         shelf.RemoveCustomerInQueue(this);
     }

@@ -28,7 +28,7 @@ public class RollPaste : Minigame {
 
     new void Start() {
         base.Start();
-        inputType = gameManager.GetInputType();
+        inputType = controller.GetInputType();
 
         if (inputType == InputType.Gamepad) {
             string inputName = GetControl(playerController.playerInput.RollPaste.RollPasteAction);

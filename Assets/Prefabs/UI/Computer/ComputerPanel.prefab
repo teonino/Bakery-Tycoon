@@ -182,6 +182,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   computerPanel: {fileID: 3677835412240533996}
   priceButtonPanel: {fileID: 874483020392047075}
+  products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
 --- !u!1 &445042262459265182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,6 +1557,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   computerPanel: {fileID: 3677835412240533996}
   priceButtonPanel: {fileID: 874483020392047075}
+  products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
 --- !u!1 &3677835411356914718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3677835411360049070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1715,7 +1717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3677835411493125802
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1801,6 +1803,10 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   cartPanel: {fileID: 6086797128845034346}
   computerPanel: {fileID: 3677835412240533996}
+  ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
+  rectTransform: {fileID: 3677835411356914719}
+  scrollSpeed: 2
 --- !u!1 &3677835411567182691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2396,6 +2402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listInputField: []
+  controller: {fileID: 0}
 --- !u!1 &3677835411881564469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,6 +2826,7 @@ MonoBehaviour:
   orderSumary: {fileID: 6526965424423930577}
   totalCostText: {fileID: 6086797129329452188}
   deliveryDropdown: {fileID: 0}
+  money: {fileID: 11400000, guid: 2165d7b449c98dc409d632d23f2844b0, type: 2}
   deliveryManager: {fileID: 0}
   cartWeight: 0
   cartCost: 0
@@ -2903,7 +2911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3677835412240533997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3161,8 +3169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a5e72fea378e14395a936a22c8e8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPanel: {fileID: 3677835411281358887}
-  firstTab: {fileID: 874483020392047075}
+  firstPanel: {fileID: 3677835411493125805}
+  firstTab: {fileID: 890572937777468592}
+  controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
 --- !u!1 &3677835412475758167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4979,6 +4988,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 6086797129069656051}
+  ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
+  computerPanel: {fileID: 3677835412240533996}
 --- !u!1 &6086797129329452190
 GameObject:
   m_ObjectHideFlags: 0
@@ -8308,6 +8320,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7134568795317437493, guid: d6b131717c1fc4a498fc0cf5bbbb366e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d6b131717c1fc4a498fc0cf5bbbb366e, type: 3}
+--- !u!1 &890572937777468592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4562630809526304756, guid: d6b131717c1fc4a498fc0cf5bbbb366e, type: 3}
+  m_PrefabInstance: {fileID: 3677835412926901060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3439514608826193763 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2067670658544188455, guid: d6b131717c1fc4a498fc0cf5bbbb366e, type: 3}
@@ -8318,7 +8335,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5186547422356364373, guid: d6b131717c1fc4a498fc0cf5bbbb366e, type: 3}
   m_PrefabInstance: {fileID: 3677835412926901060}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 890572937777468592}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}

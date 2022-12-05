@@ -41,23 +41,25 @@ public class AIRegularCustomer : AICustomer {
 
         if (table && table.GetItem(false) && state == AIState.sitting) {
             if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
+            //if(table.items[indexChair]?.GetComponent<ProductHolder>()?.product?.productSO?.name == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") { 
                 StopCoroutine(waitingCoroutine);
                 //Take item
+                ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
                 if (!item) {
-                    if (table.items[indexChair].GetComponent<ProductHolder>().product.amount > 1) {
-                        table.items[indexChair].GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                    if (productholder.product.amount > 1) {
+                        productholder.product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
-                            TakeItem(table.items[indexChair].GetComponent<ProductHolder>(), table.gameObject);
+                            TakeItem(productholder, table.gameObject);
                             table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
                             state = AIState.eating;
                         };
-                        table.items[indexChair].GetComponent<ProductHolder>().product.amount--;
+                        productholder.product.amount--;
                     }
                     else {
                         item = table.items[indexChair];
                         TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
-                        table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
+                        productholder.blocked = true;
                         StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
                         state = AIState.eating;
                     }
@@ -83,7 +85,7 @@ public class AIRegularCustomer : AICustomer {
             Addressables.ReleaseInstance(table.items[indexChair]);
         }
         else {
-            gameManager.RemoveReputation(3);
+            reputation.RemoveReputation(3);
         }
 
         base.Leave();

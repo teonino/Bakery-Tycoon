@@ -12,6 +12,7 @@ public class PriceManager : MonoBehaviour {
     [SerializeField] private AssetReference productRackAsset;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private GameObject priceButtonPanel;
+    [SerializeField] private ListProduct products;
 
     private GameManager gameManager;
     private PlayerController playerController;
@@ -30,7 +31,7 @@ public class PriceManager : MonoBehaviour {
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
 
-        lenght = gameManager.GetProductsLenght();
+        lenght = products.GetProductLenght();
         playerController = gameManager.GetPlayerController();
     }
 
@@ -45,7 +46,7 @@ public class PriceManager : MonoBehaviour {
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<PriceButton>().SetProduct(gameManager.GetProductList()[nbButton]);
+                go.Result.GetComponent<PriceButton>().SetProduct(products.GetProductList()[nbButton]);
                 inputFieldControllerManager.listInputField.Add(go.Result.GetComponentInChildren<TMP_InputField>());
                 productButtonList.Add(go.Result);
                 nbButton++;
@@ -74,17 +75,18 @@ public class PriceManager : MonoBehaviour {
 
                 navButton.mode = Navigation.Mode.Explicit;
 
-                if(i < 4) 
+                if (i < maxButtonInRack)
                     navButton.selectOnUp = priceButtonPanel.GetComponent<Button>();
+                else
+                    navButton.selectOnUp = productButtonList[i - maxButtonInRack].GetComponentInChildren<Button>();
 
-                if (i + 5 < lenght)
-                    navButton.selectOnDown = productButtonList[i + 5].GetComponentInChildren<TMP_InputField>();
-                if (i + 1 < lenght) {
+                if (i + maxButtonInRack < lenght)
+                    navButton.selectOnDown = productButtonList[i + maxButtonInRack].GetComponentInChildren<Button>();
+                if (i + 1 < lenght) 
                     navButton.selectOnRight = productButtonList[i + 1].GetComponentInChildren<Button>();
-                }
-                if (i - 1 >= 0) {
+                if (i - 1 >= 0) 
                     navButton.selectOnLeft = productButtonList[i - 1].GetComponentInChildren<Button>();
-                }
+                
 
                 productButtonList[i].GetComponentInChildren<Button>().navigation = navButton;
             }

@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour {
     [SerializeField] TextMeshProUGUI npcSpeechTxt;
     [SerializeField] List<TextMeshProUGUI> playerAnswersTxt;
+    [SerializeField] Controller controller;
 
     private Dialogue dialogue;
     private GameManager gameManager;
@@ -71,7 +72,7 @@ public class DialogueManager : MonoBehaviour {
             button.SetNextDialogue(dialogue.answers[i].nextDialogue);
             button.SetRelationReward(dialogue.answers[i].relation);
 
-            if (i == 0 && gameManager.GetInputType() == InputType.Gamepad) {
+            if (i == 0 && controller.GetInputType() == InputType.Gamepad) {
                 gameManager.SetEventSystemToStartButton(button.gameObject);
             }
         }

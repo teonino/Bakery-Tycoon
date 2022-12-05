@@ -11,6 +11,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
     [SerializeField] private TMP_Dropdown deliveryDropdown;
+    [SerializeField] private Money money;
 
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public Dictionary<IngredientSO, int> cart;
@@ -42,7 +43,7 @@ public class CartUI : MonoBehaviour {
     public void Order() {
         //Check if the order can be stocked && bought
         if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
-            if (cartCost <= gameManager.GetMoney()) {
+            if (cartCost <= money.GetMoney()) {
                 Delivery delivery = new Delivery((int)deliveryType);
                 foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                     if (stock.Value > 0) {
@@ -50,7 +51,7 @@ public class CartUI : MonoBehaviour {
                     }
                 }
                 gameManager.AddDelivery(delivery);
-                gameManager.RemoveMoney(cartCost);
+                money.RemoveMoney(cartCost);
                 Clear();
             }
         }

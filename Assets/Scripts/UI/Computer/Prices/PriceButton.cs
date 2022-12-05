@@ -11,18 +11,19 @@ using UnityEngine.UI;
 
 public class PriceButton : MonoBehaviour {
 
-    [SerializeField] private ProductSO product;
     [SerializeField] private TMP_InputField priceText;
     [SerializeField] private RawImage image;
     [SerializeField] private AssetReference virtualkeyboard;
+    [SerializeField] private Controller controller;
+    private ProductSO product;
 
     private GameManager gameManager;
-    private void Awake() {
+    private void OnEnable() {
         gameManager = FindObjectOfType<GameManager>();
     }
 
     public void SetPrice() {
-        if (!gameManager.IsGamepad())
+        if (!controller.IsGamepad())
             gameManager.SetProductPrice(product, (int)Math.Round(float.Parse(priceText.text), 0));
         else {
             virtualkeyboard.InstantiateAsync(FindObjectOfType<PriceManager>().transform).Completed += (go) => {

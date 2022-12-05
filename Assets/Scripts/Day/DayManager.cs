@@ -4,28 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DayManager : MonoBehaviour {
-
-    private GameManager gameManager;
-
     [SerializeField] private bool daySystemEnable;
     [SerializeField] private int startLightRotation;
-    [SerializeField] private int endLightRotationMorning;
     [SerializeField] private int endLightRotation;
-    [SerializeField] private int morningDuration;
-    [SerializeField] private int dayDuration;
+    [SerializeField] private Day day;
 
     private float timeElapsed;
     private int duration;
-    private Action<DayTime, int> updateDayTimeUI;
     private Action displaySkipButton;
 
     void Start() {
-        gameManager = FindObjectOfType<GameManager>();
-        updateDayTimeUI = FindObjectOfType<DayTimeUI>().StartDayTime;
         displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
         displaySkipButton();
-        updateDayTimeUI(gameManager.dayTime, morningDuration);
-        duration = morningDuration + dayDuration;
+        duration = day.GetMorningDuration()+ day.GetDayDuration();
     }
 
     void FixedUpdate() {
@@ -34,21 +25,17 @@ public class DayManager : MonoBehaviour {
                 transform.rotation = Quaternion.Euler(Vector3.right * Mathf.Lerp(startLightRotation, endLightRotation, timeElapsed / duration));
                 timeElapsed += Time.deltaTime;
 
-                if (timeElapsed > morningDuration && gameManager.dayTime == DayTime.Morning)
+                if (timeElapsed > day.GetMorningDuration() && day.GetDayTime() == DayTime.Morning)
                     Updateday();
             }
-            else if (gameManager.dayTime == DayTime.Day)
+            else if (day.GetDayTime() == DayTime.Day)
                 Updateday();
         }
     }
 
     public void Updateday() {
-        gameManager.dayTime++;
-        if (gameManager.dayTime == DayTime.Evening)
+        day.NextDayPhase();
+        if (day.GetDayTime() == DayTime.Evening)
             displaySkipButton();
-        updateDayTimeUI(gameManager.dayTime, duration - morningDuration);
     }
-
-    public int GetDayDuration() => dayDuration;
-    public int GetMorningDuration() => morningDuration;
 }
