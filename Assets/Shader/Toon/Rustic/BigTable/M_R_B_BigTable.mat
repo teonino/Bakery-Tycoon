@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_R_NapkinBigTable
+  m_Name: M_R_B_BigTable
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords:
   - _SPECULAR_SETUP
@@ -28,7 +28,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
@@ -44,11 +44,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3a379833fde361140b253af03b34e024, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0d2d7cb1764cc3b4bab16e1a08d827da, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -60,15 +60,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 2dc4551c015b4ae4e863d841a0a0750d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 515e0fdac69b71c49a909b838203b8ad, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0e509caea0456ab458a59e119cab9b89, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: 02b7d03bd0dd7c147aacbbc034a664bd, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3abb5379018173145ad19d13ec076c72, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -76,11 +76,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: 747469d8443e2ca43aae40a3058aa282, type: 3}
+        m_Texture: {fileID: 2800000, guid: 682f844f24c336b4097a6ff1c1fc1af5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: 63bbf74e378f80d4886200b4f6fd62f2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 63b2ab9b53cad9843a2516b142c1710d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -141,8 +141,8 @@ Material:
     - _Height: 0
     - _HeightForce: 0
     - _IntForce: 0
-    - _LightProbeContribution: 3
-    - _MetallicStrenght: 1
+    - _LightProbeContribution: 3.5
+    - _MetallicStrenght: 0
     - _NormalStrenght: 1
     - _OutlineDepthSensitivity: 0.125
     - _OutlineNormalsSensitivity: 1
@@ -152,7 +152,7 @@ Material:
     - _ReceiveShadows: 1
     - _RedForce: 0.9
     - _RedTintActivated: 0
-    - _RougnessRatio: 0
+    - _RougnessRatio: 0.4
     - _SmoothMapTiling: 0
     - _Smoothness: 0.867
     - _SrcBlend: 1
