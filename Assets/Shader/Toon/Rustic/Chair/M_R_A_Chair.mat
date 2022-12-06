@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_R_A_Chair
+  m_Name: MaterialRusticChair
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -59,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: e80b3460f4bc9504e8b16ab431db2478, type: 3}
+        m_Texture: {fileID: 2800000, guid: 01f727d1edb0af7408687fe911d5f2bd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
@@ -67,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: 0c134b46faade2446b053f35d6ea79af, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -75,7 +75,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: fecaca5519072d040b395b7d4b82947a, type: 3}
+        m_Texture: {fileID: 2800000, guid: f631404fd104c3d44890f47aedc3e765, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
@@ -122,6 +122,7 @@ Material:
     - Vector1_6258FE53: 2
     - _AlphaClip: 0
     - _AlphaStrenght: 0
+    - _AmbiantOcclusionRatio: 0
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -135,6 +136,7 @@ Material:
     - _DetailsScale: 1
     - _DetailsScale_1: 0
     - _DstBlend: 0
+    - _EmissiveIntensity: 0.5
     - _EmissivePower: 1
     - _FallOffSize: 0.05
     - _Height: 0
@@ -157,7 +159,8 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _UV: 1
-    - _UseEmissive: 1
+    - _UseAO: 0
+    - _UseEmissive: 0
     - _UseHeight: 0
     - _UseMetallic: 0
     - _WallThrough: 0
