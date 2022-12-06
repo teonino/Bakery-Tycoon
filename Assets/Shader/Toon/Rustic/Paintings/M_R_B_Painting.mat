@@ -20,14 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MaterialRusticWall
+  m_Name: M_R_B_Painting
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
@@ -39,15 +39,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Alpha_Mask:
-        m_Texture: {fileID: 2800000, guid: c23bfca46412fc141b8ba26011f35546, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 2800000, guid: 27eb5372708613c4cb7fed7892e8cde7, type: 3}
+        m_Texture: {fileID: 2800000, guid: dfa35a39063c11f44afd646ec8faffe1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: c34147dc63e801148beb4c9f650734b5, type: 3}
+        m_Texture: {fileID: 2800000, guid: af9f9e641761e1d4c941d41009205606, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -59,15 +59,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: c34147dc63e801148beb4c9f650734b5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 32a1f8735848c9a4f98e22a4dacee550, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: 11df513bf2f9c8a4e925c70e30d7759b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 54573569a0e3c1549a324a5cf4ea64e3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: c34147dc63e801148beb4c9f650734b5, type: 3}
+        m_Texture: {fileID: 2800000, guid: b2395160795494e49ab34cb7c54351c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -75,11 +75,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: 27eb5372708613c4cb7fed7892e8cde7, type: 3}
+        m_Texture: {fileID: 2800000, guid: bb558a25cf5f69e4cb0c8d4c13c1342b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: ddebbcc8ef834854d9a9527771d882bc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1b8e1ad4bfb90d747b8016735c3f8761, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -139,7 +139,7 @@ Material:
     - _FallOffSize: 0.05
     - _Height: 0
     - _HeightForce: 0
-    - _IntForce: 0.4
+    - _IntForce: 0
     - _LightProbeContribution: 3.5
     - _MetallicStrenght: 0
     - _NormalStrenght: 1
@@ -151,7 +151,7 @@ Material:
     - _ReceiveShadows: 1
     - _RedForce: 0.9
     - _RedTintActivated: 0
-    - _RougnessRatio: 1
+    - _RougnessRatio: 0.5
     - _SmoothMapTiling: 0
     - _Smoothness: 0.867
     - _SrcBlend: 1
