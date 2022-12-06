@@ -113,7 +113,6 @@ public class WorkstationManager : MonoBehaviour {
     private void SetupButton() {
         if (productRackList.Count * maxButtonInRack >= productButtonList.Count) {
             content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().rect.width, productRackList[0].GetComponent<RectTransform>().rect.height * productRackList.Count);
-
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < productRackList.Count) {
                     productButtonList[i].transform.SetParent(productRackList[i / maxButtonInRack].transform);

@@ -7,17 +7,17 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class BuildingMode : Interactable {
     [Header("References")]
-    [SerializeField] private LayerMask pickUpLayer;
-    [SerializeField] private LayerMask putDownLayer;
     [SerializeField] private Material collidingMaterial;
     [SerializeField] private Day day;
     [SerializeField] private Controller controller;
+    [SerializeField] private AssetReference cursor;
 
     [Header("Global Parameters")]
+    [SerializeField] private LayerMask pickUpLayer;
+    [SerializeField] private LayerMask putDownLayer;
     [SerializeField] private float snapValue;
 
     [Header("Gamepad Parameters")]
-    [SerializeField] private AssetReference cursor;
     [SerializeField] private int cursorSpeed = 1;
 
     private GameObject mainCamera;
@@ -106,7 +106,7 @@ public class BuildingMode : Interactable {
 
     private void ChangeColliderSize(bool remove) {
         if (selectedGo.TryGetComponent(out BoxCollider boxCol))
-            if (remove)
+            if (remove) 
                 boxCol.size -= Vector3.one * 0.1f;
             else
                 boxCol.size += Vector3.one * 0.1f;

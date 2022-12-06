@@ -28,7 +28,7 @@ public class StatisticUI : MonoBehaviour {
     }
 
     private void OnEnable() {
-        content.text = "Most product solds : " + TmpBuild.instance.stats.GetMostProductSold().Key + " (" + TmpBuild.instance.stats.GetPercentageAmongAllProduct() + "%)\n";
+        content.text =  "Most product solds : " + TmpBuild.instance.stats.GetMostProductSold().Key + " (" + TmpBuild.instance.stats.GetPercentageAmongAllProduct() + "%)\n";
         content.text += "Product Solds : " + TmpBuild.instance.stats.GetMostProductSold().Value + "\n";
         content.text += "Low Quantity ressources : " + TmpBuild.instance.stats.GetLowestIngredient(TmpBuild.instance.ingredients) + "\n";
         content.text += "Money spent : " + TmpBuild.instance.stats.GetMoneySpent() + "\n";
