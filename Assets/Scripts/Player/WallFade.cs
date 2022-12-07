@@ -27,7 +27,6 @@ public class WallFade : MonoBehaviour {
                 }
 
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++) {
-                    print("For Loop Dispawn");
                     invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
                 }
             }
