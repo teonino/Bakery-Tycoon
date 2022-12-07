@@ -47,6 +47,10 @@ public class CartUI : MonoBehaviour {
                     delivery.Add(stock.Key, stock.Value);
                 }
             }
+            if (delivery.GetDay() == day.GetCurrentDay()) {
+                StartCoroutine(deliveries.ExpressDelivery(delivery));
+                StartCoroutine(deliveryManager.UpdateStockButtons(deliveries.GetExpressOrderTime()));
+            }
             deliveries.Add(delivery);
             money.SetMoney(-cartCost);
             Clear();
@@ -69,6 +73,6 @@ public class CartUI : MonoBehaviour {
     public void Clear() {
         cartCost = 0;
         if (deliveryManager)
-            deliveryManager.ResetCart(deliveryType == DeliveryType.Express);
+            deliveryManager.ResetCart();
     }
 }

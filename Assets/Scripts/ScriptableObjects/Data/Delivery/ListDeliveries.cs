@@ -22,13 +22,9 @@ public class ListDeliveries : ScriptableObject {
 
     public void Add(Delivery delivery) {
         deliveries.Add(delivery);
-
-        if (delivery.GetDay() == day.GetCurrentDay()) {
-            DeliverOrder(delivery);
-        }
     }
 
-    private IEnumerator ExpressDelivery(Delivery delivery) {
+    public IEnumerator ExpressDelivery(Delivery delivery) {
         yield return new WaitForSeconds(timeExpressDelivery);
         DeliverOrder(delivery);
     }
@@ -55,4 +51,6 @@ public class ListDeliveries : ScriptableObject {
 
         deliveries.Remove(delivery);
     }
+
+    public int GetExpressOrderTime() => timeExpressDelivery;
 }

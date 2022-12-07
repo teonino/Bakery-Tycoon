@@ -136,11 +136,7 @@ public class DeliveryManager : MonoBehaviour {
         currentCart.InitCart();
     }
 
-    public void ResetCart(bool expressDelivery) {
-        if (expressDelivery) {
-            for(int i = 0; i < ingredientButtonList.Count; i++)
-                ingredientButtonList[i].GetComponent<DeliveryButton>().UpdateStock();
-        }
+    public void ResetCart() {
         cart.Clear();
         cartPanel.ClearText();
         InitCart();
@@ -162,7 +158,13 @@ public class DeliveryManager : MonoBehaviour {
         ingredientRackList.Clear();
 
         if (resetCart)
-            ResetCart(false);
+            ResetCart();
+    }
+
+    public IEnumerator UpdateStockButtons(int secondDelay) {
+        yield return new WaitForSeconds(secondDelay);
+        for (int i = 0; i < ingredientButtonList.Count; i++)
+            ingredientButtonList[i].GetComponent<DeliveryButton>().UpdateStock();
     }
 
     public void Quit(InputAction.CallbackContext context) {
