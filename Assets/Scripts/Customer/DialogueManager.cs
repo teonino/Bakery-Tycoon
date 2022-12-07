@@ -9,15 +9,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
-    [SerializeField] TextMeshProUGUI npcSpeechTxt;
-    [SerializeField] List<TextMeshProUGUI> playerAnswersTxt;
-    [SerializeField] Controller controller;
+    [SerializeField] private TextMeshProUGUI npcSpeechTxt;
+    [SerializeField] private List<TextMeshProUGUI> playerAnswersTxt;
+    [SerializeField] private Controller controller;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
 
     private Dialogue dialogue;
-    private GameManager gameManager;
 
     private void Awake() {
-        gameManager = FindObjectOfType<GameManager>();
         dialogue = new Dialogue();
     }
 
@@ -73,13 +72,13 @@ public class DialogueManager : MonoBehaviour {
             button.SetRelationReward(dialogue.answers[i].relation);
 
             if (i == 0 && controller.GetInputType() == InputType.Gamepad) {
-                gameManager.SetEventSystemToStartButton(button.gameObject);
+                controller.SetEventSystemToStartButton(button.gameObject);
             }
         }
     }
 
     public void Destroy() {
-        gameManager.GetPlayerController().EnableInput();
+        playerControllerSO.GetPlayerController().EnableInput();
         Time.timeScale = 1;
         Addressables.ReleaseInstance(gameObject);
     }

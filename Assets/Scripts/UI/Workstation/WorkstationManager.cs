@@ -13,12 +13,12 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI stockListText;
     [SerializeField] private GameObject stockPanel;
     [SerializeField] private ListProduct products;
-    [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private ListIngredient ingredients; 
+    [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private int scrollSpeed;
 
-    private GameManager gameManager;
     private List<GameObject> productButtonList;
     private List<GameObject> productRackList;
     private Workstation workplace;
@@ -36,19 +36,18 @@ public class WorkstationManager : MonoBehaviour {
 
     //Create buttons
     private void Start() {
-        gameManager = FindObjectOfType<GameManager>();
         workplace = FindObjectOfType<Workstation>();
         productButtonList = new List<GameObject>();
         productRackList = new List<GameObject>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
-        lenght = TmpBuild.instance.products.GetProductLenght();
+        lenght = products.GetProductLenght();
 
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
                 button.workplacePanel = this;
-                button.SetProduct(TmpBuild.instance.products.GetProductList()[nbButton]);
-                button.requirementMet = CheckRequirement(TmpBuild.instance.products.GetProductList()[nbButton]);
+                button.SetProduct(products.GetProductList()[nbButton]);
+                button.requirementMet = CheckRequirement(products.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks();
@@ -57,15 +56,15 @@ public class WorkstationManager : MonoBehaviour {
 
         //Setup Stock
         stockListText.SetText("");
-        List<StockIngredient> stocks = TmpBuild.instance.ingredients.GetIngredientList();
+        List<StockIngredient> stocks = ingredients.GetIngredientList();
         foreach (StockIngredient stock in stocks) {
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
         }
     }
 
     private void Update() {
-        if (TmpBuild.instance.controller.IsGamepad()) {
-                rectTransform.offsetMax -= new Vector2Int(0, (int)gameManager.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
+        if (controller.IsGamepad()) {
+                rectTransform.offsetMax -= new Vector2Int(0, (int)playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
         }
     }
 
@@ -84,7 +83,7 @@ public class WorkstationManager : MonoBehaviour {
 
         //Check Ingredients
         foreach (IngredientSO ingredient in product.ingredients)
-            if (gameManager.GetIngredientAmount(ingredient) <= 0) requirementMet = false;
+            if (ingredients.GetIngredientAmount(ingredient) <= 0) requirementMet = false;
 
         return requirementMet;
     }
@@ -121,9 +120,9 @@ public class WorkstationManager : MonoBehaviour {
             }
 
             if (controller.IsGamepad())
-                gameManager.SetEventSystemToStartButton(productButtonList[0]);
+                controller.SetEventSystemToStartButton(productButtonList[0]);
             else
-                gameManager.SetEventSystemToStartButton(null);
+                controller.SetEventSystemToStartButton(null);
         }
     }
 
@@ -169,7 +168,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void RemoveIngredients(ProductSO product) {
         foreach (IngredientSO ingredient in product.ingredients) {
-            gameManager.RemoveIngredientStock(ingredient, 1);
+            ingredients.RemoveIngredientStock(ingredient, 1);
         }
     }
 

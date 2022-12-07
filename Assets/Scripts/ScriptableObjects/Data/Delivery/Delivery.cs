@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Delivery {
-    public List<StockIngredient> ingredients;
-    public int day;
+    private List<StockIngredient> ingredients;
+    private int day;
 
     public Delivery(int day) { 
         ingredients = new List<StockIngredient>();
@@ -23,4 +23,7 @@ public class Delivery {
         if (!alreadyOrdered)
             ingredients.Add(new StockIngredient(ingredient, nb));
     }
+
+    public List<StockIngredient> GetIngredients() => ingredients;
+    public int GetDay() => day;
 }

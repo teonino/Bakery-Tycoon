@@ -13,7 +13,7 @@ public class InputFieldControllerManager : MonoBehaviour {
 
     void Update() {
         foreach (TMP_InputField field in listInputField)
-            if (field.isFocused && TmpBuild.instance.controller.IsGamepad()) {
+            if (field.isFocused && controller.IsGamepad()) {
                 if (Gamepad.current.leftStick.ReadValue().y < -0.5 || Gamepad.current.dpad.ReadValue().y < -0.5)
                     SelectUIElement(field.FindSelectableOnDown());
                 else if (Gamepad.current.leftStick.ReadValue().y > 0.5 || Gamepad.current.dpad.ReadValue().y > 0.5)

@@ -22,4 +22,10 @@ public class ListIngredient : ScriptableObject
         }
         return amount;
     }
+
+    public void RemoveIngredientStock(IngredientSO ingredient, int amount) {
+        foreach (StockIngredient stock in listIngredient)
+            if (ingredient == stock.ingredient)
+                stock.amount -= amount;
+    }
 }

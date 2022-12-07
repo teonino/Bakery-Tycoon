@@ -93,7 +93,7 @@ public class AIRegularCustomer : AICustomer {
 
     public override void Effect() {
         if (conversationRemaining > 0 && state == AIState.eating) {
-            gameManager.GetPlayerController().DisableInput();
+            playerControllerSO.GetPlayerController().DisableInput();
             dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
                 go.Result.GetComponent<DialogueManager>().GetDialogues(1);
             Time.timeScale = 0;

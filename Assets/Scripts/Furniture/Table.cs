@@ -9,8 +9,7 @@ public class Table : Interactable {
 
     public List<GameObject> items;
 
-    private new void Awake() {
-        base.Awake();
+    private void Awake() {
         foreach (Chair chair in chairs) {
             chair.table = this;
         }
@@ -26,16 +25,16 @@ public class Table : Interactable {
         return -1;
     }
     public override void Effect() {
-        if (playerController.GetItemHold() && GetItem(true)) {
-            PutDownItem(playerController.GetItemHold());
-            if (playerController.GetItemHold().GetComponent<ProductHolder>().product.amount <= 0)
-                playerController.SetItemHold(null);
+        if (playerControllerSO.GetPlayerController().GetItemHold() && GetItem(true)) {
+            PutDownItem(playerControllerSO.GetPlayerController().GetItemHold());
+            if (playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.amount <= 0)
+                playerControllerSO.GetPlayerController().SetItemHold(null);
         }
-        else if (!playerController.GetItemHold() && (GetItem(false) || CheckPlate()))
+        else if (!playerControllerSO.GetPlayerController().GetItemHold() && (GetItem(false) || CheckPlate()))
             TakeItem();
-        else if (playerController.GetItemHold() && GetAllItem(false)) {
-            GameObject tmpPlayer = playerController.GetItemHold();
-            playerController.SetItemHold(null);
+        else if (playerControllerSO.GetPlayerController().GetItemHold() && GetAllItem(false)) {
+            GameObject tmpPlayer = playerControllerSO.GetPlayerController().GetItemHold();
+            playerControllerSO.GetPlayerController().SetItemHold(null);
             TakeItem();
             PutDownItem(tmpPlayer);
         }
@@ -109,14 +108,14 @@ public class Table : Interactable {
 
 
     private void TakeItem() {
-        Transform arm = playerController.gameObject.transform.GetChild(0);
+        Transform arm = playerControllerSO.GetPlayerController().gameObject.transform.GetChild(0);
 
         for (int i = 0; i < chairs.Count; i++) {
-            if (items[i] && !playerController.GetItemHold() && !items[i].GetComponent<ProductHolder>().blocked) {
-                playerController.SetItemHold(items[i]);
+            if (items[i] && !playerControllerSO.GetPlayerController().GetItemHold() && !items[i].GetComponent<ProductHolder>().blocked) {
+                playerControllerSO.GetPlayerController().SetItemHold(items[i]);
                 items[i] = null;
-                playerController.GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
-                playerController.GetItemHold().transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
+                playerControllerSO.GetPlayerController().GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
+                playerControllerSO.GetPlayerController().GetItemHold().transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
             }
         }
     }

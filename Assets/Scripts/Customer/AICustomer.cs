@@ -28,8 +28,7 @@ public class AICustomer : Interactable {
     protected Vector3 spawnPosition;
     protected Coroutine waitingCoroutine;
 
-    protected new void Awake() {
-        base.Awake();
+    protected void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();
     }
 
@@ -81,7 +80,7 @@ public class AICustomer : Interactable {
 
     //Display the payement
     public void DisplayPayment(GameObject displayGO) {
-        int basePrice = gameManager.GetProductPrice(item.GetComponent<ProductHolder>().product.productSO);
+        int basePrice = item.GetComponent<ProductHolder>().product.productSO.price;
         int totalPrice = basePrice + basePrice * item.GetComponent<ProductHolder>().product.quality / 100;
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
@@ -90,7 +89,7 @@ public class AICustomer : Interactable {
             requestedProduct = null;
         };
 
-        money.AddMoney(totalPrice);
+        money.SetMoney(totalPrice);
         reputation.AddReputation(saleReputation);
     }
 

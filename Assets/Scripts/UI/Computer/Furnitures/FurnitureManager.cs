@@ -10,16 +10,16 @@ public class FurnitureManager : MonoBehaviour {
     [SerializeField] private AssetReference furnitureButtonAsset;
     [SerializeField] private AssetReference furnitureRackAsset;
     [SerializeField] private ListFurniture furnitures;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Money money;
     [SerializeField] private Controller controller;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private RectTransform scrollRectTransform;
-    [SerializeField] private int scrollSpeed;
+    [SerializeField] private int scrollSpeed; 
 
     private List<GameObject> furnitureButtonList;
     private List<GameObject> furnitureRackList;
-    private GameManager gameManager;
     private PlayerController playerController;
     private int nbButton = 0;
     private int lenght = 0;
@@ -45,8 +45,7 @@ public class FurnitureManager : MonoBehaviour {
         furnitureStyleFilter = new List<FurnitureStyle>();
 
         lenght = furnitures.GetFurnitureCount();
-        gameManager = FindObjectOfType<GameManager>();
-        playerController = gameManager.GetPlayerController();
+        playerController = playerControllerSO.GetPlayerController();
     }
 
     private void Start() {
@@ -56,7 +55,7 @@ public class FurnitureManager : MonoBehaviour {
 
                 go.Result.GetComponent<FurnitureButton>().SetFurnitureManager(this);
                 go.Result.GetComponent<FurnitureButton>().SetFurniture(tmp);
-                go.Result.name = "Button " + tmp.GetName();
+                go.Result.name = tmp.GetName() + "Button";
                 furnitureButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks();
@@ -89,9 +88,9 @@ public class FurnitureManager : MonoBehaviour {
             }
 
             if (controller.IsGamepad())
-                gameManager.SetEventSystemToStartButton(furnitureButtonList[0]);
+                controller.SetEventSystemToStartButton(furnitureButtonList[0]);
             else
-                gameManager.SetEventSystemToStartButton(null);
+                controller.SetEventSystemToStartButton(null);
         }
     }
 
@@ -102,8 +101,8 @@ public class FurnitureManager : MonoBehaviour {
             if (furnitureRackList[i].activeSelf)
                 nbRack++;
 
-        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width, furnitureRackList[0].GetComponent<RectTransform>().rect.height * nbRack);
-        buttonPanel.GetComponent<RectTransform>().localPosition = new Vector2(buttonPanel.GetComponent<RectTransform>().localPosition.x, 0);
+        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].GetComponent<RectTransform>().rect.height * nbRack);
+        buttonPanel.GetComponent<RectTransform>().localPosition = new Vector3(buttonPanel.GetComponent<RectTransform>().localPosition.x, 0, 0);
     }
 
     public void SetStyleFilter(int filter) {
@@ -147,6 +146,7 @@ public class FurnitureManager : MonoBehaviour {
         int buttonLenght = furnitureButtonList.Count;
         int rackLenght = furnitureRackList.Count;
         int lenght = furnitureTypeFilter.Count + furnitureStyleFilter.Count;
+        List<GameObject> activeButtons = new List<GameObject>();
 
         if (lenght == 0) {
             for (int i = 0; i < buttonLenght; i++) {
@@ -188,35 +188,35 @@ public class FurnitureManager : MonoBehaviour {
                     }
                 }
 
-
                 //If button is in filter, set true
+                if (inFilter)
+                    activeButtons.Add(furnitureButtonList[i]);
+
                 furnitureButtonList[i].SetActive(inFilter);
             }
 
+
             //Setup buttons in racks
             for (int i = 0; i < rackLenght; i++) {
-                int nbActiveButton = 0;
-                int childCount = furnitureRackList[i].transform.childCount;
-
-                for (int k = 0; k < childCount; k++)
-                    if (furnitureRackList[i].transform.GetChild(k).gameObject.activeSelf)
-                        nbActiveButton++;
-
-
-                for (int k = i * maxButtonInRack; (k < buttonLenght) && (nbActiveButton < maxButtonInRack); k++) {
-                    if (furnitureButtonList[k].transform.parent.GetInstanceID() != furnitureRackList[i].transform.GetInstanceID() && furnitureRackList.IndexOf(furnitureButtonList[k].transform.parent.gameObject) > furnitureRackList.IndexOf(furnitureRackList[i]) && furnitureButtonList[k].activeSelf) {
-                        furnitureButtonList[k].transform.SetParent(furnitureRackList[i].transform);
-                        nbActiveButton++;
-                    }
+                for (int j = 0; (j < maxButtonInRack) && ((j + i * maxButtonInRack) < activeButtons.Count); j++) {
+                    activeButtons[j + i * maxButtonInRack].transform.SetParent(furnitureRackList[i].transform);
                 }
             }
 
-            //Disable racks with no child
+            activeButtons.Clear();
+
+            //Disable racks with no child active
             for (int i = 0; i < rackLenght; i++) {
-                if (furnitureRackList[i].transform.childCount == 0)
-                    furnitureRackList[i].SetActive(false);
-                else
+                bool hasOneChildActif = false;
+                int childCount = furnitureRackList[i].transform.childCount;
+                for (int j = 0; j < childCount; j++)
+                    if (furnitureRackList[i].transform.GetChild(j).gameObject.activeSelf)
+                        hasOneChildActif = true;
+
+                if (hasOneChildActif)
                     furnitureRackList[i].SetActive(true);
+                else
+                    furnitureRackList[i].SetActive(false);
             }
         }
         SetVerticalLayoutGroup();

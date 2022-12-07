@@ -30,9 +30,9 @@ public class BuildingMode : Interactable {
 
     private void Start() {
         currentRaycastlayer = pickUpLayer;
-        playerController.playerInput.Building.Quit.performed += Quit;
-        playerController.playerInput.Building.Select.performed += Select;
-        playerController.playerInput.Building.Rotate.performed += RotateGameObject;
+        playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
+        playerControllerSO.GetPlayerController().playerInput.Building.Select.performed += Select;
+        playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed += RotateGameObject;
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
@@ -40,11 +40,11 @@ public class BuildingMode : Interactable {
     }
 
     public override void Effect() {
-        if (TmpBuild.instance.day.GetDayTime() == DayTime.Morning) {
-            playerController.DisableInput();
-            playerController.playerInput.Building.Enable();
+        if (day.GetDayTime() == DayTime.Morning) {
+            playerControllerSO.GetPlayerController().DisableInput();
+            playerControllerSO.GetPlayerController().playerInput.Building.Enable();
 
-            if (TmpBuild.instance.controller.IsGamepad()) {
+            if (controller.IsGamepad()) {
                 cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
                     cursorObject = go.Result;
                 };
@@ -60,8 +60,8 @@ public class BuildingMode : Interactable {
             if (cursorObject) {
                 Addressables.ReleaseInstance(cursorObject);
             }
-            playerController.playerInput.Building.Disable();
-            playerController.EnableInput();
+            playerControllerSO.GetPlayerController().playerInput.Building.Disable();
+            playerControllerSO.GetPlayerController().EnableInput();
             mainCamera.SetActive(true);
             buildingCamera.SetActive(false);
             inBuildingMode = false;
@@ -70,7 +70,7 @@ public class BuildingMode : Interactable {
 
     public void Select(CallbackContext context) {
         Ray ray;
-        if (TmpBuild.instance.controller.IsGamepad()) {
+        if (controller.IsGamepad()) {
             ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
         }
         else
@@ -125,7 +125,7 @@ public class BuildingMode : Interactable {
     private void FixedUpdate() {
         if (inBuildingMode) {
             if (controller.IsGamepad() && cursorObject) {
-                cursorObject.transform.Translate(gameManager.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
                 SnapGameObject(cursorObject.transform.position);
             }
             else {
@@ -136,10 +136,10 @@ public class BuildingMode : Interactable {
 
     private void RotateGameObject(InputAction.CallbackContext ctx) {
         if (selectedGo) {
-            if (playerController.playerInput.Building.Rotate.ReadValue<float>() > 0) {
+            if (playerControllerSO.GetPlayerController().playerInput.Building.Rotate.ReadValue<float>() > 0) {
                 selectedGo.transform.Rotate(Vector3.up * 90);
             }
-            else if (playerController.playerInput.Building.Rotate.ReadValue<float>() < 0) {
+            else if (playerControllerSO.GetPlayerController().playerInput.Building.Rotate.ReadValue<float>() < 0) {
                 selectedGo.transform.Rotate(Vector3.up * -90);
             }
         }

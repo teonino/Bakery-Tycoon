@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float interactionDistance;
     [SerializeField] private Controller controller;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject itemSocket;
     private PlayerMovements playerMovements;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Awake() {
+        playerControllerSO.SetPlayerController(this);
         playerInput = new PlayerInput();
         playerMovements = GetComponent<PlayerMovements>();
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
@@ -33,17 +35,13 @@ public class PlayerController : MonoBehaviour {
         else
             animator.SetBool("isWalking", false);
 
-        if (!TmpBuild.instance.controller.IsGamepad()) {
+        if (!controller.IsGamepad()) {
             if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
                 cinemachine.enabled = true;
             else if (cinemachine.enabled == true)
                 cinemachine.enabled = false;
-        } else {
+        } else 
             cinemachine.enabled = true; ;
-        }
-
-
-        Debug.DrawRay(transform.position + Vector3.down / 2, transform.forward * interactionDistance, Color.green);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
@@ -59,7 +57,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
     private void OnPause(InputAction.CallbackContext context) {
-        FindObjectOfType<GameManager>().Pause();
+        FindObjectOfType<PauseManager>(true).gameObject.SetActive(true);
         DisableInput();
     }
 
@@ -68,6 +66,7 @@ public class PlayerController : MonoBehaviour {
 
     public void EnableInput() {
         playerInput.Player.Enable();
+        controller.InitInputType(this);
     }
 
     public void DisableInput() {
