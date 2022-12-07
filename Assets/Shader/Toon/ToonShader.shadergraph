@@ -423,6 +423,9 @@
         },
         {
             "m_Id": "8b61352b2fbc4ab2883fb3070f2ca8de"
+        },
+        {
+            "m_Id": "08dfd26a5e4d442f9f650ce9e978220d"
         }
     ],
     "m_GroupDatas": [
@@ -486,6 +489,20 @@
                     "m_Id": "d639021c99680c8780565d19da9664f6"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "08dfd26a5e4d442f9f650ce9e978220d"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "69abfd5fb8d146aa921350d8c47a034a"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -2244,6 +2261,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "08dfd26a5e4d442f9f650ce9e978220d",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3401.7392578125,
+            "y": -1625.217529296875,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "148285e0c1a64ea6bd7f41fa9372f659"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "c2724114874f4ac89f3fbb3df851aaa3"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.AddNode",
     "m_ObjectId": "09e8c1b122479a808500c8ec031e2184",
     "m_Group": {
@@ -2792,6 +2844,21 @@
     "useTilingAndOffset": false,
     "m_Modifiable": true,
     "m_DefaultType": 3
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "148285e0c1a64ea6bd7f41fa9372f659",
+    "m_Id": 0,
+    "m_DisplayName": "IntForce",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {

@@ -19,7 +19,7 @@ public class WallFade : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (thisRoomIsActive) {
-            if (other.gameObject.name == "Main Camera") {
+            if (other.gameObject.tag == "MainCamera") {
                 if (visibleCoroutines.Count > 0) {
                     foreach (Coroutine coroutine in visibleCoroutines)
                         StopCoroutine(coroutine);
@@ -27,6 +27,7 @@ public class WallFade : MonoBehaviour {
                 }
 
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++) {
+                    print("For Loop Dispawn");
                     invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
                 }
             }
@@ -35,7 +36,7 @@ public class WallFade : MonoBehaviour {
 
     private void OnTriggerExit(Collider other) {
         if (thisRoomIsActive) {
-            if (other.gameObject.name == "Main Camera") {
+            if (other.gameObject.tag == "MainCamera"){
                 if (invisibleCoroutines.Count > 0) {
                     foreach (Coroutine coroutine in invisibleCoroutines)
                         StopCoroutine(coroutine);
