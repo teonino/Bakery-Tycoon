@@ -36,6 +36,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaMask:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
@@ -104,6 +108,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Variation_2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -123,8 +135,9 @@ Material:
     - Vector1_140A3D6D: 0.5
     - Vector1_6258FE53: 2
     - _AlphaClip: 0
-    - _AlphaStrenght: 0
+    - _AlphaStrenght: 1
     - _AmbiantOcclusionRatio: 1
+    - _BaseColorVariation: 1
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -165,6 +178,7 @@ Material:
     - _UseEmissive: 0
     - _UseHeight: 0
     - _UseMetallic: 0
+    - _UseUV1: 0
     - _WallThrough: 0
     - _WorkflowMode: 1
     - _ZTest: 4
