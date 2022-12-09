@@ -20,9 +20,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_R_V_Couch
+  m_Name: M_R_B_BigTable
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SPECULAR_SETUP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Alpha_Mask:
@@ -47,11 +48,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 2800000, guid: abf311341c827fe44ad03de44cd6882e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3a379833fde361140b253af03b34e024, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: b75e20afb29a24842b3a46646a4778f3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0d2d7cb1764cc3b4bab16e1a08d827da, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -63,15 +64,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: d4ed7cedc32ddb949a3c1b15adbeb877, type: 3}
+        m_Texture: {fileID: 2800000, guid: 515e0fdac69b71c49a909b838203b8ad, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: d9ae1f60312e51740a7b419fc2dc97b7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0e509caea0456ab458a59e119cab9b89, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: 76caa7506a741814caebf03fd6213215, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3abb5379018173145ad19d13ec076c72, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -79,11 +80,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: be1c6c59000da2943bf4e22eb9d51985, type: 3}
+        m_Texture: {fileID: 2800000, guid: 682f844f24c336b4097a6ff1c1fc1af5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: 63bbf74e378f80d4886200b4f6fd62f2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 63b2ab9b53cad9843a2516b142c1710d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -107,7 +108,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Variation_2:
-        m_Texture: {fileID: 2800000, guid: a277997e1b620cc4c96ad92f03eae284, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Variation_3:
@@ -135,7 +136,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaStrenght: 0
     - _AmbiantOcclusionRatio: 1
-    - _BaseColorVariation: 1
+    - _BaseColorVariation: 2
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -149,13 +150,13 @@ Material:
     - _DetailsScale: 1
     - _DetailsScale_1: 0
     - _DstBlend: 0
-    - _EmissiveIntensity: 0.5
+    - _EmissiveIntensity: 0
     - _EmissivePower: 1
     - _FallOffSize: 0.05
     - _Height: 0
     - _HeightForce: 0
     - _IntForce: 0
-    - _LightProbeContribution: 3
+    - _LightProbeContribution: 3.5
     - _MetallicStrenght: 0
     - _NormalStrenght: 1
     - _OutlineDepthSensitivity: 0.125
@@ -166,7 +167,7 @@ Material:
     - _ReceiveShadows: 1
     - _RedForce: 0.9
     - _RedTintActivated: 0
-    - _RougnessRatio: 0
+    - _RougnessRatio: 0.084
     - _SmoothMapTiling: 0
     - _Smoothness: 0.867
     - _SrcBlend: 1
@@ -178,7 +179,7 @@ Material:
     - _UseMetallic: 0
     - _UseUV1: 0
     - _WallThrough: 0
-    - _WorkflowMode: 1
+    - _WorkflowMode: 0
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
