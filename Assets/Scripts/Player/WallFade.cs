@@ -19,7 +19,7 @@ public class WallFade : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (thisRoomIsActive) {
-            if (other.gameObject.name == "Main Camera") {
+            if (other.gameObject.tag == "MainCamera") {
                 if (visibleCoroutines.Count > 0) {
                     foreach (Coroutine coroutine in visibleCoroutines)
                         StopCoroutine(coroutine);
@@ -35,7 +35,7 @@ public class WallFade : MonoBehaviour {
 
     private void OnTriggerExit(Collider other) {
         if (thisRoomIsActive) {
-            if (other.gameObject.name == "Main Camera") {
+            if (other.gameObject.tag == "MainCamera"){
                 if (invisibleCoroutines.Count > 0) {
                     foreach (Coroutine coroutine in invisibleCoroutines)
                         StopCoroutine(coroutine);
@@ -50,9 +50,9 @@ public class WallFade : MonoBehaviour {
     }
 
     private IEnumerator ChangeColor(Transform go, float opacity) {
-        while (go.GetComponent<Renderer>().material.GetFloat("_IntForce") != opacity) {
-            float a = go.GetComponent<Renderer>().material.GetFloat("_IntForce");
-            go.GetComponent<Renderer>().material.SetFloat("_IntForce", Mathf.Lerp(a, opacity, lerpTime));
+        while (go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght") != opacity) {
+            float a = go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght");
+            go.GetComponent<Renderer>().material.SetFloat("_AlphaStrenght", Mathf.Lerp(a, opacity, lerpTime));
             yield return new WaitForEndOfFrame();
         }
         yield return null;
