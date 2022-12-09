@@ -20,22 +20,26 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_R_B_DoorFrame
+  m_Name: M_R_V_Couch
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaMask:
-        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Alpha_Mask:
@@ -43,11 +47,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 2800000, guid: 65940d0402f42eb4cb57b956f4e0adb2, type: 3}
+        m_Texture: {fileID: 2800000, guid: abf311341c827fe44ad03de44cd6882e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: 15fca4221f5cb2644aed923f789b58e2, type: 3}
+        m_Texture: {fileID: 2800000, guid: b75e20afb29a24842b3a46646a4778f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -59,15 +63,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: db25a5db468b5514692ddbcf0a2e2de4, type: 3}
+        m_Texture: {fileID: 2800000, guid: d4ed7cedc32ddb949a3c1b15adbeb877, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: 79239ed674651bf49a0dee956fd93f92, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9ae1f60312e51740a7b419fc2dc97b7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: b212445b6b148ee4caf8c61255ee0207, type: 3}
+        m_Texture: {fileID: 2800000, guid: 76caa7506a741814caebf03fd6213215, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -75,11 +79,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: bee77e1e23de0e240b94fc8441328289, type: 3}
+        m_Texture: {fileID: 2800000, guid: be1c6c59000da2943bf4e22eb9d51985, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: 9490257fc70f82f4dbbccca67bc078bc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 63bbf74e378f80d4886200b4f6fd62f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -99,6 +103,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_315744aa42d646018314e9c9526c1bff_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_2:
+        m_Texture: {fileID: 2800000, guid: a277997e1b620cc4c96ad92f03eae284, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_3:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -123,6 +135,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaStrenght: 0
     - _AmbiantOcclusionRatio: 1
+    - _BaseColorVariation: 1
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -136,13 +149,13 @@ Material:
     - _DetailsScale: 1
     - _DetailsScale_1: 0
     - _DstBlend: 0
-    - _EmissiveIntensity: 0
+    - _EmissiveIntensity: 0.5
     - _EmissivePower: 1
     - _FallOffSize: 0.05
     - _Height: 0
     - _HeightForce: 0
     - _IntForce: 0
-    - _LightProbeContribution: 3.5
+    - _LightProbeContribution: 3
     - _MetallicStrenght: 0
     - _NormalStrenght: 1
     - _OutlineDepthSensitivity: 0.125
@@ -163,6 +176,7 @@ Material:
     - _UseEmissive: 0
     - _UseHeight: 0
     - _UseMetallic: 0
+    - _UseUV1: 0
     - _WallThrough: 0
     - _WorkflowMode: 1
     - _ZTest: 4

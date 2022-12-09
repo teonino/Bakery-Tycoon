@@ -20,20 +20,24 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_R_B_Door
+  m_Name: M_R_V_Carpet
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaMask:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
@@ -43,11 +47,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 2800000, guid: a022d073f47bbd046b85853c755e5ac9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 14fe95bedc8d2b94d9d66d71bb82625e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: 788172a44ab418c41a89c52c48bfee84, type: 3}
+        m_Texture: {fileID: 2800000, guid: 307d1ad0c7855044e97f39bd5390dc5c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -59,15 +63,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 9d2e4878eeb02414e868153d0594e0d7, type: 3}
+        m_Texture: {fileID: 2800000, guid: acac450f80e28ca4286cbee849d28665, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: 767b8735b7fb7af4d9bd7f913001573f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6e2419291c6330846a454763674c4d1d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: 9da74e699d22d4f40868407ad9f9d2ee, type: 3}
+        m_Texture: {fileID: 2800000, guid: 77fa432dca0c5c84a8a4156ff4132d99, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -75,11 +79,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: 9661db32f0ef8924c8de1a2bbd86bf3d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 14fe95bedc8d2b94d9d66d71bb82625e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: acd377c1fb1cebe4680fbd21b21601f1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 71604bc6649c9e7418ec9653ad11c326, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -99,6 +103,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_315744aa42d646018314e9c9526c1bff_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_2:
+        m_Texture: {fileID: 2800000, guid: 31d5f21e57a0d95488b62752f7b531a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_3:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -123,6 +135,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaStrenght: 0
     - _AmbiantOcclusionRatio: 1
+    - _BaseColorVariation: 1
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -163,6 +176,7 @@ Material:
     - _UseEmissive: 0
     - _UseHeight: 0
     - _UseMetallic: 0
+    - _UseUV1: 0
     - _WallThrough: 0
     - _WorkflowMode: 1
     - _ZTest: 4
