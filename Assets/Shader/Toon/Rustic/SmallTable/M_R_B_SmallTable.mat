@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_R_B_NapkinWorkstation
+  m_Name: M_R_B_SmallTable
   m_Shader: {fileID: -6465566751694194690, guid: bf36778a400a0894b86a1f49c422fa62, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -47,11 +47,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormal:
-        m_Texture: {fileID: 2800000, guid: 43d473c9045cd08438c19e73ba4a01f3, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailsAlbedo:
-        m_Texture: {fileID: 2800000, guid: 37c3a363a949a7a4eba6665ccdc2529b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
@@ -63,15 +63,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: b660884f0f6c0e84a8e512ed05a59416, type: 3}
+        m_Texture: {fileID: 2800000, guid: 252ffb8d1a5190a4f97fcd60994f1e34, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicMap:
-        m_Texture: {fileID: 2800000, guid: e728c4ee8bc417c4aa269cebaa0dc08c, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MultiTexture:
-        m_Texture: {fileID: 2800000, guid: a891db4543151394db5008221fc90fdb, type: 3}
+        m_Texture: {fileID: 2800000, guid: c7d6091cf9e2e6942a60aeb3490a990b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -79,11 +79,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapChannel:
-        m_Texture: {fileID: 2800000, guid: ecfb688385ce53a459696c7c0eabbc49, type: 3}
+        m_Texture: {fileID: 2800000, guid: 634c5fc7866f9ff41b8bd338061a3da6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessMap:
-        m_Texture: {fileID: 2800000, guid: e471f41686f53e749be08e2cb5bbfec8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 63bbf74e378f80d4886200b4f6fd62f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smoothness_Map:
@@ -103,6 +103,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_315744aa42d646018314e9c9526c1bff_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_2:
+        m_Texture: {fileID: 2800000, guid: 252ffb8d1a5190a4f97fcd60994f1e34, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Variation_3:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -127,6 +135,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaStrenght: 0
     - _AmbiantOcclusionRatio: 1
+    - _BaseColorVariation: 1
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -146,8 +155,8 @@ Material:
     - _Height: 0
     - _HeightForce: 0
     - _IntForce: 0
-    - _LightProbeContribution: 1
-    - _MetallicStrenght: 0
+    - _LightProbeContribution: 3
+    - _MetallicStrenght: 1
     - _NormalStrenght: 1
     - _OutlineDepthSensitivity: 0.125
     - _OutlineNormalsSensitivity: 1
