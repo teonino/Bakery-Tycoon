@@ -20,23 +20,23 @@ public class CraftingStation : Interactable {
     private GameObject progressBar;
 
     private void Start() {
-        if (!TmpBuild.instance.debugState.GetDebug())
+        if (!debugState.GetDebug())
             skipCookingTime = false;
     }
 
     public CraftingStationType GetCraftingStationType() => type;
 
     public override void Effect() {
-        if (playerController.GetItemHold() && playerController.GetItemHold().tag == "Paste" && itemInStation == null && playerController.GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type) {
-            itemInStation = new Product(playerController.GetItemHold().GetComponent<ProductHolder>().product);
-            Addressables.ReleaseInstance(playerController.GetItemHold());
-            playerController.SetItemHold(null);
+        if (playerControllerSO.GetPlayerController().GetItemHold() && playerControllerSO.GetPlayerController().GetItemHold().tag == "Paste" && itemInStation == null && playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type) {
+            itemInStation = new Product(playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product);
+            Addressables.ReleaseInstance(playerControllerSO.GetPlayerController().GetItemHold());
+            playerControllerSO.GetPlayerController().SetItemHold(null);
             StartCoroutine(CookingTime(itemInStation));
         }
-        else if (itemInStation != null && !playerController.GetItemHold() && !cooking) {
+        else if (itemInStation != null && !playerControllerSO.GetPlayerController().GetItemHold() && !cooking) {
             itemInStation.productSO.asset.InstantiateAsync().Completed += (go) => {
-                Transform arm = playerController.GetItemSocket().transform;
-                playerController.SetItemHold(go.Result);
+                Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
+                playerControllerSO.GetPlayerController().SetItemHold(go.Result);
                 ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
 
                 if (progressBar.GetComponent<ProgressBar>().burned)
@@ -49,11 +49,11 @@ public class CraftingStation : Interactable {
                 Addressables.ReleaseInstance(progressBar);
             };            
         }
-        else if (TmpBuild.instance.day.GetDayTime() == DayTime.Evening) {
+        else if (day.GetDayTime() == DayTime.Evening) {
             //Check cleanness
             if (dirty > 20) {
                 //Launch Animation
-                playerController.DisableInput();
+                playerControllerSO.GetPlayerController().DisableInput();
                 progressBarAsset.InstantiateAsync(transform).Completed += (go) => {
                     ProgressBar progressBarScript = go.Result.GetComponentInChildren<ProgressBar>();
 
@@ -89,7 +89,7 @@ public class CraftingStation : Interactable {
 
     public void Clean() {
         dirty = 0;
-        playerController.EnableInput();
+        playerControllerSO.GetPlayerController().EnableInput();
     }
 
     public void AddDirt() => dirty++;

@@ -37,18 +37,18 @@ public class SpawnCustomer : MonoBehaviour {
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
 
-        if (!TmpBuild.instance.debugState.GetDebug())
+        if (!debugState.GetDebug())
             debug = false;
 
         StartCoroutine(SpawnDelay());
     }
 
     private IEnumerator SpawnDelay() {
-        if (TmpBuild.instance.day.GetDayTime() == DayTime.Morning)
-            yield return new WaitForSeconds(TmpBuild.instance.day.GetMorningDuration());
+        if (day.GetDayTime() == DayTime.Morning)
+            yield return new WaitForSeconds(day.GetMorningDuration());
         else {
             if (!debug)
-                randomTime = Random.Range(delaySpawn.GetDelaySpawn(TmpBuild.instance.reputation.GetLevel()).x, delaySpawn.GetDelaySpawn(TmpBuild.instance.reputation.GetLevel()).y);
+                randomTime = Random.Range(delaySpawn.GetDelaySpawn(reputation.GetLevel()).x, delaySpawn.GetDelaySpawn(reputation.GetLevel()).y);
             else
                 randomTime = Random.Range(debugDelaySpawn.x, debugDelaySpawn.y);
 
@@ -60,7 +60,7 @@ public class SpawnCustomer : MonoBehaviour {
 
     private void InstantiateCustomer() {
         //Spawn a customer
-        if (enableSpawn && nbCustomer < nbCustomerMax && TmpBuild.instance.day.GetDayTime() == DayTime.Day && CheckProducts()) {
+        if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
             if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0 && CheckChairs()) {
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
@@ -117,10 +117,10 @@ public class SpawnCustomer : MonoBehaviour {
 
     public bool CheckProducts() {
         bool doable;
-        foreach (ProductSO product in TmpBuild.instance.products.GetProductList()) { //Go through all product
+        foreach (ProductSO product in products.GetProductList()) { //Go through all product
             doable = true;
             foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
-                if (TmpBuild.instance.ingredients.GetIngredientAmount(ingredient) <= 0)
+                if (ingredients.GetIngredientAmount(ingredient) <= 0)
                     doable = false;
 
             if (doable)

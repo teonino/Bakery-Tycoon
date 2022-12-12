@@ -5,23 +5,14 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public class Computer : Interactable {
+    private GameObject computerPanel;
 
-    [SerializeField] private AssetReference computerPanelAsset;
-
-    private GameObject computerPanel = null;
-    private GameObject mainCanvas;
-
-    private void Start() {
-        mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas");
+    private void Awake() {
+        computerPanel = GameObject.FindGameObjectWithTag("MainCanvas").transform.Find("ComputerPanel").gameObject;
     }
 
     public override void Effect() {
-        if (!computerPanel)
-            computerPanelAsset.InstantiateAsync(mainCanvas.transform).Completed += (go) => {
-                computerPanel = go.Result;
-                computerPanel.SetActive(true);
-            };
-        else
+        if(computerPanel)
             computerPanel.SetActive(true);
     }
 }

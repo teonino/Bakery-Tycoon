@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MoneyUI : MonoBehaviour
-{
+public class MoneyUI : MonoBehaviour {
     [SerializeField] private Money money;
 
     private void Start() {
-        TmpBuild.instance.money.SetUpdateUI(SetMoney);
-        SetMoney();
+        UpdateUI(money.GetMoney());
     }
 
-    public void SetMoney() {
-        GetComponent<TextMeshProUGUI>().SetText("Money : " + TmpBuild.instance.money.GetMoney() + "€");
+    private void OnEnable() {
+        money.OnMoneyChanged += UpdateUI;
+    }
+
+    private void OnDisable() {
+        money.OnMoneyChanged -= UpdateUI;
+    }
+
+    private void UpdateUI(int money) {
+        GetComponent<TextMeshProUGUI>().text = $"Money : {money}€";
     }
 }

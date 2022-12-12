@@ -6,20 +6,19 @@ using UnityEngine.InputSystem;
 public class PauseManager : MonoBehaviour {
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private Controller controller;
-    GameManager gameManager;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
 
     private void OnEnable() {
         Time.timeScale = 0f;
-        gameManager.GetPlayerController().playerInput.Pause.Enable();
+        playerControllerSO.GetPlayerController().playerInput.Pause.Enable();
         if (controller.IsGamepad())
-            gameManager.SetEventSystemToStartButton(resumeButton);
+            controller.SetEventSystemToStartButton(resumeButton);
         else
-            gameManager.SetEventSystemToStartButton(null);
+            controller.SetEventSystemToStartButton(null);
     }
 
     private void Awake() {
-        gameManager = FindObjectOfType<GameManager>();
-        gameManager.GetPlayerController().playerInput.Pause.Unpause.performed += ResumeInput;
+        playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed += ResumeInput;
     }
 
     private void ResumeInput(InputAction.CallbackContext context) {
@@ -29,8 +28,8 @@ public class PauseManager : MonoBehaviour {
     public void Resume() {
         gameObject.SetActive(false);
         Time.timeScale = 1f;
-        gameManager.GetPlayerController().playerInput.Pause.Disable();
-        gameManager.GetPlayerController().EnableInput();
+        playerControllerSO.GetPlayerController().playerInput.Pause.Disable();
+        playerControllerSO.GetPlayerController().EnableInput();
     }
 
     public void Quit() {

@@ -12,7 +12,6 @@ public abstract class Minigame : MonoBehaviour {
     [Header("Minigame parameters")]
 
     protected WorkstationManager workplacePanel;
-    protected GameManager gameManager;
     protected PlayerController playerController;
     protected float launchTime;
     protected float endTime;
@@ -20,7 +19,6 @@ public abstract class Minigame : MonoBehaviour {
 
     // Start is called before the first frame update
     protected void Start() {
-        gameManager = FindObjectOfType<GameManager>();
         workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
         playerController = FindObjectOfType<PlayerController>();
         launchTime = Time.time;

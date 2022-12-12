@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TmpBuild : MonoBehaviour {
+public class TmpBuildDisable : MonoBehaviour {
     public Day day;
     public Controller controller;
     public DebugState debugState;
@@ -13,7 +13,7 @@ public class TmpBuild : MonoBehaviour {
     public Reputation reputation;
     public Statistics stats;
 
-    public static TmpBuild instance;
+    public static TmpBuildDisable instance;
 
     private void Awake() {
         instance = this;

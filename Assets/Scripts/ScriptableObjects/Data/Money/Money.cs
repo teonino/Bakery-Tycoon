@@ -7,23 +7,17 @@ public class Money : ScriptableObject
 {
     [SerializeField] private int money;
     [SerializeField] private Statistics stats;
-    [SerializeField] private Action UpdateUI;
 
-    private void OnEnable() {
-        money = 100;
-    }
+    public Action<int> OnMoneyChanged;
 
     public int GetMoney() => money;
-    public void SetUpdateUI(Action updateUI) => UpdateUI = updateUI;
-    public void AddMoney(int value) {
+    public void SetMoney(int value) {
         money += value;
-        UpdateUI?.Invoke();
-        stats.AddMoney(value);
+        OnMoneyChanged?.Invoke(money);
+        if (value > 0)
+            stats.AddMoney(value);
+        else
+            stats.RemoveMoney(value);
     }
 
-    public void RemoveMoney(int value) {
-        money -= value;
-        UpdateUI?.Invoke();
-        stats.RemoveMoney(value);
-    }
 }

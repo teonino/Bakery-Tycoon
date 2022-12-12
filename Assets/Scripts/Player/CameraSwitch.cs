@@ -11,10 +11,9 @@ public class CameraSwitch : MonoBehaviour {
     [SerializeField] private float LerpTime;
     [SerializeField] private List<WallFade> wallFadeScriptMainRoom;
     [SerializeField] private List<WallFade> wallFadeScriptStorage;
-
-    private float playerLocalisation = 0;
     private CinemachineFreeLook cinemachine;
     private Coroutine coroutine;
+
     private void Awake() {
         for (int i = 0; i < wallFadeScriptMainRoom.Count; i++) {
             wallFadeScriptMainRoom[i].thisRoomIsActive = true;
@@ -38,7 +37,6 @@ public class CameraSwitch : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Player") {
-            playerLocalisation = 1;
             for (int i = 0; i < wallFadeScriptMainRoom.Count; i++) {
                 wallFadeScriptMainRoom[i].thisRoomIsActive = false;
             }
@@ -55,7 +53,6 @@ public class CameraSwitch : MonoBehaviour {
 
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.tag == "Player") {
-            playerLocalisation = 2;
             for (int i = 0; i < wallFadeScriptMainRoom.Count; i++) {
                 wallFadeScriptMainRoom[i].thisRoomIsActive = true;
             }
@@ -69,6 +66,4 @@ public class CameraSwitch : MonoBehaviour {
             coroutine = StartCoroutine(EnableCinemachine(MainRoomSocket));
         }
     }
-
-
 }

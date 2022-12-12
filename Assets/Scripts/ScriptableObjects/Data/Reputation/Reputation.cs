@@ -8,7 +8,7 @@ public class Reputation : ScriptableObject {
     [SerializeField] private int level;
     [SerializeField] private int experience;
     [SerializeField] private List<int> experiencesPerLevel;
-    [SerializeField] private Action UpdateUI;
+    public Action UpdateUI;
 
     private void OnEnable() {
         experience = 0;
@@ -17,8 +17,6 @@ public class Reputation : ScriptableObject {
 
     public int GetLevel() => level;
     public int GetExperience() => experience;
-
-    public void SetUpdateUI(Action updateUI) => UpdateUI = updateUI;
 
     public int GetExpNeeded() => experiencesPerLevel[level];
 

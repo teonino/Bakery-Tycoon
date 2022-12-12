@@ -4,12 +4,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour {
 
-    protected GameManager gameManager;
-    protected PlayerController playerController;
+    [SerializeField] protected PlayerControllerSO playerControllerSO;
 
-    protected void Awake() {
-        gameManager = FindObjectOfType<GameManager>();
-        playerController = FindObjectOfType<PlayerController>();
-    }
     public abstract void Effect();
 }

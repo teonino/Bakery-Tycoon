@@ -13,8 +13,8 @@ public class PriceManager : MonoBehaviour {
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private GameObject priceButtonPanel;
     [SerializeField] private ListProduct products;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
 
-    private GameManager gameManager;
     private PlayerController playerController;
     private InputFieldControllerManager inputFieldControllerManager;
     private GameObject content;
@@ -25,14 +25,13 @@ public class PriceManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Awake() {
-        gameManager = FindObjectOfType<GameManager>();
         inputFieldControllerManager = FindObjectOfType<InputFieldControllerManager>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
 
-        lenght = TmpBuild.instance.products.GetProductLenght();
-        playerController = gameManager.GetPlayerController();
+        lenght = products.GetProductLenght();
+        playerController = playerControllerSO.GetPlayerController();
     }
 
     private void OnEnable() {
@@ -45,8 +44,7 @@ public class PriceManager : MonoBehaviour {
     private void Start() {
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
-                //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<PriceButton>().SetProduct(TmpBuild.instance.products.GetProductList()[nbButton]);
+                go.Result.GetComponent<PriceButton>().SetProduct(products.GetProductList()[nbButton]);
                 inputFieldControllerManager.listInputField.Add(go.Result.GetComponentInChildren<TMP_InputField>());
                 productButtonList.Add(go.Result);
                 nbButton++;

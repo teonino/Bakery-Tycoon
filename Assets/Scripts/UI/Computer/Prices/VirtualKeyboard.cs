@@ -8,17 +8,15 @@ using UnityEngine.UI;
 public class VirtualKeyboard : MonoBehaviour
 {
     // Start is called before the first frame update
-    [HideInInspector] public ProductSO product;
-    public TMP_InputField inputField;
-    public GameObject firstButton;
-    [HideInInspector] public PriceButton priceButton;
-    public RawImage productImage;
-
-    private GameManager gameManager;
+    [SerializeField] private ProductSO product;
+    [SerializeField] private PriceButton priceButton;
+    [SerializeField] private Controller controller;
+    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private GameObject firstButton;
+    [SerializeField] private RawImage productImage;
 
     private void OnEnable() {
-        gameManager = FindObjectOfType<GameManager>();
-        gameManager.SetEventSystemToStartButton(firstButton);
+        controller.SetEventSystemToStartButton(firstButton);
     }
 
     private void Start() {
@@ -36,9 +34,12 @@ public class VirtualKeyboard : MonoBehaviour
 
     public void ConfirmNumber() {
         if (inputField.text != "") {
-            gameManager.SetProductPrice(product, int.Parse(inputField.text));
+            product.price = int.Parse(inputField.text);
             priceButton.SetVirtualKeyboardValue();
             Addressables.Release(gameObject);
         }
     }
+
+    public void SetProduct(ProductSO product) => this.product = product;
+    public void SetPriceButton(PriceButton priceButton) => this.priceButton = priceButton;
 }
