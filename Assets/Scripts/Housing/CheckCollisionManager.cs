@@ -12,11 +12,14 @@ public class CheckCollisionManager : MonoBehaviour {
         furnitureList = new List<GameObject>();
         initialMaterials = new List<Material>();
 
-        CheckCollision component = gameObject.AddComponent<CheckCollision>();
-        component.manager = this;
-        furnitureList.Add(gameObject);
+        MeshRenderer renderer;
+        if (gameObject.TryGetComponent<MeshRenderer>(out renderer)) {
+            CheckCollision component = gameObject.AddComponent<CheckCollision>();
+            component.manager = this;
+            furnitureList.Add(gameObject);
+        }
         foreach (Transform t in transform) {
-            if (t.gameObject.GetComponent<MeshRenderer>()) {
+            if (t.gameObject.TryGetComponent<MeshRenderer>(out renderer)) {
                 CheckCollision childComponent = t.gameObject.AddComponent<CheckCollision>();
                 childComponent.manager = this;
                 furnitureList.Add(t.gameObject);
@@ -24,8 +27,7 @@ public class CheckCollisionManager : MonoBehaviour {
         }
 
         foreach (GameObject go in furnitureList) {
-            if(go.GetComponent<MeshRenderer>())
-                initialMaterials.Add(go.GetComponent<MeshRenderer>().material);
+            initialMaterials.Add(go.GetComponent<MeshRenderer>().material);
         }
     }
 
@@ -37,8 +39,7 @@ public class CheckCollisionManager : MonoBehaviour {
 
     public void InitialMaterial() {
         for (int i = 0; i < furnitureList.Count; i++) {
-            furnitureList[i].GetComponent<MeshRenderer>().material = 
-                initialMaterials[i];
+            furnitureList[i].GetComponent<MeshRenderer>().material = initialMaterials[i];
         }
     }
 
@@ -51,7 +52,7 @@ public class CheckCollisionManager : MonoBehaviour {
 
     public int GetNbCollision() {
         int total = 0;
-        foreach(GameObject go in furnitureList) {
+        foreach (GameObject go in furnitureList) {
             total += go.GetComponent<CheckCollision>().nbCollision;
         }
         return total;
