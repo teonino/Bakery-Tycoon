@@ -148,7 +148,9 @@ public class BuildingMode : Interactable {
     private void SnapGameObject(Vector3 pos) {
         if (selectedGo) {
             RaycastHit hit;
-            if (Physics.Raycast(buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer)) {
+            Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
+            Debug.DrawRay(ray.origin, ray.direction * 150, Color.red, 5);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
                 selectedGo.transform.position = hit.point;
                 selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), 0, RoundToNearestGrid(selectedGo.transform.localPosition.z));
             }
