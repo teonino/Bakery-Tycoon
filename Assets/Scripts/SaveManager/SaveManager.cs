@@ -123,7 +123,7 @@ public class SaveManager : MonoBehaviour {
         GameObject returnObject = null;
         foreach (FurnitureSO furniture in furnitures) {
             if (furniture.name == name)
-                returnObject = furniture.asset;
+                returnObject = furniture.GetAssets();
         }
         return returnObject;
     }

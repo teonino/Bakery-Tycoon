@@ -12,25 +12,25 @@ public class Shelf : Interactable {
     public DebugState debugState;
 
     protected void Start() {
-        if (!TmpBuild.instance.debugState.GetDebug())
+        if (!debugState.GetDebug())
             spawnAsset = false;
     }
 
     public override void Effect() {
-        if (playerController.GetItemHold() && !item) {
-            PutDownItem(playerController.GetItemHold());
-            playerController.SetItemHold(null);
+        if (playerControllerSO.GetPlayerController().GetItemHold() && !item) {
+            PutDownItem(playerControllerSO.GetPlayerController().GetItemHold());
+            playerControllerSO.GetPlayerController().SetItemHold(null);
         }
-        else if (!playerController.GetItemHold() && item)
+        else if (!playerControllerSO.GetPlayerController().GetItemHold() && item)
             TakeItem();
-        else if (playerController.GetItemHold() && item) {
-            GameObject tmpPlayer = playerController.GetItemHold();
-            playerController.SetItemHold(null);
+        else if (playerControllerSO.GetPlayerController().GetItemHold() && item) {
+            GameObject tmpPlayer = playerControllerSO.GetPlayerController().GetItemHold();
+            playerControllerSO.GetPlayerController().SetItemHold(null);
             TakeItem();
             PutDownItem(tmpPlayer);
         }
 
-        if (playerController.GetItemHold() == null && item == null && spawnAsset)
+        if (playerControllerSO.GetPlayerController().GetItemHold() == null && item == null && spawnAsset)
             debugAsset.InstantiateAsync(transform).Completed += (go) => {
                 item = go.Result;
                 item.transform.position = itemPosition.transform.position;
@@ -46,12 +46,12 @@ public class Shelf : Interactable {
     }
 
     private void TakeItem() {
-        Transform arm = playerController.GetItemSocket().transform;
+        Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
 
-        playerController.SetItemHold(item);
+        playerControllerSO.GetPlayerController().SetItemHold(item);
         item = null;
-        playerController.GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
-        playerController.GetItemHold().transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
+        playerControllerSO.GetPlayerController().GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
+        playerControllerSO.GetPlayerController().GetItemHold().transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
     }
 
     public GameObject GetItem() => item;

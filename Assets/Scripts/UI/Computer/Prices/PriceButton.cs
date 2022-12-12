@@ -17,32 +17,29 @@ public class PriceButton : MonoBehaviour {
     [SerializeField] private Controller controller;
     private ProductSO product;
 
-    private GameManager gameManager;
-    private void OnEnable() {
-        gameManager = FindObjectOfType<GameManager>();
-    }
-
     public void SetPrice() {
         if (!controller.IsGamepad())
-            gameManager.SetProductPrice(product, (int)Math.Round(float.Parse(priceText.text), 0));
+            product.price = (int)Math.Round(float.Parse(priceText.text), 0);
+            //gameManager.SetProductPrice(product, (int)Math.Round(float.Parse(priceText.text), 0));
         else {
             virtualkeyboard.InstantiateAsync(FindObjectOfType<PriceManager>().transform).Completed += (go) => {
-                go.Result.GetComponent<VirtualKeyboard>().product = product;
-                go.Result.GetComponent<VirtualKeyboard>().priceButton = this;
+                go.Result.GetComponent<VirtualKeyboard>().SetProduct(product);
+                go.Result.GetComponent<VirtualKeyboard>().SetPriceButton(this);
             };
-            gameManager.RegisterCurrentSelectedButton();
+            controller.RegisterCurrentSelectedButton();
         }
     }
 
     public void SetProduct(ProductSO product) {
         this.product = product;
         image.texture = product.image;
-        priceText.text = gameManager.GetProductPrice(product) + "";
+        priceText.text = product.price + "";
+        //priceText.text = gameManager.GetProductPrice(product) + "";
     }
 
     public void SetVirtualKeyboardValue() {
-        priceText.text = gameManager.GetProductPrice(product) + "";
-        gameManager.SetEventSystemToLastButton();
+        priceText.text = product.price.ToString();
+        controller.SetEventSystemToLastButton();
     }
 
     public void CheckPrice() {

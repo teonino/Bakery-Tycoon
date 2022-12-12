@@ -5,27 +5,24 @@ using UnityEngine.InputSystem;
 using TMPro;
 
 public class SwitchController : MonoBehaviour {
-    private GameManager gameManager;
     public TextMeshProUGUI textButton;
     [SerializeField] private Controller controller;
-    void Start() {
-        gameManager = FindObjectOfType<GameManager>();
-    }
+    [SerializeField] private PlayerControllerSO playerControllerSO;
 
     public void SwitchCurrentController() {
-        if (TmpBuild.instance.controller.IsGamepad()) {
+        if (controller.IsGamepad()) {
             if (InputSystem.devices.Count > 0) {
-                gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
-                gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
-                TmpBuild.instance.controller.SetInputType(InputType.KeyboardMouse);
+                playerControllerSO.GetPlayerController().playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
+                playerControllerSO.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
+                controller.SetInputType(InputType.KeyboardMouse);
                 textButton.SetText("Keyboard & Mouse");
             }
         }
         else {
             if (Gamepad.all.Count > 0) {
-                gameManager.GetPlayerController().playerInput.devices = new InputDevice[] { Gamepad.all[0] };
-                gameManager.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
-                TmpBuild.instance.controller.SetInputType(InputType.Gamepad);
+                playerControllerSO.GetPlayerController().playerInput.devices = new InputDevice[] { Gamepad.all[0] };
+                playerControllerSO.GetPlayerController().playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
+                controller.SetInputType(InputType.Gamepad);
                 textButton.SetText("Gamepad");
             }
         }

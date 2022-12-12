@@ -9,16 +9,13 @@ public class TabsManagement : MonoBehaviour {
     [SerializeField] private Controller controller;
 
     private GameObject currentPanel;
-    private GameManager gameManager;
 
-    private void Start() {
-        gameManager = FindObjectOfType<GameManager>();
-
+    private void OnEnable() {
         currentPanel = firstPanel;
         currentPanel.SetActive(true);
 
-        if (TmpBuild.instance.controller.IsGamepad()) {
-            gameManager.SetEventSystemToStartButton(firstTab);
+        if (controller.IsGamepad()) {
+            controller.SetEventSystemToStartButton(firstTab);
         }
     }
 

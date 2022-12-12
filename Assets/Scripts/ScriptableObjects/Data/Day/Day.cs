@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "Day", menuName = "Data/Day")]
 public class Day : ScriptableObject {
+    [SerializeField] private string currentScene;
     [SerializeField] private DayTime dayTime;
     [SerializeField] private int dayCount;
     [SerializeField] private int morningDuration;
     [SerializeField] private int dayDuration;
+
     private int timeElapsed;
-    private Action DayTimeChange;
-    private Action NewDay;
+    public Action DayTimeChange;
+    public Action NewDay;
 
     private void OnEnable() {
         dayTime = DayTime.Morning;
@@ -20,13 +22,11 @@ public class Day : ScriptableObject {
     }
 
     public DayTime GetDayTime() => dayTime;
-    public int GetDayCount() => dayCount;
+    public int GetCurrentDay() => dayCount;
     public int GetMorningDuration() => morningDuration;
     public int GetDayDuration() => dayDuration;
     public int GetTimeElapsed() => timeElapsed;
     public void AddTimeElpased(int time) => timeElapsed += time;
-    public void AddEventOnDayTimeChange(Action action) => DayTimeChange = action;
-    public void AddEventOnNewDay(Action action) => NewDay = action;
     public void OnNextDayPhase() {
         dayTime++;
         DayTimeChange?.Invoke();
@@ -34,7 +34,8 @@ public class Day : ScriptableObject {
     public void OnNewDay() {
         dayCount++;
         dayTime = DayTime.Morning;
+        timeElapsed = 0;
         NewDay?.Invoke();
-        SceneManager.LoadSceneAsync("FirstBakery");
+        SceneManager.LoadSceneAsync(currentScene);
     }
 }

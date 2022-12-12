@@ -13,12 +13,11 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private CartUI cartPanel;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
     [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private int scrollSpeed;
 
-
-    private GameManager gameManager;
     private PlayerController playerController;
     private GameObject content;
     private List<GameObject> ingredientButtonList;
@@ -32,13 +31,11 @@ public class DeliveryManager : MonoBehaviour {
     public Dictionary<IngredientSO, int> cart;
 
     void Awake() {
-        gameManager = FindObjectOfType<GameManager>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         ingredientRackList = new List<GameObject>();
         ingredientButtonList = new List<GameObject>();
 
-        lenght = TmpBuild.instance.ingredients.GetIngredientLenght();
-        playerController = gameManager.GetPlayerController();
+        playerController = playerControllerSO.GetPlayerController();
 
     }
     private void OnEnable() {
@@ -51,6 +48,8 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     private void Start() {
+        lenght = ingredients.GetIngredientLenght();
+
         //Init Cart
         if (cart == null)
             InitCart();
@@ -59,7 +58,7 @@ public class DeliveryManager : MonoBehaviour {
         for (int i = 0; i < lenght; i++) {
             ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
                 go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<DeliveryButton>().SetIngredient(TmpBuild.instance.ingredients.GetIngredientList()[nbButton].ingredient);
+                go.Result.GetComponent<DeliveryButton>().SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks();
@@ -83,8 +82,8 @@ public class DeliveryManager : MonoBehaviour {
 
     void SetupButtons() {
         if (ingredientRackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
-            content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().rect.width, ingredientRackList[0].GetComponent<RectTransform>().rect.height * ingredientRackList.Count); for (int i = 0; i < lenght; i++) {
-
+            content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().rect.width, ingredientRackList[0].GetComponent<RectTransform>().rect.height * ingredientRackList.Count);
+            for (int i = 0; i < lenght; i++) {
                 for (int j = 0; j < lenght; j++) {
                     if (j / maxButtonInRack < ingredientRackList.Count) {
                         ingredientButtonList[j].transform.SetParent(ingredientRackList[j / maxButtonInRack].transform);
@@ -93,16 +92,16 @@ public class DeliveryManager : MonoBehaviour {
                 }
 
                 if (controller.IsGamepad())
-                    gameManager.SetEventSystemToStartButton(ingredientButtonList[0]);
+                    controller.SetEventSystemToStartButton(ingredientButtonList[0]);
                 else
-                    gameManager.SetEventSystemToStartButton(null);
+                    controller.SetEventSystemToStartButton(null);
             }
         }
     }
 
     private void Update() {
-        if (TmpBuild.instance.controller.IsGamepad()) {
-            scrollRectTransform.offsetMax -= new Vector2Int(0, (int)gameManager.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
+        if (controller.IsGamepad()) {
+            scrollRectTransform.offsetMax -= new Vector2Int(0, (int)playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
         }
     }
 
@@ -123,7 +122,7 @@ public class DeliveryManager : MonoBehaviour {
 
     private void InitCart() {
         cart = new Dictionary<IngredientSO, int>();
-        foreach (StockIngredient stockIngredient in TmpBuild.instance.ingredients.GetIngredientList()) {
+        foreach (StockIngredient stockIngredient in ingredients.GetIngredientList()) {
             cart.Add(stockIngredient.ingredient, 0);
         }
     }
@@ -160,6 +159,12 @@ public class DeliveryManager : MonoBehaviour {
 
         if (resetCart)
             ResetCart();
+    }
+
+    public IEnumerator UpdateStockButtons(int secondDelay) {
+        yield return new WaitForSeconds(secondDelay);
+        for (int i = 0; i < ingredientButtonList.Count; i++)
+            ingredientButtonList[i].GetComponent<DeliveryButton>().UpdateStock();
     }
 
     public void Quit(InputAction.CallbackContext context) {

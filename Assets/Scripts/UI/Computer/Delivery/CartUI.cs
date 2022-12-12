@@ -11,6 +11,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
     [SerializeField] private TMP_Dropdown deliveryDropdown;
+    [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Money money;
     [SerializeField] private Day day;
 
@@ -19,13 +20,8 @@ public class CartUI : MonoBehaviour {
     [HideInInspector] public float cartWeight;
     [HideInInspector] public int cartCost;
 
-    private GameManager gameManager;
     private DeliveryType deliveryType;
     private float cost = 0;
-
-    void Start() {
-        gameManager = FindObjectOfType<GameManager>();
-    }
 
     public void InitCart() {
         string newText = "";
@@ -43,19 +39,21 @@ public class CartUI : MonoBehaviour {
 
     public void Order() {
         //Check if the order can be stocked && bought
-        if (cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()) {
-            if (cartCost <= TmpBuild.instance.money.GetMoney()) {
-                SetDeliveryType();
-                Delivery delivery = new Delivery((int)deliveryType + day.GetDayCount());
-                foreach (KeyValuePair<IngredientSO, int> stock in cart) {
-                    if (stock.Value > 0) {
-                        delivery.Add(stock.Key, stock.Value);
-                    }
+        if (cartCost <= money.GetMoney() /*&& cartWeight > 0 && cartWeight + gameManager.GetCurrentStock() <= gameManager.GetMaxStock()*/) {
+            SetDeliveryType();
+            Delivery delivery = new Delivery((int)deliveryType + day.GetCurrentDay());
+            foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                if (stock.Value > 0) {
+                    delivery.Add(stock.Key, stock.Value);
                 }
-                gameManager.AddDelivery(delivery);
-                TmpBuild.instance.money.RemoveMoney(cartCost);
-                Clear();
             }
+            if (delivery.GetDay() == day.GetCurrentDay()) {
+                StartCoroutine(deliveries.ExpressDelivery(delivery));
+                StartCoroutine(deliveryManager.UpdateStockButtons(deliveries.GetExpressOrderTime()));
+            }
+            deliveries.Add(delivery);
+            money.SetMoney(-cartCost);
+            Clear();
         }
     }
 
