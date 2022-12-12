@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3797028200986697733}
   - component: {fileID: 224646294235049888}
   - component: {fileID: 2664703627249851242}
+  - component: {fileID: 13389010874567128}
   m_Layer: 0
   m_Name: ENV_RU_WALLDOUBLE_MODEL (1)
   m_TagString: Untagged
@@ -25,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4610016567244339903}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5097897, y: 0.005613804, z: -7.76632}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: eb81e5c26c0126b4a9d441cb29c01929, type: 3}
+  - {fileID: 2100000, guid: 4c9a510a81d999545b345bfcc950c2b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &13389010874567128
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4610016567244339903}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0004041, y: 2.4999998, z: 0.17079209}
+  m_Center: {x: -0.5000222, y: 1.2499999, z: -0.04527729}

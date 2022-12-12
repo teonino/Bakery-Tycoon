@@ -10,6 +10,7 @@ public class WallFade : MonoBehaviour {
     public bool thisRoomIsActive;
     private List<Coroutine> invisibleCoroutines;
     private List<Coroutine> visibleCoroutines;
+    [SerializeField] private bool stillInUse = false;
 
     private void Start() {
         lerpTime = time * Time.deltaTime;
@@ -20,14 +21,19 @@ public class WallFade : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (thisRoomIsActive) {
             if (other.gameObject.tag == "MainCamera") {
-                if (visibleCoroutines.Count > 0) {
-                    foreach (Coroutine coroutine in visibleCoroutines)
-                        StopCoroutine(coroutine);
-                    visibleCoroutines.Clear();
-                }
+                if (stillInUse)
+                {
+                    if (visibleCoroutines.Count > 0)
+                    {
+                        foreach (Coroutine coroutine in visibleCoroutines)
+                            StopCoroutine(coroutine);
+                        visibleCoroutines.Clear();
+                    }
 
-                for (int i = 0; i < wallToDispawn.transform.childCount; i++) {
-                    invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
+                    for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                    {
+                        invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
+                    }
                 }
             }
         }
@@ -36,14 +42,19 @@ public class WallFade : MonoBehaviour {
     private void OnTriggerExit(Collider other) {
         if (thisRoomIsActive) {
             if (other.gameObject.tag == "MainCamera"){
-                if (invisibleCoroutines.Count > 0) {
-                    foreach (Coroutine coroutine in invisibleCoroutines)
-                        StopCoroutine(coroutine);
-                    invisibleCoroutines.Clear();
-                }
+                if (stillInUse)
+                {
+                    if (invisibleCoroutines.Count > 0)
+                    {
+                        foreach (Coroutine coroutine in invisibleCoroutines)
+                            StopCoroutine(coroutine);
+                        invisibleCoroutines.Clear();
+                    }
 
-                for (int i = 0; i < wallToDispawn.transform.childCount; i++) {
-                    visibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1)));
+                    for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                    {
+                        visibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1)));
+                    }
                 }
             }
         }

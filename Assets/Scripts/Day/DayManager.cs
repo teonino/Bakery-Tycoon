@@ -8,6 +8,7 @@ public class DayManager : MonoBehaviour {
     [SerializeField] private int startLightRotation;
     [SerializeField] private int endLightRotation;
     [SerializeField] private Day day;
+    private Light light;
 
     private float timeElapsed;
     private int duration;
@@ -17,6 +18,7 @@ public class DayManager : MonoBehaviour {
         displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
         displaySkipButton();
         duration = day.GetMorningDuration()+ day.GetDayDuration();
+        light = GetComponent<Light>();
     }
 
     void FixedUpdate() {
@@ -30,6 +32,16 @@ public class DayManager : MonoBehaviour {
             }
             else if (day.GetDayTime() == DayTime.Day)
                 Updateday();
+
+            //if(timeElapsed <  )
+            //{
+            //    light.shadowStrength = Mathf.Lerp(1, 0, timeElapsed / duration *2);
+            //}
+            //if() < duration / 2
+            //{
+            //    float tmpTimeElapsed = timeElapsed - duration / 2;
+            //    light.shadowStrength = Mathf.Lerp(0, 1, tmpTimeElapsed / duration*2);
+            //}
         }
     }
 
