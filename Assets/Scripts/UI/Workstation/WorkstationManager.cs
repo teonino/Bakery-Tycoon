@@ -41,14 +41,14 @@ public class WorkstationManager : MonoBehaviour {
         productButtonList = new List<GameObject>();
         productRackList = new List<GameObject>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
-        lenght = products.GetProductLenght();
-        
+        lenght = TmpBuild.instance.products.GetProductLenght();
+
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
                 button.workplacePanel = this;
-                button.SetProduct(products.GetProductList()[nbButton]);
-                button.requirementMet = CheckRequirement(products.GetProductList()[nbButton]);
+                button.SetProduct(TmpBuild.instance.products.GetProductList()[nbButton]);
+                button.requirementMet = CheckRequirement(TmpBuild.instance.products.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks();
@@ -57,14 +57,14 @@ public class WorkstationManager : MonoBehaviour {
 
         //Setup Stock
         stockListText.SetText("");
-        List<StockIngredient> stocks = ingredients.GetIngredientList();
+        List<StockIngredient> stocks = TmpBuild.instance.ingredients.GetIngredientList();
         foreach (StockIngredient stock in stocks) {
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
         }
     }
 
     private void Update() {
-        if (controller.IsGamepad()) {
+        if (TmpBuild.instance.controller.IsGamepad()) {
                 rectTransform.offsetMax -= new Vector2Int(0, (int)gameManager.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
         }
     }
@@ -111,7 +111,9 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     private void SetupButton() {
-        if (productRackList.Count == productButtonList.Count / maxButtonInRack) {
+        if (productRackList.Count * maxButtonInRack >= productButtonList.Count) {
+            content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().rect.width, productRackList[0].GetComponent<RectTransform>().rect.height * productRackList.Count);
+
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < productRackList.Count) {
                     productButtonList[i].transform.SetParent(productRackList[i / maxButtonInRack].transform);

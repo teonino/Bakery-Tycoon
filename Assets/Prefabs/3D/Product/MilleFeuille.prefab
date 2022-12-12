@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -7757344868138001725}
   - component: {fileID: 5447855420345163374}
   - component: {fileID: 7313119587639957016}
-  - component: {fileID: 3162174070911441132}
+  - component: {fileID: 8171985194362677366}
   m_Layer: 0
   m_Name: MilleFeuille
   m_TagString: Untagged
@@ -102,16 +102,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3162174070911441132
-BoxCollider:
+--- !u!114 &8171985194362677366
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6945453877531509781}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5cca6f0130fda4298f3169aff10043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  product:
+    productSO: {fileID: 11400000, guid: 55b9a8ecd0f021742a8e6f21e8672517, type: 2}
+    quality: 0
+    amount: 0
+  blocked: 0

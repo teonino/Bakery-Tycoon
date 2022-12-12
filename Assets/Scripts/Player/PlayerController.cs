@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float interactionDistance;
     [SerializeField] private Controller controller;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject itemSocket;
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
@@ -32,10 +33,10 @@ public class PlayerController : MonoBehaviour {
         else
             animator.SetBool("isWalking", false);
 
-        if (!controller.IsGamepad()) {
+        if (!TmpBuild.instance.controller.IsGamepad()) {
             if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
                 cinemachine.enabled = true;
-            else
+            else if (cinemachine.enabled == true)
                 cinemachine.enabled = false;
         } else {
             cinemachine.enabled = true; ;
@@ -64,10 +65,6 @@ public class PlayerController : MonoBehaviour {
 
     public void SetItemHold(GameObject go) => itemHolded = go;
     public GameObject GetItemHold() => itemHolded;
-    private void OnEnable() {
-        playerInput.Player.Interact.performed += OnInterract;
-        playerInput.Player.Pause.performed += OnPause;
-    }
 
     public void EnableInput() {
         playerInput.Player.Enable();
@@ -81,5 +78,17 @@ public class PlayerController : MonoBehaviour {
         print(action.controls[0].ToString());
         string[] s = action.controls[0].ToString().Split("/");
         return s[s.Length - 1];
+    }
+
+    public GameObject GetItemSocket() => itemSocket;
+
+    private void OnEnable() {
+        playerInput.Player.Interact.performed += OnInterract;
+        playerInput.Player.Pause.performed += OnPause;
+    }
+
+    private void OnDestroy() {
+        playerInput.Player.Interact.performed -= OnInterract;
+        playerInput.Player.Pause.performed -= OnPause;
     }
 }

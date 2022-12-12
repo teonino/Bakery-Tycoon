@@ -16,22 +16,28 @@ public class ProgressBar : MonoBehaviour {
     private float burnDuration = 5;
     public Action onDestroy;
     public bool burned = false;
-
+    private bool canBurn = true;
     private float timeElapsed = 0;
 
     void Update() {
         timeElapsed += Time.deltaTime;
         readySlider.value = Mathf.Lerp(0, 1, timeElapsed / duration);
         if (timeElapsed > duration) {
-            readyFill.color = Color.green;
-            burningSlider.gameObject.SetActive(true);
-            burningSlider.value = Mathf.Lerp(0, 1, (timeElapsed - duration) / burnDuration);
-            if (timeElapsed > duration + burnDuration) {
-                burned = true;
-                //Reduce reputation
+            if (canBurn) {
+                readyFill.color = Color.green;
+                burningSlider.gameObject.SetActive(true);
+                burningSlider.value = Mathf.Lerp(0, 1, (timeElapsed - duration) / burnDuration);
+                if (timeElapsed > duration + burnDuration) {
+                    burned = true;
+                }
+            } else {
+                onDestroy?.Invoke();
+                Addressables.ReleaseInstance(gameObject);
             }
         }
     }
 
     public void SetDuration(int duration) => this.duration = duration;
+
+    public void CanBurn(bool value) => canBurn = value;
 }

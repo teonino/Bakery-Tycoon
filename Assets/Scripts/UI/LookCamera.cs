@@ -7,7 +7,7 @@ public class LookCamera : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (lookCamera)
+        if (lookCamera && Camera.main && Camera.main.tag == "MainCamera")
             transform.LookAt(Camera.main.transform);
     }
 }

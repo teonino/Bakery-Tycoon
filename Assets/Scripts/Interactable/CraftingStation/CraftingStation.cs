@@ -20,7 +20,7 @@ public class CraftingStation : Interactable {
     private GameObject progressBar;
 
     private void Start() {
-        if (!debugState.GetDebug())
+        if (!TmpBuild.instance.debugState.GetDebug())
             skipCookingTime = false;
     }
 
@@ -35,19 +35,21 @@ public class CraftingStation : Interactable {
         }
         else if (itemInStation != null && !playerController.GetItemHold() && !cooking) {
             itemInStation.productSO.asset.InstantiateAsync().Completed += (go) => {
-                Transform arm = playerController.gameObject.transform.GetChild(0);
+                Transform arm = playerController.GetItemSocket().transform;
                 playerController.SetItemHold(go.Result);
+                ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
+
                 if (progressBar.GetComponent<ProgressBar>().burned)
-                    go.Result.GetComponent<ProductHolder>().product.quality = 0;
+                    productItem.product.quality = 0;
                 else
-                    go.Result.GetComponent<ProductHolder>().product.quality = itemInStation.quality;
-                go.Result.GetComponent<ProductHolder>().product.amount = itemInStation.amount; go.Result.transform.SetParent(arm);
-                go.Result.transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
+                    productItem.product.quality = itemInStation.quality;
+                productItem.product.amount = itemInStation.amount; go.Result.transform.SetParent(arm);
+                go.Result.transform.localPosition = Vector3.zero;
                 itemInStation = null;
                 Addressables.ReleaseInstance(progressBar);
             };            
         }
-        else if (day.GetDayTime() == DayTime.Evening) {
+        else if (TmpBuild.instance.day.GetDayTime() == DayTime.Evening) {
             //Check cleanness
             if (dirty > 20) {
                 //Launch Animation
@@ -58,6 +60,7 @@ public class CraftingStation : Interactable {
                     go.Result.transform.localPosition = Vector3.up * 2;
                     go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
                     progressBarScript.SetDuration(dirty / 10);
+                    progressBarScript.CanBurn(false);
                     progressBarScript.onDestroy = Clean;
                 };
             }

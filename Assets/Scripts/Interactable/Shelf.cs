@@ -12,7 +12,7 @@ public class Shelf : Interactable {
     public DebugState debugState;
 
     protected void Start() {
-        if (!debugState.GetDebug())
+        if (!TmpBuild.instance.debugState.GetDebug())
             spawnAsset = false;
     }
 
@@ -46,7 +46,7 @@ public class Shelf : Interactable {
     }
 
     private void TakeItem() {
-        Transform arm = playerController.gameObject.transform.GetChild(0);
+        Transform arm = playerController.GetItemSocket().transform;
 
         playerController.SetItemHold(item);
         item = null;

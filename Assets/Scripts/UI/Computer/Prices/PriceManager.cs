@@ -31,7 +31,7 @@ public class PriceManager : MonoBehaviour {
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
 
-        lenght = products.GetProductLenght();
+        lenght = TmpBuild.instance.products.GetProductLenght();
         playerController = gameManager.GetPlayerController();
     }
 
@@ -46,7 +46,7 @@ public class PriceManager : MonoBehaviour {
         for (int i = 0; i < lenght; i++) {
             productButtonAsset.InstantiateAsync().Completed += (go) => {
                 //go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<PriceButton>().SetProduct(products.GetProductList()[nbButton]);
+                go.Result.GetComponent<PriceButton>().SetProduct(TmpBuild.instance.products.GetProductList()[nbButton]);
                 inputFieldControllerManager.listInputField.Add(go.Result.GetComponentInChildren<TMP_InputField>());
                 productButtonList.Add(go.Result);
                 nbButton++;

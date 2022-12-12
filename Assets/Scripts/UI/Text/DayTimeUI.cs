@@ -10,12 +10,12 @@ public class DayTimeUI : MonoBehaviour {
 
     private void Start() {
         text = GetComponent<TextMeshProUGUI>();
-        day.SetUpdateUI(SetDay);
+        TmpBuild.instance.day.AddEventOnDayTimeChange(SetDay);
         SetDay();
     }
 
     private void SetDay() {
-        if (day.GetDayTime() == DayTime.Morning) {
+        if (TmpBuild.instance.day.GetDayTime() == DayTime.Morning) {
             StartCoroutine(TimeRemaining());
         }
         else {
@@ -24,12 +24,12 @@ public class DayTimeUI : MonoBehaviour {
     }
 
     private IEnumerator TimeRemaining() {
-        if (day.GetDayTime() == DayTime.Morning)
-            duration = day.GetMorningDuration();
+        if (TmpBuild.instance.day.GetDayTime() == DayTime.Morning)
+            duration = TmpBuild.instance.day.GetMorningDuration();
         else
-            duration = day.GetDayDuration();
+            duration = TmpBuild.instance.day.GetDayDuration() + TmpBuild.instance.day.GetMorningDuration();
 
-        int timeRemaining = duration - day.GetTimeElapsed();
+        int timeRemaining = duration - TmpBuild.instance.day.GetTimeElapsed();
 
         text.SetText(GetDay() + " " + timeRemaining / 60  + ":"); // Display minutes
         if (timeRemaining % 60 < 10)
@@ -38,14 +38,14 @@ public class DayTimeUI : MonoBehaviour {
             text.text += timeRemaining % 60;
 
         yield return new WaitForSeconds(1);
-        day.AddTimeElpased(1);
-        if (day.GetTimeElapsed() > 0)
+        TmpBuild.instance.day.AddTimeElpased(1);
+        if (TmpBuild.instance.day.GetTimeElapsed() > 0 && TmpBuild.instance.day.GetDayTime() != DayTime.Evening)
             StartCoroutine(TimeRemaining());
     }
 
     public string GetDay() {
         string s = "";
-        switch (day.GetDayTime()) {
+        switch (TmpBuild.instance.day.GetDayTime()) {
             case DayTime.Morning:
                 s = "Morning";
                 break;

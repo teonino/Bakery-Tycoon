@@ -9,15 +9,13 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour {
     [Header("References")]
     [SerializeField] private AssetReference pausePanelAsset;
-    [SerializeField] private ListProduct productsList;
+    [SerializeField] private ListProduct products;
     [SerializeField] private ListIngredient ingredients;
-    [SerializeField] private Day day;
     [SerializeField] private Controller controller;
-    [Header("Variables")]
-    [SerializeField] private int startingMoney;
     [SerializeField] private List<int> reputationExpToLvUp;
     [SerializeField] private int maxStock;
     [SerializeField] private int timeExpressDelivery;
+    [SerializeField] private Day day;
 
     private Dictionary<string, int> productPrices;
     private List<Delivery> deliveries;
@@ -27,10 +25,9 @@ public class GameManager : MonoBehaviour {
     private int currentStock;
 
     private void Awake() {
-
         //Set product list for prices
         productPrices = new Dictionary<string, int>();
-        foreach (ProductSO product in productsList.GetProductList())
+        foreach (ProductSO product in TmpBuild.instance.products.GetProductList())
             productPrices.Add(product.name, product.price);
 
         //Get player Controller
@@ -38,15 +35,17 @@ public class GameManager : MonoBehaviour {
 
         //Set Statistic class
         deliveries = new List<Delivery>();
+
+        day.AddEventOnNewDay(CheckDeliveries);
     }
 
     private void Start() {
         //Set Input Device
-        if (controller.GetInputType() == InputType.Gamepad && Gamepad.all.Count > 0) {
+        if (TmpBuild.instance.controller.GetInputType() == InputType.Gamepad && Gamepad.all.Count > 0) {
             playerController.playerInput.devices = new InputDevice[] { Gamepad.all[0] };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("Gamepad");
         }
-        else if (controller.GetInputType() == InputType.KeyboardMouse && InputSystem.devices.Count > 0 && InputSystem.devices.Count > 0) {
+        else if (TmpBuild.instance.controller.GetInputType() == InputType.KeyboardMouse && InputSystem.devices.Count > 0 && InputSystem.devices.Count > 0) {
             playerController.playerInput.devices = new InputDevice[] { Keyboard.current, Mouse.current };
             playerController.playerInput.bindingMask = InputBinding.MaskByGroup("KeyboardMouse");
         }
@@ -63,7 +62,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public int GetIngredientAmount(IngredientSO ingredient) {
-        foreach (StockIngredient stock in ingredients.GetIngredientList())
+        foreach (StockIngredient stock in TmpBuild.instance.ingredients.GetIngredientList())
             if (ingredient == stock.ingredient)
                 return stock.amount;
 
@@ -71,7 +70,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void RemoveIngredientStock(IngredientSO ingredient, int amount) {
-        foreach (StockIngredient stock in ingredients.GetIngredientList())
+        foreach (StockIngredient stock in TmpBuild.instance.ingredients.GetIngredientList())
             if (ingredient == stock.ingredient)
                 stock.amount -= amount;
     }
@@ -80,18 +79,33 @@ public class GameManager : MonoBehaviour {
 
         if (delivery.day == 0)
             StartCoroutine(ExpressDelivery(delivery));
+    }
+
+    private void CheckDeliveries() {
+        List<Delivery> todayDeliveries = new List<Delivery>();
+
+        //Fetch all deliveries arriving today
+        foreach (Delivery delivery in deliveries) 
+            if (delivery.day == TmpBuild.instance.day.GetDayCount())
+                todayDeliveries.Add(delivery);
+
+        //Add stock and Remove them from deliveries planned
+        foreach (Delivery delivery in todayDeliveries)
+            DeliverOrder(delivery);
 
     }
+
     private IEnumerator ExpressDelivery(Delivery delivery) {
         yield return new WaitForSeconds(timeExpressDelivery);
         DeliverOrder(delivery);
     }
 
     private void DeliverOrder(Delivery delivery) {
-        foreach (StockIngredient stockIngredient in ingredients.GetIngredientList())
+        foreach (StockIngredient stockIngredient in TmpBuild.instance.ingredients.GetIngredientList())
             foreach (StockIngredient deliveryIngredient in delivery.ingredients)
                 if (stockIngredient.ingredient == deliveryIngredient.ingredient)
                     stockIngredient.amount += deliveryIngredient.amount;
+
         deliveries.Remove(delivery);
         print("Order delivered !");
     }

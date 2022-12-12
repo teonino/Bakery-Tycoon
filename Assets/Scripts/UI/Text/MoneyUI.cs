@@ -8,11 +8,11 @@ public class MoneyUI : MonoBehaviour
     [SerializeField] private Money money;
 
     private void Start() {
-        money.SetUpdateUI(SetMoney);
+        TmpBuild.instance.money.SetUpdateUI(SetMoney);
         SetMoney();
     }
 
     public void SetMoney() {
-        GetComponent<TextMeshProUGUI>().SetText("Money : " + money.GetMoney() + "€");
+        GetComponent<TextMeshProUGUI>().SetText("Money : " + TmpBuild.instance.money.GetMoney() + "€");
     }
 }

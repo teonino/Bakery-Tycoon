@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6599275471140418590}
   - component: {fileID: 6599275471140418589}
   - component: {fileID: 6599275471140418591}
+  - component: {fileID: 2691855205861453371}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,7 +55,6 @@ MonoBehaviour:
   ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
   controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
-  debug: 0
   startingMoney: 0
   reputationExpToLvUp: 3200000064000000c8000000ee020000
   maxStock: 999
@@ -85,3 +85,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9ec5af2a2a70734397ff61cbe66bc4e, type: 2}
   - {fileID: 11400000, guid: 03ab389786bfcd6478011fb77c64c8fe, type: 2}
   - {fileID: 11400000, guid: c615a21b7fdb23f4f8ca5c3a432797eb, type: 2}
+--- !u!114 &2691855205861453371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599275471140418588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62471ebca3447014f9ce7f75184c1e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
+  debugState: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
+  ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
+  money: {fileID: 11400000, guid: 2165d7b449c98dc409d632d23f2844b0, type: 2}
+  reputation: {fileID: 11400000, guid: 4bff35ce618f3f34eb389465ff98e553, type: 2}
+  statistics: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}

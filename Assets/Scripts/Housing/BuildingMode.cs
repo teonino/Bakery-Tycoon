@@ -40,11 +40,11 @@ public class BuildingMode : Interactable {
     }
 
     public override void Effect() {
-        if (day.GetDayTime() == DayTime.Morning) {
+        if (TmpBuild.instance.day.GetDayTime() == DayTime.Morning) {
             playerController.DisableInput();
             playerController.playerInput.Building.Enable();
 
-            if (controller.IsGamepad()) {
+            if (TmpBuild.instance.controller.IsGamepad()) {
                 cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
                     cursorObject = go.Result;
                 };
@@ -70,7 +70,7 @@ public class BuildingMode : Interactable {
 
     public void Select(CallbackContext context) {
         Ray ray;
-        if (controller.IsGamepad()) {
+        if (TmpBuild.instance.controller.IsGamepad()) {
             ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
         }
         else

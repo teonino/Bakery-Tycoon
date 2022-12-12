@@ -16,7 +16,7 @@ public class DayManager : MonoBehaviour {
     void Start() {
         displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
         displaySkipButton();
-        duration = day.GetMorningDuration()+ day.GetDayDuration();
+        duration = TmpBuild.instance.day.GetMorningDuration()+ TmpBuild.instance.day.GetDayDuration();
     }
 
     void FixedUpdate() {
@@ -25,17 +25,17 @@ public class DayManager : MonoBehaviour {
                 transform.rotation = Quaternion.Euler(Vector3.right * Mathf.Lerp(startLightRotation, endLightRotation, timeElapsed / duration));
                 timeElapsed += Time.deltaTime;
 
-                if (timeElapsed > day.GetMorningDuration() && day.GetDayTime() == DayTime.Morning)
+                if (timeElapsed > TmpBuild.instance.day.GetMorningDuration() && TmpBuild.instance.day.GetDayTime() == DayTime.Morning)
                     Updateday();
             }
-            else if (day.GetDayTime() == DayTime.Day)
+            else if (TmpBuild.instance.day.GetDayTime() == DayTime.Day)
                 Updateday();
         }
     }
 
     public void Updateday() {
-        day.NextDayPhase();
-        if (day.GetDayTime() == DayTime.Evening)
+        TmpBuild.instance.day.OnNextDayPhase();
+        if (TmpBuild.instance.day.GetDayTime() == DayTime.Evening)
             displaySkipButton();
     }
 }
