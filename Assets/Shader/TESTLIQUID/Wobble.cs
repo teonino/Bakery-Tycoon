@@ -30,7 +30,6 @@ public class Wobble : MonoBehaviour
     }
     private void Update()
     {
-        print("test");
         time += Time.deltaTime;
         // decrease wobble over time
         wobbleAmountToAddX = Mathf.Lerp(wobbleAmountToAddX, 0, Time.deltaTime * (Recovery));
