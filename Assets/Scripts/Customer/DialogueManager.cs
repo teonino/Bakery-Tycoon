@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
 
     private Dialogue dialogue;
+    public Action OnDestroyDialoguePanel;
 
     private void Awake() {
         dialogue = new Dialogue();
@@ -77,9 +78,10 @@ public class DialogueManager : MonoBehaviour {
         }
     }
 
-    public void Destroy() {
+    public void OnDestroy() {
         playerControllerSO.GetPlayerController().EnableInput();
         Time.timeScale = 1;
+        OnDestroyDialoguePanel.Invoke();
         Addressables.ReleaseInstance(gameObject);
     }
 }
