@@ -50,9 +50,9 @@ public class WallFade : MonoBehaviour {
     }
 
     private IEnumerator ChangeColor(Transform go, float opacity) {
-        while (go.GetComponent<Renderer>().material.GetFloat("_IntForce") != opacity) {
-            float a = go.GetComponent<Renderer>().material.GetFloat("_IntForce");
-            go.GetComponent<Renderer>().material.SetFloat("_IntForce", Mathf.Lerp(a, opacity, lerpTime));
+        while (go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght") != opacity) {
+            float a = go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght");
+            go.GetComponent<Renderer>().material.SetFloat("_AlphaStrenght", Mathf.Lerp(a, opacity, lerpTime));
             yield return new WaitForEndOfFrame();
         }
         yield return null;
