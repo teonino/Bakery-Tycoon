@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour {
 
     public void OnInterract(InputAction.CallbackContext context) {
         if (context.performed) {
-            RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.down / 2, transform.forward, interactionDistance);
+            RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
             bool interactableFound = false;
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
                 if (hitInfo[i].collider.GetComponent<Interactable>()) {
