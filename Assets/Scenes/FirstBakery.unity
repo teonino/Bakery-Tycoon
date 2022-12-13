@@ -5036,7 +5036,7 @@ GameObject:
   - component: {fileID: 524778703}
   m_Layer: 0
   m_Name: Light (2)
-  m_TagString: Untagged
+  m_TagString: Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6285,6 +6285,7 @@ MonoBehaviour:
   startLightRotation: 20
   endLightRotation: 160
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  MuralLight: []
 --- !u!114 &705507997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15760,6 +15761,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3217845647990630652, guid: 6657e48164b121949acfcb353091fb52, type: 3}
+      propertyPath: m_Intensity
+      value: 1.17
+      objectReference: {fileID: 0}
     - target: {fileID: 5739454934739627837, guid: 6657e48164b121949acfcb353091fb52, type: 3}
       propertyPath: m_Name
       value: RusticMuralLight
@@ -16075,11 +16080,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9140724073959827534, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.36939996
+      value: 0.3694
       objectReference: {fileID: 0}
     - target: {fileID: 9140724073959827534, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09995927
+      value: 0.09995928
       objectReference: {fileID: 0}
     - target: {fileID: 9140724073959827534, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
       propertyPath: m_LocalRotation.y
@@ -16099,11 +16104,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9140724074534057943, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.3663855
+      value: 0.36638546
       objectReference: {fileID: 0}
     - target: {fileID: 9140724074534057943, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.110498264
+      value: 0.11049826
       objectReference: {fileID: 0}
     - target: {fileID: 9140724074534057943, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
       propertyPath: m_LocalRotation.y

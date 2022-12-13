@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DayManager : MonoBehaviour
@@ -8,8 +8,9 @@ public class DayManager : MonoBehaviour
     [SerializeField] private int startLightRotation;
     [SerializeField] private int endLightRotation;
     [SerializeField] private Day day;
-    private Light light;
+    [SerializeField] private Light[] MuralLight;
 
+    private Light light;
     private float timeElapsed;
     private int duration;
     private Action displaySkipButton;
@@ -23,6 +24,7 @@ public class DayManager : MonoBehaviour
         duration = day.GetMorningDuration() + day.GetDayDuration();
         light = GetComponent<Light>();
         initialColorTemperature = light.colorTemperature;
+        UpdateLightList();
     }
 
     void FixedUpdate()
@@ -43,6 +45,11 @@ public class DayManager : MonoBehaviour
                 {
                     light.colorTemperature = Mathf.Lerp(initialColorTemperature, targetColorTemperature, (timeElapsed - day.GetMorningDuration()) / duration);
                     light.shadowStrength = Mathf.Lerp(0, 1, (timeElapsed - day.GetMorningDuration()) / duration);
+                    for (int i = 0; i < MuralLight.Length; i++)
+                    {
+                        float time = 2f;
+                        MuralLight[i].intensity = Mathf.Lerp(MuralLight[i].intensity, 0, time * Time.deltaTime);
+                    }
                 }
 
                     if (timeElapsed > day.GetMorningDuration() && day.GetDayTime() == DayTime.Morning)
@@ -66,4 +73,15 @@ public class DayManager : MonoBehaviour
         if (day.GetDayTime() == DayTime.Evening)
             displaySkipButton();
     }
+
+    public void UpdateLightList()
+    {
+        GameObject[] MuralLightObject = GameObject.FindGameObjectsWithTag("Light");
+        MuralLight = new Light[MuralLightObject.Length];
+        for(int i = 0; i < MuralLightObject.Length; i++)
+        {
+            MuralLight[i] = MuralLightObject[i].GetComponent<Light>();
+        }
+    }
+
 }
