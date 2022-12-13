@@ -57,16 +57,6 @@ public class DayManager : MonoBehaviour
                 Updateday();
 
             }
-
-            //if(timeElapsed < duration / 2)
-            //{
-            //    light.shadowStrength = Mathf.Lerp(1, 0, timeElapsed / duration *2);
-            //}
-            //else
-            //{
-            //    float tmpTimeElapsed = timeElapsed - duration / 2;
-            //    light.shadowStrength = Mathf.Lerp(0, 1, tmpTimeElapsed / duration*2);
-            //}
         }
     }
 
