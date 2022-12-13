@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DayManager : MonoBehaviour {
@@ -33,15 +31,18 @@ public class DayManager : MonoBehaviour {
             else if (day.GetDayTime() == DayTime.Day)
                 Updateday();
 
-            //if(timeElapsed <  )
+            //if(timeElapsed < duration / 2)
             //{
             //    light.shadowStrength = Mathf.Lerp(1, 0, timeElapsed / duration *2);
             //}
-            //if() < duration / 2
+            //else
             //{
             //    float tmpTimeElapsed = timeElapsed - duration / 2;
             //    light.shadowStrength = Mathf.Lerp(0, 1, tmpTimeElapsed / duration*2);
             //}
+            // Note a moi-même
+            // 
+            // 
         }
     }
 
