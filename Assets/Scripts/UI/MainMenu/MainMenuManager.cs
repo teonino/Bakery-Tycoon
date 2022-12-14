@@ -3,46 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> Screen = new List<GameObject>();
-    [SerializeField] private List<Animator> ScreenAnimator = new List<Animator>();
     [SerializeField] private List<GameObject> Button = new List<GameObject>();
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private bool pressAnyButton = false;
 
-    void Start()
+    //void Start()
+    //{
+    //    playerInput = new PlayerInput();
+    //    playerInput.UI.Enable();
+    //    playerInput.UI.AnyKeyPressed.performed += Continue;
+    //    playerInput.UI.Click.performed += Continue;
+    //    ScreenAnimator[0].SetTrigger("TriggerFade");
+    //    StartCoroutine(DisplayTitle());
+    //    StartCoroutine(WaitingTimeToDisableBlackscreen());
+    //    StartCoroutine(DisplayLogo());
+    //}
+
+    //public void Continue(InputAction.CallbackContext context)
+    //{
+    //    if (context.performed)
+    //    {
+    //        StartCoroutine(AnimationLogo());
+    //    }
+    //}
+
+    public void displayMainMenuTools()
     {
-        playerInput = new PlayerInput();
-        playerInput.UI.Enable();
-        playerInput.UI.AnyKeyPressed.performed += Continue;
-        playerInput.UI.Click.performed += Continue;
-        ScreenAnimator[0].SetTrigger("TriggerFade");
-        StartCoroutine(DisplayTitle());
-        StartCoroutine(WaitingTimeToDisableBlackscreen());
-        StartCoroutine(DisplayLogo());
+        StartCoroutine(DisplayButton());
     }
 
-    private void Update()
-    {
-
-    }
-
-    void Continue(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            StartCoroutine(AnimationLogo());
-        }
-    }
-
-    private IEnumerator AnimationLogo()
+    public IEnumerator AnimationLogo()
     {
         if (pressAnyButton)
         {
-            ScreenAnimator[1].SetTrigger("TriggerMovement");
-            ScreenAnimator[2].SetTrigger("TriggerHide");
+            //ScreenAnimator[1].SetTrigger("TriggerMovement");
+            //ScreenAnimator[2].SetTrigger("TriggerHide");
             yield return new WaitForSeconds(3);
             StartCoroutine(DisplayButton());
             pressAnyButton = false;
@@ -55,15 +55,15 @@ public class MainMenuManager : MonoBehaviour
 
     }
 
-    private IEnumerator DisplayButton()
+    public IEnumerator DisplayButton()
     {
         Button[0].SetActive(true);
         Button[1].SetActive(true);
         Button[2].SetActive(true);
         yield return new WaitForSeconds(0.3f);
-        ScreenAnimator[3].SetTrigger("Spawn");
-        ScreenAnimator[4].SetTrigger("Spawn");
-        ScreenAnimator[5].SetTrigger("Spawn");
+        //ScreenAnimator[3].SetTrigger("Spawn");
+        //ScreenAnimator[4].SetTrigger("Spawn");
+        //ScreenAnimator[5].SetTrigger("Spawn");
 
     }
 
@@ -71,11 +71,11 @@ public class MainMenuManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         Screen[1].SetActive(true);
-        ScreenAnimator[1].SetTrigger("TriggerFade");
+        //ScreenAnimator[1].SetTrigger("TriggerFade");
         yield return new WaitForSeconds(0.5f);
         pressAnyButton = true;
         Screen[2].SetActive(true);
-        ScreenAnimator[2].SetTrigger("TriggerDisplay");
+        //ScreenAnimator[2].SetTrigger("TriggerDisplay");
     }
 
     private IEnumerator DisplayTitle()
@@ -93,4 +93,10 @@ public class MainMenuManager : MonoBehaviour
     {
         Screen[0].SetActive(false);
     }
+
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
 }
