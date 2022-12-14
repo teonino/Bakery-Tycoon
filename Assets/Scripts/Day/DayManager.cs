@@ -60,14 +60,7 @@ public class DayManager : MonoBehaviour
                         MuralLight[i].intensity = Mathf.Lerp(MuralLight[i].intensity, 0, time * Time.deltaTime);
                     }
                 }
-                else if(day.GetDayTime() == DayTime.Evening)
-                {
-                    for (int i = 0; i < MuralLight.Length; i++)
-                    {
-                        float time = 1.2f;
-                        MuralLight[i].intensity = Mathf.Lerp(MuralLight[i].intensity, 0, time * Time.deltaTime);
-                    }
-                }
+
 
 
                     if (timeElapsed > day.GetMorningDuration() && day.GetDayTime() == DayTime.Morning)
@@ -83,6 +76,15 @@ public class DayManager : MonoBehaviour
             {
                 Updateday();
 
+            }
+            
+            else if (day.GetDayTime() == DayTime.Evening)
+            {
+                for (int i = 0; i < MuralLight.Length; i++)
+                {
+                    float time = 1.2f;
+                    MuralLight[i].intensity = Mathf.Lerp(MuralLight[i].intensity, 1, time * Time.deltaTime);
+                }
             }
         }
     }
