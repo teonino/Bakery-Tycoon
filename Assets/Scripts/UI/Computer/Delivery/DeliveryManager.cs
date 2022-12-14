@@ -17,6 +17,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private int scrollSpeed;
+    [SerializeField] private OrderQuest orderQuest;
 
     private PlayerController playerController;
     private GameObject content;
@@ -107,6 +108,9 @@ public class DeliveryManager : MonoBehaviour {
 
     public void SetIngredient(IngredientSO ingredient, int amount) {
         cart[ingredient] = amount;
+
+        orderQuest.CheckOrder(ingredient, cart[ingredient]);
+
         CalculateCartCostAndWeight();
         DisplayCart();
     }

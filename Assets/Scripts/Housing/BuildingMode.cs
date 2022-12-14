@@ -11,6 +11,7 @@ public class BuildingMode : Interactable {
     [SerializeField] private Day day;
     [SerializeField] private Controller controller;
     [SerializeField] private AssetReference cursor;
+    [SerializeField] private InterractQuest interractQuest;
 
     [Header("Global Parameters")]
     [SerializeField] private LayerMask pickUpLayer;
@@ -52,6 +53,8 @@ public class BuildingMode : Interactable {
             inBuildingMode = true;
             mainCamera.SetActive(false);
             buildingCamera.SetActive(true);
+
+                interractQuest.OnInterract();
         }
     }
 

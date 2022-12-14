@@ -14,6 +14,7 @@ public class PriceManager : MonoBehaviour {
     [SerializeField] private GameObject priceButtonPanel;
     [SerializeField] private ListProduct products;
     [SerializeField] private PlayerControllerSO playerControllerSO;
+    [SerializeField] private InterractQuest interractQuest;
 
     private PlayerController playerController;
     private InputFieldControllerManager inputFieldControllerManager;
@@ -39,6 +40,8 @@ public class PriceManager : MonoBehaviour {
         playerController.DisableInput();
         playerController.playerInput.UI.Enable();
         playerController.playerInput.UI.Quit.performed += Quit;
+
+        interractQuest.OnInterract();
     }
 
     private void Start() {

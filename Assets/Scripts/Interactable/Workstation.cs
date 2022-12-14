@@ -12,13 +12,19 @@ public class Workstation : Interactable {
     [Header("Debug parameters")]
     [SerializeField] private bool skipRequirement = false;
     [SerializeField] private bool skipMinigame = false;
+    [SerializeField] private InterractQuest interractQuest;
 
     private WorkstationManager manager;
     private GameObject workplacePanel;
 
     private void Start() {
-        if (!debug.GetDebug()) 
+        if (!debug.GetDebug())
             skipMinigame = skipRequirement = false;
+
+        manager = FindObjectOfType<WorkstationManager>(true);
+        manager.skipMinigame = skipMinigame;
+        manager.skipRequirement = skipRequirement;
+        workplacePanel = manager.gameObject;
     }
 
 
@@ -27,15 +33,12 @@ public class Workstation : Interactable {
         if (!playerControllerSO.GetPlayerController().GetItemHold() && day.GetDayTime() != DayTime.Evening) {
             playerControllerSO.GetPlayerController().DisableInput();
 
-            workplacePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
-                manager = go.Result.GetComponent<WorkstationManager>();
-                manager.skipRequirement = skipRequirement;
-                manager.skipMinigame = skipMinigame;
-                workplacePanel = go.Result;
-            };
+            manager.gameObject.SetActive(true);
 
             playerControllerSO.GetPlayerController().playerInput.UI.Enable();
             playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
+
+            interractQuest.OnInterract();
         }
     }
 
@@ -46,20 +49,18 @@ public class Workstation : Interactable {
             playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
             playerControllerSO.GetPlayerController().playerInput.UI.Disable();
             playerControllerSO.GetPlayerController().EnableInput();
-            if (workplacePanel)
-                Addressables.ReleaseInstance(workplacePanel);
+            workplacePanel.gameObject.SetActive(false);
         }
     }
 
     //Give the item to the player once its done
     public void CloseWorkplace(GameObject go) {
         Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
-
+        
         playerControllerSO.GetPlayerController().SetItemHold(go);
         playerControllerSO.GetPlayerController().GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
         playerControllerSO.GetPlayerController().GetItemHold().transform.localPosition = Vector3.zero;
         playerControllerSO.GetPlayerController().EnableInput();
-        if (workplacePanel)
-            Addressables.ReleaseInstance(workplacePanel);
+        workplacePanel.gameObject.SetActive(false);
     }
 }

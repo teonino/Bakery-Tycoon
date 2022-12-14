@@ -17,7 +17,7 @@ public class DialogueButton : Button {
         if (!string.IsNullOrEmpty(nextDialogue.npcSpeech))
             dialogueManager.SetDialogue(nextDialogue);
         else
-            Destroy(dialogueManager.gameObject);
+            dialogueManager.gameObject.SetActive(false);
     }
 
     public void SetNextDialogue(Dialogue dialogue) => nextDialogue = dialogue;

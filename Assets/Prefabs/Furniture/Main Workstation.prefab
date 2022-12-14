@@ -157,6 +157,8 @@ MonoBehaviour:
   debug: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
   skipRequirement: 1
   skipMinigame: 1
+  interractQuest: {fileID: 11400000, guid: 8f44fcbb772db8d4da49b6dfd6f93c18, type: 2}
+  createQuest: {fileID: 11400000, guid: 93a24d7ec215c624583b06f601b4ebf1, type: 2}
 --- !u!33 &5009015900436519618
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -237,7 +239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001974089575349911, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -0.000030517578
+      value: -721.09
       objectReference: {fileID: 0}
     - target: {fileID: 4001974089575349911, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -264,12 +266,20 @@ PrefabInstance:
       value: 0.041931152
       objectReference: {fileID: 0}
     - target: {fileID: 4001974089575349911, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 369
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001974089575349911, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 5126148529990817656, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5963754054195472204, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 5963754054195472205, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -365,7 +375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472337981953768431, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.13
+      value: 1.175
       objectReference: {fileID: 0}
     - target: {fileID: 7472337981953768431, guid: 18f2e2fd6177393439fe415f631410bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

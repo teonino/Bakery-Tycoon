@@ -34,31 +34,43 @@ public class WorkstationManager : MonoBehaviour {
     [HideInInspector] public bool skipMinigame = false;
     [HideInInspector] public ProductSO currentProduct;
 
-    //Create buttons
-    private void Start() {
+    private void Awake() {
         workplace = FindObjectOfType<Workstation>();
         productButtonList = new List<GameObject>();
         productRackList = new List<GameObject>();
         content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         lenght = products.GetProductLenght();
+    }
 
-        for (int i = 0; i < lenght; i++) {
-            productButtonAsset.InstantiateAsync().Completed += (go) => {
-                WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
-                button.workplacePanel = this;
-                button.SetProduct(products.GetProductList()[nbButton]);
-                button.requirementMet = CheckRequirement(products.GetProductList()[nbButton]);
-                productButtonList.Add(go.Result);
-                nbButton++;
-                SetupRacks();
-            };
-        }
-
+    private void OnEnable() {
         //Setup Stock
         stockListText.SetText("");
         List<StockIngredient> stocks = ingredients.GetIngredientList();
         foreach (StockIngredient stock in stocks) {
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
+        }
+
+        foreach (GameObject button in productButtonList) {
+            button.GetComponent<WorkstationButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationButton>().GetProduct()));
+        }
+
+        if (productButtonList != null) {
+            EnableButtons();
+        }
+    }
+
+    //Create buttons
+    private void Start() {
+        for (int i = 0; i < lenght; i++) {
+            productButtonAsset.InstantiateAsync().Completed += (go) => {
+                WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
+                button.workplacePanel = this;
+                button.SetProduct(products.GetProductList()[nbButton]);
+                button.SetRequirement(CheckRequirement(products.GetProductList()[nbButton]));
+                productButtonList.Add(go.Result);
+                nbButton++;
+                SetupRacks();
+            };
         }
     }
 
@@ -86,12 +98,6 @@ public class WorkstationManager : MonoBehaviour {
             if (ingredients.GetIngredientAmount(ingredient) <= 0) requirementMet = false;
 
         return requirementMet;
-    }
-
-    private void OnEnable() {
-        if (productButtonList != null) {
-            EnableButtons();
-        }
     }
 
     //Once enough button created, we position them

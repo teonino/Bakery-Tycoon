@@ -15,12 +15,12 @@ public class PriceButton : MonoBehaviour {
     [SerializeField] private RawImage image;
     [SerializeField] private AssetReference virtualkeyboard;
     [SerializeField] private Controller controller;
+    [SerializeField] private ChangePriceQuest changePriceQuest;
     private ProductSO product;
 
-    public void SetPrice() {
-        if (!controller.IsGamepad())
-            product.price = (int)Math.Round(float.Parse(priceText.text), 0);
-            //gameManager.SetProductPrice(product, (int)Math.Round(float.Parse(priceText.text), 0));
+    public void SetPriceButton() {
+        if (!controller.IsGamepad()) 
+            SetNewPrice((int)Math.Round(float.Parse(priceText.text), 0));
         else {
             virtualkeyboard.InstantiateAsync(FindObjectOfType<PriceManager>().transform).Completed += (go) => {
                 go.Result.GetComponent<VirtualKeyboard>().SetProduct(product);
@@ -37,7 +37,9 @@ public class PriceButton : MonoBehaviour {
         //priceText.text = gameManager.GetProductPrice(product) + "";
     }
 
-    public void SetVirtualKeyboardValue() {
+    public void SetNewPrice(int newPrice) {
+        changePriceQuest.CheckPrice(product.price, newPrice);
+        product.price = newPrice;
         priceText.text = product.price.ToString();
         controller.SetEventSystemToLastButton();
     }
