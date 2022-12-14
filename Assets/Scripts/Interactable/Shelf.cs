@@ -5,11 +5,12 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class Shelf : Interactable {
-    public GameObject item;
-    public GameObject itemPosition;
-    public bool spawnAsset;
-    public AssetReference debugAsset;
-    public DebugState debugState;
+    [SerializeField] private GameObject item;
+    [SerializeField] private GameObject itemPosition;
+    [SerializeField] private bool spawnAsset;
+    [SerializeField] private AssetReference debugAsset;
+    [SerializeField] private DebugState debugState;
+    [SerializeField] private InterractQuest interractQuest;
 
     protected void Start() {
         if (!debugState.GetDebug())
@@ -20,6 +21,7 @@ public class Shelf : Interactable {
         if (playerControllerSO.GetPlayerController().GetItemHold() && !item) {
             PutDownItem(playerControllerSO.GetPlayerController().GetItemHold());
             playerControllerSO.GetPlayerController().SetItemHold(null);
+            interractQuest.OnInterract();
         }
         else if (!playerControllerSO.GetPlayerController().GetItemHold() && item)
             TakeItem();

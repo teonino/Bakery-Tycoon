@@ -27,6 +27,7 @@ public class AICustomer : Interactable {
     protected SpawnCustomer spawner;
     protected Vector3 spawnPosition;
     protected Coroutine waitingCoroutine;
+    protected bool tutorial;
 
     protected void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();
@@ -40,7 +41,7 @@ public class AICustomer : Interactable {
             if (requestedProduct)
                 productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
             else
-                print("requestedProductNull");
+                Debug.LogError("RequestedProductNull");
         };
         spawnPosition = transform.position;
     }
@@ -67,6 +68,11 @@ public class AICustomer : Interactable {
         Addressables.ReleaseInstance(gameObject);
     }
 
+    public void SetWaitingTime(int time) {
+        tutorial = true;
+        waitingTime = time;
+    }
+
     protected IEnumerator CustomerWaiting(float time, Action leavingFunction) {
         yield return new WaitForSeconds(time);
         leavingFunction.Invoke();
@@ -89,7 +95,7 @@ public class AICustomer : Interactable {
             requestedProduct = null;
         };
 
-        money.SetMoney(totalPrice);
+        money.AddMoney(totalPrice);
         reputation.AddReputation(saleReputation);
     }
 

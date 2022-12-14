@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class DialogueButton : Button {
@@ -16,7 +17,7 @@ public class DialogueButton : Button {
         if (!string.IsNullOrEmpty(nextDialogue.npcSpeech))
             dialogueManager.SetDialogue(nextDialogue);
         else
-            dialogueManager.Destroy();
+            dialogueManager.gameObject.SetActive(false);
     }
 
     public void SetNextDialogue(Dialogue dialogue) => nextDialogue = dialogue;

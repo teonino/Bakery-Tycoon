@@ -11,7 +11,7 @@ public class Money : ScriptableObject
     public Action<int> OnMoneyChanged;
 
     public int GetMoney() => money;
-    public void SetMoney(int value) {
+    public void AddMoney(int value) {
         money += value;
         OnMoneyChanged?.Invoke(money);
         if (value > 0)

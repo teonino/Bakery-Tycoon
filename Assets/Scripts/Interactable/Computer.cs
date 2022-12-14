@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public class Computer : Interactable {
+    [SerializeField] private InterractQuest interractQuest;
     private GameObject computerPanel;
 
     private void Awake() {
@@ -12,7 +13,9 @@ public class Computer : Interactable {
     }
 
     public override void Effect() {
-        if(computerPanel)
+        if (computerPanel)
             computerPanel.SetActive(true);
+
+            interractQuest.OnInterract();    
     }
 }

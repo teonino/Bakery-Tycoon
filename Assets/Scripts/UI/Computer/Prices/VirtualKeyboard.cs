@@ -28,14 +28,13 @@ public class VirtualKeyboard : MonoBehaviour
     }
 
     public void ClearNumber() {
-        priceButton.SetVirtualKeyboardValue();
+        priceButton.SetNewPrice(0);
         Addressables.Release(gameObject);
     }
 
     public void ConfirmNumber() {
         if (inputField.text != "") {
-            product.price = int.Parse(inputField.text);
-            priceButton.SetVirtualKeyboardValue();
+            priceButton.SetNewPrice(int.Parse(inputField.text));
             Addressables.Release(gameObject);
         }
     }
