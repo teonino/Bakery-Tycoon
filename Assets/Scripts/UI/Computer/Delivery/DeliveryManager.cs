@@ -15,12 +15,12 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
-    [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private int scrollSpeed;
     [SerializeField] private OrderQuest orderQuest;
+    [SerializeField] private GameObject scroll;
 
+    private RectTransform scrollRectTransform;
     private PlayerController playerController;
-    private GameObject content;
     private List<GameObject> ingredientButtonList;
     private List<GameObject> ingredientRackList;
     private int nbButton = 0;
@@ -32,7 +32,7 @@ public class DeliveryManager : MonoBehaviour {
     public Dictionary<IngredientSO, int> cart;
 
     void Awake() {
-        content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+        scrollRectTransform = scroll.GetComponent<RectTransform>();
         ingredientRackList = new List<GameObject>();
         ingredientButtonList = new List<GameObject>();
 
@@ -69,10 +69,10 @@ public class DeliveryManager : MonoBehaviour {
 
     void SetupRacks() {
         if (ingredientButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
             for (int i = 0; i < ingredientButtonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
-                    ingredientRackAsset.InstantiateAsync(content.transform).Completed += (go) => {
+                    ingredientRackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
                         ingredientRackList.Add(go.Result);
                         SetupButtons();
                     };
@@ -83,7 +83,7 @@ public class DeliveryManager : MonoBehaviour {
 
     void SetupButtons() {
         if (ingredientRackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
-            content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().rect.width, ingredientRackList[0].GetComponent<RectTransform>().rect.height * ingredientRackList.Count);
+            scrollRectTransform.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, ingredientRackList[0].GetComponent<RectTransform>().rect.height * ingredientRackList.Count);
             for (int i = 0; i < lenght; i++) {
                 for (int j = 0; j < lenght; j++) {
                     if (j / maxButtonInRack < ingredientRackList.Count) {
@@ -91,18 +91,13 @@ public class DeliveryManager : MonoBehaviour {
                         ingredientButtonList[j].transform.localScale = Vector3.one;
                     }
                 }
-
-                if (controller.IsGamepad())
-                    controller.SetEventSystemToStartButton(ingredientButtonList[0]);
-                else
-                    controller.SetEventSystemToStartButton(null);
             }
         }
     }
 
     private void Update() {
         if (controller.IsGamepad()) {
-            scrollRectTransform.offsetMax -= new Vector2Int(0, (int)playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
+            scrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
         }
     }
 

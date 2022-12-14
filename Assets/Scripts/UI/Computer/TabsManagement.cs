@@ -19,6 +19,12 @@ public class TabsManagement : MonoBehaviour {
         }
     }
 
+    private void Update() {
+        if (gameObject.transform.parent.gameObject.activeSelf && !controller.GetEventSystemCurrentlySelected()) {
+            controller.SetEventSystemToStartButton(firstTab);
+        }
+    }
+
     public void ShowPanel(GameObject panel) {
         currentPanel.SetActive(false);
         panel.SetActive(true);

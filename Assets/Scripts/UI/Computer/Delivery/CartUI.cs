@@ -49,7 +49,7 @@ public class CartUI : MonoBehaviour {
                 }
             }
 
-                orderTypeQuest.CheckDeliveryType(deliveryType);
+            orderTypeQuest.CheckDeliveryType(deliveryType);
 
 
             //Express deliveries

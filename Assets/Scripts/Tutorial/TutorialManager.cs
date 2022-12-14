@@ -23,9 +23,9 @@ public class TutorialManager : MonoBehaviour {
     }
 
     private void SetupDialogue() {
+        dialogueManager.gameObject.SetActive(true);
         dialogueManager.GetDialogues(indexQuest + 1, "Tutorial");
 
-        dialogueManager.gameObject.SetActive(true);
         dialogueManager.OnDestroyDialoguePanel += LaunchQuest;
 
         //dialogue = new Dialogue();

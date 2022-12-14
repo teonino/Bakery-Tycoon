@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour {
 
     private void OnEnable() {
         playerControllerSO.GetPlayerController().DisableInput();
+        controller.RegisterCurrentSelectedButton();
         Time.timeScale = 0;
     }
 
@@ -83,6 +84,7 @@ public class DialogueManager : MonoBehaviour {
 
     public void OnDisable() {
         playerControllerSO.GetPlayerController().EnableInput();
+        controller.SetEventSystemToLastButton();
         Time.timeScale = 1;
         OnDestroyDialoguePanel.Invoke();
         Addressables.ReleaseInstance(gameObject);

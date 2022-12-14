@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
+    private bool playerInUI = false;
+    private bool playerInputEnable = true;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -35,13 +37,18 @@ public class PlayerController : MonoBehaviour {
         else
             animator.SetBool("isWalking", false);
 
-        if (!controller.IsGamepad()) {
-            if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
-                cinemachine.enabled = true;
-            else if (cinemachine.enabled == true)
-                cinemachine.enabled = false;
-        } else 
-            cinemachine.enabled = true; ;
+        if (!playerInUI) {
+            if (!controller.IsGamepad()) {
+                if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
+                    cinemachine.enabled = true;
+                else if (cinemachine.enabled == true)
+                    cinemachine.enabled = false;
+            }
+            else
+                cinemachine.enabled = true; ;
+        }
+        else
+            cinemachine.enabled = false;
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
@@ -66,10 +73,14 @@ public class PlayerController : MonoBehaviour {
 
     public void EnableInput() {
         playerInput.Player.Enable();
+        playerInUI = false;
+        playerInputEnable = true;
         controller.InitInputType(this);
     }
 
     public void DisableInput() {
+        playerInUI = true;
+        playerInputEnable = false;
         playerInput.Player.Disable();
     }
 
@@ -79,6 +90,7 @@ public class PlayerController : MonoBehaviour {
         return s[s.Length - 1];
     }
 
+    public bool GetPlayerInputEnabled() => playerInputEnable;
     public GameObject GetItemSocket() => itemSocket;
 
     private void OnEnable() {

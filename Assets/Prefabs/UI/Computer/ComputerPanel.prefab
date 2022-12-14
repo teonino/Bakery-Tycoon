@@ -107,7 +107,10 @@ MonoBehaviour:
   priceButtonPanel: {fileID: 874483020392047075}
   products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
   playerControllerSO: {fileID: 0}
+  controller: {fileID: 0}
   interractQuest: {fileID: 0}
+  scroll: {fileID: 0}
+  scrollSpeed: 0
 --- !u!1 &1855530532994245288
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,6 +3127,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7284106829561168148, guid: bf90a7ac61f015c4e990abbcb8aadbc5, type: 3}
+      propertyPath: scroll
+      value: 
+      objectReference: {fileID: 3677835411844459056}
+    - target: {fileID: 7284106829561168148, guid: bf90a7ac61f015c4e990abbcb8aadbc5, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
+    - target: {fileID: 7284106829561168148, guid: bf90a7ac61f015c4e990abbcb8aadbc5, type: 3}
+      propertyPath: scrollSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284106829561168148, guid: bf90a7ac61f015c4e990abbcb8aadbc5, type: 3}
       propertyPath: computerPanel
       value: 
       objectReference: {fileID: 3677835412240533996}
@@ -3145,6 +3160,11 @@ RectTransform:
 --- !u!1 &3677835411281358887 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 172463891821140460, guid: bf90a7ac61f015c4e990abbcb8aadbc5, type: 3}
+  m_PrefabInstance: {fileID: 3562062725000702411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3677835411844459056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 172463891241288699, guid: bf90a7ac61f015c4e990abbcb8aadbc5, type: 3}
   m_PrefabInstance: {fileID: 3562062725000702411}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3677835411289942307

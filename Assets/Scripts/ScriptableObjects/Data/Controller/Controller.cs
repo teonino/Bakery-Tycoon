@@ -36,14 +36,19 @@ public class Controller : ScriptableObject {
     public void SetEventSystemToStartButton(GameObject startButton) {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(startButton);
+        Debug.Log("Set Start " + GetEventSystemCurrentlySelected());
     }
 
     public void RegisterCurrentSelectedButton() {
         lastButton = EventSystem.current.currentSelectedGameObject;
+        Debug.Log("Register " + GetEventSystemCurrentlySelected());
     }
 
     public void SetEventSystemToLastButton() {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(lastButton);
+        Debug.Log("Set Last " + GetEventSystemCurrentlySelected());
     }
+
+    public GameObject GetEventSystemCurrentlySelected() => EventSystem.current.currentSelectedGameObject;
 }
