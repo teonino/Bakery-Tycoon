@@ -6,6 +6,8 @@ using UnityEngine;
 public class Tutorial : ScriptableObject {
     [SerializeField] private bool tutorial;
 
+    private void OnEnable() => tutorial = false;
+    
     public void SetTutorial(bool value) => tutorial = value;
     public bool GetTutorial() => tutorial;
 }

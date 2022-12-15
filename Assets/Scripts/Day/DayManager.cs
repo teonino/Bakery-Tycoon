@@ -12,7 +12,7 @@ public class DayManager : MonoBehaviour
     private Light[] MuralLight;
 
 
-    private Light light;
+    private Light lightComponent;
     private float timeElapsed;
     private int duration;
     private Action displaySkipButton;
@@ -26,8 +26,8 @@ public class DayManager : MonoBehaviour
         displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
         displaySkipButton();
         duration = day.GetMorningDuration() + day.GetDayDuration();
-        light = GetComponent<Light>();
-        initialColorTemperature = light.colorTemperature;
+        lightComponent = GetComponent<Light>();
+        initialColorTemperature = lightComponent.colorTemperature;
         UpdateLightList();
     }
 
@@ -44,17 +44,17 @@ public class DayManager : MonoBehaviour
                 {
                     if ((day.GetMorningDuration() - timeElapsed ) <= secondBeforeLightMovement)
                     {
-                        light.colorTemperature = Mathf.Lerp(targetColorTemperature, initialColorTemperature, (day.GetMorningDuration() - timeElapsed) / secondBeforeLightMovement);
-                        light.shadowStrength = Mathf.Lerp(0, 1, (day.GetMorningDuration() - timeElapsed) / secondBeforeLightMovement);
-                        light.intensity = Mathf.Lerp(goalIntensity, originalIntensity, (day.GetMorningDuration() - timeElapsed) / secondBeforeLightMovement);
+                        lightComponent.colorTemperature = Mathf.Lerp(targetColorTemperature, initialColorTemperature, (day.GetMorningDuration() - timeElapsed) / secondBeforeLightMovement);
+                        lightComponent.shadowStrength = Mathf.Lerp(0, 1, (day.GetMorningDuration() - timeElapsed) / secondBeforeLightMovement);
+                        lightComponent.intensity = Mathf.Lerp(goalIntensity, originalIntensity, (day.GetMorningDuration() - timeElapsed) / secondBeforeLightMovement);
                     }
                 }
                 else if (day.GetDayTime() == DayTime.Day)
                 {
                     if ((day.GetDayDuration() - timeElapsed) <= secondBeforeLightMovement)
                     {
-                        light.colorTemperature = Mathf.Lerp(targetColorTemperature, initialColorTemperature, (duration - timeElapsed) / secondBeforeLightMovement);
-                        light.shadowStrength = Mathf.Lerp(1, 0, (duration - timeElapsed) / secondBeforeLightMovement);
+                        lightComponent.colorTemperature = Mathf.Lerp(targetColorTemperature, initialColorTemperature, (duration - timeElapsed) / secondBeforeLightMovement);
+                        lightComponent.shadowStrength = Mathf.Lerp(1, 0, (duration - timeElapsed) / secondBeforeLightMovement);
                         
                     }
 
@@ -70,7 +70,7 @@ public class DayManager : MonoBehaviour
                     if (timeElapsed > day.GetMorningDuration() && day.GetDayTime() == DayTime.Morning)
                 {
                         Updateday();
-                        initialColorTemperature = light.colorTemperature;
+                        initialColorTemperature = lightComponent.colorTemperature;
                         targetColorTemperature = 3000;
                 }
 
@@ -88,7 +88,7 @@ public class DayManager : MonoBehaviour
                 {
                     float time = 1.2f;
                     MuralLight[i].intensity = Mathf.Lerp(MuralLight[i].intensity, 1, time * Time.deltaTime);
-                    light.intensity = Mathf.Lerp(originalIntensity, goalIntensity, time * Time.deltaTime);
+                    lightComponent.intensity = Mathf.Lerp(originalIntensity, goalIntensity, time * Time.deltaTime);
                 }
             }
         }
