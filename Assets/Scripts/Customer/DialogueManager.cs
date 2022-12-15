@@ -23,6 +23,12 @@ public class DialogueManager : MonoBehaviour {
         Time.timeScale = 0;
     }
 
+    private void OnEnable() {
+        playerControllerSO.GetPlayerController().DisableInput();
+        controller.RegisterCurrentSelectedButton();
+        Time.timeScale = 0;
+    }
+
     public void GetDialogues(int id, string character) {
         dialogue = new Dialogue();
 
