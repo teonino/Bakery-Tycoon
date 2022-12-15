@@ -322,7 +322,7 @@ Transform:
   m_GameObject: {fileID: 37715356}
   m_LocalRotation: {x: -0.50000066, y: 0.4999994, z: -0.4999994, w: 0.50000066}
   m_LocalPosition: {x: 4.91, y: -3.7, z: -3.5}
-  m_LocalScale: {x: 16.286663, y: 11.324637, z: 10.166982}
+  m_LocalScale: {x: 16.286663, y: 11.324637, z: 15.607333}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1153605087}
@@ -340,10 +340,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2365c40684db07147be72eef56e9578d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallToDispawn: {fileID: 0}
+  wallToDispawn: {fileID: 1265008981}
   time: 5
   thisRoomIsActive: 0
-  stillInUse: 0
+  stillInUse: 1
 --- !u!65 &37715359
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6505,9 +6505,8 @@ MonoBehaviour:
   daySystemEnable: 1
   startLightRotation: 20
   endLightRotation: 160
-  secondBeforeLightMovement: 0
+  secondBeforeLightMovement: 10
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
-  MuralLight: []
 --- !u!114 &705507997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10639,6 +10638,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1265008982}
+  - component: {fileID: 1265008985}
+  - component: {fileID: 1265008984}
+  - component: {fileID: 1265008983}
   m_Layer: 7
   m_Name: Wallpanel (1)
   m_TagString: Untagged
@@ -10670,6 +10672,45 @@ Transform:
   m_Father: {fileID: 209171304}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1265008983
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265008981}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15793796, y: 2.479867, z: 5.0132732}
+  m_Center: {x: -0.99094915, y: 1.2713246, z: -6.39944}
+--- !u!65 &1265008984
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265008981}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15793796, y: 0.5772624, z: 0.9926274}
+  m_Center: {x: -0.99094915, y: 2.222627, z: -3.4061024}
+--- !u!65 &1265008985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265008981}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15793796, y: 2.479867, z: 3.0169609}
+  m_Center: {x: -0.99094915, y: 1.2713246, z: -1.4086566}
 --- !u!1001 &1267741848
 PrefabInstance:
   m_ObjectHideFlags: 0
