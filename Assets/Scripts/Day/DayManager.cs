@@ -19,7 +19,7 @@ public class DayManager : MonoBehaviour
     private float initialColorTemperature;
     private float targetColorTemperature = 5500;
     private float originalIntensity = 0.75f;
-    private float goalIntensity = 2;
+    private float goalIntensity = 1.75f;
 
     void Start()
     {
