@@ -15,14 +15,19 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
 
     private Dialogue dialogue;
+    public Action OnDestroyDialoguePanel;
 
-    private void Awake() {
-        dialogue = new Dialogue();
+    private void OnEnable() {
+        playerControllerSO.GetPlayerController().DisableInput();
+        controller.RegisterCurrentSelectedButton();
+        Time.timeScale = 0;
     }
 
-    public void GetDialogues(int id) {
+    public void GetDialogues(int id, string character) {
+        dialogue = new Dialogue();
+
         try {
-            StreamReader s = new StreamReader("Assets\\Dialogues\\classeur" + id + ".csv");
+            StreamReader s = new StreamReader($"Assets\\Dialogues\\{character}\\{character}{id}.csv");
 
             int answerDialogueId = 0;
             bool npcSpeechNext = true;
@@ -77,9 +82,11 @@ public class DialogueManager : MonoBehaviour {
         }
     }
 
-    public void Destroy() {
+    public void OnDisable() {
         playerControllerSO.GetPlayerController().EnableInput();
+        controller.SetEventSystemToLastButton();
         Time.timeScale = 1;
+        OnDestroyDialoguePanel.Invoke();
         Addressables.ReleaseInstance(gameObject);
     }
 }

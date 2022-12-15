@@ -10,13 +10,14 @@ public class FurnitureManager : MonoBehaviour {
     [SerializeField] private AssetReference furnitureButtonAsset;
     [SerializeField] private AssetReference furnitureRackAsset;
     [SerializeField] private ListFurniture furnitures;
+    [SerializeField] private ListFurniture ownedFurnitures;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Money money;
     [SerializeField] private Controller controller;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private RectTransform scrollRectTransform;
-    [SerializeField] private int scrollSpeed; 
+    [SerializeField] private int scrollSpeed;
 
     private List<GameObject> furnitureButtonList;
     private List<GameObject> furnitureRackList;
@@ -220,6 +221,13 @@ public class FurnitureManager : MonoBehaviour {
             }
         }
         SetVerticalLayoutGroup();
+    }
+
+    public void AddownedFurniture(FurnitureSO furniture) {
+        if (furniture.GetPrice() <= money.GetMoney()) {
+            ownedFurnitures.AddFurniture(furniture);
+            print($"{furniture.GetName()} bought");
+        }
     }
 
     public void Quit(InputAction.CallbackContext context) {

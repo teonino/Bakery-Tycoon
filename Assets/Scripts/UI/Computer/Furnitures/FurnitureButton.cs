@@ -11,6 +11,11 @@ public class FurnitureButton : MonoBehaviour {
 
     private FurnitureManager furnitureManager;
     private FurnitureSO furnitureSO;
+    private Button button;
+
+    private void Awake() {
+        button = GetComponent<Button>();
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -21,7 +26,14 @@ public class FurnitureButton : MonoBehaviour {
             "Type : " + furnitureSO.GetType();
 
         image.texture = furnitureSO.GetTexture();
+
+        button.onClick.AddListener(BuyFurniture);
     }
+
+    private void BuyFurniture() {
+        furnitureManager.AddownedFurniture(furnitureSO);
+    }
+
     public void SetFurnitureManager(FurnitureManager value) => furnitureManager = value;
     public void SetFurniture(FurnitureSO value) => furnitureSO = value;
     public FurnitureSO GetFurniture() => furnitureSO;

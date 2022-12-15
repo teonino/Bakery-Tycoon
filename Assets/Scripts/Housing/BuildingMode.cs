@@ -11,6 +11,7 @@ public class BuildingMode : Interactable {
     [SerializeField] private Day day;
     [SerializeField] private Controller controller;
     [SerializeField] private AssetReference cursor;
+    [SerializeField] private InterractQuest interractQuest;
 
     [Header("Global Parameters")]
     [SerializeField] private LayerMask pickUpLayer;
@@ -52,6 +53,8 @@ public class BuildingMode : Interactable {
             inBuildingMode = true;
             mainCamera.SetActive(false);
             buildingCamera.SetActive(true);
+
+                interractQuest.OnInterract();
         }
     }
 
@@ -148,7 +151,9 @@ public class BuildingMode : Interactable {
     private void SnapGameObject(Vector3 pos) {
         if (selectedGo) {
             RaycastHit hit;
-            if (Physics.Raycast(buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos), out hit, Mathf.Infinity, currentRaycastlayer)) {
+            Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
+            Debug.DrawRay(ray.origin, ray.direction * 150, Color.red, 5);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
                 selectedGo.transform.position = hit.point;
                 selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), 0, RoundToNearestGrid(selectedGo.transform.localPosition.z));
             }

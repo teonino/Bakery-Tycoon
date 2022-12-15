@@ -41,7 +41,6 @@ public class AIRegularCustomer : AICustomer {
 
         if (table && table.GetItem(false) && state == AIState.sitting) {
             if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
-            //if(table.items[indexChair]?.GetComponent<ProductHolder>()?.product?.productSO?.name == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") { 
                 StopCoroutine(waitingCoroutine);
                 //Take item
                 ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
@@ -51,8 +50,11 @@ public class AIRegularCustomer : AICustomer {
                             item = go.Result;
                             TakeItem(productholder, table.gameObject);
                             table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
-                            StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
                             state = AIState.eating;
+                            if (tutorial)
+                                Leave();
+                            else
+                                StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
                         };
                         productholder.product.amount--;
                     }
@@ -60,8 +62,11 @@ public class AIRegularCustomer : AICustomer {
                         item = table.items[indexChair];
                         TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
                         productholder.blocked = true;
-                        StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
                         state = AIState.eating;
+                        if (tutorial)
+                            Leave();
+                        else
+                            StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
                     }
                 }
             }
@@ -93,10 +98,8 @@ public class AIRegularCustomer : AICustomer {
 
     public override void Effect() {
         if (conversationRemaining > 0 && state == AIState.eating) {
-            playerControllerSO.GetPlayerController().DisableInput();
             dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
-                go.Result.GetComponent<DialogueManager>().GetDialogues(1);
-            Time.timeScale = 0;
+                go.Result.GetComponent<DialogueManager>().GetDialogues(1,"classeur");
             conversationRemaining--;
         }
     }

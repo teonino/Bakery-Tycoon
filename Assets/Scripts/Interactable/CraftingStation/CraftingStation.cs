@@ -11,6 +11,7 @@ public class CraftingStation : Interactable {
     [SerializeField] private DebugState debugState;
     [SerializeField] private CraftingStationType type;
     [SerializeField] private int dirty = 0;
+    [SerializeField] private CreateQuest createQuest;
 
     [Header("Debug parameters")]
     [SerializeField] private bool skipCookingTime = false;
@@ -43,8 +44,12 @@ public class CraftingStation : Interactable {
                     productItem.product.quality = 0;
                 else
                     productItem.product.quality = itemInStation.quality;
-                productItem.product.amount = itemInStation.amount; go.Result.transform.SetParent(arm);
+                productItem.product.amount = itemInStation.amount; 
+                go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = Vector3.zero;
+
+                createQuest.CheckProduct(productItem.product.productSO);
+
                 itemInStation = null;
                 Addressables.ReleaseInstance(progressBar);
             };            

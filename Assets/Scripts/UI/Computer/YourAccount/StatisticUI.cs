@@ -10,6 +10,7 @@ public class StatisticUI : MonoBehaviour {
     [SerializeField] private Statistics stats;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private GameObject computerPanel; 
+    [SerializeField] private InterractQuest interractQuest; 
 
     private PlayerController playerController;
 
@@ -19,6 +20,7 @@ public class StatisticUI : MonoBehaviour {
 
     public void Enable() {
         gameObject.SetActive(true);
+        interractQuest.OnInterract();
     }
 
     private void Start() { 
