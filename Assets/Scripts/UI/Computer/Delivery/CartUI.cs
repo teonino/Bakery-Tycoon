@@ -14,6 +14,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Money money;
     [SerializeField] private Day day;
+    [SerializeField] private Tutorial tutorial;
     [SerializeField] private OrderTypeQuest orderTypeQuest;
 
     [HideInInspector] public DeliveryManager deliveryManager;
@@ -23,6 +24,13 @@ public class CartUI : MonoBehaviour {
 
     private DeliveryType deliveryType;
     private float cost = 0; //Display value of a ingredient, not used yet
+
+    private void Awake() {
+        if (tutorial)
+            deliveries.SetExpressOrderTime(0);
+        else
+            deliveries.SetDefaultExpressOrderTime();
+    }
 
     public void InitCart() {
         string newText = "";

@@ -8,12 +8,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "listDeliveries", menuName = "Data/ListDeliveries")]
 public class ListDeliveries : ScriptableObject {
     [SerializeField] private Day day;
+    [SerializeField] private Tutorial tutorial;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private List<Delivery> deliveries = new List<Delivery>();
     [SerializeField] private int timeExpressDelivery = 15;
 
+    private int timeExpressDeliveryValue;
+
     private void OnEnable() {
         day.NewDay += CheckDeliveries;
+
+        if (tutorial)
+            timeExpressDeliveryValue = 0;
+        else
+            timeExpressDeliveryValue = timeExpressDelivery;
     }
 
     private void OnDisable() {
@@ -25,7 +33,7 @@ public class ListDeliveries : ScriptableObject {
     }
 
     public IEnumerator ExpressDelivery(Delivery delivery) {
-        yield return new WaitForSeconds(timeExpressDelivery);
+        yield return new WaitForSeconds(timeExpressDeliveryValue);
         DeliverOrder(delivery);
     }
 
@@ -52,5 +60,7 @@ public class ListDeliveries : ScriptableObject {
         deliveries.Remove(delivery);
     }
 
-    public int GetExpressOrderTime() => timeExpressDelivery;
+    public int GetExpressOrderTime() => timeExpressDeliveryValue;
+    public int SetExpressOrderTime(int value) => timeExpressDeliveryValue = value;
+    public int SetDefaultExpressOrderTime() => timeExpressDeliveryValue = timeExpressDelivery;
 }

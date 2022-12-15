@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour {
     private Dialogue dialogue;
     public Action OnDestroyDialoguePanel;
 
-    private void OnEnable() {
+    private void Start() {
         playerControllerSO.GetPlayerController().DisableInput();
         controller.RegisterCurrentSelectedButton();
         Time.timeScale = 0;

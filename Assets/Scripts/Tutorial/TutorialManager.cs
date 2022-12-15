@@ -7,12 +7,15 @@ using UnityEngine.SceneManagement;
 public class TutorialManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI questTxt;
     [SerializeField] private List<Quest> quests;
+    [SerializeField] private Tutorial tutorial;
 
     private int indexQuest = 0;
     private DialogueManager dialogueManager;
     private Dialogue dialogue;
 
     private void Awake() {
+        tutorial.SetTutorial(true);
+
         foreach (Quest quest in quests)
             quest.SetActive(false);
 
