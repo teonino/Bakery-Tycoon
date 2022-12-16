@@ -15,8 +15,13 @@ public class TabsManagement : MonoBehaviour {
         currentPanel.SetActive(true);
 
         if (controller.IsGamepad()) {
-            controller.SetEventSystemToStartButton(firstTab);
+            StartCoroutine(WaitForGamepad());
         }
+    }
+
+    private IEnumerator WaitForGamepad() {
+        yield return new WaitForEndOfFrame();
+        controller.SetEventSystemToStartButton(firstTab);
     }
 
     private void Update() {

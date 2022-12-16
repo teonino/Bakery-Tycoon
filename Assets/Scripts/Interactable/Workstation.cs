@@ -37,7 +37,6 @@ public class Workstation : Interactable {
 
             playerControllerSO.GetPlayerController().playerInput.UI.Enable();
             playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
-
             interractQuest.OnInterract();
         }
     }

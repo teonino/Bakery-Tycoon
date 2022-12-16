@@ -17,18 +17,17 @@ public class DialogueManager : MonoBehaviour {
     private Dialogue dialogue;
     public Action OnDestroyDialoguePanel;
 
-    private void Start() {
-        playerControllerSO.GetPlayerController().DisableInput();
-        controller.RegisterCurrentSelectedButton();
-        Time.timeScale = 0;
-    }
-
     private void OnEnable() {
         if (playerControllerSO.GetPlayerController()) {
             playerControllerSO.GetPlayerController().DisableInput();
             controller.RegisterCurrentSelectedButton();
             Time.timeScale = 0;
         }
+    } 
+    private void Start() {
+        playerControllerSO.GetPlayerController().DisableInput();
+        controller.RegisterCurrentSelectedButton();
+        Time.timeScale = 0;
     }
 
     public void GetDialogues(int id, string character) {
@@ -84,10 +83,15 @@ public class DialogueManager : MonoBehaviour {
             button.SetNextDialogue(dialogue.answers[i].nextDialogue);
             button.SetRelationReward(dialogue.answers[i].relation);
 
-            if (i == 0 && controller.GetInputType() == InputType.Gamepad) {
-                controller.SetEventSystemToStartButton(button.gameObject);
+            if (i == 0) {
+                StartCoroutine(WaitForGamepad(button.gameObject));
             }
         }
+    }
+
+    private IEnumerator WaitForGamepad(GameObject go) {
+        yield return new WaitForEndOfFrame();
+        controller.SetEventSystemToStartButton(go);
     }
 
     public void OnDisable() {

@@ -53,7 +53,6 @@ public class TutorialManager : MonoBehaviour {
     }
     private void SetupQuest() {
         quests[indexQuest].OnCompletedAction += NextQuest;
-        //Debug.LogError($"Quest \"{quests[indexQuest].GetTitle()}\" Started");
         quests[indexQuest].SetActive(true);
         LaunchQuest();
     }

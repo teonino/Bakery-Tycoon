@@ -50,8 +50,8 @@ public class WorkstationManager : MonoBehaviour {
         foreach (StockIngredient stock in stocks)
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
 
-        //foreach (GameObject button in productButtonList) 
-        //    button.GetComponent<WorkstationButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationButton>().GetProduct()));
+        foreach (GameObject button in productButtonList) 
+            button.GetComponent<WorkstationButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationButton>().GetProduct()));
 
 
         if(productButtonList.Count > 0) 
@@ -76,6 +76,10 @@ public class WorkstationManager : MonoBehaviour {
     private void Update() {
         if (controller.IsGamepad()) {
             scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+        }
+
+        if (gameObject.activeSelf) {
+            playerControllerSO.GetPlayerController().DisableInput();
         }
     }
 
