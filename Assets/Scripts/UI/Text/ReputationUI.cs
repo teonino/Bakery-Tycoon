@@ -13,6 +13,7 @@ public class ReputationUI : MonoBehaviour {
     private void OnDisable() {
         reputation.UpdateUI -= SetReputation;
     }
+    public Reputation GetReputation() => reputation;
 
     public void SetReputation() {
         GetComponent<TextMeshProUGUI>().SetText("Reputation Lv " + reputation.GetLevel() + 1  + " : " + reputation.GetExperience() + " / " + reputation.GetExpNeeded());

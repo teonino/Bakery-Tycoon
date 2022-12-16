@@ -31,6 +31,8 @@ public class AICustomer : Interactable {
 
     protected void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();
+        reputation = FindObjectOfType<ReputationUI>().GetReputation();
+        money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
     public void InitCustomer() {

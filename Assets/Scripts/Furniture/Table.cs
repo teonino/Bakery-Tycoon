@@ -42,7 +42,7 @@ public class Table : Interactable {
 
     private bool CheckPlate() {
         foreach (GameObject item in items) {
-            if (item.tag == "Plate")
+            if (item && item.tag == "Plate")
                 return true;
         }
         return false;

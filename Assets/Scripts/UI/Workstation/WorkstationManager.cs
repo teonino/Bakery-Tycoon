@@ -79,6 +79,9 @@ public class WorkstationManager : MonoBehaviour {
         }
 
         if (gameObject.activeSelf) {
+            if (!controller.GetEventSystemCurrentlySelected() && productButtonList.Count > 0) {
+                controller.SetEventSystemToStartButton(productButtonList[0]);
+            }
             playerControllerSO.GetPlayerController().DisableInput();
         }
     }

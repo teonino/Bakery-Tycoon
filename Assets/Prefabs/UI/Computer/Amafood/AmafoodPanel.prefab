@@ -401,9 +401,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.43529415, g: 0.83921576, b: 0.41960788, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.43529415, g: 0.83921576, b: 0.41960788, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1195,9 +1195,11 @@ MonoBehaviour:
   cartPanel: {fileID: 6567722710604534408}
   computerPanel: {fileID: 0}
   ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  playerControllerSO: {fileID: 0}
   controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
-  scrollRectTransform: {fileID: 4348176430963032673}
   scrollSpeed: 2
+  orderQuest: {fileID: 0}
+  scroll: {fileID: 0}
 --- !u!1 &4348176432118274951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,9 +1433,11 @@ MonoBehaviour:
   orderSumary: {fileID: 6181727907631586099}
   totalCostText: {fileID: 6567722711093147006}
   deliveryDropdown: {fileID: 4236803589059376577}
+  deliveries: {fileID: 0}
   money: {fileID: 11400000, guid: 2165d7b449c98dc409d632d23f2844b0, type: 2}
-  m_TestMoney: {fileID: 11400000, guid: a4700c18238309f48a21ab6cd933b70f, type: 2}
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  tutorial: {fileID: 0}
+  orderTypeQuest: {fileID: 0}
   deliveryManager: {fileID: 0}
   cartWeight: 0
   cartCost: 0
