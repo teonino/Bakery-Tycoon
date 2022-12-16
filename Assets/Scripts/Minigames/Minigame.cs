@@ -21,6 +21,7 @@ public abstract class Minigame : MonoBehaviour {
     protected void Start() {
         workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
         playerController = FindObjectOfType<PlayerController>();
+        controller = playerController.GetController();
         launchTime = Time.time;
         EnableInputs();
     }

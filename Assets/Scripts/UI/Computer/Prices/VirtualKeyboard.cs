@@ -8,12 +8,13 @@ using UnityEngine.UI;
 public class VirtualKeyboard : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private ProductSO product;
-    [SerializeField] private PriceButton priceButton;
     [SerializeField] private Controller controller;
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private GameObject firstButton;
     [SerializeField] private RawImage productImage;
+
+    private ProductSO product;
+    private PriceButton priceButton;
 
     private void OnEnable() {
         controller.SetEventSystemToStartButton(firstButton);

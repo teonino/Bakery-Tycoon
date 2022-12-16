@@ -9,7 +9,7 @@ public class SwitchController : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
 
-    private void Awake() {
+    private void Start() {
         if (Gamepad.all.Count > 0) {
             controller.SetInputType(InputType.Gamepad);
             textButton.SetText("Gamepad");

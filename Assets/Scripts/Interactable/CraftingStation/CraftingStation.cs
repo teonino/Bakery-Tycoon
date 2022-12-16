@@ -48,7 +48,7 @@ public class CraftingStation : Interactable {
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = Vector3.zero;
 
-                createQuest.CheckProduct(productItem.product.productSO);
+                createQuest?.CheckProduct(productItem.product.productSO);
 
                 itemInStation = null;
                 Addressables.ReleaseInstance(progressBar);
