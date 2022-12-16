@@ -20,6 +20,7 @@ public class TutorialManager : MonoBehaviour {
             quest.SetActive(false);
 
         dialogueManager = FindObjectOfType<DialogueManager>(true);
+        dialogueManager.OnDestroyDialoguePanel += LaunchQuest;
 
         SetupDialogue();
         SetupQuest();
@@ -28,23 +29,6 @@ public class TutorialManager : MonoBehaviour {
     private void SetupDialogue() {
         dialogueManager.gameObject.SetActive(true);
         dialogueManager.GetDialogues(indexQuest + 1, "Tutorial");
-
-        dialogueManager.OnDestroyDialoguePanel += LaunchQuest;
-
-        //dialogue = new Dialogue();
-        //dialogue.npcSpeech = "Welcome my dear little marmotte to your soon-to-become bakery ! Here you will prepare and serve delicious food to your customers. Today i will help you to prepare and find your way in the bakery !";
-        //dialogue.answers.Add(new Answer("Continue...", 0, new Dialogue()));
-        //dialogue.answers[0].nextDialogue.npcSpeech = "To bake your first baguette, get to the computer to order on amafood !";
-        //dialogue.answers[0].nextDialogue.answers.Add(new Answer("Continue...", 0, new Dialogue()));
-
-        //dialogueManager.SetDialogue(dialogue);
-
-    }
-
-    private void SetupQuest() {
-        quests[indexQuest].OnCompletedAction += NextQuest;
-        quests[indexQuest].SetActive(true);
-        LaunchQuest();
     }
 
     private void LaunchQuest() {
@@ -66,5 +50,11 @@ public class TutorialManager : MonoBehaviour {
             questTxt.gameObject.SetActive(false);
             SetupDialogue();
         }
+    }
+    private void SetupQuest() {
+        quests[indexQuest].OnCompletedAction += NextQuest;
+        //Debug.LogError($"Quest \"{quests[indexQuest].GetTitle()}\" Started");
+        quests[indexQuest].SetActive(true);
+        LaunchQuest();
     }
 }

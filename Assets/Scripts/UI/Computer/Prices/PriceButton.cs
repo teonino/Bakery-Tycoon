@@ -34,7 +34,6 @@ public class PriceButton : MonoBehaviour {
         this.product = product;
         image.texture = product.image;
         priceText.text = product.price + "";
-        //priceText.text = gameManager.GetProductPrice(product) + "";
     }
 
     public void SetNewPrice(int newPrice) {

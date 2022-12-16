@@ -89,8 +89,8 @@ public class Table : Interactable {
         }
         if (!itemPutDown) {
             for (int i = 0; i < items.Count; i++) {
-                if (!items[i] && go) {
-                    if (go.GetComponent<ProductHolder>().product.amount > 1) {
+                if (!items[i] && go && go.tag != "paste") {
+                    if (go.GetComponent<ProductHolder>().product.amount > 1 ) {
                         items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
                         items[i].transform.localPosition = itemPositions[i].transform.localPosition;
                         go.GetComponent<ProductHolder>().product.amount--;

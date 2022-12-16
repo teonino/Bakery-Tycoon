@@ -19,8 +19,8 @@ public class DeliveryButton : MonoBehaviour {
     void Start() { 
         GetComponentInChildren<AmmountManager>().deliveryManager = deliveryManager;
         GetComponentInChildren<AmmountManager>().deliveryButton = this;
-        nbIngredient = ingredients.GetIngredientAmount(ingredient);
-        stockText.SetText("Stock : " + nbIngredient);
+        nbIngredient = 0;
+        stockText.SetText("Stock : " + ingredients.GetIngredientAmount(ingredient));
         priceText.SetText(ingredient.price + "€/U");
         productImage.texture = ingredient.image;
     }

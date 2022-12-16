@@ -25,13 +25,15 @@ public class CameraSwitch : MonoBehaviour {
         CurrentCamPosition.transform.position = MainRoomSocket.transform.position;
     }
 
-    private IEnumerator EnableCinemachine(GameObject dest) { 
+    public bool switchingCamera;
+
+    private IEnumerator EnableCinemachine(GameObject dest) {
+        cinemachine.enabled = switchingCamera =true;
         while (Vector3.Distance(CurrentCamPosition.transform.position, dest.transform.position) > 0.2f) {
-            cinemachine.enabled = true;
             CurrentCamPosition.transform.position = Vector3.Slerp(CurrentCamPosition.transform.position, dest.transform.position, LerpTime * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        cinemachine.enabled = false;
+        cinemachine.enabled = switchingCamera = false;
         yield return null;
     }
 

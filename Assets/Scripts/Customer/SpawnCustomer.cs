@@ -14,7 +14,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private Reputation reputation;
     [SerializeField] private DebugState debugState;
     [Header("Spawn Variables")]
-    [SerializeField] private bool debug;
+    
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
     [SerializeField] private Vector2 debugDelaySpawn;
@@ -22,6 +22,7 @@ public class SpawnCustomer : MonoBehaviour {
     [Tooltip("1 chance out of X to spawn")]
     [SerializeField] private int spawnChanceRegularCustomer = 10;
 
+    private bool debug;
     private int nbCustomer = 0;
     private int nbCustomerSpawned = 0; // only for customer's name
     private Chair currentChair;

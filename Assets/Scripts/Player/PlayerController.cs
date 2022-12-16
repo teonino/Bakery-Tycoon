@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject itemSocket;
+    [SerializeField] private GameObject interractPanel;
+
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
+    public Controller GetController() => controller;
 
     // Start is called before the first frame update
     void Awake() {
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     private void FixedUpdate() {
+        //Player Movement
         if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) { //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
             animator.SetBool("isWalking", true);
@@ -37,18 +41,21 @@ public class PlayerController : MonoBehaviour {
         else
             animator.SetBool("isWalking", false);
 
-        if (!playerInUI) {
-            if (!controller.IsGamepad()) {
-                if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
-                    cinemachine.enabled = true;
-                else if (cinemachine.enabled == true)
-                    cinemachine.enabled = false;
+        //Camera Movement
+        if (!FindObjectOfType<CameraSwitch>().switchingCamera) {
+            if (!playerInUI) {
+                if (!controller.IsGamepad()) {
+                    if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
+                        cinemachine.enabled = true;
+                    else if (cinemachine.enabled == true)
+                        cinemachine.enabled = false;
+                }
+                else
+                    cinemachine.enabled = true; ;
             }
             else
-                cinemachine.enabled = true; ;
+                cinemachine.enabled = false;
         }
-        else
-            cinemachine.enabled = false;
     }
 
     public void OnInterract(InputAction.CallbackContext context) {

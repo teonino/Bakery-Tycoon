@@ -18,17 +18,18 @@ public abstract class Quest : ScriptableObject {
 
     public Action OnCompletedAction;
     private enum RewardType { Reputation, Money }
-    public void SetActive(bool active) => isActive = active;
+    public void SetActive(bool active) {
+        isActive = active;
+    }
     public void UpdateUI(TextMeshProUGUI text) => text.text = title;
-
+    public string GetTitle() => title;
     protected void OnCompleted() {
         if (reward == RewardType.Reputation)
             reputation.AddReputation(rewardAmount);
         else if (reward == RewardType.Money)
             money.AddMoney(rewardAmount);
 
-        OnCompletedAction?.Invoke();
         SetActive(false);
-        Debug.Log($"Quest \"{title}\" Completed");
+        OnCompletedAction?.Invoke();
     }
 }

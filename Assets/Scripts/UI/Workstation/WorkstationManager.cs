@@ -13,7 +13,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI stockListText;
     [SerializeField] private GameObject stockPanel;
     [SerializeField] private ListProduct products;
-    [SerializeField] private ListIngredient ingredients; 
+    [SerializeField] private ListIngredient ingredients;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
     [SerializeField] private GameObject scroll;
@@ -46,17 +46,16 @@ public class WorkstationManager : MonoBehaviour {
         //Setup Stock
         stockListText.SetText("");
         List<StockIngredient> stocks = ingredients.GetIngredientList();
-        foreach (StockIngredient stock in stocks) {
+
+        foreach (StockIngredient stock in stocks)
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
-        }
 
-        foreach (GameObject button in productButtonList) {
-            button.GetComponent<WorkstationButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationButton>().GetProduct()));
-        }
+        //foreach (GameObject button in productButtonList) 
+        //    button.GetComponent<WorkstationButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationButton>().GetProduct()));
 
-        if (productButtonList != null) {
+
+        if(productButtonList.Count > 0) 
             EnableButtons();
-        }
     }
 
     //Create buttons
@@ -76,7 +75,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void Update() {
         if (controller.IsGamepad()) {
-            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed,0);
+            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
         }
     }
 
@@ -179,8 +178,10 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     public void ResetManager() {
-        if (currentMinigame)
+        if (currentMinigame) {
             currentMinigame.DisableInputs();
+            Addressables.ReleaseInstance(currentMinigame.gameObject);
+        }
         currentMinigameCounter = 0;
         currentProduct = null;
         itemQuality = 0;
@@ -196,18 +197,39 @@ public class WorkstationManager : MonoBehaviour {
     private void DisableButtons() {
         foreach (GameObject go in productButtonList)
             go.SetActive(false);
+
+        nbButton = 0;
         stockPanel.SetActive(false);
     }
 
     private void EnableButtons() {
+        if (controller.IsGamepad())
+            StartCoroutine(waitForGamepad());
+
         foreach (GameObject go in productButtonList)
             go.SetActive(true);
+
         stockPanel.SetActive(true);
+    }
+
+    private IEnumerator waitForGamepad() {
+        yield return new WaitForEndOfFrame();
+        controller.SetEventSystemToStartButton(productButtonList[0]);
+    }
+
+    private void OnDisable() {
+        controller?.SetEventSystemToStartButton(null);
     }
 
     private void OnDestroy() {
         foreach (GameObject go in productButtonList)
             if (go)
                 Addressables.ReleaseInstance(go);
+        productButtonList.Clear();
+
+        foreach (GameObject go in productRackList)
+            if (go)
+                Addressables.ReleaseInstance(go);
+        productRackList.Clear();
     }
 }

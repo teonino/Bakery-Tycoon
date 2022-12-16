@@ -21,7 +21,7 @@ public class Shelf : Interactable {
         if (playerControllerSO.GetPlayerController().GetItemHold() && !item) {
             PutDownItem(playerControllerSO.GetPlayerController().GetItemHold());
             playerControllerSO.GetPlayerController().SetItemHold(null);
-            interractQuest.OnInterract();
+            interractQuest?.OnInterract();
         }
         else if (!playerControllerSO.GetPlayerController().GetItemHold() && item)
             TakeItem();

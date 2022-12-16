@@ -7,9 +7,11 @@ using UnityEngine.InputSystem;
 public class StatisticUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI content;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private Controller controller;
     [SerializeField] private Statistics stats;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private GameObject computerPanel; 
+    [SerializeField] private GameObject backButton; 
     [SerializeField] private InterractQuest interractQuest; 
 
     private PlayerController playerController;
@@ -21,6 +23,13 @@ public class StatisticUI : MonoBehaviour {
     public void Enable() {
         gameObject.SetActive(true);
         interractQuest.OnInterract();
+        controller.RegisterCurrentSelectedButton();
+        controller.SetEventSystemToStartButton(backButton);
+    }
+
+    public void Disable() {
+        gameObject.SetActive(false);
+        controller.SetEventSystemToLastButton();
     }
 
     private void Start() { 
