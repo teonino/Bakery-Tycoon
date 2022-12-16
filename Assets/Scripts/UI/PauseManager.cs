@@ -34,6 +34,6 @@ public class PauseManager : MonoBehaviour {
     }
 
     public void Quit() {
-        SceneManager.LoadScene("FirstBakery");
+        SceneManager.LoadScene("MainMenu");
     }
 }
