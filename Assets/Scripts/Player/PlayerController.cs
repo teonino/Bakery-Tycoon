@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
         if (context.performed) {
             RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
             bool interactableFound = false;
-            if (hitInfo[0].collider.tag != "Walls")
+            if (hitInfo[0].collider.tag != "Wall")
             {
                 for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
                 {
