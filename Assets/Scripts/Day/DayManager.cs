@@ -55,7 +55,8 @@ public class DayManager : MonoBehaviour
                     {
                         lightComponent.colorTemperature = Mathf.Lerp(targetColorTemperature, initialColorTemperature, (duration - timeElapsed) / secondBeforeLightMovement);
                         lightComponent.shadowStrength = Mathf.Lerp(1, 0, (duration - timeElapsed) / secondBeforeLightMovement);
-                        
+                        lightComponent.intensity = Mathf.Lerp(originalIntensity, goalIntensity, (duration - timeElapsed) / secondBeforeLightMovement);
+
                     }
 
                     for (int i = 0; i < MuralLight.Length; i++)
@@ -88,7 +89,6 @@ public class DayManager : MonoBehaviour
                 {
                     float time = 1.2f;
                     MuralLight[i].intensity = Mathf.Lerp(MuralLight[i].intensity, 1, time * Time.deltaTime);
-                    lightComponent.intensity = Mathf.Lerp(originalIntensity, goalIntensity, time * Time.deltaTime);
                 }
             }
         }

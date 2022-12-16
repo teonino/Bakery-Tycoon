@@ -55,10 +55,15 @@ public class PlayerController : MonoBehaviour {
         if (context.performed) {
             RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
             bool interactableFound = false;
-            for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                if (hitInfo[i].collider.GetComponent<Interactable>()) {
-                    hitInfo[i].collider.GetComponent<Interactable>().Effect();
-                    interactableFound = true;
+            if (hitInfo[0].collider.tag != "Walls")
+            {
+                for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
+                {
+                    if (hitInfo[i].collider.GetComponent<Interactable>())
+                    {
+                        hitInfo[i].collider.GetComponent<Interactable>().Effect();
+                        interactableFound = true;
+                    }
                 }
             }
         }
