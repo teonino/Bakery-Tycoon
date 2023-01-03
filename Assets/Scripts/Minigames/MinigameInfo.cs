@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public class MinigameInfo {
-    [Space(10)]
     [Header("Function Settings")]
     public AssetReference minigameAsset;
 

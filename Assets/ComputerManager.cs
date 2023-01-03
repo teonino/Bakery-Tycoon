@@ -14,7 +14,7 @@ public class ComputerManager : MonoBehaviour {
 
     private void OnDisable() {
         for (int i = 0; i < tabs.Count; i++)
-            tabs[i].gameObject.SetActive(false);
+            tabs[i]?.gameObject.SetActive(false);
 
         controller?.SetEventSystemToStartButton(null);
     }

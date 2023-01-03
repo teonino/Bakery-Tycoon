@@ -10,4 +10,6 @@ public class IngredientSO : ScriptableObject {
     public int price;
     public Texture image;
     public float weight;
+
+    public MinigameInfo minigame;
 }

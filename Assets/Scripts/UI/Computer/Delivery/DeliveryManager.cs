@@ -9,20 +9,26 @@ using UnityEngine.UI;
 
 public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
-    [SerializeField] private AssetReference ingredientRackAsset;
+    [SerializeField] private AssetReference productButtonAsset;
+    [SerializeField] private AssetReference rackAsset;
     [SerializeField] private CartUI cartPanel;
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private ListProduct products;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
     [SerializeField] private int scrollSpeed;
     [SerializeField] private OrderQuest orderQuest;
-    [SerializeField] private GameObject scroll;
+    [SerializeField] private GameObject ingredientScroll;
+    [SerializeField] private GameObject productScroll;
 
-    private RectTransform scrollRectTransform;
+    private RectTransform ingredientScrollRectTransform;
+    private RectTransform productScrollRectTransform;
     private PlayerController playerController;
     private List<GameObject> ingredientButtonList;
+    private List<GameObject> productButtonList;
     private List<GameObject> ingredientRackList;
+    private List<GameObject> productRackList;
     private int nbButton = 0;
     private int lenght;
     private float cartWeight = 0;
@@ -32,9 +38,13 @@ public class DeliveryManager : MonoBehaviour {
     public Dictionary<IngredientSO, int> cart;
 
     void Awake() {
-        scrollRectTransform = scroll.GetComponent<RectTransform>();
+        ingredientScrollRectTransform = ingredientScroll.GetComponent<RectTransform>();
+        productScrollRectTransform = productScroll.GetComponent<RectTransform>();
+
         ingredientRackList = new List<GameObject>();
         ingredientButtonList = new List<GameObject>();
+        productRackList = new List<GameObject>();
+        productButtonList = new List<GameObject>();
 
         playerController = playerControllerSO.GetPlayerController();
 
@@ -62,42 +72,59 @@ public class DeliveryManager : MonoBehaviour {
                 go.Result.GetComponent<DeliveryButton>().SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
-                SetupRacks();
+                SetupRacks(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
             };
         }
     }
 
-    void SetupRacks() {
-        if (ingredientButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
-            for (int i = 0; i < ingredientButtonList.Count; i++) {
+    void SetupRacks(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
+        if (buttonList.Count > 0 && nbButton == lenght) {
+            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / buttonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            for (int i = 0; i < buttonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
-                    ingredientRackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
-                        ingredientRackList.Add(go.Result);
-                        SetupButtons();
+                    rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
+                        rackList.Add(go.Result);
+                        SetupButtons(rackList, buttonList, scroll, scrollRect);
                     };
                 }
             }
         }
     }
 
-    void SetupButtons() {
-        if (ingredientRackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
-            scrollRectTransform.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, ingredientRackList[0].GetComponent<RectTransform>().rect.height * ingredientRackList.Count);
+    void SetupButtons(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
+        if (rackList.Count * maxButtonInRack >= buttonList.Count) {
+            scrollRect.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, buttonList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
             for (int i = 0; i < lenght; i++) {
                 for (int j = 0; j < lenght; j++) {
-                    if (j / maxButtonInRack < ingredientRackList.Count) {
-                        ingredientButtonList[j].transform.SetParent(ingredientRackList[j / maxButtonInRack].transform);
-                        ingredientButtonList[j].transform.localScale = Vector3.one;
+                    if (j / maxButtonInRack < rackList.Count) {
+                        buttonList[j].transform.SetParent(rackList[j / maxButtonInRack].transform);
+                        buttonList[j].transform.localScale = Vector3.one;
                     }
                 }
             }
+            if (productButtonList.Count == 0)
+                SetupProductButton();
+        }
+    }
+
+    private void SetupProductButton() {
+        nbButton = 0;
+        lenght = products.GetProductLenght();
+
+        for (int i = 0; i < lenght; i++) {
+            productButtonAsset.InstantiateAsync().Completed += (go) => {
+                go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
+                go.Result.GetComponent<DeliveryButton>().SetProduct(products.GetProductList()[nbButton]);
+                productButtonList.Add(go.Result);
+                nbButton++;
+                SetupRacks(productRackList, productButtonList, productScroll, productScrollRectTransform);
+            };
         }
     }
 
     private void Update() {
         if (controller.IsGamepad()) {
-            scrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+            ingredientScrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
         }
     }
 
@@ -142,6 +169,9 @@ public class DeliveryManager : MonoBehaviour {
         cartWeight = 0;
         cartCost = 0;
         foreach (GameObject go in ingredientButtonList)
+            go.GetComponentInChildren<AmmountManager>().ResetAmount();
+
+        foreach (GameObject go in productButtonList)
             go.GetComponentInChildren<AmmountManager>().ResetAmount();
     }
 

@@ -10,18 +10,18 @@ public class ListDeliveries : Data {
     [SerializeField] private Day day;
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private ListIngredient ingredients;
-    [SerializeField] private int timeExpressDelivery = 15;
+    [SerializeField] private int timeDelivery = 15;
 
     private List<Delivery> deliveries = new List<Delivery>();
-    private int timeExpressDeliveryValue;
+    private int timeDeliveryValue;
 
     private void OnEnable() {
         day.NewDay += CheckDeliveries;
 
         if (tutorial)
-            timeExpressDeliveryValue = 0;
+            timeDeliveryValue = 0;
         else
-            timeExpressDeliveryValue = timeExpressDelivery;
+            timeDeliveryValue = timeDelivery;
     }
 
     public override void ResetValues() {
@@ -37,7 +37,7 @@ public class ListDeliveries : Data {
     }
 
     public IEnumerator ExpressDelivery(Delivery delivery) {
-        yield return new WaitForSeconds(timeExpressDeliveryValue);
+        yield return new WaitForSeconds(timeDeliveryValue);
         DeliverOrder(delivery);
     }
 
@@ -64,7 +64,7 @@ public class ListDeliveries : Data {
         deliveries.Remove(delivery);
     }
 
-    public int GetExpressOrderTime() => timeExpressDeliveryValue;
-    public int SetExpressOrderTime(int value) => timeExpressDeliveryValue = value;
-    public int SetDefaultExpressOrderTime() => timeExpressDeliveryValue = timeExpressDelivery;
+    public int GetExpressOrderTime() => timeDeliveryValue;
+    public int SetExpressOrderTime(int value) => timeDeliveryValue = value;
+    public int SetDefaultExpressOrderTime() => timeDeliveryValue = timeDelivery;
 }

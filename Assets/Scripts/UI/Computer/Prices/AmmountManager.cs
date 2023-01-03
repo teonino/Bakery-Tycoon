@@ -28,7 +28,12 @@ public class AmmountManager : MonoBehaviour {
     }
 
     private void SetIngredientsInCart() {
-        deliveryManager.SetIngredient(deliveryButton.ingredient, amountToBuy);
+        if (deliveryButton.ingredient)
+            deliveryManager.SetIngredient(deliveryButton.ingredient, amountToBuy);
+        else 
+            foreach (IngredientSO ingredient in deliveryButton.product.ingredients)
+                deliveryManager.SetIngredient(ingredient, amountToBuy);
+        
         textAmmount.text = amountToBuy.ToString();
     }
 

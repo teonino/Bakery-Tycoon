@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
-    [SerializeField] private TMP_Dropdown deliveryDropdown;
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Money money;
     [SerializeField] private Day day;
@@ -44,21 +43,22 @@ public class CartUI : MonoBehaviour {
         totalCostText.SetText("Total : " + cartCost + "€");
     }
 
-    public void ClearText() { orderSumary.SetText(""); totalCostText.SetText(""); }
+    public void ClearText() {
+        orderSumary.SetText("");
+        totalCostText.SetText("");
+    }
 
     public void Order() {
         //Check if the order can be bought
         if (cartCost <= money.GetMoney()) {
-            SetDeliveryType();
-            Delivery delivery = new Delivery((int)deliveryType + day.GetCurrentDay());
+            Delivery delivery = new Delivery(day.GetCurrentDay());
             foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                 if (stock.Value > 0) {
                     delivery.Add(stock.Key, stock.Value);
                 }
             }
 
-            orderTypeQuest.CheckDeliveryType(deliveryType);
-
+            orderTypeQuest?.CheckDeliveryType(deliveryType);
 
             //Express deliveries
             if (delivery.GetDay() == day.GetCurrentDay()) {
@@ -69,19 +69,6 @@ public class CartUI : MonoBehaviour {
             deliveries.Add(delivery);
             money.AddMoney(-cartCost);
             Clear();
-        }
-    }
-
-    public void SetDeliveryType() {
-        switch (deliveryDropdown.value) {
-            case 0:
-                deliveryType = DeliveryType.Express; break;
-            case 1:
-                deliveryType = DeliveryType.Regular; break;
-            case 2:
-                deliveryType = DeliveryType.Late; break;
-            default:
-                break;
         }
     }
 

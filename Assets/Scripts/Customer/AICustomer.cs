@@ -89,15 +89,15 @@ public class AICustomer : Interactable {
     //Display the payement
     public void DisplayPayment(GameObject displayGO) {
         int basePrice = item.GetComponent<ProductHolder>().product.productSO.price;
-        int totalPrice = basePrice + basePrice * item.GetComponent<ProductHolder>().product.quality / 100;
+        //int totalPrice = basePrice + basePrice * item.GetComponent<ProductHolder>().product.quality / 100;
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
-            go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(basePrice, totalPrice - basePrice);
+            go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(basePrice, 0);
             requestedProduct = null;
         };
 
-        money.AddMoney(totalPrice);
+        money.AddMoney(basePrice);
         reputation.AddReputation(saleReputation);
     }
 

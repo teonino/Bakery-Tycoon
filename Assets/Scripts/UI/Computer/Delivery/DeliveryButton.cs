@@ -12,20 +12,34 @@ public class DeliveryButton : MonoBehaviour {
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private RawImage productImage;
     public IngredientSO ingredient;
+    public ProductSO product;
     [HideInInspector] public DeliveryManager deliveryManager;
 
     public int nbIngredient = 0;
 
-    void Start() { 
+    void Start() {
         GetComponentInChildren<AmmountManager>().deliveryManager = deliveryManager;
         GetComponentInChildren<AmmountManager>().deliveryButton = this;
         nbIngredient = 0;
-        stockText.SetText("Stock : " + ingredients.GetIngredientAmount(ingredient));
-        priceText.SetText(ingredient.price + "€/U");
-        productImage.texture = ingredient.image;
+        if (ingredient) {
+            stockText.SetText("Stock : " + ingredients.GetIngredientAmount(ingredient));
+            priceText.SetText(ingredient.price + "€/U");
+            productImage.texture = ingredient.image;
+        }
+        else if (product) {
+            stockText.SetText(product.name);
+
+            int totalPrice = 0;
+            foreach (IngredientSO ingredient in product.ingredients)
+                totalPrice += ingredient.price;
+
+            priceText.SetText(totalPrice + "€/U");
+            productImage.texture = product.image;
+        }
     }
 
     public void UpdateStock() => stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
 
     public void SetIngredient(IngredientSO ingredient) => this.ingredient = ingredient;
+    public void SetProduct(ProductSO product) => this.product = product;
 }
