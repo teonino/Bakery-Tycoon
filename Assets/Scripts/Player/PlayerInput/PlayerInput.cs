@@ -589,7 +589,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -703,17 +703,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""92f78c12-0f2e-4ee6-97fa-633ad9d03966"",
-                    ""path"": ""<Gamepad>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""Keyboard"",
@@ -1476,6 +1465,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Amafood"",
+            ""id"": ""bd93baa2-dc13-4764-9812-def00b70aa35"",
+            ""actions"": [
+                {
+                    ""name"": ""AddIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""97b32914-ab71-4c62-abc8-94d30a26696b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RemoveIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""124de300-c188-4b9c-b91a-85bba0a9bf83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1a153665-ef89-4db5-8296-d88f3ba6ae40"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d34c5553-8c4d-4424-804e-1a472b023f7f"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1562,6 +1599,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CutPasteV2_DownAction = m_CutPasteV2.FindAction("DownAction", throwIfNotFound: true);
         m_CutPasteV2_RightAction = m_CutPasteV2.FindAction("RightAction", throwIfNotFound: true);
         m_CutPasteV2_LeftAction = m_CutPasteV2.FindAction("LeftAction", throwIfNotFound: true);
+        // Amafood
+        m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
+        m_Amafood_AddIngredient = m_Amafood.FindAction("AddIngredient", throwIfNotFound: true);
+        m_Amafood_RemoveIngredient = m_Amafood.FindAction("RemoveIngredient", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2148,6 +2189,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CutPasteV2Actions @CutPasteV2 => new CutPasteV2Actions(this);
+
+    // Amafood
+    private readonly InputActionMap m_Amafood;
+    private IAmafoodActions m_AmafoodActionsCallbackInterface;
+    private readonly InputAction m_Amafood_AddIngredient;
+    private readonly InputAction m_Amafood_RemoveIngredient;
+    public struct AmafoodActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddIngredient => m_Wrapper.m_Amafood_AddIngredient;
+        public InputAction @RemoveIngredient => m_Wrapper.m_Amafood_RemoveIngredient;
+        public InputActionMap Get() { return m_Wrapper.m_Amafood; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AmafoodActions set) { return set.Get(); }
+        public void SetCallbacks(IAmafoodActions instance)
+        {
+            if (m_Wrapper.m_AmafoodActionsCallbackInterface != null)
+            {
+                @AddIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
+                @RemoveIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+            }
+            m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @AddIngredient.started += instance.OnAddIngredient;
+                @AddIngredient.performed += instance.OnAddIngredient;
+                @AddIngredient.canceled += instance.OnAddIngredient;
+                @RemoveIngredient.started += instance.OnRemoveIngredient;
+                @RemoveIngredient.performed += instance.OnRemoveIngredient;
+                @RemoveIngredient.canceled += instance.OnRemoveIngredient;
+            }
+        }
+    }
+    public AmafoodActions @Amafood => new AmafoodActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2230,5 +2312,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnDownAction(InputAction.CallbackContext context);
         void OnRightAction(InputAction.CallbackContext context);
         void OnLeftAction(InputAction.CallbackContext context);
+    }
+    public interface IAmafoodActions
+    {
+        void OnAddIngredient(InputAction.CallbackContext context);
+        void OnRemoveIngredient(InputAction.CallbackContext context);
     }
 }

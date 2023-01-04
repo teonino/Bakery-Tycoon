@@ -18,22 +18,29 @@ public class AmmountManager : MonoBehaviour {
     public void MinusButtonIsClicked() {
         if (amountToBuy > 0) {
             amountToBuy -= 1;
-            SetIngredientsInCart();
+            SetIngredientsInCart(false);
         }
     }
 
     public void PlusButtonIsClicked() {
         amountToBuy += 1;
-        SetIngredientsInCart();
+        SetIngredientsInCart(true);
     }
 
-    private void SetIngredientsInCart() {
+    private void SetIngredientsInCart(bool add) {
         if (deliveryButton.ingredient)
-            deliveryManager.SetIngredient(deliveryButton.ingredient, amountToBuy);
-        else 
-            foreach (IngredientSO ingredient in deliveryButton.product.ingredients)
-                deliveryManager.SetIngredient(ingredient, amountToBuy);
+            deliveryManager.SetIngredient(deliveryButton.ingredient, add);
+        else
+            foreach (IngredientSO ingredient in deliveryButton.product.ingredients) {
+                deliveryManager.SetIngredient(ingredient, add);
+                deliveryButton.GetIngredientButton(ingredient).GetComponentInChildren<AmmountManager>().SetTextAmount();
+            }
         
+        textAmmount.text = amountToBuy.ToString();
+    }
+
+    public void SetTextAmount() {
+        amountToBuy++;
         textAmmount.text = amountToBuy.ToString();
     }
 

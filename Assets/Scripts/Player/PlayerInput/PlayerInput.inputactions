@@ -567,7 +567,7 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Quit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -681,17 +681,6 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "92f78c12-0f2e-4ee6-97fa-633ad9d03966",
-                    "path": "<Gamepad>/dpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "Keyboard",
@@ -1450,6 +1439,54 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "LeftAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Amafood",
+            "id": "bd93baa2-dc13-4764-9812-def00b70aa35",
+            "actions": [
+                {
+                    "name": "AddIngredient",
+                    "type": "Button",
+                    "id": "97b32914-ab71-4c62-abc8-94d30a26696b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RemoveIngredient",
+                    "type": "Button",
+                    "id": "124de300-c188-4b9c-b91a-85bba0a9bf83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1a153665-ef89-4db5-8296-d88f3ba6ae40",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AddIngredient",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d34c5553-8c4d-4424-804e-1a472b023f7f",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RemoveIngredient",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
