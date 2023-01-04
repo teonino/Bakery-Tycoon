@@ -32,7 +32,6 @@ public class AIRegularCustomer : AICustomer {
             if (chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving) {
                 state = AIState.sitting;
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-                waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
             }
         }
         catch (Exception e) {
@@ -41,7 +40,6 @@ public class AIRegularCustomer : AICustomer {
 
         if (table && table.GetItem(false) && state == AIState.sitting) {
             if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
-                StopCoroutine(waitingCoroutine);
                 //Take item
                 ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
                 if (!item) {
