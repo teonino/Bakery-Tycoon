@@ -73,7 +73,7 @@ public class AIRandomCustomer : AICustomer {
     }
 
     public override void Effect() {
-        StopCoroutine(waitingCoroutine);
+        print("Effect");
         Leave();
     }
 }

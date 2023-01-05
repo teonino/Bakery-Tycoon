@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour {
             else
                 cinemachine.enabled = false;
         }
+
+        Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {

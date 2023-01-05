@@ -26,7 +26,6 @@ public class AICustomer : Interactable {
     protected GameObject item;
     protected SpawnCustomer spawner;
     protected Vector3 spawnPosition;
-    protected Coroutine waitingCoroutine;
     protected bool tutorial;
 
     protected void Awake() {

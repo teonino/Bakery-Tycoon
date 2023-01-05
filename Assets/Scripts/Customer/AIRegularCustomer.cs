@@ -95,6 +95,7 @@ public class AIRegularCustomer : AICustomer {
     }
 
     public override void Effect() {
+        print("Effect");
         if (conversationRemaining > 0 && state == AIState.eating) {
             dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
                 go.Result.GetComponent<DialogueManager>().GetDialogues(1,"classeur");
