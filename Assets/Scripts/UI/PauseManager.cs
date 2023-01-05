@@ -33,7 +33,7 @@ public class PauseManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().EnableInput();
     }
 
-    public void Quit() {
+    public void MainMenu() {
         SceneManager.LoadScene("MainMenu");
     }
 }
