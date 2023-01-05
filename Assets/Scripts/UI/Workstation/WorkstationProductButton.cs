@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-public class WorkstationButton : MonoBehaviour {
+public class WorkstationProductButton : MonoBehaviour {
     [SerializeField] private ProductSO product;
     [SerializeField] private GameObject productRequirementPanel;
     [SerializeField] private RawImage image;
@@ -46,7 +46,7 @@ public class WorkstationButton : MonoBehaviour {
     }
 
     public void SetOngoingProduct() {
-        workplacePanel.SetProduct(product);
+        //workplacePanel.SetProduct(product);
     }
     public ProductSO GetProduct() => product;
 

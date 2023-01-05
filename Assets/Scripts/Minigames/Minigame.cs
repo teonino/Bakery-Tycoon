@@ -51,9 +51,6 @@ public abstract class Minigame : MonoBehaviour {
             default:
                 break;
         }
-
-        if (go != null)
-            go.GetComponent<CraftingStation>().AddDirt();
     }
 
     protected string GetControl(InputAction action, int index = 0) {
