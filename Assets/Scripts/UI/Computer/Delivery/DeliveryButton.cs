@@ -37,6 +37,8 @@ public class DeliveryButton : MonoBehaviour {
     }
     public void UpdateStock() => stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
 
+    public void SetIngredientSO(ListIngredient ingredients) => this.ingredients = ingredients;
+
     public void SetIngredient(IngredientSO ingredient) {
         this.ingredient = ingredient;
 
@@ -44,6 +46,7 @@ public class DeliveryButton : MonoBehaviour {
         priceText.SetText(ingredient.price + "€/U");
         productImage.texture = ingredient.image;
     }
+
     public void SetProduct(ProductSO product) {
         this.product = product;
 

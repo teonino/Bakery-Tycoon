@@ -16,14 +16,20 @@ public class WorkstationIngredientButton : MonoBehaviour {
     private bool requirementMet;
 
     private void Start() {
-        ingredientInformation.SetText($"Stock : {ingredients.GetIngredientAmount(ingredient)}");
+        UpdateStock();
         image.texture = ingredient.image;
+    }
+
+    public void UpdateStock() {
+        ingredientInformation.SetText($"Stock : {ingredients.GetIngredientAmount(ingredient)}");
     }
 
     public void SelectIngredient() {
         if (debugState.GetDebug() || ingredients.GetIngredientAmount(ingredient) > 0)
             workplacePanel.IngredientSelected(ingredient);
     }
+
+    public void SetIngredientSO(ListIngredient ingredients) => this.ingredients = ingredients;
 
     public IngredientSO GetIngredient() => ingredient;
 

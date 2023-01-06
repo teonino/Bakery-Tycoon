@@ -15,6 +15,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private ListProduct products;
     [SerializeField] private PlayerControllerSO playerControllerSO;
+    [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Controller controller;
     [SerializeField] private int scrollSpeed;
     [SerializeField] private OrderQuest orderQuest;
@@ -44,6 +45,8 @@ public class DeliveryManager : MonoBehaviour {
         ingredientButtonList = new List<GameObject>();
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
+
+        deliveries.UpdateUI += UpdateStockButtons;
 
         playerController = playerControllerSO.GetPlayerController();
 
@@ -86,8 +89,10 @@ public class DeliveryManager : MonoBehaviour {
         //Instantiate buttons
         for (int i = 0; i < lenght; i++) {
             buttonAsset.InstantiateAsync().Completed += (go) => {
-                go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<DeliveryButton>().SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
+                DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
+                button.deliveryManager = this;
+                button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
+                button.SetIngredientSO(ingredients);
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
@@ -214,8 +219,7 @@ public class DeliveryManager : MonoBehaviour {
             ResetCart();
     }
 
-    public IEnumerator UpdateStockButtons(int secondDelay) {
-        yield return new WaitForSeconds(secondDelay);
+    public void UpdateStockButtons() {
         for (int i = 0; i < ingredientButtonList.Count; i++)
             ingredientButtonList[i].GetComponent<DeliveryButton>().UpdateStock();
     }

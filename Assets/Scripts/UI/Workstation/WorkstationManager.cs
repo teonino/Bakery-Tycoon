@@ -23,6 +23,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI stockListText;
     [SerializeField] private ListProduct allProducts;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
 
@@ -43,13 +44,16 @@ public class WorkstationManager : MonoBehaviour {
     [HideInInspector] public ProductSO currentProduct;
 
     private void Awake() {
-        workplace = FindObjectOfType<Workstation>();
-        ingredientButtonList = new List<GameObject>();
         rackList = new List<GameObject>();
+        ingredientButtonList = new List<GameObject>();
         ingredientsSelected = new List<IngredientSelected>();
-        scollRectTransform = scroll.GetComponent<RectTransform>();
         lenght = ingredients.GetIngredientLenght();
+        workplace = FindObjectOfType<Workstation>();
+        scollRectTransform = scroll.GetComponent<RectTransform>();
+
+        deliveries.UpdateUI += UpdateStocksButton;
     }
+
 
     private void OnEnable() {
         //Setup Stock
@@ -75,6 +79,7 @@ public class WorkstationManager : MonoBehaviour {
                 WorkstationIngredientButton button = go.Result.GetComponent<WorkstationIngredientButton>();
                 button.workplacePanel = this;
                 button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
+                button.SetIngredientSO(ingredients);
                 //button.SetRequirement(CheckRequirement(allProducts.GetProductList()[nbButton]));
                 ingredientButtonList.Add(go.Result);
                 nbButton++;
@@ -120,6 +125,12 @@ public class WorkstationManager : MonoBehaviour {
                 controller.SetEventSystemToStartButton(null);
         }
     }
+
+    private void UpdateStocksButton() {
+        foreach (GameObject go in ingredientButtonList)
+            go.GetComponent<WorkstationIngredientButton>().UpdateStock();
+    }
+
     private void Update() {
         if (controller.IsGamepad()) {
             scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
@@ -242,8 +253,12 @@ public class WorkstationManager : MonoBehaviour {
         if (currentProduct) {
             IngredientPanel.SetActive(false);
             LaunchIngredientMinigame();
-            foreach (IngredientSelected ingredientSelected in ingredientsSelected)
-                ingredientSelected.RemoveIngredient();
+            foreach (IngredientSelected ingredientSelected in ingredientsSelected) {
+                if (ingredientSelected.GetIngredient()) {
+                    ingredientSelected.RemoveIngredient();
+                    nbIngredientSelected--;
+                }
+            }
         } else {
             StartCoroutine(DisplayNoRecipeText());
         }

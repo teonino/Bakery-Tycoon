@@ -14,9 +14,9 @@ public class AIRandomCustomer : AICustomer {
         shelf.GetAvailableQueuePosition(this);
     }
 
-    public new void InitCustomer() {
+    public new void InitCustomer(Day day) {
         if (inQueue)
-            base.InitCustomer();
+            base.InitCustomer(day);
         else
             DestroyCustomer();
 
@@ -35,8 +35,6 @@ public class AIRandomCustomer : AICustomer {
     }
 
     private new void Leave() {
-        if (!item)
-            reputation.RemoveReputation(3);
         base.Leave();
         shelf.RemoveCustomerInQueue(this);
     }

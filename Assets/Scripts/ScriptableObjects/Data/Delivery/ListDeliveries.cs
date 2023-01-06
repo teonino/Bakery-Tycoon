@@ -15,6 +15,8 @@ public class ListDeliveries : Data {
     private List<Delivery> deliveries = new List<Delivery>();
     private int timeDeliveryValue;
 
+    public Action UpdateUI;
+
     private void OnEnable() {
         day.NewDay += CheckDeliveries;
 
@@ -61,6 +63,7 @@ public class ListDeliveries : Data {
                 if (stockIngredient.ingredient == deliveryIngredient.ingredient)
                     stockIngredient.amount += deliveryIngredient.amount;
 
+        UpdateUI?.Invoke();
         deliveries.Remove(delivery);
     }
 
