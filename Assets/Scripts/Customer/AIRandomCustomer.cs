@@ -14,9 +14,9 @@ public class AIRandomCustomer : AICustomer {
         shelf.GetAvailableQueuePosition(this);
     }
 
-    public new void InitCustomer() {
+    public new void InitCustomer(Day day) {
         if (inQueue)
-            base.InitCustomer();
+            base.InitCustomer(day);
         else
             DestroyCustomer();
 
@@ -35,8 +35,6 @@ public class AIRandomCustomer : AICustomer {
     }
 
     private new void Leave() {
-        if (!item)
-            reputation.RemoveReputation(3);
         base.Leave();
         shelf.RemoveCustomerInQueue(this);
     }
@@ -45,15 +43,12 @@ public class AIRandomCustomer : AICustomer {
         //Go to the Queue
         if (agent.remainingDistance < 1 && state == AIState.moving) {
             state = AIState.waiting;
-            waitingCoroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
         }
 
         //Buy item and leave
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this)) {
             ProductHolder objectOnShelf = shelf.GetItem().GetComponent<ProductHolder>();
             if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste") {
-                //Stop waiting
-                StopCoroutine(waitingCoroutine);
                 //Take item
                 if (!item) {
                     if (objectOnShelf.product.amount > 1) {
@@ -76,7 +71,7 @@ public class AIRandomCustomer : AICustomer {
     }
 
     public override void Effect() {
-        StopCoroutine(waitingCoroutine);
+        reputation.RemoveReputation(5);
         Leave();
     }
 }

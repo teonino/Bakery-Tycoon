@@ -14,6 +14,7 @@ public class AICustomer : Interactable {
     [SerializeField] protected Money money;
     [SerializeField] protected Reputation reputation;
     [SerializeField] protected Statistics stats;
+    [SerializeField] protected Day day;
 
     [Header("AI Customer Variables")]
     [SerializeField] protected float waitingTime = 5f;
@@ -26,7 +27,6 @@ public class AICustomer : Interactable {
     protected GameObject item;
     protected SpawnCustomer spawner;
     protected Vector3 spawnPosition;
-    protected Coroutine waitingCoroutine;
     protected bool tutorial;
 
     protected void Awake() {
@@ -35,7 +35,10 @@ public class AICustomer : Interactable {
         money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
-    public void InitCustomer() {
+    public void InitCustomer(Day day) {
+        this.day = day;
+        day.DayTimeChange += LeaveOnEvening;
+
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
@@ -46,6 +49,11 @@ public class AICustomer : Interactable {
                 Debug.LogError("RequestedProductNull");
         };
         spawnPosition = transform.position;
+    }
+
+    private void LeaveOnEvening() {
+        if (day.GetDayTime() == DayTime.Evening)
+            Leave();
     }
 
     protected void FixedUpdate() {
@@ -82,6 +90,12 @@ public class AICustomer : Interactable {
 
     //Remove product panel + exit bakery
     protected void Leave() {
+        AIRandomCustomer randomCustomer;
+        if(this.TryGetComponent<AIRandomCustomer>(out randomCustomer)) {
+            randomCustomer.Leave();
+        } else {
+            this.GetComponent<AIRegularCustomer>().Leave();
+        }
         state = AIState.leaving;
         agent.SetDestination(spawnPosition);
     }

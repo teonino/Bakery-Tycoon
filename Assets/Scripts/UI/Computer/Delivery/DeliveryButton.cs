@@ -11,6 +11,7 @@ public class DeliveryButton : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private RawImage productImage;
+    private List<GameObject> ingredientButtons;
     public IngredientSO ingredient;
     public ProductSO product;
     [HideInInspector] public DeliveryManager deliveryManager;
@@ -18,28 +19,44 @@ public class DeliveryButton : MonoBehaviour {
     public int nbIngredient = 0;
 
     void Start() {
+        ingredientButtons = new List<GameObject>();
+
         GetComponentInChildren<AmmountManager>().deliveryManager = deliveryManager;
         GetComponentInChildren<AmmountManager>().deliveryButton = this;
         nbIngredient = 0;
-        if (ingredient) {
-            stockText.SetText("Stock : " + ingredients.GetIngredientAmount(ingredient));
-            priceText.SetText(ingredient.price + "€/U");
-            productImage.texture = ingredient.image;
-        }
-        else if (product) {
-            stockText.SetText(product.name);
-
-            int totalPrice = 0;
-            foreach (IngredientSO ingredient in product.ingredients)
-                totalPrice += ingredient.price;
-
-            priceText.SetText(totalPrice + "€/U");
-            productImage.texture = product.image;
-        }
     }
 
+    public void SetIngredientButton(List<GameObject> buttons) => ingredientButtons = buttons;
+    public DeliveryButton GetIngredientButton(IngredientSO ingredient) {
+        for(int i = 0; i < ingredientButtons.Count; i++) {
+            DeliveryButton button = ingredientButtons[i].GetComponent<DeliveryButton>();
+            if (button.ingredient == ingredient)
+                return button;
+        }
+        return null;
+    }
     public void UpdateStock() => stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
 
-    public void SetIngredient(IngredientSO ingredient) => this.ingredient = ingredient;
-    public void SetProduct(ProductSO product) => this.product = product;
+    public void SetIngredientSO(ListIngredient ingredients) => this.ingredients = ingredients;
+
+    public void SetIngredient(IngredientSO ingredient) {
+        this.ingredient = ingredient;
+
+        stockText.SetText("Stock : " + ingredients.GetIngredientAmount(ingredient));
+        priceText.SetText(ingredient.price + "€/U");
+        productImage.texture = ingredient.image;
+    }
+
+    public void SetProduct(ProductSO product) {
+        this.product = product;
+
+        stockText.SetText(product.name);
+
+        int totalPrice = 0;
+        foreach (IngredientSO ingredient in product.ingredients)
+            totalPrice += ingredient.price;
+
+        priceText.SetText(totalPrice + "€/U");
+        productImage.texture = product.image;
+    }
 }
