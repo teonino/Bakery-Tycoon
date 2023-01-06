@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class AIRandomCustomer : AICustomer {
@@ -15,6 +13,8 @@ public class AIRandomCustomer : AICustomer {
     }
 
     public new void InitCustomer(Day day) {
+        day.DayTimeChange += LeaveOnEvening;
+
         if (inQueue)
             base.InitCustomer(day);
         else
@@ -32,6 +32,12 @@ public class AIRandomCustomer : AICustomer {
     protected IEnumerator CustomerWaiting(float time) {
         yield return new WaitForSeconds(time);
         Leave();
+    }
+    private void LeaveOnEvening() {
+        if (day.GetDayTime() == DayTime.Evening) {
+            Leave();
+            day.DayTimeChange -= LeaveOnEvening;
+        }
     }
 
     private new void Leave() {

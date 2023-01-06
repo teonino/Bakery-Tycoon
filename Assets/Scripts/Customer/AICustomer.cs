@@ -37,7 +37,6 @@ public class AICustomer : Interactable {
 
     public void InitCustomer(Day day) {
         this.day = day;
-        day.DayTimeChange += LeaveOnEvening;
 
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
@@ -51,10 +50,7 @@ public class AICustomer : Interactable {
         spawnPosition = transform.position;
     }
 
-    private void LeaveOnEvening() {
-        if (day.GetDayTime() == DayTime.Evening)
-            Leave();
-    }
+
 
     protected void FixedUpdate() {
         //Exit the bakery
@@ -90,12 +86,6 @@ public class AICustomer : Interactable {
 
     //Remove product panel + exit bakery
     protected void Leave() {
-        AIRandomCustomer randomCustomer;
-        if(this.TryGetComponent<AIRandomCustomer>(out randomCustomer)) {
-            randomCustomer.Leave();
-        } else {
-            this.GetComponent<AIRegularCustomer>().Leave();
-        }
         state = AIState.leaving;
         agent.SetDestination(spawnPosition);
     }

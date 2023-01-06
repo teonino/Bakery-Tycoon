@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();
         Time.timeScale = 1;
-        OnDestroyDialoguePanel.Invoke();
+        OnDestroyDialoguePanel?.Invoke();
         Addressables.ReleaseInstance(gameObject);
     }
 }

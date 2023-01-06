@@ -16,9 +16,10 @@ public class AIRegularCustomer : AICustomer {
     [HideInInspector] public int indexChair;
     [HideInInspector] public Table table;
 
-    new void Awake() {
-        base.Awake();
+    public new void InitCustomer(Day day) {
         dialoguePanel = FindObjectOfType<DialogueManager>(true);
+        day.DayTimeChange += LeaveOnEvening;
+        base.InitCustomer(day);
     }
 
     new void FixedUpdate() {
@@ -76,7 +77,12 @@ public class AIRegularCustomer : AICustomer {
         agent.SetDestination(chair.transform.position);
         state = AIState.moving;
     }
-
+    private void LeaveOnEvening() {
+        if (day.GetDayTime() == DayTime.Evening) {
+            Leave();
+            day.DayTimeChange -= LeaveOnEvening;
+        }
+    }
     private new void Leave() {
         if (chair)
             chair.ocuppied = false;
