@@ -72,8 +72,5 @@ public class AIRandomCustomer : AICustomer {
         base.FixedUpdate();
     }
 
-    public override void Effect() {
-        print("Effect");
-        Leave();
-    }
+    public override void Effect() => Leave();
 }

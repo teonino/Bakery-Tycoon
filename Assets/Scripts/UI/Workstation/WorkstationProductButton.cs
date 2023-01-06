@@ -2,37 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class WorkstationProductButton : MonoBehaviour {
     [SerializeField] private ProductSO product;
-    [SerializeField] private GameObject productRequirementPanel;
-    [SerializeField] private RawImage image;
-    [SerializeField] private TextMeshProUGUI productIngredientsText;
-    [SerializeField] private TextMeshProUGUI productCreatedText;
 
-    [HideInInspector] public WorkstationManager workplacePanel;
+    [SerializeField] private RawImage image;
+    [SerializeField] private TextMeshProUGUI productNbCreated;
+    [SerializeField] private TextMeshProUGUI productDescription;
+    [SerializeField] private GameObject layoutGroup;
+    [SerializeField] private AssetReference ingredientAsset;
+
+    [SerializeField] private GameObject productRequirementPanel;
     private bool requirementMet;
 
-    private void Start() {
-        productCreatedText.SetText(product.name + " x" + product.nbCreated);
+    public void SetProduct(ProductSO product) {
+        this.product = product;
+
         image.texture = product.image;
+        productNbCreated.SetText(product.name + " x" + product.nbCreated);
+        productDescription.SetText("Ingredients :\n");
 
-        productIngredientsText.SetText("Ingredients :\n");
-        for (int i = 0; i < product.ingredients.Count; i++) {
-            productIngredientsText.text += "    " + product.ingredients[i].name;
-            if (i < product.ingredients.Count - 1)
-                productIngredientsText.text += ",\n";
+        foreach(IngredientSO ingredient in product.ingredients) {
+            ingredientAsset.InstantiateAsync(layoutGroup.transform).Completed += (go) => {
+                IngredientSelected ingredientDisplay = go.Result.GetComponent<IngredientSelected>();
+                ingredientDisplay.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+                ingredientDisplay.SetIngredient(ingredient);
+            };
         }
-        productIngredientsText.text += "\nCrafting station :\n    " + product.craftStationRequired.ToString();
 
-        CheckRequirement();
+        //CheckRequirement();
     }
 
     public void SetRequirement(bool requirementMet) {
         this.requirementMet = requirementMet;
-        CheckRequirement();
+        //CheckRequirement();
     }
 
     private void CheckRequirement() {
@@ -44,11 +50,4 @@ public class WorkstationProductButton : MonoBehaviour {
             productRequirementPanel.SetActive(false);
         }
     }
-
-    public void SetOngoingProduct() {
-        //workplacePanel.SetProduct(product);
-    }
-    public ProductSO GetProduct() => product;
-
-    public void SetProduct(ProductSO product) => this.product = product;
 }

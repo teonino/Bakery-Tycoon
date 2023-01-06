@@ -34,8 +34,10 @@ public class Controller : ScriptableObject {
     public bool IsGamepad() => inputType == InputType.Gamepad;
 
     public void SetEventSystemToStartButton(GameObject startButton) {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(startButton);
+        if (EventSystem.current) {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(startButton);
+        }
     }
 
     public void RegisterCurrentSelectedButton() {

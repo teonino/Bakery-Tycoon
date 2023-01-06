@@ -85,6 +85,12 @@ public class CraftingStation : Interactable {
         };
 
         cooking = true;
+
+        readyAsset.InstantiateAsync().Completed += (go) => {
+            readyText = go.Result;
+            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+            readyText.SetActive(false);
+        };
         //if (skipCookingTime)
         //    yield return new WaitForSeconds(0);
         //else
@@ -94,10 +100,7 @@ public class CraftingStation : Interactable {
 
     private void FinishCooking() {
         cooking = false;
-        readyAsset.InstantiateAsync().Completed += (go) => {
-            readyText = go.Result;
-            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
-        };
+        readyText.SetActive(true);
     }
 
     //public void Clean() {

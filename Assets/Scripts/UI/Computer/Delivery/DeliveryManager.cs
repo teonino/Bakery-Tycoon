@@ -111,7 +111,7 @@ public class DeliveryManager : MonoBehaviour {
 
     void SetupButtons(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
         if (rackList.Count * maxButtonInRack >= buttonList.Count) {
-            scrollRect.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, buttonList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
+            scrollRect.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, buttonList[0].GetComponent<RectTransform>().rect.height * (rackList.Count + 1));
             for (int i = 0; i < lenght; i++) {
                 for (int j = 0; j < lenght; j++) {
                     if (j / maxButtonInRack < rackList.Count) {

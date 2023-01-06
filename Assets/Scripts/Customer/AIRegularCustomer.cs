@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 public class AIRegularCustomer : AICustomer {
     [Header("AI Regular Customer variables")]
-    [SerializeField] private AssetReference dialoguePanelAsset;
+    [SerializeField] private DialogueManager dialoguePanel;
     [SerializeField] private AssetReference plateAsset;
     [SerializeField] private int conversationRemaining = 2;
 
@@ -18,6 +18,7 @@ public class AIRegularCustomer : AICustomer {
 
     new void Awake() {
         base.Awake();
+        dialoguePanel = FindObjectOfType<DialogueManager>(true);
     }
 
     new void FixedUpdate() {
@@ -95,10 +96,9 @@ public class AIRegularCustomer : AICustomer {
     }
 
     public override void Effect() {
-        print("Effect");
         if (conversationRemaining > 0 && state == AIState.eating) {
-            dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
-                go.Result.GetComponent<DialogueManager>().GetDialogues(1,"classeur");
+            dialoguePanel.gameObject.SetActive(true);
+            dialoguePanel.GetDialogues(1, "classeur");
             conversationRemaining--;
         }
     }

@@ -14,6 +14,8 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private AssetReference ingredientSelectedAsset;
     //[SerializeField] private GameObject stockPanel;
+    [SerializeField] private GameObject IngredientPanel;
+    [SerializeField] private GameObject RecipePanel;
     [SerializeField] private GameObject ingredientSelectedParent;
     [SerializeField] private GameObject cookButton;
     [SerializeField] private GameObject scroll;
@@ -23,6 +25,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
 
+    private List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
     private List<GameObject> rackList;
     private Workstation workplace;
@@ -32,7 +35,6 @@ public class WorkstationManager : MonoBehaviour {
     private int lenght;
     private int maxButtonInRack;
     private RectTransform scollRectTransform;
-    private List<IngredientSelected> ingredientsSelected;
     private int nbIngredientSelected = 0;
 
     [HideInInspector] public bool skipRequirement = false;
@@ -59,9 +61,10 @@ public class WorkstationManager : MonoBehaviour {
         //foreach (GameObject button in ingredientButtonList)
         //    button.GetComponent<WorkstationIngredientButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationProductButton>().GetProduct()));
 
-
-        if (ingredientButtonList.Count > 0)
-            EnableButtons();
+        if (ingredientButtonList.Count > 0) 
+            if (controller.IsGamepad())
+                StartCoroutine(waitForGamepad());
+        DisplayIngredients();
     }
 
     //Create buttons
@@ -87,7 +90,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void SetupRacks() {
         if (ingredientButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x) - 1;
+            maxButtonInRack = (int)Math.Floor(scollRectTransform.rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x) - 1;
             for (int i = 0; i < ingredientButtonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
                     rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
@@ -102,7 +105,7 @@ public class WorkstationManager : MonoBehaviour {
     //Once enough button created, we position them
     private void SetupButton() {
         if (rackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
-            scollRectTransform.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, rackList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
+            scollRectTransform.sizeDelta = new Vector2(scollRectTransform.rect.width, rackList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < rackList.Count) {
                     ingredientButtonList[i].transform.SetParent(rackList[i / maxButtonInRack].transform);
@@ -236,8 +239,10 @@ public class WorkstationManager : MonoBehaviour {
         }
 
         if (currentProduct) {
-            DisableButtons();
+            IngredientPanel.SetActive(false);
             LaunchIngredientMinigame();
+            foreach (IngredientSelected ingredientSelected in ingredientsSelected)
+                ingredientSelected.RemoveIngredient();
         } else {
             print("No Product found with these ingredients");
         }
@@ -294,25 +299,43 @@ public class WorkstationManager : MonoBehaviour {
         LaunchIngredientMinigame();
     }
 
-    private void DisableButtons() {
-        foreach (GameObject go in ingredientButtonList)
-            go.SetActive(false);
+    public void DisplayRecipes() {
+        IngredientPanel.SetActive(false);
+        RecipePanel.SetActive(true);
+    }
 
-        nbButton = 0;
-        cookButton.SetActive(false);
+    public void DisplayIngredients() {
+        IngredientPanel.SetActive(true);
+        RecipePanel.SetActive(false);
+    }
+
+    //private void DisableButtons() {
+
+        //foreach (GameObject go in ingredientButtonList)
+        //    go.SetActive(false);
+
+        //foreach (IngredientSelected ingredientDisplay in ingredientsSelected)
+        //    ingredientDisplay.gameObject.SetActive(false);
+
+        //nbButton = 0;
+        //cookButton.SetActive(false);
         //stockPanel.SetActive(false);
-    }
+    //}
 
-    private void EnableButtons() {
-        if (controller.IsGamepad())
-            StartCoroutine(waitForGamepad());
+    //private void EnableButtons() {
+    //    if (controller.IsGamepad())
+    //        StartCoroutine(waitForGamepad());
 
-        foreach (GameObject go in ingredientButtonList)
-            go.SetActive(true);
+        //IngredientPanel.SetActive(true);
+        //foreach (GameObject go in ingredientButtonList)
+        //    go.SetActive(true);
 
-        cookButton.SetActive(true);
+        //foreach (IngredientSelected ingredientDisplay in ingredientsSelected)
+        //    ingredientDisplay.gameObject.SetActive(true);
+
+        //cookButton.SetActive(true);
         //stockPanel.SetActive(true);
-    }
+    //}
 
     private IEnumerator waitForGamepad() {
         yield return new WaitForEndOfFrame();
@@ -321,6 +344,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void OnDisable() {
         controller?.SetEventSystemToStartButton(null);
+        RecipePanel.SetActive(false);     
     }
 
     private void OnDestroy() {
@@ -332,6 +356,11 @@ public class WorkstationManager : MonoBehaviour {
         foreach (GameObject go in rackList)
             if (go)
                 Addressables.ReleaseInstance(go);
+
+        foreach (IngredientSelected ingredientSelected in ingredientsSelected)
+            if (ingredientSelected.gameObject)
+                Addressables.ReleaseInstance(ingredientSelected.gameObject);
+
         rackList.Clear();
     }
 }
