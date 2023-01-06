@@ -72,5 +72,8 @@ public class AIRandomCustomer : AICustomer {
         base.FixedUpdate();
     }
 
-    public override void Effect() => Leave();
+    public override void Effect() {
+        reputation.RemoveReputation(5);
+        Leave();
+    }
 }

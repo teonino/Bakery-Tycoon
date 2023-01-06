@@ -10,6 +10,8 @@ public class TabsManagement : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private Day day;
 
+    private GameObject currentPanel;
+
     private void Awake() {
         day.DayTimeChange += EnableStatistic;
     }
@@ -19,7 +21,6 @@ public class TabsManagement : MonoBehaviour {
             statisticTab.SetActive(true);
     }
 
-    private GameObject currentPanel;
 
     private void OnEnable() {
         currentPanel = firstPanel;

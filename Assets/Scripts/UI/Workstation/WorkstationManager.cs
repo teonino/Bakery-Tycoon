@@ -19,6 +19,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private GameObject ingredientSelectedParent;
     [SerializeField] private GameObject cookButton;
     [SerializeField] private GameObject scroll;
+    [SerializeField] private GameObject noRecipeText;
     [SerializeField] private TextMeshProUGUI stockListText;
     [SerializeField] private ListProduct allProducts;
     [SerializeField] private ListIngredient ingredients;
@@ -244,8 +245,14 @@ public class WorkstationManager : MonoBehaviour {
             foreach (IngredientSelected ingredientSelected in ingredientsSelected)
                 ingredientSelected.RemoveIngredient();
         } else {
-            print("No Product found with these ingredients");
+            StartCoroutine(DisplayNoRecipeText());
         }
+    }
+
+    private IEnumerator DisplayNoRecipeText() {
+        noRecipeText.SetActive(true);
+        yield return new WaitForSeconds(1);
+        noRecipeText.SetActive(false);
     }
 
     public void LaunchIngredientMinigame() {
