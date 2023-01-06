@@ -7,41 +7,28 @@ using UnityEngine.SceneManagement;
 public class TutorialManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI questTxt;
     [SerializeField] private List<Quest> quests;
+    [SerializeField] private Tutorial tutorial;
 
     private int indexQuest = 0;
     private DialogueManager dialogueManager;
     private Dialogue dialogue;
 
     private void Awake() {
+        tutorial.SetTutorial(true);
+
         foreach (Quest quest in quests)
             quest.SetActive(false);
 
         dialogueManager = FindObjectOfType<DialogueManager>(true);
+        dialogueManager.OnDestroyDialoguePanel += LaunchQuest;
 
         SetupDialogue();
         SetupQuest();
     }
 
     private void SetupDialogue() {
-        dialogueManager.GetDialogues(indexQuest + 1, "Tutorial");
-
         dialogueManager.gameObject.SetActive(true);
-        dialogueManager.OnDestroyDialoguePanel += LaunchQuest;
-
-        //dialogue = new Dialogue();
-        //dialogue.npcSpeech = "Welcome my dear little marmotte to your soon-to-become bakery ! Here you will prepare and serve delicious food to your customers. Today i will help you to prepare and find your way in the bakery !";
-        //dialogue.answers.Add(new Answer("Continue...", 0, new Dialogue()));
-        //dialogue.answers[0].nextDialogue.npcSpeech = "To bake your first baguette, get to the computer to order on amafood !";
-        //dialogue.answers[0].nextDialogue.answers.Add(new Answer("Continue...", 0, new Dialogue()));
-
-        //dialogueManager.SetDialogue(dialogue);
-
-    }
-
-    private void SetupQuest() {
-        quests[indexQuest].OnCompletedAction += NextQuest;
-        quests[indexQuest].SetActive(true);
-        LaunchQuest();
+        dialogueManager.GetDialogues(indexQuest + 1, "Tutorial");
     }
 
     private void LaunchQuest() {
@@ -63,5 +50,10 @@ public class TutorialManager : MonoBehaviour {
             questTxt.gameObject.SetActive(false);
             SetupDialogue();
         }
+    }
+    private void SetupQuest() {
+        quests[indexQuest].OnCompletedAction += NextQuest;
+        quests[indexQuest].SetActive(true);
+        LaunchQuest();
     }
 }

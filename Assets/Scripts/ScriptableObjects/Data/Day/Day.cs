@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "Day", menuName = "Data/Day")]
-public class Day : ScriptableObject {
+public class Day : Data {
     [SerializeField] private string currentScene;
     [SerializeField] private DayTime dayTime;
     [SerializeField] private int dayCount;
@@ -15,8 +15,8 @@ public class Day : ScriptableObject {
     private int timeElapsed;
     public Action DayTimeChange;
     public Action NewDay;
-
-    private void OnEnable() {
+    
+    public override void ResetValues() {
         dayTime = DayTime.Morning;
         timeElapsed = 0;
     }

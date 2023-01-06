@@ -18,7 +18,15 @@ public class DialogueManager : MonoBehaviour {
     public Action OnDestroyDialoguePanel;
 
     private void OnEnable() {
+        if (playerControllerSO.GetPlayerController()) {
+            playerControllerSO.GetPlayerController().DisableInput();
+            controller.RegisterCurrentSelectedButton();
+            Time.timeScale = 0;
+        }
+    } 
+    private void Start() {
         playerControllerSO.GetPlayerController().DisableInput();
+        controller.RegisterCurrentSelectedButton();
         Time.timeScale = 0;
     }
 
@@ -75,14 +83,20 @@ public class DialogueManager : MonoBehaviour {
             button.SetNextDialogue(dialogue.answers[i].nextDialogue);
             button.SetRelationReward(dialogue.answers[i].relation);
 
-            if (i == 0 && controller.GetInputType() == InputType.Gamepad) {
-                controller.SetEventSystemToStartButton(button.gameObject);
+            if (i == 0) {
+                StartCoroutine(WaitForGamepad(button.gameObject));
             }
         }
     }
 
+    private IEnumerator WaitForGamepad(GameObject go) {
+        yield return new WaitForEndOfFrame();
+        controller.SetEventSystemToStartButton(go);
+    }
+
     public void OnDisable() {
         playerControllerSO.GetPlayerController().EnableInput();
+        controller.SetEventSystemToLastButton();
         Time.timeScale = 1;
         OnDestroyDialoguePanel.Invoke();
         Addressables.ReleaseInstance(gameObject);

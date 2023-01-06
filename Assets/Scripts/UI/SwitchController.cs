@@ -9,6 +9,17 @@ public class SwitchController : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
 
+    private void Start() {
+        if (Gamepad.all.Count > 0) {
+            controller.SetInputType(InputType.Gamepad);
+            textButton.SetText("Gamepad");
+        }
+        else if (InputSystem.devices.Count > 0) {
+            controller.SetInputType(InputType.KeyboardMouse);
+            textButton.SetText("Keyboard & Mouse");
+        }
+    }
+
     public void SwitchCurrentController() {
         if (controller.IsGamepad()) {
             if (InputSystem.devices.Count > 0) {
@@ -26,5 +37,5 @@ public class SwitchController : MonoBehaviour {
                 textButton.SetText("Gamepad");
             }
         }
-    } 
+    }
 }

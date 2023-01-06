@@ -10,7 +10,7 @@ public class Statistics : ScriptableObject {
     private int moneySpent;
     private int moneyEarned;
 
-    private void OnEnable() {
+    public void OnEnable() {
         moneyEarned = moneySpent = 0;
         productsSold = new Dictionary<ProductSO, int>();
         foreach (ProductSO product in products.GetProductList())

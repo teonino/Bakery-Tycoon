@@ -23,39 +23,46 @@ public class WallFade : MonoBehaviour {
             if (other.gameObject.tag == "MainCamera") {
                 if (stillInUse)
                 {
-                    if (visibleCoroutines.Count > 0)
-                    {
-                        foreach (Coroutine coroutine in visibleCoroutines)
-                            StopCoroutine(coroutine);
-                        visibleCoroutines.Clear();
-                    }
-
+                    
                     for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    {
-                        invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
-                    }
+                        wallToDispawn.transform.GetChild(i).gameObject.SetActive(false);
+
+                    //if (visibleCoroutines.Count > 0)
+                    //{
+                    //    foreach (Coroutine coroutine in visibleCoroutines)
+                    //        StopCoroutine(coroutine);
+                    //    visibleCoroutines.Clear();
+                    //}
+
+                    //for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                    //{
+                        
+                    //    invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
+                    //}
                 }
             }
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (thisRoomIsActive) {
-            if (other.gameObject.tag == "MainCamera"){
-                if (stillInUse)
-                {
-                    if (invisibleCoroutines.Count > 0)
-                    {
-                        foreach (Coroutine coroutine in invisibleCoroutines)
-                            StopCoroutine(coroutine);
-                        invisibleCoroutines.Clear();
-                    }
+        if (other.gameObject.tag == "MainCamera"){
+            if (stillInUse)
+            {
+                
+                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                    wallToDispawn.transform.GetChild(i).gameObject.SetActive(true);
+                    //if (invisibleCoroutines.Count > 0)
+                    //{
+                    //    foreach (Coroutine coroutine in invisibleCoroutines)
+                    //        StopCoroutine(coroutine);
+                    //    invisibleCoroutines.Clear();
+                    //}
 
-                    for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    {
-                        visibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1)));
-                    }
-                }
+                    //for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                    //{
+
+                    //    visibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1)));
+                    //}
             }
         }
     }

@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "ListIngredient", menuName = "Data/ListIngredient")]
-public class ListIngredient : ScriptableObject
+public class ListIngredient : Data
 {
     [SerializeField] private List<StockIngredient> listIngredient;
 
     private void OnEnable() {
+        ResetValues();
+    }
+
+    public override void ResetValues() {
         foreach (StockIngredient stock in listIngredient)
             stock.amount = 0;
     }

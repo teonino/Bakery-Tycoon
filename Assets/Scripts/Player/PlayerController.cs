@@ -10,12 +10,17 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject itemSocket;
+    [SerializeField] private GameObject interractPanel;
+
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
+    private bool playerInUI = false;
+    private bool playerInputEnable = true;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
+    public Controller GetController() => controller;
 
     // Start is called before the first frame update
     void Awake() {
@@ -28,6 +33,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     private void FixedUpdate() {
+        //Player Movement
         if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) { //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
             animator.SetBool("isWalking", true);
@@ -35,23 +41,35 @@ public class PlayerController : MonoBehaviour {
         else
             animator.SetBool("isWalking", false);
 
-        if (!controller.IsGamepad()) {
-            if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
-                cinemachine.enabled = true;
-            else if (cinemachine.enabled == true)
+        //Camera Movement
+        if (!FindObjectOfType<CameraSwitch>().switchingCamera) {
+            if (!playerInUI) {
+                if (!controller.IsGamepad()) {
+                    if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
+                        cinemachine.enabled = true;
+                    else if (cinemachine.enabled == true)
+                        cinemachine.enabled = false;
+                }
+                else
+                    cinemachine.enabled = true; ;
+            }
+            else
                 cinemachine.enabled = false;
-        } else 
-            cinemachine.enabled = true; ;
+        }
+
+        Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
     }
 
     public void OnInterract(InputAction.CallbackContext context) {
         if (context.performed) {
             RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
             bool interactableFound = false;
-            for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                if (hitInfo[i].collider.GetComponent<Interactable>()) {
-                    hitInfo[i].collider.GetComponent<Interactable>().Effect();
-                    interactableFound = true;
+            if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
+                for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
+                    if (hitInfo[i].collider.GetComponent<Interactable>()) {
+                        hitInfo[i].collider.GetComponent<Interactable>().Effect();
+                        interactableFound = true;
+                    }
                 }
             }
         }
@@ -66,10 +84,14 @@ public class PlayerController : MonoBehaviour {
 
     public void EnableInput() {
         playerInput.Player.Enable();
+        playerInUI = false;
+        playerInputEnable = true;
         controller.InitInputType(this);
     }
 
     public void DisableInput() {
+        playerInUI = true;
+        playerInputEnable = false;
         playerInput.Player.Disable();
     }
 
@@ -79,6 +101,7 @@ public class PlayerController : MonoBehaviour {
         return s[s.Length - 1];
     }
 
+    public bool GetPlayerInputEnabled() => playerInputEnable;
     public GameObject GetItemSocket() => itemSocket;
 
     private void OnEnable() {

@@ -93,9 +93,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 3187611812318952568}
   ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  controller: {fileID: 0}
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
-  computerPanel: {fileID: 0}
   playerControllerSO: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
+  computerPanel: {fileID: 0}
+  backButton: {fileID: 0}
+  interractQuest: {fileID: 0}
 --- !u!1 &3187611811520534322
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2944029175012035507
 RectTransform:
   m_ObjectHideFlags: 0

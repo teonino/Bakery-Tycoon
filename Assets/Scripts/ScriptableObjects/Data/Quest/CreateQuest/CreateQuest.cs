@@ -13,11 +13,11 @@ public class CreateQuest : Quest {
 
     public void CheckProduct(ProductSO product) {
         if (isActive) {
-            if (this.product == product) {
+            if (string.Equals(this.product.name,product.name)) {
                 currentAmount++;
             }
 
-            if (currentAmount > amount) {
+            if (currentAmount >= amount) {
                 OnCompleted();
             }
         }

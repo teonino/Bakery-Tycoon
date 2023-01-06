@@ -8,27 +8,32 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class WorkstationManager : MonoBehaviour {
-    [SerializeField] private AssetReference productButtonAsset;
-    [SerializeField] private AssetReference productRackAsset;
+    [SerializeField] private int nbIngredientMax = 3;
+    [SerializeField] private int scrollSpeed;
+    [SerializeField] private AssetReference ingredientButtonAsset;
+    [SerializeField] private AssetReference rackAsset;
+    [SerializeField] private AssetReference ingredientSelectedAsset;
+    //[SerializeField] private GameObject stockPanel;
+    [SerializeField] private GameObject ingredientSelectedParent;
+    [SerializeField] private GameObject cookButton;
+    [SerializeField] private GameObject scroll;
     [SerializeField] private TextMeshProUGUI stockListText;
-    [SerializeField] private GameObject stockPanel;
-    [SerializeField] private ListProduct products;
-    [SerializeField] private ListIngredient ingredients; 
+    [SerializeField] private ListProduct allProducts;
+    [SerializeField] private ListIngredient ingredients;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
-    [SerializeField] private RectTransform rectTransform;
-    [SerializeField] private int scrollSpeed;
 
-    private List<GameObject> productButtonList;
-    private List<GameObject> productRackList;
+    private List<GameObject> ingredientButtonList;
+    private List<GameObject> rackList;
     private Workstation workplace;
     private int nbButton = 0;
     private int currentMinigameCounter = 0;
     private Minigame currentMinigame;
-    private int itemQuality = 0;
-    private GameObject content;
     private int lenght;
     private int maxButtonInRack;
+    private RectTransform scollRectTransform;
+    private List<IngredientSelected> ingredientsSelected;
+    private int nbIngredientSelected = 0;
 
     [HideInInspector] public bool skipRequirement = false;
     [HideInInspector] public bool skipMinigame = false;
@@ -36,47 +41,91 @@ public class WorkstationManager : MonoBehaviour {
 
     private void Awake() {
         workplace = FindObjectOfType<Workstation>();
-        productButtonList = new List<GameObject>();
-        productRackList = new List<GameObject>();
-        content = GetComponentInChildren<VerticalLayoutGroup>().gameObject;
-        lenght = products.GetProductLenght();
+        ingredientButtonList = new List<GameObject>();
+        rackList = new List<GameObject>();
+        ingredientsSelected = new List<IngredientSelected>();
+        scollRectTransform = scroll.GetComponent<RectTransform>();
+        lenght = ingredients.GetIngredientLenght();
     }
 
     private void OnEnable() {
         //Setup Stock
         stockListText.SetText("");
         List<StockIngredient> stocks = ingredients.GetIngredientList();
-        foreach (StockIngredient stock in stocks) {
+
+        foreach (StockIngredient stock in stocks)
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
-        }
 
-        foreach (GameObject button in productButtonList) {
-            button.GetComponent<WorkstationButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationButton>().GetProduct()));
-        }
+        //foreach (GameObject button in ingredientButtonList)
+        //    button.GetComponent<WorkstationIngredientButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationProductButton>().GetProduct()));
 
-        if (productButtonList != null) {
+
+        if (ingredientButtonList.Count > 0)
             EnableButtons();
-        }
     }
 
     //Create buttons
     private void Start() {
         for (int i = 0; i < lenght; i++) {
-            productButtonAsset.InstantiateAsync().Completed += (go) => {
-                WorkstationButton button = go.Result.GetComponent<WorkstationButton>();
+            ingredientButtonAsset.InstantiateAsync().Completed += (go) => {
+                WorkstationIngredientButton button = go.Result.GetComponent<WorkstationIngredientButton>();
                 button.workplacePanel = this;
-                button.SetProduct(products.GetProductList()[nbButton]);
-                button.SetRequirement(CheckRequirement(products.GetProductList()[nbButton]));
-                productButtonList.Add(go.Result);
+                button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
+                //button.SetRequirement(CheckRequirement(allProducts.GetProductList()[nbButton]));
+                ingredientButtonList.Add(go.Result);
                 nbButton++;
                 SetupRacks();
             };
         }
+
+        for (int i = 0; i < nbIngredientMax; i++) {
+            ingredientSelectedAsset.InstantiateAsync(ingredientSelectedParent.transform).Completed += (go) => {
+                ingredientsSelected.Add(go.Result.GetComponent<IngredientSelected>());
+            };
+        }
     }
 
+    private void SetupRacks() {
+        if (ingredientButtonList.Count > 0 && nbButton == lenght) {
+            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x) - 1;
+            for (int i = 0; i < ingredientButtonList.Count; i++) {
+                if (i % maxButtonInRack == 0) {
+                    rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
+                        rackList.Add(go.Result);
+                        SetupButton();
+                    };
+                }
+            }
+        }
+    }
+
+    //Once enough button created, we position them
+    private void SetupButton() {
+        if (rackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
+            scollRectTransform.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, rackList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
+            for (int i = 0; i < lenght; i++) {
+                if (i / maxButtonInRack < rackList.Count) {
+                    ingredientButtonList[i].transform.SetParent(rackList[i / maxButtonInRack].transform);
+                    ingredientButtonList[i].transform.localScale = Vector3.one;
+                }
+            }
+
+            if (controller.IsGamepad())
+                controller.SetEventSystemToStartButton(ingredientButtonList[0]);
+            else
+                controller.SetEventSystemToStartButton(null);
+        }
+    }
     private void Update() {
         if (controller.IsGamepad()) {
-                rectTransform.offsetMax -= new Vector2Int(0, (int)playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed);
+            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+        }
+
+        if (gameObject.activeSelf) {
+            if (!controller.GetEventSystemCurrentlySelected() && ingredientButtonList.Count > 0) {
+                controller.SetEventSystemToStartButton(ingredientButtonList[0]);
+            }
+            playerControllerSO.GetPlayerController().DisableInput();
         }
     }
 
@@ -100,114 +149,189 @@ public class WorkstationManager : MonoBehaviour {
         return requirementMet;
     }
 
-    //Once enough button created, we position them
-    private void SetupRacks() {
-        if (productButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(content.GetComponent<RectTransform>().rect.width / productButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
-            for (int i = 0; i < productButtonList.Count; i++) {
-                if (i % maxButtonInRack == 0) {
-                    productRackAsset.InstantiateAsync(content.transform).Completed += (go) => {
-                        productRackList.Add(go.Result);
-                        SetupButton();
-                    };
+    //public void SetProduct(ProductSO product) {
+    //    this.currentProduct = product;
+    //    DisableButtons();
+    //    LaunchMinigame();
+    //}
+
+    public void IngredientSelected(IngredientSO ingredient) {
+        //Check if ingredient already selected
+        bool ingredientRemoved = false;
+        for (int i = 0; i < ingredientsSelected.Count; i++)
+            if (ingredientsSelected[i].GetIngredient() == ingredient) {
+                ingredientsSelected[i].RemoveIngredient();
+                nbIngredientSelected--;
+                ingredientRemoved = true;
+
+            }
+
+        //Check available ingredient slot
+        if (!ingredientRemoved) {
+            bool ingredientAdded = false;
+            for (int i = 0; i < ingredientsSelected.Count && !ingredientAdded; i++) {
+                if (ingredientsSelected[i].GetIngredient() == null) {
+                    ingredientsSelected[i].SetIngredient(ingredient);
+                    nbIngredientSelected++;
+                    ingredientAdded = true;
                 }
             }
         }
     }
 
-    private void SetupButton() {
-        if (productRackList.Count * maxButtonInRack >= productButtonList.Count) {
-            content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().rect.width, productRackList[0].GetComponent<RectTransform>().rect.height * productRackList.Count);
-            for (int i = 0; i < lenght; i++) {
-                if (i / maxButtonInRack < productRackList.Count) {
-                    productButtonList[i].transform.SetParent(productRackList[i / maxButtonInRack].transform);
-                    productButtonList[i].transform.localScale = Vector3.one;
+    //private void LaunchMinigame() {
+    //    if (currentProduct) {
+    //        //Launch minigame
+    //        if (currentMinigameCounter != currentProduct.minigames.Count && !skipMinigame)
+    //            currentProduct.minigames[currentMinigameCounter].minigameAsset.InstantiateAsync(transform).Completed += (go) => {
+    //                go.Result.name = " Panel " + currentMinigameCounter;
+    //                currentMinigame = go.Result.GetComponent<Minigame>();
+    //            };
+    //        //Create product
+    //        else {
+    //            if (!currentProduct.hasPaste) {
+    //                currentProduct.asset.InstantiateAsync().Completed += (go) => {
+    //                    if (currentMinigameCounter >= 0)
+    //                        go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
+    //                    workplace.CloseWorkplace(go.Result);
+    //                    ResetManager();
+    //                };
+    //            }
+    //            else {
+    //                ProductSO tmpProduct = currentProduct;
+    //                currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
+    //                    if (currentMinigameCounter > 0)
+    //                        go.Result.GetComponent<ProductHolder>().product.quality = itemQuality / currentMinigameCounter;
+    //                    go.Result.GetComponent<ProductHolder>().product.SetProduct(tmpProduct);
+    //                    workplace.CloseWorkplace(go.Result);
+    //                    ResetManager();
+    //                };
+    //            }
+
+    //            RemoveIngredients(currentProduct);
+    //        }
+    //    }
+    //}
+
+    public void Cook() {
+        //Check product with selected Ingredient
+        foreach (ProductSO product in allProducts.GetProductList()) {
+            if (product.ingredients.Count == nbIngredientSelected) {
+                bool matchingIngredient = true;
+                for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
+                    bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
+                    for (int j = 0; j < nbIngredientSelected; j++) {
+                        if (product.ingredients[i] == ingredientsSelected[j].GetIngredient()) {
+                            checkMatchingIngredients = true;
+                        }
+                    }
+
+                    if (!checkMatchingIngredients)
+                        matchingIngredient = false;
                 }
+
+                if (matchingIngredient)
+                    currentProduct = product;
             }
-
-            if (controller.IsGamepad())
-                controller.SetEventSystemToStartButton(productButtonList[0]);
-            else
-                controller.SetEventSystemToStartButton(null);
         }
-    }
 
-    public void SetProduct(ProductSO product) {
-        this.currentProduct = product;
-        DisableButtons();
-        LaunchMinigame();
-    }
-
-    private void LaunchMinigame() {
         if (currentProduct) {
-            //Launch minigame
-            if (currentMinigameCounter != currentProduct.minigames.Count && !skipMinigame)
-                currentProduct.minigames[currentMinigameCounter].minigameAsset.InstantiateAsync(transform).Completed += (go) => {
-                    go.Result.name = " Panel " + currentMinigameCounter;
-                    currentMinigame = go.Result.GetComponent<Minigame>();
-                };
-            //Create product
-            else {
-                if (!currentProduct.hasPaste) {
-                    currentProduct.asset.InstantiateAsync().Completed += (go) => {
-                        if (currentMinigameCounter >= 0)
-                            go.Result.GetComponent<Product>().quality = itemQuality / currentMinigameCounter;
-                        workplace.CloseWorkplace(go.Result);
-                        ResetManager();
-                    };
-                }
-                else {
-                    ProductSO tmpProduct = currentProduct;
-                    currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
-                        if (currentMinigameCounter > 0)
-                            go.Result.GetComponent<ProductHolder>().product.quality = itemQuality / currentMinigameCounter;
-                        go.Result.GetComponent<ProductHolder>().product.SetProduct(tmpProduct);
-                        workplace.CloseWorkplace(go.Result);
-                        ResetManager();
-                    };
-                }
-
-                RemoveIngredients(currentProduct);
-            }
+            DisableButtons();
+            LaunchIngredientMinigame();
+        } else {
+            print("No Product found with these ingredients");
         }
     }
 
-    private void RemoveIngredients(ProductSO product) {
-        foreach (IngredientSO ingredient in product.ingredients) {
-            ingredients.RemoveIngredientStock(ingredient, 1);
+    public void LaunchIngredientMinigame() {
+
+        if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
+            ingredientsSelected[currentMinigameCounter].GetIngredient().minigame.minigameAsset.InstantiateAsync(transform).Completed += (go) => {
+                go.Result.name = " Panel " + currentMinigameCounter;
+                currentMinigame = go.Result.GetComponent<Minigame>();
+            };
+        }
+        else {
+            if (!currentProduct.hasPaste) {
+                currentProduct.asset.InstantiateAsync().Completed += (go) => {
+                    workplace.CloseWorkplace(go.Result);
+                    ResetManager();
+                };
+            }
+            else {
+                ProductSO tmpProduct = currentProduct;
+                currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
+                    go.Result.GetComponent<ProductHolder>().product.SetProduct(tmpProduct);
+                    workplace.CloseWorkplace(go.Result);
+                    ResetManager();
+                };
+            }
+
+            RemoveIngredients();
+        }
+    }
+
+    private void RemoveIngredients() {
+        for (int i = 0; i < nbIngredientSelected; i++) {
+            ingredients.RemoveIngredientStock(ingredientsSelected[i].GetIngredient(), 1);
         }
     }
 
     public void ResetManager() {
-        if (currentMinigame)
+        if (currentMinigame) {
             currentMinigame.DisableInputs();
+            Addressables.ReleaseInstance(currentMinigame.gameObject);
+        }
         currentMinigameCounter = 0;
         currentProduct = null;
-        itemQuality = 0;
     }
 
     public void MinigameComplete(int quality) {
-        itemQuality += quality;
+        //itemQuality += quality;
         currentMinigame = null;
         currentMinigameCounter++;
-        LaunchMinigame();
+        //LaunchMinigame();
+        LaunchIngredientMinigame();
     }
 
     private void DisableButtons() {
-        foreach (GameObject go in productButtonList)
+        foreach (GameObject go in ingredientButtonList)
             go.SetActive(false);
-        stockPanel.SetActive(false);
+
+        nbButton = 0;
+        cookButton.SetActive(false);
+        //stockPanel.SetActive(false);
     }
 
     private void EnableButtons() {
-        foreach (GameObject go in productButtonList)
+        if (controller.IsGamepad())
+            StartCoroutine(waitForGamepad());
+
+        foreach (GameObject go in ingredientButtonList)
             go.SetActive(true);
-        stockPanel.SetActive(true);
+
+        cookButton.SetActive(true);
+        //stockPanel.SetActive(true);
+    }
+
+    private IEnumerator waitForGamepad() {
+        yield return new WaitForEndOfFrame();
+        controller.SetEventSystemToStartButton(ingredientButtonList[0]);
+    }
+
+    private void OnDisable() {
+        controller?.SetEventSystemToStartButton(null);
     }
 
     private void OnDestroy() {
-        foreach (GameObject go in productButtonList)
+        foreach (GameObject go in ingredientButtonList)
             if (go)
                 Addressables.ReleaseInstance(go);
+        ingredientButtonList.Clear();
+
+        foreach (GameObject go in rackList)
+            if (go)
+                Addressables.ReleaseInstance(go);
+        rackList.Clear();
     }
 }

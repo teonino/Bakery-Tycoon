@@ -18,6 +18,10 @@ public class PriceButton : MonoBehaviour {
     [SerializeField] private ChangePriceQuest changePriceQuest;
     private ProductSO product;
 
+    private void Start() {
+        controller = FindObjectOfType<PlayerController>().GetController();
+    }
+
     public void SetPriceButton() {
         if (!controller.IsGamepad()) 
             SetNewPrice((int)Math.Round(float.Parse(priceText.text), 0));
@@ -34,7 +38,6 @@ public class PriceButton : MonoBehaviour {
         this.product = product;
         image.texture = product.image;
         priceText.text = product.price + "";
-        //priceText.text = gameManager.GetProductPrice(product) + "";
     }
 
     public void SetNewPrice(int newPrice) {

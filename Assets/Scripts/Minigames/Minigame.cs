@@ -21,6 +21,7 @@ public abstract class Minigame : MonoBehaviour {
     protected void Start() {
         workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
         playerController = FindObjectOfType<PlayerController>();
+        controller = playerController.GetController();
         launchTime = Time.time;
         EnableInputs();
     }
@@ -50,9 +51,6 @@ public abstract class Minigame : MonoBehaviour {
             default:
                 break;
         }
-
-        if (go != null)
-            go.GetComponent<CraftingStation>().AddDirt();
     }
 
     protected string GetControl(InputAction action, int index = 0) {

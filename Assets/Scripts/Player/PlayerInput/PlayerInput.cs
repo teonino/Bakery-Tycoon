@@ -585,6 +585,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f6bae206-9a3e-4800-94f0-e334542959a6"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""aa604c1a-887b-45db-a437-8338d720610d"",
                     ""path"": ""<Keyboard>/anyKey"",
                     ""interactions"": """",
@@ -692,17 +703,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""92f78c12-0f2e-4ee6-97fa-633ad9d03966"",
-                    ""path"": ""<Gamepad>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""Keyboard"",
@@ -998,19 +998,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""65a74147-41bb-4dd5-b441-9d9061ca9704"",
-                    ""path"": ""<XInputController>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SpreadPasteAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""72617cb1-b1cc-406b-82a3-1453b4b8654e"",
-                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""id"": ""ab464387-bc0c-443b-a101-360d90ff8966"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -1273,17 +1262,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""e717c75d-fb18-48b1-adf0-35f43b5f4e74"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""AddItemsAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""53815827-1d00-471e-a47a-8d960c3d911a"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
@@ -1295,7 +1273,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""30162b73-45ea-4c77-b661-958cdea9910b"",
+                    ""id"": ""2cd8dd82-9edd-4e49-a55b-d528e8b4c593"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddItemsAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""143e95c0-1718-4863-ab87-aa65866b7ecd"",
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1323,17 +1312,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""d74882cf-cbfa-489c-81cf-3a886d6991da"",
-                    ""path"": ""<XInputController>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""CutPasteAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ebb83a92-a4d7-417e-bff2-fe6c127269dd"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -1345,8 +1323,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ca262e6d-bed5-4831-9847-9df849ea0e91"",
-                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""id"": ""1a9ce429-6591-437a-a438-7ac91aea6bf6"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -1487,6 +1465,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Amafood"",
+            ""id"": ""bd93baa2-dc13-4764-9812-def00b70aa35"",
+            ""actions"": [
+                {
+                    ""name"": ""AddIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""97b32914-ab71-4c62-abc8-94d30a26696b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RemoveIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""124de300-c188-4b9c-b91a-85bba0a9bf83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1a153665-ef89-4db5-8296-d88f3ba6ae40"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d34c5553-8c4d-4424-804e-1a472b023f7f"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1573,6 +1599,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CutPasteV2_DownAction = m_CutPasteV2.FindAction("DownAction", throwIfNotFound: true);
         m_CutPasteV2_RightAction = m_CutPasteV2.FindAction("RightAction", throwIfNotFound: true);
         m_CutPasteV2_LeftAction = m_CutPasteV2.FindAction("LeftAction", throwIfNotFound: true);
+        // Amafood
+        m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
+        m_Amafood_AddIngredient = m_Amafood.FindAction("AddIngredient", throwIfNotFound: true);
+        m_Amafood_RemoveIngredient = m_Amafood.FindAction("RemoveIngredient", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2159,6 +2189,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CutPasteV2Actions @CutPasteV2 => new CutPasteV2Actions(this);
+
+    // Amafood
+    private readonly InputActionMap m_Amafood;
+    private IAmafoodActions m_AmafoodActionsCallbackInterface;
+    private readonly InputAction m_Amafood_AddIngredient;
+    private readonly InputAction m_Amafood_RemoveIngredient;
+    public struct AmafoodActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddIngredient => m_Wrapper.m_Amafood_AddIngredient;
+        public InputAction @RemoveIngredient => m_Wrapper.m_Amafood_RemoveIngredient;
+        public InputActionMap Get() { return m_Wrapper.m_Amafood; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AmafoodActions set) { return set.Get(); }
+        public void SetCallbacks(IAmafoodActions instance)
+        {
+            if (m_Wrapper.m_AmafoodActionsCallbackInterface != null)
+            {
+                @AddIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
+                @RemoveIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+            }
+            m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @AddIngredient.started += instance.OnAddIngredient;
+                @AddIngredient.performed += instance.OnAddIngredient;
+                @AddIngredient.canceled += instance.OnAddIngredient;
+                @RemoveIngredient.started += instance.OnRemoveIngredient;
+                @RemoveIngredient.performed += instance.OnRemoveIngredient;
+                @RemoveIngredient.canceled += instance.OnRemoveIngredient;
+            }
+        }
+    }
+    public AmafoodActions @Amafood => new AmafoodActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2241,5 +2312,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnDownAction(InputAction.CallbackContext context);
         void OnRightAction(InputAction.CallbackContext context);
         void OnLeftAction(InputAction.CallbackContext context);
+    }
+    public interface IAmafoodActions
+    {
+        void OnAddIngredient(InputAction.CallbackContext context);
+        void OnRemoveIngredient(InputAction.CallbackContext context);
     }
 }

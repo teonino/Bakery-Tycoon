@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Reputation", menuName = "Data/Reputation")]
-public class Reputation : ScriptableObject {
+public class Reputation : Data {
     [SerializeField] private int level;
     [SerializeField] private int experience;
     [SerializeField] private List<int> experiencesPerLevel;
     public Action UpdateUI;
 
-    private void OnEnable() {
+    public override void ResetValues() {
         experience = 0;
         level = 0;
     }

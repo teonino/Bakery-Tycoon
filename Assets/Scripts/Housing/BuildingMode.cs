@@ -41,7 +41,7 @@ public class BuildingMode : Interactable {
     }
 
     public override void Effect() {
-        if (day.GetDayTime() == DayTime.Morning) {
+        if (day.GetDayTime() != DayTime.Day) {
             playerControllerSO.GetPlayerController().DisableInput();
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
 
@@ -54,7 +54,7 @@ public class BuildingMode : Interactable {
             mainCamera.SetActive(false);
             buildingCamera.SetActive(true);
 
-                interractQuest.OnInterract();
+            interractQuest?.OnInterract();
         }
     }
 
@@ -109,7 +109,7 @@ public class BuildingMode : Interactable {
 
     private void ChangeColliderSize(bool remove) {
         if (selectedGo.TryGetComponent(out BoxCollider boxCol))
-            if (remove) 
+            if (remove)
                 boxCol.size -= Vector3.one * 0.1f;
             else
                 boxCol.size += Vector3.one * 0.1f;

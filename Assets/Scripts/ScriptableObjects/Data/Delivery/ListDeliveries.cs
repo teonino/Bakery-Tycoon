@@ -6,14 +6,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "listDeliveries", menuName = "Data/ListDeliveries")]
-public class ListDeliveries : ScriptableObject {
+public class ListDeliveries : Data {
     [SerializeField] private Day day;
+    [SerializeField] private Tutorial tutorial;
     [SerializeField] private ListIngredient ingredients;
-    [SerializeField] private List<Delivery> deliveries = new List<Delivery>();
-    [SerializeField] private int timeExpressDelivery = 15;
+    [SerializeField] private int timeDelivery = 15;
+
+    private List<Delivery> deliveries = new List<Delivery>();
+    private int timeDeliveryValue;
 
     private void OnEnable() {
         day.NewDay += CheckDeliveries;
+
+        if (tutorial)
+            timeDeliveryValue = 0;
+        else
+            timeDeliveryValue = timeDelivery;
+    }
+
+    public override void ResetValues() {
+        deliveries = new List<Delivery>();
     }
 
     private void OnDisable() {
@@ -25,7 +37,7 @@ public class ListDeliveries : ScriptableObject {
     }
 
     public IEnumerator ExpressDelivery(Delivery delivery) {
-        yield return new WaitForSeconds(timeExpressDelivery);
+        yield return new WaitForSeconds(timeDeliveryValue);
         DeliverOrder(delivery);
     }
 
@@ -52,5 +64,7 @@ public class ListDeliveries : ScriptableObject {
         deliveries.Remove(delivery);
     }
 
-    public int GetExpressOrderTime() => timeExpressDelivery;
+    public int GetExpressOrderTime() => timeDeliveryValue;
+    public int SetExpressOrderTime(int value) => timeDeliveryValue = value;
+    public int SetDefaultExpressOrderTime() => timeDeliveryValue = timeDelivery;
 }
