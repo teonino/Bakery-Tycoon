@@ -15,6 +15,11 @@ public class CreateQuest : Quest {
         this.product = product;
         this.amount = amount;
         this.title = $"Create {amount} {product.name}";
+
+        isActive = true;
+
+        reward = RewardType.Money;
+        rewardAmount = 25;
     }   
 
     public void CheckProduct(ProductSO product) {

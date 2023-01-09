@@ -31,12 +31,13 @@ public class AICustomer : Interactable {
 
     protected void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();
+
+        day = FindObjectOfType<DayTimeUI>().GetDay();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
         money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
-    public void InitCustomer(Day day) {
-        this.day = day;
+    public void InitCustomer() {
 
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;

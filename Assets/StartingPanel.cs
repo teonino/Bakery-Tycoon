@@ -13,22 +13,11 @@ public class StartingPanel : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
         quests.ResetValues();
 
         Time.timeScale = 0;
         dayTxt.text = $"Day {day.GetCurrentDay()}";
         customerTxt.text = $"X Customers expected";
-
-        //for (int i = 0; i < nbQuest; i++) {
-        //    int rng = Random.Range(0, 1);
-
-        //    switch (rng) {
-        //        case 0: 
-        //            quests.GetQuestList().Add(new CreateQuest(products.GetRandomProduct(), 2));
-        //            break;
-        //    }
-        //}
 
         questTxt.text = "";
         foreach (Quest quest in quests.GetQuestList()) {

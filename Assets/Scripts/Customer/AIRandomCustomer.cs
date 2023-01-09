@@ -12,14 +12,13 @@ public class AIRandomCustomer : AICustomer {
         shelf.GetAvailableQueuePosition(this);
     }
 
-    public new void InitCustomer(Day day) {
-        day.DayTimeChange += LeaveOnEvening;
-
+    public new void InitCustomer() {
         if (inQueue)
-            base.InitCustomer(day);
+            base.InitCustomer();
         else
             DestroyCustomer();
 
+        day.DayTimeChange += LeaveOnEvening;
         state = AIState.moving;
     }
 

@@ -10,6 +10,9 @@ public class ListQuest : Data {
     [SerializeField] private List<Quest> quests;
 
     public override void ResetValues() {
+        for (int i = 0; i < quests.Count; i++) 
+            quests[i].SetActive(false);
+        
         for (int i = 0; i < nbQuest; i++) {
             int rng = Random.Range(0, quests.Count);
 
@@ -17,18 +20,25 @@ public class ListQuest : Data {
             while (quests[rng].IsActive())
                 rng = Random.Range(0, quests.Count);
 
-            //Don't add => Randomize which quest will be randomize
+            //Set active when 3+ quests
             switch (quests[rng]) {
                 case CreateQuest:
-                    CreateQuest createQuest = (CreateQuest) quests[rng];
+                    CreateQuest createQuest = (CreateQuest)quests[rng];
+
+                    //Only pick a product player can do
+                    ProductSO rngProduct = products.GetRandomProduct();
+                    while (!rngProduct.CheckRequirement())
+                        rngProduct = products.GetRandomProduct();
+
                     createQuest.Init(products.GetRandomProduct(), 2);
                     break;
-                case InterractQuest: 
+                case InterractQuest:
+                    InterractQuest interractQuest = (InterractQuest)quests[rng];
+                    interractQuest.Init();
                     break;
-                default: 
+                default:
                     break;
             }
-
         }
     }
 
