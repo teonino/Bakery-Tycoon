@@ -13,7 +13,6 @@ public class CheckCollision : MonoBehaviour {
                 nbCollision++;
                 manager.CheckNbCollision();
             }
-
         }
         else {
             if (collision.gameObject.layer == layer || collision.gameObject.tag == "Wall") {
@@ -29,7 +28,6 @@ public class CheckCollision : MonoBehaviour {
                 nbCollision--;
                 manager.CheckNbCollision();
             }
-
         }
         else {
             if (collision.gameObject.layer == layer || collision.gameObject.tag == "Wall") {
