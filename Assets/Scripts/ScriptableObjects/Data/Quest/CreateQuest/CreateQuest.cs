@@ -11,6 +11,12 @@ public class CreateQuest : Quest {
 
     private int currentAmount = 0;
 
+    public void Init(ProductSO product, int amount) {
+        this.product = product;
+        this.amount = amount;
+        this.title = $"Create {amount} {product.name}";
+    }   
+
     public void CheckProduct(ProductSO product) {
         if (isActive) {
             if (string.Equals(this.product.name,product.name)) {
