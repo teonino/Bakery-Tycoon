@@ -24,7 +24,7 @@ public class DayManager : MonoBehaviour
     void Start()
     {
         displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
-        displaySkipButton();
+        displaySkipButton?.Invoke();
         duration = day.GetMorningDuration() + day.GetDayDuration();
         lightComponent = GetComponent<Light>();
         initialColorTemperature = lightComponent.colorTemperature;
