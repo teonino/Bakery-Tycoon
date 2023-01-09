@@ -734,6 +734,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearButtonTxt
       objectReference: {fileID: 0}
+    - target: {fileID: 6030660968947672183, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 4192824943942559278}
     - target: {fileID: 6086797128112917780, guid: 225c74f45f724324abfeeda26760af26, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -798,7 +802,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 2781184677757129322}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.49681446, g: 1, b: 0.4764151, a: 1}
@@ -942,6 +946,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6030660968947672183, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 6727540552535140333}
+    - target: {fileID: 6030660968947672183, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1554458104070261755}
+    - target: {fileID: 6030660968947672183, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Order
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030660968947672183, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CartUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6086797128112917780, guid: 225c74f45f724324abfeeda26760af26, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -960,15 +980,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 225c74f45f724324abfeeda26760af26, type: 3}
---- !u!114 &2781184677757129322 stripped
+--- !u!114 &6727540552535140333 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6086797128112917780, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3440015068309534867, guid: 225c74f45f724324abfeeda26760af26, type: 3}
   m_PrefabInstance: {fileID: 8277727198084915070}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &7580262516966092704 stripped
