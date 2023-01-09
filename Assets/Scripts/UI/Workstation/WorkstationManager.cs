@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class WorkstationManager : MonoBehaviour {
     [SerializeField] private int nbIngredientMax = 3;
@@ -38,6 +36,8 @@ public class WorkstationManager : MonoBehaviour {
     private RectTransform scollRectTransform;
     private int nbIngredientSelected = 0;
     private TextMeshProUGUI noRecipeText;
+    private int firstIndexMinigame = -1;
+    private int secondIndexMinigame = -1;
 
     [HideInInspector] public bool skipRequirement = false;
     [HideInInspector] public bool skipMinigame = false;
@@ -217,8 +217,8 @@ public class WorkstationManager : MonoBehaviour {
                 bool matchingIngredient = true;
                 for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
                     bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
-                    for (int j = 0; j < nbIngredientSelected; j++) 
-                        if (product.ingredients[i] == ingredientsSelected[j].GetIngredient()) 
+                    for (int j = 0; j < nbIngredientSelected; j++)
+                        if (product.ingredients[i] == ingredientsSelected[j].GetIngredient())
                             checkMatchingIngredients = true;
 
                     if (!checkMatchingIngredients)
@@ -235,12 +235,6 @@ public class WorkstationManager : MonoBehaviour {
             if (currentProduct.CheckRequirement()) {
                 IngredientPanel.SetActive(false);
                 LaunchIngredientMinigame();
-                foreach (IngredientSelected ingredientSelected in ingredientsSelected) {
-                    if (ingredientSelected.GetIngredient()) {
-                        ingredientSelected.RemoveIngredient();
-                        nbIngredientSelected--;
-                    }
-                }
             }
             else
                 StartCoroutine(DisplayErrorText("Crafting Station Missing"));
@@ -256,10 +250,32 @@ public class WorkstationManager : MonoBehaviour {
         noRecipeTextGO.SetActive(false);
     }
 
+
+
     public void LaunchIngredientMinigame() {
 
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
-            ingredientsSelected[currentMinigameCounter].GetIngredient().minigame.minigameAsset.InstantiateAsync(transform).Completed += (go) => {
+            int indexMinigame;
+
+            if (nbIngredientSelected > 3) {
+                indexMinigame = UnityEngine.Random.Range(0, 5);
+
+                if (currentMinigameCounter > 0) {
+                    while (indexMinigame == firstIndexMinigame || indexMinigame == secondIndexMinigame)
+                        indexMinigame = UnityEngine.Random.Range(0, 5);
+                    if(currentMinigameCounter == 1) {
+                        secondIndexMinigame = indexMinigame;
+                    }
+                } else {
+                    firstIndexMinigame = indexMinigame;
+                }
+            }
+
+            else {
+                indexMinigame = currentMinigameCounter;
+            }
+
+            ingredientsSelected[indexMinigame].GetIngredient().minigame.minigameAsset.InstantiateAsync(transform).Completed += (go) => {
                 go.Result.name = " Panel " + currentMinigameCounter;
                 currentMinigame = go.Result.GetComponent<Minigame>();
             };
@@ -285,8 +301,12 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     private void RemoveIngredients() {
-        for (int i = 0; i < nbIngredientSelected; i++) {
-            ingredients.RemoveIngredientStock(ingredientsSelected[i].GetIngredient(), 1);
+        foreach (IngredientSelected ingredientSelected in ingredientsSelected) {
+            if (ingredientSelected.GetIngredient()) {
+                ingredients.RemoveIngredientStock(ingredientSelected.GetIngredient(), 1); //Remove from stock
+                ingredientSelected.RemoveIngredient(); //Set to null
+                nbIngredientSelected--;
+            }
         }
     }
 
@@ -295,6 +315,7 @@ public class WorkstationManager : MonoBehaviour {
             currentMinigame.DisableInputs();
             Addressables.ReleaseInstance(currentMinigame.gameObject);
         }
+        firstIndexMinigame = secondIndexMinigame = -1;
         currentMinigameCounter = 0;
         currentProduct = null;
     }

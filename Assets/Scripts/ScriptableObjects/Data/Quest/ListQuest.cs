@@ -7,23 +7,25 @@ public class ListQuest : Data {
 
     [SerializeField] private int nbQuest;
     [SerializeField] private ListProduct products;
-    [SerializeField] private List<Quest> quests;
+    [SerializeField] private Quest mainQuest;
+    [SerializeField] private List<Quest> dailyQuests;
 
     public override void ResetValues() {
-        for (int i = 0; i < quests.Count; i++) 
-            quests[i].SetActive(false);
+        //Daily Quests
+        for (int i = 0; i < dailyQuests.Count; i++) 
+            dailyQuests[i].SetActive(false);
         
         for (int i = 0; i < nbQuest; i++) {
-            int rng = Random.Range(0, quests.Count);
+            int rng = Random.Range(0, dailyQuests.Count);
 
             //Run until it find a disable quest
-            while (quests[rng].IsActive())
-                rng = Random.Range(0, quests.Count);
+            while (dailyQuests[rng].IsActive())
+                rng = Random.Range(0, dailyQuests.Count);
 
             //Set active when 3+ quests
-            switch (quests[rng]) {
+            switch (dailyQuests[rng]) {
                 case CreateQuest:
-                    CreateQuest createQuest = (CreateQuest)quests[rng];
+                    CreateQuest createQuest = (CreateQuest)dailyQuests[rng];
 
                     //Only pick a product player can do
                     ProductSO rngProduct = products.GetRandomProduct();
@@ -33,7 +35,7 @@ public class ListQuest : Data {
                     createQuest.Init(products.GetRandomProduct(), 2);
                     break;
                 case InterractQuest:
-                    InterractQuest interractQuest = (InterractQuest)quests[rng];
+                    InterractQuest interractQuest = (InterractQuest)dailyQuests[rng];
                     interractQuest.Init();
                     break;
                 default:
@@ -42,5 +44,5 @@ public class ListQuest : Data {
         }
     }
 
-    public List<Quest> GetQuestList() => quests;
+    public List<Quest> GetDailyQuests() => dailyQuests;
 }

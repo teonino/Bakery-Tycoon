@@ -32,6 +32,7 @@ public class AIRandomCustomer : AICustomer {
         yield return new WaitForSeconds(time);
         Leave();
     }
+
     private void LeaveOnEvening() {
         if (day.GetDayTime() == DayTime.Evening) {
             Leave();
@@ -39,7 +40,7 @@ public class AIRandomCustomer : AICustomer {
         }
     }
 
-    private new void Leave() {
+    protected override void Leave() {
         base.Leave();
         shelf.RemoveCustomerInQueue(this);
     }

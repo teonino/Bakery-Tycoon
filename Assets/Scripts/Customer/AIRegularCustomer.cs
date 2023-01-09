@@ -86,7 +86,7 @@ public class AIRegularCustomer : AICustomer {
             day.DayTimeChange -= LeaveOnEvening;
         }
     }
-    private new void Leave() {
+    protected override void Leave() {
         if (chair)
             chair.ocuppied = false;
 

@@ -86,7 +86,7 @@ public class AICustomer : Interactable {
     }
 
     //Remove product panel + exit bakery
-    protected void Leave() {
+    protected virtual void Leave() {
         state = AIState.leaving;
         agent.SetDestination(spawnPosition);
     }
