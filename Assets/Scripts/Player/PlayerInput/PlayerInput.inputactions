@@ -996,6 +996,61 @@
                     "action": "TrackedDeviceOrientation",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Dpad",
+                    "id": "6592c40d-6fd9-42b0-a3fb-7e842ab114a3",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "5bac4c33-0f2c-4fea-9ada-954a356dc54c",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "92f548cb-093d-44ed-b4c8-755916049357",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "a2eaa973-5dc3-45df-8b30-0ff7612f776f",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "09a2fdc7-de50-4fa6-8890-f0b6bbb36487",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -1522,7 +1577,7 @@
                 {
                     "name": "",
                     "id": "1a153665-ef89-4db5-8296-d88f3ba6ae40",
-                    "path": "<Gamepad>/dpad/up",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -1532,12 +1587,82 @@
                 },
                 {
                     "name": "",
+                    "id": "ccb36cd4-c221-4e50-96ee-e1451073b2d3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AddIngredient",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d34c5553-8c4d-4424-804e-1a472b023f7f",
-                    "path": "<Gamepad>/dpad/down",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "RemoveIngredient",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0544b466-fc34-4477-a8fa-04dab82f81a1",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RemoveIngredient",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Tabs",
+            "id": "9b00190c-e8ac-4c4c-bd7b-302b7f736bf4",
+            "actions": [
+                {
+                    "name": "NextTab",
+                    "type": "Button",
+                    "id": "c3142671-0da4-4123-8cd0-8ef44e3000f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousTab",
+                    "type": "Button",
+                    "id": "1a1a879b-c4e9-4a8a-ac16-60fbab666ffe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d18c250b-2143-43f4-aca3-1ea7a879c897",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "NextTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be5627f5-efdc-46b5-a12e-ec25b977a640",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PreviousTab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

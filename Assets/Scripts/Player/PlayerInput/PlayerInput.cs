@@ -1018,6 +1018,61 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Dpad"",
+                    ""id"": ""6592c40d-6fd9-42b0-a3fb-7e842ab114a3"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""5bac4c33-0f2c-4fea-9ada-954a356dc54c"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""92f548cb-093d-44ed-b4c8-755916049357"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a2eaa973-5dc3-45df-8b30-0ff7612f776f"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""09a2fdc7-de50-4fa6-8890-f0b6bbb36487"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1544,7 +1599,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1a153665-ef89-4db5-8296-d88f3ba6ae40"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -1554,12 +1609,82 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ccb36cd4-c221-4e50-96ee-e1451073b2d3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d34c5553-8c4d-4424-804e-1a472b023f7f"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0544b466-fc34-4477-a8fa-04dab82f81a1"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Tabs"",
+            ""id"": ""9b00190c-e8ac-4c4c-bd7b-302b7f736bf4"",
+            ""actions"": [
+                {
+                    ""name"": ""NextTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3142671-0da4-4123-8cd0-8ef44e3000f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a1a879b-c4e9-4a8a-ac16-60fbab666ffe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d18c250b-2143-43f4-aca3-1ea7a879c897"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be5627f5-efdc-46b5-a12e-ec25b977a640"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousTab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1656,6 +1781,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
         m_Amafood_AddIngredient = m_Amafood.FindAction("AddIngredient", throwIfNotFound: true);
         m_Amafood_RemoveIngredient = m_Amafood.FindAction("RemoveIngredient", throwIfNotFound: true);
+        // Tabs
+        m_Tabs = asset.FindActionMap("Tabs", throwIfNotFound: true);
+        m_Tabs_NextTab = m_Tabs.FindAction("NextTab", throwIfNotFound: true);
+        m_Tabs_PreviousTab = m_Tabs.FindAction("PreviousTab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2299,6 +2428,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public AmafoodActions @Amafood => new AmafoodActions(this);
+
+    // Tabs
+    private readonly InputActionMap m_Tabs;
+    private ITabsActions m_TabsActionsCallbackInterface;
+    private readonly InputAction m_Tabs_NextTab;
+    private readonly InputAction m_Tabs_PreviousTab;
+    public struct TabsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public TabsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextTab => m_Wrapper.m_Tabs_NextTab;
+        public InputAction @PreviousTab => m_Wrapper.m_Tabs_PreviousTab;
+        public InputActionMap Get() { return m_Wrapper.m_Tabs; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TabsActions set) { return set.Get(); }
+        public void SetCallbacks(ITabsActions instance)
+        {
+            if (m_Wrapper.m_TabsActionsCallbackInterface != null)
+            {
+                @NextTab.started -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
+                @NextTab.performed -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
+                @NextTab.canceled -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
+                @PreviousTab.started -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
+                @PreviousTab.performed -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
+                @PreviousTab.canceled -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
+            }
+            m_Wrapper.m_TabsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @NextTab.started += instance.OnNextTab;
+                @NextTab.performed += instance.OnNextTab;
+                @NextTab.canceled += instance.OnNextTab;
+                @PreviousTab.started += instance.OnPreviousTab;
+                @PreviousTab.performed += instance.OnPreviousTab;
+                @PreviousTab.canceled += instance.OnPreviousTab;
+            }
+        }
+    }
+    public TabsActions @Tabs => new TabsActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2388,5 +2558,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnAddIngredient(InputAction.CallbackContext context);
         void OnRemoveIngredient(InputAction.CallbackContext context);
+    }
+    public interface ITabsActions
+    {
+        void OnNextTab(InputAction.CallbackContext context);
+        void OnPreviousTab(InputAction.CallbackContext context);
     }
 }
