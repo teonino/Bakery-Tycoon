@@ -33,7 +33,7 @@ public class CameraSwitch : MonoBehaviour {
             CurrentCamPosition.transform.position = Vector3.Slerp(CurrentCamPosition.transform.position, dest.transform.position, LerpTime * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        cinemachine.enabled = switchingCamera = false;
+        //cinemachine.enabled = switchingCamera = false;
         yield return null;
     }
 
