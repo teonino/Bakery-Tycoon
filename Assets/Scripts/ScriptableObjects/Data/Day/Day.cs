@@ -9,7 +9,6 @@ public class Day : Data {
     [SerializeField] private string currentScene;
     [SerializeField] private DayTime dayTime;
     [SerializeField] private int dayCount;
-    [SerializeField] private int morningDuration;
     [SerializeField] private int dayDuration;
 
     private int timeElapsed;
@@ -17,13 +16,12 @@ public class Day : Data {
     public Action NewDay;
     
     public override void ResetValues() {
-        dayTime = DayTime.Morning;
+        dayTime = DayTime.Day;
         timeElapsed = 0;
     }
 
     public DayTime GetDayTime() => dayTime;
     public int GetCurrentDay() => dayCount;
-    public int GetMorningDuration() => morningDuration;
     public int GetDayDuration() => dayDuration;
     public int GetTimeElapsed() => timeElapsed;
     public void AddTimeElpased(int time) => timeElapsed += time;
@@ -33,7 +31,7 @@ public class Day : Data {
     }
     public void OnNewDay() {
         dayCount++;
-        dayTime = DayTime.Morning;
+        dayTime = DayTime.Day;
         timeElapsed = 0;
         NewDay?.Invoke();
         SceneManager.LoadSceneAsync(currentScene);

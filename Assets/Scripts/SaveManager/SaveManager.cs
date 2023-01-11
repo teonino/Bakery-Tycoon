@@ -18,9 +18,9 @@ public class SaveManager : MonoBehaviour {
 
     public void GenerateWorld() {
         if (File.Exists(filepath))
-            print("oui");
-        else
             Load(filepath);
+        else
+            print("oui");
     }
 
     public void Save() {
@@ -31,22 +31,30 @@ public class SaveManager : MonoBehaviour {
 
         w.WriteLine("{ \n \"Level\" : [");
 
-        //Get all objects in level
-        foreach (Transform t in level) {
-            data = SetCustomizableData(t);
-            w.WriteLine(JsonUtility.ToJson(data) + ",");
+        FetchGameObjects(w, level, true);
 
-            if (t.childCount > 1) {
-                foreach (Transform t2 in t) {
-                    data = SetCustomizableData(t2);
-                    w.WriteLine(JsonUtility.ToJson(data));
-                    if (t2 != t.GetChild(t.childCount - 1) || t != level.GetChild(level.childCount - 1))
-                        w.WriteLine(",");
-                }
-            }
-        }
         w.WriteLine("] \n }");
         w.Close();
+
+        print("Level Saved");
+    }
+
+    private void FetchGameObjects(StreamWriter w, Transform parent, bool parentNotLastChild) {
+        CustomizableData data;
+
+        foreach (Transform dataTransform in parent) {
+            data = SetCustomizableData(dataTransform);
+            w.WriteLine(JsonUtility.ToJson(data));
+
+
+            if (parentNotLastChild && dataTransform != level.GetChild(level.childCount - 1))
+                w.WriteLine(",");
+            else if (dataTransform.childCount > 0)
+                w.WriteLine(",");
+
+            if (!GetGameObject(data.objectName) && dataTransform.childCount > 0)
+                FetchGameObjects(w, dataTransform, dataTransform != level.GetChild(level.childCount - 1));
+        }
     }
 
     private CustomizableData SetCustomizableData(Transform t) {
@@ -59,9 +67,10 @@ public class SaveManager : MonoBehaviour {
         //If gameObject contains only a transform => Empty gameObject that contains child
         if (t.gameObject.GetComponents<Component>().Length == 1)
             data.objectName = "Empty";
-        else
+        else {
             data.objectName = Regex.Replace(t.name, @" [(]\d+[)]", string.Empty);
-
+            data.objectName = Regex.Replace(data.objectName, @"([(]Clone[)])", string.Empty);
+        }
         return data;
     }
 
@@ -84,30 +93,39 @@ public class SaveManager : MonoBehaviour {
             int focusedChildCount = 0;
             GameObject gameObjectParent = null;
 
+            //NEED TO DO RECURSIVE FUNCTION
             foreach (CustomizableData data in dataList.Level) {
                 GameObject obj = null, instantiateObj;
 
                 if (data.objectName == "Empty") {
                     focusedChildCount = data.childCount;
                     currentChildCount = 0;
+                    gameObjectParent = obj;
                 }
                 else {
                     obj = GetGameObject(data.objectName);
                     currentChildCount++;
                 }
 
-                if (obj) {
-                    if (currentChildCount <= focusedChildCount && gameObjectParent != obj)
+                if (currentChildCount <= focusedChildCount && gameObjectParent != obj) {
+                    if (obj)
                         instantiateObj = Instantiate(obj, gameObjectParent.transform);
-                    else
-                        instantiateObj = Instantiate(obj, level.transform);
+                    else {
+                        instantiateObj = new GameObject();
+                        instantiateObj.transform.parent = gameObjectParent.transform;
+                    }
 
+                    instantiateObj.name = data.objectName;
                     instantiateObj.transform.position = data.position;
                     instantiateObj.transform.rotation = data.rotation;
                     instantiateObj.transform.localScale = data.scale;
                 }
+
                 else {
-                    instantiateObj = new GameObject();
+                    if (obj)
+                        instantiateObj = Instantiate(obj);
+                    else
+                        instantiateObj = new GameObject();
                     instantiateObj.transform.parent = level.transform;
                     instantiateObj.name = data.objectName;
                     instantiateObj.transform.position = data.position;
@@ -117,6 +135,12 @@ public class SaveManager : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void LoadObjects() {
+        //foreach (CustomizableData data in dataList.Level) {
+
+        //}
     }
 
     public GameObject GetGameObject(string name) {

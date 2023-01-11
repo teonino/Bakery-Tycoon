@@ -14,7 +14,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private Reputation reputation;
     [SerializeField] private DebugState debugState;
     [Header("Spawn Variables")]
-    
+
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
     [SerializeField] private Vector2 debugDelaySpawn;
@@ -45,17 +45,13 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     private IEnumerator SpawnDelay() {
-        if (day.GetDayTime() == DayTime.Morning)
-            yield return new WaitForSeconds(day.GetMorningDuration());
-        else {
-            if (!debug)
-                randomTime = Random.Range(delaySpawn.GetDelaySpawn(reputation.GetLevel()).x, delaySpawn.GetDelaySpawn(reputation.GetLevel()).y);
-            else
-                randomTime = Random.Range(debugDelaySpawn.x, debugDelaySpawn.y);
+        if (!debug)
+            randomTime = Random.Range(delaySpawn.GetDelaySpawn(reputation.GetLevel()).x, delaySpawn.GetDelaySpawn(reputation.GetLevel()).y);
+        else
+            randomTime = Random.Range(debugDelaySpawn.x, debugDelaySpawn.y);
 
-            yield return new WaitForSeconds(randomTime);
-            InstantiateCustomer();
-        }
+        yield return new WaitForSeconds(randomTime);
+        InstantiateCustomer();
         StartCoroutine(SpawnDelay());
     }
 

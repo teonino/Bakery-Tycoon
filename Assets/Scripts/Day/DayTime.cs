@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum DayTime 
 {
-    Morning,
     Day,
     Evening
 }

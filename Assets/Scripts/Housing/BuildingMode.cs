@@ -29,6 +29,7 @@ public class BuildingMode : Interactable {
     private GameObject cursorObject;
     private GameObject selectedGo;
     private bool inBuildingMode = false;
+    private float originalHeight;
 
     private void Start() {
         currentRaycastlayer = pickUpLayer;
@@ -96,6 +97,7 @@ public class BuildingMode : Interactable {
 
                 initialGoLayer = selectedGo.layer;
                 selectedGo.layer = 3;
+                originalHeight = selectedGo.transform.position.y;
 
                 ChangeColliderSize(true);
             }
@@ -146,7 +148,7 @@ public class BuildingMode : Interactable {
     }
 
     private void RotateGameObject(InputAction.CallbackContext ctx) {
-        if (selectedGo) {
+        if (selectedGo && initialGoLayer != LayerMask.NameToLayer("CustomizableWall")) {
             if (playerControllerSO.GetPlayerController().playerInput.Building.Rotate.ReadValue<float>() > 0) {
                 selectedGo.transform.Rotate(Vector3.up * 90);
             }
@@ -163,15 +165,12 @@ public class BuildingMode : Interactable {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
                 selectedGo.transform.position = hit.point;
 
-                int height;
                 if (initialGoLayer == LayerMask.NameToLayer("CustomizableWall")) {
-                    height = 1;
                     selectedGo.transform.rotation = hit.transform.rotation;
+                    selectedGo.transform.localPosition = new Vector3(selectedGo.transform.localPosition.x, originalHeight, selectedGo.transform.localPosition.z);
                 }
                 else
-                    height = 0;
-
-                selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), height, RoundToNearestGrid(selectedGo.transform.localPosition.z));
+                    selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), originalHeight, RoundToNearestGrid(selectedGo.transform.localPosition.z));
             }
         }
     }

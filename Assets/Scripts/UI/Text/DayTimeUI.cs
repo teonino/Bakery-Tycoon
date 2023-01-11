@@ -22,7 +22,7 @@ public class DayTimeUI : MonoBehaviour {
     }
 
     private void SetDay() {
-        if (day.GetDayTime() == DayTime.Morning) {
+        if (day.GetDayTime() == DayTime.Day) {
             StartCoroutine(TimeRemaining());
         }
         else {
@@ -31,10 +31,7 @@ public class DayTimeUI : MonoBehaviour {
     }
 
     private IEnumerator TimeRemaining() {
-        if (day.GetDayTime() == DayTime.Morning)
-            duration = day.GetMorningDuration();
-        else
-            duration = day.GetDayDuration() + day.GetMorningDuration();
+        duration = day.GetDayDuration();
 
         int timeRemaining = duration - day.GetTimeElapsed();
 
@@ -53,9 +50,6 @@ public class DayTimeUI : MonoBehaviour {
     public string GetDayTime() {
         string s = "";
         switch (day.GetDayTime()) {
-            case DayTime.Morning:
-                s = "Morning";
-                break;
             case DayTime.Day:
                 s = "Day";
                 break;

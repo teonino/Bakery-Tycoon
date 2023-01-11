@@ -5,12 +5,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class AICustomer : Interactable {
     [Header("AI Customer References")]
     [SerializeField] protected AssetReference assetProductCanvas;
     [SerializeField] protected AssetReference assetPaymentCanvas;
     [SerializeField] protected NavMeshAgent agent;
+    [Tooltip("Time in which if you give the requested product, earn a bonus of money & reputation")]
+    [SerializeField] protected int bonusTime;
     [SerializeField] protected Money money;
     [SerializeField] protected Reputation reputation;
     [SerializeField] protected Statistics stats;
@@ -23,6 +26,8 @@ public class AICustomer : Interactable {
     [HideInInspector] public ProductSO requestedProduct;
 
     public AIState state = AIState.idle;
+
+    protected bool bonus = true;
     protected GameObject productCanvas;
     protected GameObject item;
     protected SpawnCustomer spawner;
@@ -42,16 +47,22 @@ public class AICustomer : Interactable {
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
-            productCanvas.transform.position = transform.position + Vector3.up * 2;
-            if (requestedProduct)
-                productCanvas.GetComponentInChildren<TextMeshProUGUI>().SetText(requestedProduct.name);
+            productCanvas.transform.position = transform.position + Vector3.up;
+            if (requestedProduct) 
+                productCanvas.GetComponentInChildren<RawImage>().texture = requestedProduct.image;
             else
                 Debug.LogError("RequestedProductNull");
+
+            StartCoroutine(LaunchBonusTime());
         };
         spawnPosition = transform.position;
     }
 
+    private IEnumerator LaunchBonusTime() {
+        yield return new WaitForSeconds(bonusTime);
+        bonus = false;
 
+    }
 
     protected void FixedUpdate() {
         //Exit the bakery
