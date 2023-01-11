@@ -11,15 +11,18 @@ public class AIRegularCustomer : AICustomer {
     [SerializeField] private DialogueManager dialoguePanel;
     [SerializeField] private AssetReference plateAsset;
     [SerializeField] private int conversationRemaining = 2;
+    [SerializeField] private InterractQuest onTalk;
 
     [HideInInspector] public Chair chair;
     [HideInInspector] public int indexChair;
     [HideInInspector] public Table table;
 
-    public new void InitCustomer(Day day) {
-        dialoguePanel = FindObjectOfType<DialogueManager>(true);
+    public new void InitCustomer() {
+        base.InitCustomer();
         day.DayTimeChange += LeaveOnEvening;
-        base.InitCustomer(day);
+
+        onTalk = FindObjectOfType<QuestHolder>().GetInterractQuest();
+        dialoguePanel = FindObjectOfType<DialogueManager>(true);
     }
 
     new void FixedUpdate() {
@@ -83,7 +86,7 @@ public class AIRegularCustomer : AICustomer {
             day.DayTimeChange -= LeaveOnEvening;
         }
     }
-    private new void Leave() {
+    protected override void Leave() {
         if (chair)
             chair.ocuppied = false;
 
@@ -103,6 +106,9 @@ public class AIRegularCustomer : AICustomer {
 
     public override void Effect() {
         if (conversationRemaining > 0 && state == AIState.eating) {
+
+            onTalk?.OnInterract();
+
             dialoguePanel.gameObject.SetActive(true);
             dialoguePanel.GetDialogues(1, "classeur");
             conversationRemaining--;

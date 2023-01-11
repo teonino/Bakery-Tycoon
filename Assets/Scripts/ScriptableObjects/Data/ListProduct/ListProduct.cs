@@ -7,6 +7,7 @@ public class ListProduct : ScriptableObject {
     [SerializeField] private List<ProductSO> listProduct;
 
     public int GetProductLenght() => listProduct.Count;
+    public ProductSO GetRandomProduct() => listProduct[Random.Range(0, GetProductLenght())];
     public List<ProductSO> GetProductList() => listProduct;
 
 }

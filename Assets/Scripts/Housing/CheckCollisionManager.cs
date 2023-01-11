@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CheckCollisionManager : MonoBehaviour {
     public Material collidingMaterial;
+    public int layer;
     private List<Material> initialMaterials;
     private List<GameObject> furnitureList;
 
@@ -13,15 +14,19 @@ public class CheckCollisionManager : MonoBehaviour {
         initialMaterials = new List<Material>();
 
         MeshRenderer renderer;
+
         if (gameObject.TryGetComponent<MeshRenderer>(out renderer)) {
             CheckCollision component = gameObject.AddComponent<CheckCollision>();
             component.manager = this;
+            component.layer = layer;
             furnitureList.Add(gameObject);
         }
+
         foreach (Transform t in transform) {
             if (t.gameObject.TryGetComponent<MeshRenderer>(out renderer)) {
                 CheckCollision childComponent = t.gameObject.AddComponent<CheckCollision>();
                 childComponent.manager = this;
+                childComponent.layer = layer;
                 furnitureList.Add(t.gameObject);
             }
         }
@@ -52,15 +57,14 @@ public class CheckCollisionManager : MonoBehaviour {
 
     public int GetNbCollision() {
         int total = 0;
-        foreach (GameObject go in furnitureList) {
+        foreach (GameObject go in furnitureList) 
             total += go.GetComponent<CheckCollision>().nbCollision;
-        }
+
         return total;
     }
 
     private void OnDestroy() {
-        foreach (GameObject go in furnitureList) {
+        foreach (GameObject go in furnitureList) 
             Destroy(go.GetComponent<CheckCollision>());
-        }
     }
 }

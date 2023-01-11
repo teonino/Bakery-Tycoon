@@ -27,4 +27,19 @@ public class ProductSO : ScriptableObject {
     [Space(5)]
     [Header("Minigames")]
     public List<MinigameInfo> minigames;
+
+    public bool CheckRequirement() {
+        bool requirementMet = true;
+
+        //Check Crafting Station
+        List<CraftingStation> craftingStations = new List<CraftingStation>(FindObjectsOfType<CraftingStation>());
+        if (requirementMet) {
+            requirementMet = false;
+            foreach (CraftingStation craftingStation in craftingStations)
+                if (craftingStation.GetCraftingStationType() == craftStationRequired) 
+                    requirementMet = true;
+        }
+
+        return requirementMet;
+    }
 }
