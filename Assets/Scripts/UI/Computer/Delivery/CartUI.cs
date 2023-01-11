@@ -61,10 +61,8 @@ public class CartUI : MonoBehaviour {
             orderTypeQuest?.CheckDeliveryType(deliveryType);
 
             //Express deliveries
-            if (delivery.GetDay() == day.GetCurrentDay()) {
+            if (delivery.GetDay() == day.GetCurrentDay()) 
                 StartCoroutine(deliveries.ExpressDelivery(delivery));
-                StartCoroutine(deliveryManager.UpdateStockButtons(deliveries.GetExpressOrderTime()));
-            }
 
             deliveries.Add(delivery);
             money.AddMoney(-cartCost);

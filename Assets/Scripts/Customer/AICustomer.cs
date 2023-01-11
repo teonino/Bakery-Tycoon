@@ -14,6 +14,7 @@ public class AICustomer : Interactable {
     [SerializeField] protected Money money;
     [SerializeField] protected Reputation reputation;
     [SerializeField] protected Statistics stats;
+    [SerializeField] protected Day day;
 
     [Header("AI Customer Variables")]
     [SerializeField] protected float waitingTime = 5f;
@@ -34,7 +35,9 @@ public class AICustomer : Interactable {
         money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
-    public void InitCustomer() {
+    public void InitCustomer(Day day) {
+        this.day = day;
+
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
@@ -46,6 +49,8 @@ public class AICustomer : Interactable {
         };
         spawnPosition = transform.position;
     }
+
+
 
     protected void FixedUpdate() {
         //Exit the bakery

@@ -88,11 +88,12 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     private void SetCustomer(AIRandomCustomer customer, ProductSO product = null) {
+
         if (product)
             customer.requestedProduct = product;
         else
             customer.requestedProduct = GetRandomProduct();
-        customer.InitCustomer();
+        customer.InitCustomer(day);
         doableProduct.Clear();
         availableProduct.Clear();
     }
@@ -112,7 +113,7 @@ public class SpawnCustomer : MonoBehaviour {
         }
         else
             customer.requestedProduct = GetRandomProduct();
-        customer.InitCustomer();
+        customer.InitCustomer(day);
         doableProduct.Clear();
         availableProduct.Clear();
     }

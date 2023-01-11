@@ -17,6 +17,7 @@ public class MainMenuManager : MonoBehaviour
     {
         blackscreenAnimator = Blackscreen.GetComponent<Animator>();
         blackscreenAnimator.SetTrigger("Fade");
+        StartCoroutine(SetAtLastSiblingBlackscreen());
     }
 
 
@@ -37,6 +38,12 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
+    public IEnumerator SetAtLastSiblingBlackscreen()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Blackscreen.transform.SetAsFirstSibling();
+    }
+
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
@@ -44,6 +51,7 @@ public class MainMenuManager : MonoBehaviour
 
     public IEnumerator BlackscreenTransition(string SceneToLoad)
     {
+        Blackscreen.transform.SetAsLastSibling();
         blackscreenAnimator.SetTrigger("FadeReverse");
         yield return new WaitForSeconds(0.45f);
         print("After delay");

@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 public class AIRegularCustomer : AICustomer {
     [Header("AI Regular Customer variables")]
-    [SerializeField] private AssetReference dialoguePanelAsset;
+    [SerializeField] private DialogueManager dialoguePanel;
     [SerializeField] private AssetReference plateAsset;
     [SerializeField] private int conversationRemaining = 2;
 
@@ -16,8 +16,10 @@ public class AIRegularCustomer : AICustomer {
     [HideInInspector] public int indexChair;
     [HideInInspector] public Table table;
 
-    new void Awake() {
-        base.Awake();
+    public new void InitCustomer(Day day) {
+        dialoguePanel = FindObjectOfType<DialogueManager>(true);
+        day.DayTimeChange += LeaveOnEvening;
+        base.InitCustomer(day);
     }
 
     new void FixedUpdate() {
@@ -75,7 +77,12 @@ public class AIRegularCustomer : AICustomer {
         agent.SetDestination(chair.transform.position);
         state = AIState.moving;
     }
-
+    private void LeaveOnEvening() {
+        if (day.GetDayTime() == DayTime.Evening) {
+            Leave();
+            day.DayTimeChange -= LeaveOnEvening;
+        }
+    }
     private new void Leave() {
         if (chair)
             chair.ocuppied = false;
@@ -95,10 +102,9 @@ public class AIRegularCustomer : AICustomer {
     }
 
     public override void Effect() {
-        print("Effect");
         if (conversationRemaining > 0 && state == AIState.eating) {
-            dialoguePanelAsset.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) =>
-                go.Result.GetComponent<DialogueManager>().GetDialogues(1,"classeur");
+            dialoguePanel.gameObject.SetActive(true);
+            dialoguePanel.GetDialogues(1, "classeur");
             conversationRemaining--;
         }
     }
