@@ -27,6 +27,7 @@ public class FurnitureManager : MonoBehaviour {
     private int maxButtonInRack;
     private List<FurnitureType> furnitureTypeFilter;
     private List<FurnitureStyle> furnitureStyleFilter;
+    private BuildingMode buildingMode;
 
     private void OnEnable() {
         if (gameObject.activeSelf) {
@@ -48,6 +49,8 @@ public class FurnitureManager : MonoBehaviour {
         lenght = furnitures.GetFurnitureCount();
         playerController = playerControllerSO.GetPlayerController();
     }
+
+    public void SetBuildingMode(BuildingMode building) => buildingMode = building;
 
     private void Start() {
         for (int i = 0; i < lenght; i++) {
@@ -104,6 +107,12 @@ public class FurnitureManager : MonoBehaviour {
 
         buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].GetComponent<RectTransform>().rect.height * nbRack);
         buttonPanel.GetComponent<RectTransform>().localPosition = new Vector3(buttonPanel.GetComponent<RectTransform>().localPosition.x, 0, 0);
+    }
+
+    private void Update() {
+        if (controller.IsGamepad()) {
+            scrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+        }
     }
 
     public void SetStyleFilter(int filter) {
@@ -223,7 +232,7 @@ public class FurnitureManager : MonoBehaviour {
         SetVerticalLayoutGroup();
     }
 
-    public void AddownedFurniture(FurnitureSO furniture) {
+    public void AddOwnedFurniture(FurnitureSO furniture) {
         if (furniture.GetPrice() <= money.GetMoney()) {
             ownedFurnitures.AddFurniture(furniture);
             print($"{furniture.GetName()} bought");
@@ -233,7 +242,7 @@ public class FurnitureManager : MonoBehaviour {
     public void Quit(InputAction.CallbackContext context) {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
-        playerController.EnableInput();
-        computerPanel.SetActive(false);
+        buildingMode.Effect();
+        gameObject.SetActive(false);
     }
 }

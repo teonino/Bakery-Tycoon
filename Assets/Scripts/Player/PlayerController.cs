@@ -42,20 +42,17 @@ public class PlayerController : MonoBehaviour {
             animator.SetBool("isWalking", false);
 
         //Camera Movement
-        if (!FindObjectOfType<CameraSwitch>().switchingCamera) {
-            if (!playerInUI) {
-                if (!controller.IsGamepad()) {
+        if (!FindObjectOfType<CameraSwitch>().switchingCamera)
+            if (!playerInUI)
+                if (!controller.IsGamepad()) 
                     if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
                         cinemachine.enabled = true;
                     else if (cinemachine.enabled == true)
                         cinemachine.enabled = false;
-                }
                 else
-                    cinemachine.enabled = true; ;
-            }
+                    cinemachine.enabled = true; 
             else
                 cinemachine.enabled = false;
-        }
 
         Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
     }

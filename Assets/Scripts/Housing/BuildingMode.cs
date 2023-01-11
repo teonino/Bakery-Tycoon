@@ -9,6 +9,7 @@ public class BuildingMode : Interactable {
     [Header("References")]
     [SerializeField] private Material collidingMaterial;
     [SerializeField] private Day day;
+    [SerializeField] private Money money;
     [SerializeField] private Controller controller;
     [SerializeField] private AssetReference cursor;
     [SerializeField] private InterractQuest interractQuest;
@@ -22,6 +23,7 @@ public class BuildingMode : Interactable {
     [Header("Gamepad Parameters")]
     [SerializeField] private int cursorSpeed = 1;
 
+    private FurnitureManager furnitureManager;
     private GameObject mainCamera;
     private GameObject buildingCamera;
     private LayerMask currentRaycastlayer;
@@ -33,10 +35,13 @@ public class BuildingMode : Interactable {
 
     private void Start() {
         currentRaycastlayer = pickUpLayer;
+        playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed += Sell;
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed += Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed += RotateGameObject;
+        playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed += DisplayFurtniturePanel;
 
+        furnitureManager = FindObjectOfType<FurnitureManager>(true);
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
         buildingCamera.SetActive(false);
@@ -47,16 +52,31 @@ public class BuildingMode : Interactable {
             playerControllerSO.GetPlayerController().DisableInput();
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
 
-            if (controller.IsGamepad()) {
-                cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
-                    cursorObject = go.Result;
-                };
-            }
+            if (controller.IsGamepad())
+                if (!cursorObject)
+                    cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
+                        cursorObject = go.Result;
+                    };
+                else
+                    cursorObject.SetActive(true);
+
             inBuildingMode = true;
             mainCamera.SetActive(false);
             buildingCamera.SetActive(true);
+            furnitureManager.SetBuildingMode(this);
 
             interractQuest?.OnInterract();
+        }
+    }
+
+    public void Sell(CallbackContext ctx) {
+        if (ctx.performed && selectedGo) {
+            if(selectedGo.TryGetComponent(out FurnitureHolder holder)) {
+                money.AddMoney(holder.GetFurniturePrice());
+                print($"Add {holder.GetFurniturePrice()} €");
+            } else {
+                print("Furniture not implemented");
+            }
         }
     }
 
@@ -71,6 +91,12 @@ public class BuildingMode : Interactable {
             buildingCamera.SetActive(false);
             inBuildingMode = false;
         }
+    }
+
+    public void DisplayFurtniturePanel(CallbackContext context) {
+        playerControllerSO.GetPlayerController().playerInput.Building.Disable();
+        cursorObject?.SetActive(false);
+        furnitureManager.gameObject.SetActive(true);
     }
 
     public void Select(CallbackContext context) {
@@ -176,5 +202,13 @@ public class BuildingMode : Interactable {
     }
 
     float RoundToNearestGrid(float pos) => pos - pos % snapValue;
+
+    private void OnDestroy() {
+        playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed -= Quit;
+        playerControllerSO.GetPlayerController().playerInput.Building.Select.performed -= Select;
+        playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed -= RotateGameObject;
+        playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed -= DisplayFurtniturePanel;
+        playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed -= Sell;
+    }
 }
 

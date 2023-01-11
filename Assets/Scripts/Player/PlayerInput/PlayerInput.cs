@@ -332,6 +332,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DisplayFurnitureStore"",
+                    ""type"": ""Button"",
+                    ""id"": ""8aed8851-58d5-40bb-a9b4-b8b119406519"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sell"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f9e5945-3869-4b61-8b79-3514761d7b96"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -444,6 +462,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33bf7787-169a-45f9-838c-99065643b4e5"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DisplayFurnitureStore"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1b37f61-8cb6-4212-b922-5c2e830883cc"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""DisplayFurnitureStore"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1cda452-ca2c-41fe-9003-e3d60a7ebcdb"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Sell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1560,6 +1611,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Building_Select = m_Building.FindAction("Select", throwIfNotFound: true);
         m_Building_Move = m_Building.FindAction("Move", throwIfNotFound: true);
         m_Building_Rotate = m_Building.FindAction("Rotate", throwIfNotFound: true);
+        m_Building_DisplayFurnitureStore = m_Building.FindAction("DisplayFurnitureStore", throwIfNotFound: true);
+        m_Building_Sell = m_Building.FindAction("Sell", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
@@ -1756,6 +1809,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Building_Select;
     private readonly InputAction m_Building_Move;
     private readonly InputAction m_Building_Rotate;
+    private readonly InputAction m_Building_DisplayFurnitureStore;
+    private readonly InputAction m_Building_Sell;
     public struct BuildingActions
     {
         private @PlayerInput m_Wrapper;
@@ -1764,6 +1819,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Select => m_Wrapper.m_Building_Select;
         public InputAction @Move => m_Wrapper.m_Building_Move;
         public InputAction @Rotate => m_Wrapper.m_Building_Rotate;
+        public InputAction @DisplayFurnitureStore => m_Wrapper.m_Building_DisplayFurnitureStore;
+        public InputAction @Sell => m_Wrapper.m_Building_Sell;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1785,6 +1842,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Rotate.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
+                @DisplayFurnitureStore.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnDisplayFurnitureStore;
+                @DisplayFurnitureStore.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnDisplayFurnitureStore;
+                @DisplayFurnitureStore.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnDisplayFurnitureStore;
+                @Sell.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
+                @Sell.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
+                @Sell.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -1801,6 +1864,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
+                @DisplayFurnitureStore.started += instance.OnDisplayFurnitureStore;
+                @DisplayFurnitureStore.performed += instance.OnDisplayFurnitureStore;
+                @DisplayFurnitureStore.canceled += instance.OnDisplayFurnitureStore;
+                @Sell.started += instance.OnSell;
+                @Sell.performed += instance.OnSell;
+                @Sell.canceled += instance.OnSell;
             }
         }
     }
@@ -2265,6 +2334,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnDisplayFurnitureStore(InputAction.CallbackContext context);
+        void OnSell(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

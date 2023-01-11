@@ -7,44 +7,82 @@ public class CheckCollisionManager : MonoBehaviour {
     public Material collidingMaterial;
     public int layer;
     private List<Material> initialMaterials;
-    private List<GameObject> furnitureList;
+    private List<GameObject> furnitureColliderList;
+    private List<MeshRenderer> furnitureMeshRendererList;
 
     void Start() {
-        furnitureList = new List<GameObject>();
+        furnitureColliderList = new List<GameObject>();
+        furnitureMeshRendererList = new List<MeshRenderer>();
         initialMaterials = new List<Material>();
 
-        MeshRenderer renderer;
+        Collider collider;
 
-        if (gameObject.TryGetComponent<MeshRenderer>(out renderer)) {
+        if (gameObject.TryGetComponent(out collider)) {
             CheckCollision component = gameObject.AddComponent<CheckCollision>();
             component.manager = this;
             component.layer = layer;
-            furnitureList.Add(gameObject);
+            furnitureColliderList.Add(gameObject);
         }
 
-        foreach (Transform t in transform) {
-            if (t.gameObject.TryGetComponent<MeshRenderer>(out renderer)) {
-                CheckCollision childComponent = t.gameObject.AddComponent<CheckCollision>();
-                childComponent.manager = this;
-                childComponent.layer = layer;
-                furnitureList.Add(t.gameObject);
+        FetchAllCollider(transform);
+
+        //foreach (Transform t in transform) {
+        //    if (t.gameObject.TryGetComponent(out collider)) {
+        //        CheckCollision childComponent = t.gameObject.AddComponent<CheckCollision>();
+        //        childComponent.manager = this;
+        //        childComponent.layer = layer;
+        //        furnitureList.Add(t.gameObject);
+        //    }
+        //}
+        if (gameObject.TryGetComponent(out collider)) {
+            if (transform.TryGetComponent(out MeshRenderer renderer)) {
+                furnitureMeshRendererList.Add(renderer);
+                initialMaterials.Add(renderer.material);
             }
         }
 
-        foreach (GameObject go in furnitureList) {
-            initialMaterials.Add(go.GetComponent<MeshRenderer>().material);
+        FetchAllMaterials(transform);
+
+        //foreach (GameObject go in transform) {
+        //    if (go.TryGetComponent(out MeshRenderer renderer))
+        //        initialMaterials.Add(renderer.material);
+        //}
+    }
+
+    private void FetchAllCollider(Transform parent) {
+        foreach (Transform transform in parent) {
+            Collider collider = transform.GetComponent<Collider>();
+            if (collider) {
+                CheckCollision childComponent = transform.gameObject.AddComponent<CheckCollision>();
+                childComponent.manager = this;
+                childComponent.layer = layer;
+                furnitureColliderList.Add(transform.gameObject);
+            }
+
+            if (transform.childCount > 0)
+                FetchAllCollider(transform);
+        }
+    }
+
+    private void FetchAllMaterials(Transform parent) {
+        foreach (Transform transform in parent) {
+            if (transform.TryGetComponent(out MeshRenderer renderer)) {
+                furnitureMeshRendererList.Add(renderer);
+                initialMaterials.Add(renderer.material);
+            }
+            if (transform.childCount > 0)
+                FetchAllMaterials(transform);
         }
     }
 
     public void CollisionMaterial() {
-        foreach (GameObject go in furnitureList) {
-            go.GetComponent<MeshRenderer>().material = collidingMaterial;
-        }
+        foreach (MeshRenderer renderer in furnitureMeshRendererList)
+            renderer.material = collidingMaterial;
     }
 
     public void InitialMaterial() {
-        for (int i = 0; i < furnitureList.Count; i++) {
-            furnitureList[i].GetComponent<MeshRenderer>().material = initialMaterials[i];
+        for (int i = 0; i < furnitureMeshRendererList.Count; i++) {
+            furnitureMeshRendererList[i].material = initialMaterials[i];
         }
     }
 
@@ -57,14 +95,14 @@ public class CheckCollisionManager : MonoBehaviour {
 
     public int GetNbCollision() {
         int total = 0;
-        foreach (GameObject go in furnitureList) 
+        foreach (GameObject go in furnitureColliderList)
             total += go.GetComponent<CheckCollision>().nbCollision;
 
         return total;
     }
 
     private void OnDestroy() {
-        foreach (GameObject go in furnitureList) 
+        foreach (GameObject go in furnitureColliderList)
             Destroy(go.GetComponent<CheckCollision>());
     }
 }
