@@ -93,7 +93,7 @@ public class SpawnCustomer : MonoBehaviour {
             customer.requestedProduct = product;
         else
             customer.requestedProduct = GetRandomProduct();
-        customer.InitCustomer(day);
+        customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
     }
@@ -107,13 +107,15 @@ public class SpawnCustomer : MonoBehaviour {
         indexChair = -1;
         currentChair = null;
         currentTable = null;
+
         if (product) {
             customer.requestedProduct = product;
             customer.SetWaitingTime(9999);
         }
         else
             customer.requestedProduct = GetRandomProduct();
-        customer.InitCustomer(day);
+
+        customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
     }

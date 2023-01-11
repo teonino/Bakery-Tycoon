@@ -31,12 +31,13 @@ public class AICustomer : Interactable {
 
     protected void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();
+
+        day = FindObjectOfType<DayTimeUI>().GetDay();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
         money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
-    public void InitCustomer(Day day) {
-        this.day = day;
+    public void InitCustomer() {
 
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
@@ -85,7 +86,7 @@ public class AICustomer : Interactable {
     }
 
     //Remove product panel + exit bakery
-    protected void Leave() {
+    protected virtual void Leave() {
         state = AIState.leaving;
         agent.SetDestination(spawnPosition);
     }

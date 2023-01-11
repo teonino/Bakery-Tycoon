@@ -15,7 +15,8 @@ public class BuildingMode : Interactable {
 
     [Header("Global Parameters")]
     [SerializeField] private LayerMask pickUpLayer;
-    [SerializeField] private LayerMask putDownLayer;
+    [SerializeField] private LayerMask putDownLayerFloor;
+    [SerializeField] private LayerMask putDownLayerWall;
     [SerializeField] private float snapValue;
 
     [Header("Gamepad Parameters")]
@@ -24,7 +25,7 @@ public class BuildingMode : Interactable {
     private GameObject mainCamera;
     private GameObject buildingCamera;
     private LayerMask currentRaycastlayer;
-    private LayerMask intitialGoLayer;
+    private LayerMask initialGoLayer;
     private GameObject cursorObject;
     private GameObject selectedGo;
     private bool inBuildingMode = false;
@@ -73,29 +74,36 @@ public class BuildingMode : Interactable {
 
     public void Select(CallbackContext context) {
         Ray ray;
-        if (controller.IsGamepad()) {
+        if (controller.IsGamepad())
             ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
-        }
         else
             ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(Mouse.current.position.ReadValue());
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
             if (!selectedGo) {
-                currentRaycastlayer = putDownLayer;
                 selectedGo = hit.collider.gameObject;
-                intitialGoLayer = selectedGo.layer;
-                selectedGo.layer = 3;
+
                 selectedGo.AddComponent<CheckCollisionManager>();
                 selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
+                selectedGo.GetComponent<CheckCollisionManager>().layer = selectedGo.layer;
+
+                if (selectedGo.layer == LayerMask.NameToLayer("CustomizableWall"))
+                    currentRaycastlayer = putDownLayerWall;
+                else
+                    currentRaycastlayer = putDownLayerFloor;
+
+                initialGoLayer = selectedGo.layer;
+                selectedGo.layer = 3;
 
                 ChangeColliderSize(true);
             }
             else {
                 if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
+
                     currentRaycastlayer = pickUpLayer;
-                    selectedGo.layer = intitialGoLayer;
+                    selectedGo.layer = initialGoLayer;
                     Destroy(selectedGo.GetComponent<CheckCollisionManager>());
                     Destroy(selectedGo.GetComponent<Rigidbody>());
 
@@ -154,7 +162,16 @@ public class BuildingMode : Interactable {
             Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
                 selectedGo.transform.position = hit.point;
-                selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), 0, RoundToNearestGrid(selectedGo.transform.localPosition.z));
+
+                int height;
+                if (initialGoLayer == LayerMask.NameToLayer("CustomizableWall")) {
+                    height = 1;
+                    selectedGo.transform.rotation = hit.transform.rotation;
+                }
+                else
+                    height = 0;
+
+                selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), height, RoundToNearestGrid(selectedGo.transform.localPosition.z));
             }
         }
     }

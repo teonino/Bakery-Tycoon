@@ -26,7 +26,7 @@ public class DayTimeUI : MonoBehaviour {
             StartCoroutine(TimeRemaining());
         }
         else {
-            text.SetText(GetDay());
+            text.SetText(GetDayTime());
         }
     }
 
@@ -38,7 +38,7 @@ public class DayTimeUI : MonoBehaviour {
 
         int timeRemaining = duration - day.GetTimeElapsed();
 
-        text.SetText(GetDay() + " " + timeRemaining / 60 + ":"); // Display minutes
+        text.SetText(GetDayTime() + " " + timeRemaining / 60 + ":"); // Display minutes
         if (timeRemaining % 60 < 10)
             text.text += "0" + timeRemaining % 60;
         else
@@ -50,7 +50,7 @@ public class DayTimeUI : MonoBehaviour {
             StartCoroutine(TimeRemaining());
     }
 
-    public string GetDay() {
+    public string GetDayTime() {
         string s = "";
         switch (day.GetDayTime()) {
             case DayTime.Morning:
@@ -67,4 +67,6 @@ public class DayTimeUI : MonoBehaviour {
         }
         return s;
     }
+
+    public Day GetDay() => day;
 }

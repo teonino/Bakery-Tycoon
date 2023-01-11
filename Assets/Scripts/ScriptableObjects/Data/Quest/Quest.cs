@@ -8,28 +8,31 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "Quest", menuName = "Quest")]
 public abstract class Quest : ScriptableObject {
     [Header("Global Quest Parameters")]
-    [SerializeField] private string title;
+    [SerializeField] protected string title;
     [SerializeField] private bool randomize;
-    [SerializeField] private RewardType reward;
-    [SerializeField] private int rewardAmount;
+    [SerializeField] protected RewardType reward;
+    [SerializeField] protected int rewardAmount;
     [SerializeField] private Money money;
     [SerializeField] private Reputation reputation;
     [SerializeField] protected bool isActive = false;
 
     public Action OnCompletedAction;
-    private enum RewardType { Reputation, Money }
-    public void SetActive(bool active) {
-        isActive = active;
-    }
+    protected enum RewardType { Reputation, Money }
+    public void SetActive(bool active) => isActive = active;
     public void UpdateUI(TextMeshProUGUI text) => text.text = title;
     public string GetTitle() => title;
+    public bool IsActive() => isActive;
     protected void OnCompleted() {
-        if (reward == RewardType.Reputation)
-            reputation.AddReputation(rewardAmount);
-        else if (reward == RewardType.Money)
-            money.AddMoney(rewardAmount);
+        switch (reward) {
+            case RewardType.Money:
+                money.AddMoney(rewardAmount);
+                break;
+            case RewardType.Reputation:
+                reputation.AddReputation(rewardAmount);
+                break;
+        }
 
-        SetActive(false);
+        isActive = false;
         OnCompletedAction?.Invoke();
     }
 }

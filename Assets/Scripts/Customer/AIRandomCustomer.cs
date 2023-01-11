@@ -12,14 +12,13 @@ public class AIRandomCustomer : AICustomer {
         shelf.GetAvailableQueuePosition(this);
     }
 
-    public new void InitCustomer(Day day) {
-        day.DayTimeChange += LeaveOnEvening;
-
+    public new void InitCustomer() {
         if (inQueue)
-            base.InitCustomer(day);
+            base.InitCustomer();
         else
             DestroyCustomer();
 
+        day.DayTimeChange += LeaveOnEvening;
         state = AIState.moving;
     }
 
@@ -33,6 +32,7 @@ public class AIRandomCustomer : AICustomer {
         yield return new WaitForSeconds(time);
         Leave();
     }
+
     private void LeaveOnEvening() {
         if (day.GetDayTime() == DayTime.Evening) {
             Leave();
@@ -40,7 +40,7 @@ public class AIRandomCustomer : AICustomer {
         }
     }
 
-    private new void Leave() {
+    protected override void Leave() {
         base.Leave();
         shelf.RemoveCustomerInQueue(this);
     }
