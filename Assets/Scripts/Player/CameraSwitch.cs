@@ -45,6 +45,7 @@ public class CameraSwitch : MonoBehaviour {
 
             for (int i = 0; i < wallFadeScriptStorage.Count; i++) {
                 wallFadeScriptStorage[i].thisRoomIsActive = true;
+                wallFadeScriptMainRoom[0].DisableWall();
             }
 
             if (coroutine != null)
@@ -61,6 +62,7 @@ public class CameraSwitch : MonoBehaviour {
 
             for (int i = 0; i < wallFadeScriptStorage.Count; i++) {
                 wallFadeScriptStorage[i].thisRoomIsActive = false;
+                wallFadeScriptMainRoom[0].EnableWall();
             }
 
             if (coroutine != null)
