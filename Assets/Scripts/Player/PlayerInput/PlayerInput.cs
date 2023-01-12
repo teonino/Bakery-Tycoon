@@ -332,6 +332,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Preview"",
+                    ""type"": ""Button"",
+                    ""id"": ""440e93be-013d-44fa-a345-c321a2489d25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -444,6 +453,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb36e436-9310-42a1-b192-ff14b46cbff4"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Preview"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1560,6 +1580,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Building_Select = m_Building.FindAction("Select", throwIfNotFound: true);
         m_Building_Move = m_Building.FindAction("Move", throwIfNotFound: true);
         m_Building_Rotate = m_Building.FindAction("Rotate", throwIfNotFound: true);
+        m_Building_Preview = m_Building.FindAction("Preview", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
@@ -1756,6 +1777,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Building_Select;
     private readonly InputAction m_Building_Move;
     private readonly InputAction m_Building_Rotate;
+    private readonly InputAction m_Building_Preview;
     public struct BuildingActions
     {
         private @PlayerInput m_Wrapper;
@@ -1764,6 +1786,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Select => m_Wrapper.m_Building_Select;
         public InputAction @Move => m_Wrapper.m_Building_Move;
         public InputAction @Rotate => m_Wrapper.m_Building_Rotate;
+        public InputAction @Preview => m_Wrapper.m_Building_Preview;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1785,6 +1808,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Rotate.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnRotate;
+                @Preview.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnPreview;
+                @Preview.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnPreview;
+                @Preview.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnPreview;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -1801,6 +1827,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
+                @Preview.started += instance.OnPreview;
+                @Preview.performed += instance.OnPreview;
+                @Preview.canceled += instance.OnPreview;
             }
         }
     }
@@ -2265,6 +2294,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnPreview(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

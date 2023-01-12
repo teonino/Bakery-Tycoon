@@ -24,21 +24,26 @@ public class BuildingMode : Interactable {
 
     private GameObject mainCamera;
     private GameObject buildingCamera;
+    private GameObject previewCamera;
     private LayerMask currentRaycastlayer;
     private LayerMask initialGoLayer;
     private GameObject cursorObject;
     private GameObject selectedGo;
     private bool inBuildingMode = false;
+    private bool previewShowed = false;
 
     private void Start() {
         currentRaycastlayer = pickUpLayer;
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed += Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed += RotateGameObject;
+        playerControllerSO.GetPlayerController().playerInput.Building.Preview.performed += PreviewCamera;
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
+        previewCamera = GameObject.FindGameObjectWithTag("PreviewCamera");
         buildingCamera.SetActive(false);
+        previewCamera.SetActive(false);
     }
 
     public override void Effect() {
@@ -57,6 +62,25 @@ public class BuildingMode : Interactable {
 
             interractQuest?.OnInterract();
         }
+    }
+
+    public void PreviewCamera(CallbackContext context)
+    {
+        print("Preview Camera Function Triggered");
+        
+        if (context.performed && previewShowed == false)
+        {
+            buildingCamera.SetActive(false);
+            previewCamera.SetActive(true);
+            previewShowed = true;
+        }
+        else if (context.performed && previewShowed == true)
+        {
+            buildingCamera.SetActive(true);
+            previewCamera.SetActive(false);
+            previewShowed = false;
+        }
+
     }
 
     public void Quit(CallbackContext context) {
