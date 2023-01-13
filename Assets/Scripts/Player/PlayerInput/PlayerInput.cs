@@ -1604,6 +1604,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Order"",
+                    ""type"": ""Button"",
+                    ""id"": ""d882eb63-93fb-4e05-bd5b-5b741ea49389"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1615,6 +1624,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4e405be-818e-45a5-be78-15228f99c4f6"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Order"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1902,6 +1922,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Amafood
         m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
         m_Amafood_ChangeList = m_Amafood.FindAction("ChangeList", throwIfNotFound: true);
+        m_Amafood_Order = m_Amafood.FindAction("Order", throwIfNotFound: true);
         // Tabs
         m_Tabs = asset.FindActionMap("Tabs", throwIfNotFound: true);
         m_Tabs_NextTab = m_Tabs.FindAction("NextTab", throwIfNotFound: true);
@@ -2527,11 +2548,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Amafood;
     private IAmafoodActions m_AmafoodActionsCallbackInterface;
     private readonly InputAction m_Amafood_ChangeList;
+    private readonly InputAction m_Amafood_Order;
     public struct AmafoodActions
     {
         private @PlayerInput m_Wrapper;
         public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChangeList => m_Wrapper.m_Amafood_ChangeList;
+        public InputAction @Order => m_Wrapper.m_Amafood_Order;
         public InputActionMap Get() { return m_Wrapper.m_Amafood; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2544,6 +2567,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ChangeList.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
                 @ChangeList.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
                 @ChangeList.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @Order.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
+                @Order.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
+                @Order.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
             }
             m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
             if (instance != null)
@@ -2551,6 +2577,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ChangeList.started += instance.OnChangeList;
                 @ChangeList.performed += instance.OnChangeList;
                 @ChangeList.canceled += instance.OnChangeList;
+                @Order.started += instance.OnOrder;
+                @Order.performed += instance.OnOrder;
+                @Order.canceled += instance.OnOrder;
             }
         }
     }
@@ -2742,6 +2771,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IAmafoodActions
     {
         void OnChangeList(InputAction.CallbackContext context);
+        void OnOrder(InputAction.CallbackContext context);
     }
     public interface ITabsActions
     {

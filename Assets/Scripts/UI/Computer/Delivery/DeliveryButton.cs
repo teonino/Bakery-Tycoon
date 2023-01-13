@@ -7,17 +7,18 @@ using UnityEngine.UI;
 
 public class DeliveryButton : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI stockText;
+    //[SerializeField] private AssetReference ammountPanelAsset;
     [SerializeField] private ListIngredient ingredients;
-    [SerializeField] private GameObject ammountPanel;
     [SerializeField] private RawImage productImage;
+    [SerializeField] private GameObject ammountPanel;
 
     private List<GameObject> ingredientButtons;
-    public IngredientSO ingredient;
-    public ProductSO product;
-    [HideInInspector] public DeliveryManager deliveryManager;
+    private TextMeshProUGUI stockText;
 
-    public int nbIngredient = 0;
+    [HideInInspector] public IngredientSO ingredient;
+    [HideInInspector] public ProductSO product;
+    [HideInInspector] public DeliveryManager deliveryManager;
+    [HideInInspector] public int nbIngredient = 0;
 
     void Start() {
         ingredientButtons = new List<GameObject>();
@@ -36,8 +37,9 @@ public class DeliveryButton : MonoBehaviour {
         }
         return null;
     }
-    public void UpdateStock() => stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
-
+    public void UpdateStock() {
+     //   stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
+    }
     public void SetIngredientSO(ListIngredient ingredients) => this.ingredients = ingredients;
 
     public void SetIngredient(IngredientSO ingredient) {

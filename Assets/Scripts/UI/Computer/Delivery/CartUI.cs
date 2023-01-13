@@ -14,6 +14,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private Money money;
     [SerializeField] private Day day;
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private PlayerControllerSO playerController;
     [SerializeField] private OrderTypeQuest orderTypeQuest;
 
     [HideInInspector] public DeliveryManager deliveryManager;
@@ -21,7 +22,6 @@ public class CartUI : MonoBehaviour {
     [HideInInspector] public float cartWeight;
     [HideInInspector] public int cartCost;
 
-    private DeliveryType deliveryType;
     private float cost = 0; //Display value of a ingredient, not used yet
 
     private void Awake() {
@@ -29,6 +29,14 @@ public class CartUI : MonoBehaviour {
             deliveries.SetExpressOrderTime(0);
         else
             deliveries.SetDefaultExpressOrderTime();
+    }
+
+    private void OnEnable() {
+        playerController.GetPlayerController().playerInput.Amafood.Order.performed += Order;
+    }
+
+    private void OnDisable() {
+        playerController.GetPlayerController().playerInput.Amafood.Order.performed -= Order;
     }
 
     public void InitCart() {
@@ -48,25 +56,27 @@ public class CartUI : MonoBehaviour {
         totalCostText.SetText("");
     }
 
-    public void Order() {
-        //Check if the order can be bought
-        if (cartCost <= money.GetMoney()) {
-            Delivery delivery = new Delivery(day.GetCurrentDay());
-            foreach (KeyValuePair<IngredientSO, int> stock in cart) {
-                if (stock.Value > 0) {
-                    delivery.Add(stock.Key, stock.Value);
+    public void Order(InputAction.CallbackContext ctx) {
+        if (ctx.performed) {
+            //Check if the order can be bought
+            if (cartCost <= money.GetMoney()) {
+                Delivery delivery = new Delivery(day.GetCurrentDay());
+                foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                    if (stock.Value > 0) {
+                        delivery.Add(stock.Key, stock.Value);
+                    }
                 }
+
+                orderTypeQuest?.CheckDeliveryType();
+
+                //Express deliveries
+                if (delivery.GetDay() == day.GetCurrentDay())
+                    StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                deliveries.Add(delivery);
+                money.AddMoney(-cartCost);
+                Clear();
             }
-
-            orderTypeQuest?.CheckDeliveryType(deliveryType);
-
-            //Express deliveries
-            if (delivery.GetDay() == day.GetCurrentDay()) 
-                StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-            deliveries.Add(delivery);
-            money.AddMoney(-cartCost);
-            Clear();
         }
     }
 

@@ -250,10 +250,7 @@ public class WorkstationManager : MonoBehaviour {
         noRecipeTextGO.SetActive(false);
     }
 
-
-
     public void LaunchIngredientMinigame() {
-
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
             int indexMinigame;
 

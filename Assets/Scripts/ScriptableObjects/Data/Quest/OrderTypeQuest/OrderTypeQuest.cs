@@ -7,8 +7,8 @@ public class OrderTypeQuest : Quest {
     [Header("Order Type Quest Parameters")]
     [SerializeField] private DeliveryType deliveryType;
 
-    public void CheckDeliveryType(DeliveryType deliveryType) {
-        if (isActive && this.deliveryType == deliveryType)
+    public void CheckDeliveryType() {
+        if (isActive)
             OnCompleted();
     }
 }

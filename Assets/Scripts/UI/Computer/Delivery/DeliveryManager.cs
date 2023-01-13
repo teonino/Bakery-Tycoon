@@ -200,11 +200,12 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
         cartWeight = 0;
         cartCost = 0;
+
         foreach (GameObject go in ingredientButtonList)
-            go.GetComponentInChildren<AmmountManager>().ResetAmount();
+            go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
 
         foreach (GameObject go in productButtonList)
-            go.GetComponentInChildren<AmmountManager>().ResetAmount();
+            go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
     }
 
     public void Reset(bool resetCart) {

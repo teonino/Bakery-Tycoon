@@ -1582,6 +1582,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Order",
+                    "type": "Button",
+                    "id": "d882eb63-93fb-4e05-bd5b-5b741ea49389",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1593,6 +1602,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangeList",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4e405be-818e-45a5-be78-15228f99c4f6",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Order",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
