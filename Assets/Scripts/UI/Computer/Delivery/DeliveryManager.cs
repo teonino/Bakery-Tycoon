@@ -151,7 +151,15 @@ public class DeliveryManager : MonoBehaviour {
 
     private void Update() {
         if (controller.IsGamepad()) {
-            ingredientScrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+            RectTransform scroll;
+            if (ingredientScroll.activeInHierarchy)
+                scroll = ingredientScrollRectTransform;
+            else
+                scroll = productScrollRectTransform;
+
+            float scrollValue = playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y;
+            if (scrollValue != 0)
+                scroll.position -= new Vector3(0, scrollValue * scrollSpeed, 0);
         }
     }
 
