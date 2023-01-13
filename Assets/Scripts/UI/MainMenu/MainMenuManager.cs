@@ -4,14 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> Screen = new List<GameObject>();
     [SerializeField] private List<GameObject> Button = new List<GameObject>();
-    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private ChangeMenu InternalMenu;
+    [SerializeField] private GameObject Blackscreen;
+    private Animator blackscreenAnimator;
 
-
+    private void Start()
+    {
+        blackscreenAnimator = Blackscreen.GetComponent<Animator>();
+        blackscreenAnimator.SetTrigger("Fade");
+        StartCoroutine(SetAtLastSiblingBlackscreen());
+    }
 
 
     public void displayMainMenuTools()
@@ -31,9 +38,46 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
+    public IEnumerator SetAtLastSiblingBlackscreen()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Blackscreen.transform.SetAsFirstSibling();
+    }
+
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
+    public IEnumerator BlackscreenTransition(string SceneToLoad)
+    {
+        Blackscreen.transform.SetAsLastSibling();
+        blackscreenAnimator.SetTrigger("FadeReverse");
+        yield return new WaitForSeconds(0.45f);
+        print("After delay");
+        if(SceneToLoad != "quit")
+        {
+            SceneManager.LoadScene(SceneToLoad);
+        }
+        else
+        {
+            Application.Quit();
+        }
+    }
+
+    public IEnumerator BlackscreenTransitionInMainMenu(int MenuToSwitch)
+    {
+        blackscreenAnimator.SetTrigger("FadeReverse");
+        yield return new WaitForSeconds(0.25f);
+        blackscreenAnimator.SetTrigger("Fade");
+        
+        for (int i = 0; i < InternalMenu.Panel.Count; i++)
+        {
+            InternalMenu.Panel[i].SetActive(false);
+        }
+
+        InternalMenu.Panel[MenuToSwitch].SetActive(true);
+        InternalMenu.Panel[MenuToSwitch].transform.SetAsFirstSibling();
     }
 
 }

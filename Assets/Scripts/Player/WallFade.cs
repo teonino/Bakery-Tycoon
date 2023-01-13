@@ -18,53 +18,29 @@ public class WallFade : MonoBehaviour {
         visibleCoroutines = new List<Coroutine>();
     }
 
-    private void OnTriggerEnter(Collider other) {
+    public void DisableWall()
+    {
         if (thisRoomIsActive) {
-            if (other.gameObject.tag == "MainCamera") {
                 if (stillInUse)
                 {
                     
                     for (int i = 0; i < wallToDispawn.transform.childCount; i++)
                         wallToDispawn.transform.GetChild(i).gameObject.SetActive(false);
 
-                    //if (visibleCoroutines.Count > 0)
-                    //{
-                    //    foreach (Coroutine coroutine in visibleCoroutines)
-                    //        StopCoroutine(coroutine);
-                    //    visibleCoroutines.Clear();
-                    //}
 
-                    //for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    //{
-                        
-                    //    invisibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0)));
-                    //}
                 }
-            }
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other.gameObject.tag == "MainCamera"){
+    public void EnableWall()
+    { 
+    
             if (stillInUse)
             {
                 
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++)
                     wallToDispawn.transform.GetChild(i).gameObject.SetActive(true);
-                    //if (invisibleCoroutines.Count > 0)
-                    //{
-                    //    foreach (Coroutine coroutine in invisibleCoroutines)
-                    //        StopCoroutine(coroutine);
-                    //    invisibleCoroutines.Clear();
-                    //}
-
-                    //for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    //{
-
-                    //    visibleCoroutines.Add(StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1)));
-                    //}
             }
-        }
     }
 
     private IEnumerator ChangeColor(Transform go, float opacity) {
