@@ -6,10 +6,10 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class DeliveryButton : MonoBehaviour {
-    [SerializeField] private AssetReference descriptionPanel;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI stockText;
     [SerializeField] private ListIngredient ingredients;
+    [SerializeField] private GameObject ammountPanel;
     [SerializeField] private RawImage productImage;
 
     private List<GameObject> ingredientButtons;
@@ -21,10 +21,10 @@ public class DeliveryButton : MonoBehaviour {
 
     void Start() {
         ingredientButtons = new List<GameObject>();
-
-        //GetComponentInChildren<AmmountManager>().deliveryManager = deliveryManager;
-        //GetComponentInChildren<AmmountManager>().deliveryButton = this;
         nbIngredient = 0;
+
+        GetComponentInChildren<AmmountManager>(true).deliveryManager = deliveryManager;
+        GetComponentInChildren<AmmountManager>(true).deliveryButton = this;
     }
 
     public void SetIngredientButton(List<GameObject> buttons) => ingredientButtons = buttons;
@@ -46,6 +46,10 @@ public class DeliveryButton : MonoBehaviour {
         nameText.SetText(ingredient.name + " | " + ingredient.price + " /U");
 
         productImage.texture = ingredient.image;
+    }
+
+    public void DisplayAmount() {
+        ammountPanel.SetActive(true);
     }
 
     public void SetProduct(ProductSO product) {

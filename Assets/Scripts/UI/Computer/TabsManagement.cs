@@ -78,9 +78,9 @@ public class TabsManagement : MonoBehaviour {
     }
 
     private void Update() {
-        if (gameObject.transform.parent.gameObject.activeSelf && !controller.GetEventSystemCurrentlySelected()) {
-            controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
-        }
+        //if (gameObject.transform.parent.gameObject.activeSelf && !controller.GetEventSystemCurrentlySelected()) {
+        //    controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+        //}
     }
 
     private void OnDisable() {

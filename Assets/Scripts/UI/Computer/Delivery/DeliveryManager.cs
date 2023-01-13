@@ -57,26 +57,22 @@ public class DeliveryManager : MonoBehaviour {
             playerController.DisableInput();
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
-
-            playerController.playerInput.Amafood.Enable();
-            playerController.playerInput.Amafood.AddIngredient.performed += Add;
-            playerController.playerInput.Amafood.RemoveIngredient.performed += Remove;
         }
     }
 
-    private void Add(InputAction.CallbackContext ctx) {
-        DeliveryButton button;
-        controller.GetEventSystemCurrentlySelected().transform.parent.gameObject.TryGetComponent<DeliveryButton>(out button);
-        if (button)
-            button.GetComponentInChildren<AmmountManager>().PlusButtonIsClicked();
-    }
+    //private void Add(InputAction.CallbackContext ctx) {
+    //    DeliveryButton button;
+    //    controller.GetEventSystemCurrentlySelected().transform.parent.gameObject.TryGetComponent<DeliveryButton>(out button);
+    //    if (button)
+    //        button.GetComponentInChildren<AmmountManager>().PlusButtonIsClicked();
+    //}
 
-    private void Remove(InputAction.CallbackContext ctx) {
-        DeliveryButton button;
-        controller.GetEventSystemCurrentlySelected().transform.parent.gameObject.TryGetComponent<DeliveryButton>(out button);
-        if (button)
-            button.GetComponentInChildren<AmmountManager>().MinusButtonIsClicked();
-    }
+    //private void Remove(InputAction.CallbackContext ctx) {
+    //    DeliveryButton button;
+    //    controller.GetEventSystemCurrentlySelected().transform.parent.gameObject.TryGetComponent<DeliveryButton>(out button);
+    //    if (button)
+    //        button.GetComponentInChildren<AmmountManager>().MinusButtonIsClicked();
+    //}
 
     private void Start() {
         lenght = ingredients.GetIngredientLenght();
@@ -234,10 +230,6 @@ public class DeliveryManager : MonoBehaviour {
     public void Quit(InputAction.CallbackContext context) {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
-
-        playerController.playerInput.Amafood.AddIngredient.performed -= Add;
-        playerController.playerInput.Amafood.RemoveIngredient.performed -= Remove;
-        playerController.playerInput.Amafood.Disable();
 
         playerController.EnableInput();
         computerPanel.SetActive(false);
