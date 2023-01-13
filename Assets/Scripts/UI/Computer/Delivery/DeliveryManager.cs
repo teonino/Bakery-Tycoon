@@ -21,7 +21,6 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject productScroll;
-    [SerializeField] private SwitchListDelivery SwitchListScript;
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;

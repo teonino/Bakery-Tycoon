@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class DeliveryButton : MonoBehaviour {
     [SerializeField] private AssetReference descriptionPanel;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI stockText;
-    [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private RawImage productImage;
+
     private List<GameObject> ingredientButtons;
     public IngredientSO ingredient;
     public ProductSO product;
@@ -21,14 +22,14 @@ public class DeliveryButton : MonoBehaviour {
     void Start() {
         ingredientButtons = new List<GameObject>();
 
-        GetComponentInChildren<AmmountManager>().deliveryManager = deliveryManager;
-        GetComponentInChildren<AmmountManager>().deliveryButton = this;
+        //GetComponentInChildren<AmmountManager>().deliveryManager = deliveryManager;
+        //GetComponentInChildren<AmmountManager>().deliveryButton = this;
         nbIngredient = 0;
     }
 
     public void SetIngredientButton(List<GameObject> buttons) => ingredientButtons = buttons;
     public DeliveryButton GetIngredientButton(IngredientSO ingredient) {
-        for(int i = 0; i < ingredientButtons.Count; i++) {
+        for (int i = 0; i < ingredientButtons.Count; i++) {
             DeliveryButton button = ingredientButtons[i].GetComponent<DeliveryButton>();
             if (button.ingredient == ingredient)
                 return button;
@@ -42,21 +43,21 @@ public class DeliveryButton : MonoBehaviour {
     public void SetIngredient(IngredientSO ingredient) {
         this.ingredient = ingredient;
 
-        stockText.SetText("Stock : " + ingredients.GetIngredientAmount(ingredient));
-        priceText.SetText(ingredient.price + "€/U");
+        nameText.SetText(ingredient.name + " | " + ingredient.price + " /U");
+
         productImage.texture = ingredient.image;
     }
 
     public void SetProduct(ProductSO product) {
         this.product = product;
 
-        stockText.SetText(product.name);
+        if (stockText)
+            stockText.SetText(product.name);
 
         int totalPrice = 0;
         foreach (IngredientSO ingredient in product.ingredients)
             totalPrice += ingredient.price;
 
-        priceText.SetText(totalPrice + "€/U");
         productImage.texture = product.image;
     }
 }
