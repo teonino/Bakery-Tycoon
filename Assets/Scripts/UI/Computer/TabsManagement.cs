@@ -12,6 +12,11 @@ public class TabsManagement : MonoBehaviour {
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
 
+    [Header("ButtonAnimation")]
+    [SerializeField] private Vector3 normalScale;
+    [SerializeField] private Vector3 BigScale;
+    [SerializeField] private float AnimationLenght;
+
     private GameObject currentPanel;
     private int currentPanelIndex = 0;
 
