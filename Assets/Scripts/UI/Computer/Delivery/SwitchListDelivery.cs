@@ -1,13 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SwitchListDelivery : MonoBehaviour
 {
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productList;
+    [SerializeField] private PlayerControllerSO playerControllerSO;
 
-    public void SwitchList() {
+    private void Start()
+    {
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += SwitchList;
+    }
+
+    private void OnDestroy()
+    {
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= SwitchList;
+    }
+
+    public void SwitchList(InputAction.CallbackContext context) {
         if(ingredientsList.activeSelf) {
             ingredientsList.SetActive(false);
             productList.SetActive(true);

@@ -1593,6 +1593,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeList"",
+                    ""type"": ""Button"",
+                    ""id"": ""c104e7fb-e701-4880-a0d5-d1ac680493b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1637,6 +1646,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e04b77a0-c950-40bc-aa8a-6f5d22761fb4"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1781,6 +1801,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
         m_Amafood_AddIngredient = m_Amafood.FindAction("AddIngredient", throwIfNotFound: true);
         m_Amafood_RemoveIngredient = m_Amafood.FindAction("RemoveIngredient", throwIfNotFound: true);
+        m_Amafood_ChangeList = m_Amafood.FindAction("ChangeList", throwIfNotFound: true);
         // Tabs
         m_Tabs = asset.FindActionMap("Tabs", throwIfNotFound: true);
         m_Tabs_NextTab = m_Tabs.FindAction("NextTab", throwIfNotFound: true);
@@ -2393,12 +2414,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IAmafoodActions m_AmafoodActionsCallbackInterface;
     private readonly InputAction m_Amafood_AddIngredient;
     private readonly InputAction m_Amafood_RemoveIngredient;
+    private readonly InputAction m_Amafood_ChangeList;
     public struct AmafoodActions
     {
         private @PlayerInput m_Wrapper;
         public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @AddIngredient => m_Wrapper.m_Amafood_AddIngredient;
         public InputAction @RemoveIngredient => m_Wrapper.m_Amafood_RemoveIngredient;
+        public InputAction @ChangeList => m_Wrapper.m_Amafood_ChangeList;
         public InputActionMap Get() { return m_Wrapper.m_Amafood; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2414,6 +2437,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @RemoveIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
                 @RemoveIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
                 @RemoveIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
+                @ChangeList.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @ChangeList.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @ChangeList.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
             }
             m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
             if (instance != null)
@@ -2424,6 +2450,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @RemoveIngredient.started += instance.OnRemoveIngredient;
                 @RemoveIngredient.performed += instance.OnRemoveIngredient;
                 @RemoveIngredient.canceled += instance.OnRemoveIngredient;
+                @ChangeList.started += instance.OnChangeList;
+                @ChangeList.performed += instance.OnChangeList;
+                @ChangeList.canceled += instance.OnChangeList;
             }
         }
     }
@@ -2558,6 +2587,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnAddIngredient(InputAction.CallbackContext context);
         void OnRemoveIngredient(InputAction.CallbackContext context);
+        void OnChangeList(InputAction.CallbackContext context);
     }
     public interface ITabsActions
     {

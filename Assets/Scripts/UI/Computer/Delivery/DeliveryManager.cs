@@ -21,6 +21,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject productScroll;
+    [SerializeField] private SwitchListDelivery SwitchListScript;
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -57,7 +58,6 @@ public class DeliveryManager : MonoBehaviour {
             playerController.DisableInput();
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
-
 
             playerController.playerInput.Amafood.Enable();
             playerController.playerInput.Amafood.AddIngredient.performed += Add;

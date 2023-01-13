@@ -1571,6 +1571,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeList",
+                    "type": "Button",
+                    "id": "c104e7fb-e701-4880-a0d5-d1ac680493b9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1615,6 +1624,17 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "RemoveIngredient",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e04b77a0-c950-40bc-aa8a-6f5d22761fb4",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeList",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
