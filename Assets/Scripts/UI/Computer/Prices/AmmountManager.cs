@@ -21,7 +21,6 @@ public class AmmountManager : MonoBehaviour {
 
     private void Confirm(InputAction.CallbackContext ctx) {
         StartCoroutine(WaitForGamepad());
-        gameObject.SetActive(false);
     }
 
     private void Cancel(InputAction.CallbackContext ctx) {
@@ -29,7 +28,6 @@ public class AmmountManager : MonoBehaviour {
             SetIngredientsInCart(false);
 
         StartCoroutine(WaitForGamepad());
-        gameObject.SetActive(false);
     }
 
     private void OnEnable() {
@@ -56,6 +54,8 @@ public class AmmountManager : MonoBehaviour {
     private IEnumerator WaitForGamepad() {
         yield return new WaitForEndOfFrame();
         controller.SetEventSystemToLastButton();
+
+        gameObject.SetActive(false);
     }
 
     public void MinusButtonIsClicked(InputAction.CallbackContext ctx) {
