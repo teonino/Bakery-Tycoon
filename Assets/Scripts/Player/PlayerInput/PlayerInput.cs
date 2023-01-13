@@ -1597,24 +1597,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""bd93baa2-dc13-4764-9812-def00b70aa35"",
             ""actions"": [
                 {
-                    ""name"": ""AddIngredient"",
-                    ""type"": ""Button"",
-                    ""id"": ""97b32914-ab71-4c62-abc8-94d30a26696b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""RemoveIngredient"",
-                    ""type"": ""Button"",
-                    ""id"": ""124de300-c188-4b9c-b91a-85bba0a9bf83"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ChangeList"",
                     ""type"": ""Button"",
                     ""id"": ""c104e7fb-e701-4880-a0d5-d1ac680493b9"",
@@ -1625,50 +1607,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""1a153665-ef89-4db5-8296-d88f3ba6ae40"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""AddIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ccb36cd4-c221-4e50-96ee-e1451073b2d3"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""AddIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d34c5553-8c4d-4424-804e-1a472b023f7f"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""RemoveIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0544b466-fc34-4477-a8fa-04dab82f81a1"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""RemoveIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""e04b77a0-c950-40bc-aa8a-6f5d22761fb4"",
@@ -1725,6 +1663,149 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""PreviousTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Ammount"",
+            ""id"": ""794c4a23-80ab-469e-b7c8-2ab81a9478d5"",
+            ""actions"": [
+                {
+                    ""name"": ""AddIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a07056f-167c-4a39-b7fe-79701a89f953"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RemoveIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""06b54f4a-d8c0-41e3-b605-5ba57ece4443"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""935cb9a3-759f-45e6-a3ef-18d2558731a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""a08bf5b8-22d3-4ec7-bea3-93b48239939c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""315f9207-e06c-4ed0-abbc-dda5aa36f7b7"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d572a22-ee53-44cf-8b63-72301a75d0fc"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8de735e-bb0c-4958-ab48-ab23c796faa1"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be63054a-245d-4952-ac46-01f425f94662"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1d8f130-da5f-43e1-a07c-5206b2a58e32"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""904b9b05-dc10-4fb3-a1cb-0f4621d6bfe2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a78b317e-8044-406b-807e-80307f545b9d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec530f09-4428-46c0-916c-e719c55ce228"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd8562aa-92cc-4178-92ff-6bc75f99a83c"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1820,13 +1901,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CutPasteV2_LeftAction = m_CutPasteV2.FindAction("LeftAction", throwIfNotFound: true);
         // Amafood
         m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
-        m_Amafood_AddIngredient = m_Amafood.FindAction("AddIngredient", throwIfNotFound: true);
-        m_Amafood_RemoveIngredient = m_Amafood.FindAction("RemoveIngredient", throwIfNotFound: true);
         m_Amafood_ChangeList = m_Amafood.FindAction("ChangeList", throwIfNotFound: true);
         // Tabs
         m_Tabs = asset.FindActionMap("Tabs", throwIfNotFound: true);
         m_Tabs_NextTab = m_Tabs.FindAction("NextTab", throwIfNotFound: true);
         m_Tabs_PreviousTab = m_Tabs.FindAction("PreviousTab", throwIfNotFound: true);
+        // Ammount
+        m_Ammount = asset.FindActionMap("Ammount", throwIfNotFound: true);
+        m_Ammount_AddIngredient = m_Ammount.FindAction("AddIngredient", throwIfNotFound: true);
+        m_Ammount_RemoveIngredient = m_Ammount.FindAction("RemoveIngredient", throwIfNotFound: true);
+        m_Ammount_Confirm = m_Ammount.FindAction("Confirm", throwIfNotFound: true);
+        m_Ammount_Cancel = m_Ammount.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2441,15 +2526,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Amafood
     private readonly InputActionMap m_Amafood;
     private IAmafoodActions m_AmafoodActionsCallbackInterface;
-    private readonly InputAction m_Amafood_AddIngredient;
-    private readonly InputAction m_Amafood_RemoveIngredient;
     private readonly InputAction m_Amafood_ChangeList;
     public struct AmafoodActions
     {
         private @PlayerInput m_Wrapper;
         public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @AddIngredient => m_Wrapper.m_Amafood_AddIngredient;
-        public InputAction @RemoveIngredient => m_Wrapper.m_Amafood_RemoveIngredient;
         public InputAction @ChangeList => m_Wrapper.m_Amafood_ChangeList;
         public InputActionMap Get() { return m_Wrapper.m_Amafood; }
         public void Enable() { Get().Enable(); }
@@ -2460,12 +2541,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_AmafoodActionsCallbackInterface != null)
             {
-                @AddIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
-                @AddIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
-                @AddIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnAddIngredient;
-                @RemoveIngredient.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
-                @RemoveIngredient.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
-                @RemoveIngredient.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnRemoveIngredient;
                 @ChangeList.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
                 @ChangeList.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
                 @ChangeList.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
@@ -2473,12 +2548,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @AddIngredient.started += instance.OnAddIngredient;
-                @AddIngredient.performed += instance.OnAddIngredient;
-                @AddIngredient.canceled += instance.OnAddIngredient;
-                @RemoveIngredient.started += instance.OnRemoveIngredient;
-                @RemoveIngredient.performed += instance.OnRemoveIngredient;
-                @RemoveIngredient.canceled += instance.OnRemoveIngredient;
                 @ChangeList.started += instance.OnChangeList;
                 @ChangeList.performed += instance.OnChangeList;
                 @ChangeList.canceled += instance.OnChangeList;
@@ -2527,6 +2596,63 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public TabsActions @Tabs => new TabsActions(this);
+
+    // Ammount
+    private readonly InputActionMap m_Ammount;
+    private IAmmountActions m_AmmountActionsCallbackInterface;
+    private readonly InputAction m_Ammount_AddIngredient;
+    private readonly InputAction m_Ammount_RemoveIngredient;
+    private readonly InputAction m_Ammount_Confirm;
+    private readonly InputAction m_Ammount_Cancel;
+    public struct AmmountActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AmmountActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddIngredient => m_Wrapper.m_Ammount_AddIngredient;
+        public InputAction @RemoveIngredient => m_Wrapper.m_Ammount_RemoveIngredient;
+        public InputAction @Confirm => m_Wrapper.m_Ammount_Confirm;
+        public InputAction @Cancel => m_Wrapper.m_Ammount_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_Ammount; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AmmountActions set) { return set.Get(); }
+        public void SetCallbacks(IAmmountActions instance)
+        {
+            if (m_Wrapper.m_AmmountActionsCallbackInterface != null)
+            {
+                @AddIngredient.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
+                @RemoveIngredient.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
+                @Confirm.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
+                @Cancel.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
+            }
+            m_Wrapper.m_AmmountActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @AddIngredient.started += instance.OnAddIngredient;
+                @AddIngredient.performed += instance.OnAddIngredient;
+                @AddIngredient.canceled += instance.OnAddIngredient;
+                @RemoveIngredient.started += instance.OnRemoveIngredient;
+                @RemoveIngredient.performed += instance.OnRemoveIngredient;
+                @RemoveIngredient.canceled += instance.OnRemoveIngredient;
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+            }
+        }
+    }
+    public AmmountActions @Ammount => new AmmountActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2615,13 +2741,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IAmafoodActions
     {
-        void OnAddIngredient(InputAction.CallbackContext context);
-        void OnRemoveIngredient(InputAction.CallbackContext context);
         void OnChangeList(InputAction.CallbackContext context);
     }
     public interface ITabsActions
     {
         void OnNextTab(InputAction.CallbackContext context);
         void OnPreviousTab(InputAction.CallbackContext context);
+    }
+    public interface IAmmountActions
+    {
+        void OnAddIngredient(InputAction.CallbackContext context);
+        void OnRemoveIngredient(InputAction.CallbackContext context);
+        void OnConfirm(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }
