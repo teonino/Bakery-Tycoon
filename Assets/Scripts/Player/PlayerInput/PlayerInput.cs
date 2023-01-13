@@ -1810,6 +1810,34 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""5bc959d0-6276-4017-9445-5532c434ff99"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""be473f9a-9d30-4dc0-9b6e-f36d6c5c9239"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ae501db4-181b-4cc5-857c-3fbe068c86a7"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1912,6 +1940,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Ammount_RemoveIngredient = m_Ammount.FindAction("RemoveIngredient", throwIfNotFound: true);
         m_Ammount_Confirm = m_Ammount.FindAction("Confirm", throwIfNotFound: true);
         m_Ammount_Cancel = m_Ammount.FindAction("Cancel", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_SwitchCamera = m_Debug.FindAction("SwitchCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2653,6 +2684,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public AmmountActions @Ammount => new AmmountActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_SwitchCamera;
+    public struct DebugActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DebugActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchCamera => m_Wrapper.m_Debug_SwitchCamera;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @SwitchCamera.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
+                @SwitchCamera.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
+                @SwitchCamera.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @SwitchCamera.started += instance.OnSwitchCamera;
+                @SwitchCamera.performed += instance.OnSwitchCamera;
+                @SwitchCamera.canceled += instance.OnSwitchCamera;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2754,5 +2818,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRemoveIngredient(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnSwitchCamera(InputAction.CallbackContext context);
     }
 }
