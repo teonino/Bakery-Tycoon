@@ -21,6 +21,6 @@ public class MoneyUI : MonoBehaviour {
     public Money GetMoney() => money;
 
     private void UpdateUI(int money) {
-        GetComponent<TextMeshProUGUI>().text = $"Money : {money}€";
+        GetComponent<TextMeshProUGUI>().text = $"Money : {money}";
     }
 }

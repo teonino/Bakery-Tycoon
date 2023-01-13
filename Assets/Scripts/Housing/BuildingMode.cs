@@ -26,6 +26,7 @@ public class BuildingMode : Interactable {
     private FurnitureManager furnitureManager;
     private GameObject mainCamera;
     private GameObject buildingCamera;
+    private GameObject previewCamera;
     private LayerMask currentRaycastlayer;
     private LayerMask initialGoLayer;
     private GameObject cursorObject;
@@ -39,12 +40,16 @@ public class BuildingMode : Interactable {
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed += Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed += RotateGameObject;
+        playerControllerSO.GetPlayerController().playerInput.Building.EnablePreview.performed += EnablePreview;
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed += DisplayFurtniturePanel;
 
         furnitureManager = FindObjectOfType<FurnitureManager>(true);
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
+        previewCamera = GameObject.FindGameObjectWithTag("PreviewCamera");
+
         buildingCamera.SetActive(false);
+        previewCamera.SetActive(false);
     }
 
     public override void Effect() {
@@ -52,13 +57,14 @@ public class BuildingMode : Interactable {
             playerControllerSO.GetPlayerController().DisableInput();
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
 
-            if (controller.IsGamepad())
-                if (!cursorObject)
-                    cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
-                        cursorObject = go.Result;
-                    };
-                else
-                    cursorObject.SetActive(true);
+            CreateCursor();
+            //if (controller.IsGamepad())
+            //    if (!cursorObject)
+            //        cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
+            //            cursorObject = go.Result;
+            //        };
+            //    else
+            //        cursorObject.SetActive(true);
 
             inBuildingMode = true;
             mainCamera.SetActive(false);
@@ -71,10 +77,11 @@ public class BuildingMode : Interactable {
 
     public void Sell(CallbackContext ctx) {
         if (ctx.performed && selectedGo) {
-            if(selectedGo.TryGetComponent(out FurnitureHolder holder)) {
+            if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
                 money.AddMoney(holder.GetFurniturePrice());
                 print($"Add {holder.GetFurniturePrice()} €");
-            } else {
+            }
+            else {
                 print("Furniture not implemented");
             }
         }
@@ -82,9 +89,7 @@ public class BuildingMode : Interactable {
 
     public void Quit(CallbackContext context) {
         if (context.performed && !selectedGo) {
-            if (cursorObject) {
-                Addressables.ReleaseInstance(cursorObject);
-            }
+            cursorObject?.SetActive(false);
             playerControllerSO.GetPlayerController().playerInput.Building.Disable();
             playerControllerSO.GetPlayerController().EnableInput();
             mainCamera.SetActive(true);
@@ -93,13 +98,46 @@ public class BuildingMode : Interactable {
         }
     }
 
-    public void DisplayFurtniturePanel(CallbackContext context) {
+    private void CreateCursor() {
+        if (!cursorObject) {
+            cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
+                cursorObject = go.Result;
+                EnableCursor(true);
+            };
+        }
+        else
+            EnableCursor(true);
+    }
+
+    private void EnableCursor(bool active) {
+        if (controller.IsGamepad())
+            cursorObject.SetActive(active);
+        else
+            cursorObject.SetActive(false);
+    }
+
+    private void EnablePreview(CallbackContext ctx) {
+        if (ctx.performed) {
+            if (!previewCamera.activeSelf) {
+                EnableCursor(false);
+                buildingCamera.SetActive(false);
+                previewCamera.SetActive(true);
+            }
+            else {
+                EnableCursor(true);
+                buildingCamera.SetActive(true);
+                previewCamera.SetActive(false);
+            }
+        }
+    }
+
+    private void DisplayFurtniturePanel(CallbackContext context) {
         playerControllerSO.GetPlayerController().playerInput.Building.Disable();
         cursorObject?.SetActive(false);
         furnitureManager.gameObject.SetActive(true);
     }
 
-    public void Select(CallbackContext context) {
+    private void Select(CallbackContext context) {
         Ray ray;
         if (controller.IsGamepad())
             ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
@@ -204,11 +242,15 @@ public class BuildingMode : Interactable {
     float RoundToNearestGrid(float pos) => pos - pos % snapValue;
 
     private void OnDestroy() {
+        if (cursorObject)
+            Addressables.ReleaseInstance(cursorObject);
+
+        playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed -= Sell;
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed -= Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed -= Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed -= RotateGameObject;
+        playerControllerSO.GetPlayerController().playerInput.Building.EnablePreview.performed -= EnablePreview;
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed -= DisplayFurtniturePanel;
-        playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed -= Sell;
     }
 }
 
