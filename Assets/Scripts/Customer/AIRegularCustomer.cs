@@ -8,7 +8,6 @@ using UnityEngine.AI;
 
 public class AIRegularCustomer : AICustomer {
     [Header("AI Regular Customer variables")]
-    [SerializeField] private DialogueManager dialoguePanel;
     [SerializeField] private AssetReference plateAsset;
     [SerializeField] private int conversationRemaining = 2;
     [SerializeField] private InterractQuest onTalk;
@@ -16,6 +15,8 @@ public class AIRegularCustomer : AICustomer {
     [HideInInspector] public Chair chair;
     [HideInInspector] public int indexChair;
     [HideInInspector] public Table table;
+
+    private DialogueManager dialoguePanel;
 
     public new void InitCustomer() {
         base.InitCustomer();

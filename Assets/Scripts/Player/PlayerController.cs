@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour {
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
-    private bool playerInUI = false;
     private bool playerInputEnable = true;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
@@ -40,19 +39,6 @@ public class PlayerController : MonoBehaviour {
         }
         else
             animator.SetBool("isWalking", false);
-
-        ////Camera Movement
-        //if (!FindObjectOfType<CameraSwitch>().switchingCamera)
-        //    if (!playerInUI)
-        //        if (!controller.IsGamepad()) 
-        //            if (playerInput.Player.AllowCameraMovement.ReadValue<float>() > 0.1f)
-        //                cinemachine.enabled = true;
-        //            else if (cinemachine.enabled == true)
-        //                cinemachine.enabled = false;
-        //        else
-        //            cinemachine.enabled = true; 
-        //    else
-        //        cinemachine.enabled = false;
 
         Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
     }
@@ -81,13 +67,13 @@ public class PlayerController : MonoBehaviour {
 
     public void EnableInput() {
         playerInput.Player.Enable();
-        playerInUI = false;
+        //playerInUI = false;
         playerInputEnable = true;
         controller.InitInputType(this);
     }
 
     public void DisableInput() {
-        playerInUI = true;
+        //playerInUI = true;
         playerInputEnable = false;
         playerInput.Player.Disable();
     }

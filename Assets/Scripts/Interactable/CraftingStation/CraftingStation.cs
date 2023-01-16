@@ -88,7 +88,7 @@ public class CraftingStation : Interactable {
 
         readyAsset.InstantiateAsync().Completed += (go) => {
             readyText = go.Result;
-            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
             readyText.SetActive(false);
         };
         //if (skipCookingTime)

@@ -14,10 +14,8 @@ public class AICustomer : Interactable {
     [SerializeField] protected NavMeshAgent agent;
     [Tooltip("Time in which if you give the requested product, earn a bonus of money & reputation")]
     [SerializeField] protected int bonusTime;
-    [SerializeField] protected Money money;
-    [SerializeField] protected Reputation reputation;
     [SerializeField] protected Statistics stats;
-    [SerializeField] protected Day day;
+    [SerializeField] protected CustomerBonusSO customerBonus;
 
     [Header("AI Customer Variables")]
     [SerializeField] protected float waitingTime = 5f;
@@ -26,7 +24,9 @@ public class AICustomer : Interactable {
     [HideInInspector] public ProductSO requestedProduct;
 
     public AIState state = AIState.idle;
-
+    protected Money money;
+    protected Reputation reputation;
+    protected Day day;
     protected bool bonus = true;
     protected GameObject productCanvas;
     protected GameObject item;
@@ -105,15 +105,15 @@ public class AICustomer : Interactable {
     //Display the payement
     public void DisplayPayment(GameObject displayGO) {
         int basePrice = item.GetComponent<ProductHolder>().product.productSO.price;
-        //int totalPrice = basePrice + basePrice * item.GetComponent<ProductHolder>().product.quality / 100;
+        int totalPrice = (int) Mathf.Ceil(basePrice + basePrice * customerBonus.GetMultiplier());
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
-            go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(basePrice, 0);
+            go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(totalPrice, 0);
             requestedProduct = null;
         };
 
-        money.AddMoney(basePrice);
+        money.AddMoney(totalPrice);
         reputation.AddReputation(saleReputation);
     }
 

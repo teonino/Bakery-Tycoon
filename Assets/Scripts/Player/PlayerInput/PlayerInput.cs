@@ -1097,6 +1097,289 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Ammount"",
+            ""id"": ""794c4a23-80ab-469e-b7c8-2ab81a9478d5"",
+            ""actions"": [
+                {
+                    ""name"": ""AddIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a07056f-167c-4a39-b7fe-79701a89f953"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RemoveIngredient"",
+                    ""type"": ""Button"",
+                    ""id"": ""06b54f4a-d8c0-41e3-b605-5ba57ece4443"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""935cb9a3-759f-45e6-a3ef-18d2558731a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""a08bf5b8-22d3-4ec7-bea3-93b48239939c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""315f9207-e06c-4ed0-abbc-dda5aa36f7b7"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d572a22-ee53-44cf-8b63-72301a75d0fc"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f278643f-87b4-4524-be16-99608d1df42c"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3cd1329-da00-4f27-b373-ec7b604c182f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AddIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be63054a-245d-4952-ac46-01f425f94662"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1d8f130-da5f-43e1-a07c-5206b2a58e32"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f594661a-ca4a-49b1-a680-80cf6501a9ff"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d996aa2c-413f-419c-8e6e-acf807a7bcbd"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RemoveIngredient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a78b317e-8044-406b-807e-80307f545b9d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""543a0ffd-30bd-4d0f-9aa8-c168d88cf84a"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec530f09-4428-46c0-916c-e719c55ce228"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd8562aa-92cc-4178-92ff-6bc75f99a83c"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""270d22ac-6e67-4b16-822d-370230dcd088"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Tabs"",
+            ""id"": ""9b00190c-e8ac-4c4c-bd7b-302b7f736bf4"",
+            ""actions"": [
+                {
+                    ""name"": ""NextTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3142671-0da4-4123-8cd0-8ef44e3000f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a1a879b-c4e9-4a8a-ac16-60fbab666ffe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d18c250b-2143-43f4-aca3-1ea7a879c897"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be5627f5-efdc-46b5-a12e-ec25b977a640"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Amafood"",
+            ""id"": ""bd93baa2-dc13-4764-9812-def00b70aa35"",
+            ""actions"": [
+                {
+                    ""name"": ""ChangeList"",
+                    ""type"": ""Button"",
+                    ""id"": ""c104e7fb-e701-4880-a0d5-d1ac680493b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Order"",
+                    ""type"": ""Button"",
+                    ""id"": ""d882eb63-93fb-4e05-bd5b-5b741ea49389"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e04b77a0-c950-40bc-aa8a-6f5d22761fb4"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4e405be-818e-45a5-be78-15228f99c4f6"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Order"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""SpreadPaste"",
             ""id"": ""4b057310-33a5-479a-98cf-ffc34e8b1b5f"",
             ""actions"": [
@@ -1593,258 +1876,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Amafood"",
-            ""id"": ""bd93baa2-dc13-4764-9812-def00b70aa35"",
+            ""name"": ""PoorLiquid"",
+            ""id"": ""988231dd-17c5-4088-abad-8e64c83acd5d"",
             ""actions"": [
                 {
-                    ""name"": ""ChangeList"",
-                    ""type"": ""Button"",
-                    ""id"": ""c104e7fb-e701-4880-a0d5-d1ac680493b9"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""PoorLiquidAction"",
+                    ""type"": ""Value"",
+                    ""id"": ""53c5f980-35c3-4fe8-9dc9-f4cc1f7eda9e"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""e04b77a0-c950-40bc-aa8a-6f5d22761fb4"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeList"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Tabs"",
-            ""id"": ""9b00190c-e8ac-4c4c-bd7b-302b7f736bf4"",
-            ""actions"": [
-                {
-                    ""name"": ""NextTab"",
-                    ""type"": ""Button"",
-                    ""id"": ""c3142671-0da4-4123-8cd0-8ef44e3000f4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PreviousTab"",
-                    ""type"": ""Button"",
-                    ""id"": ""1a1a879b-c4e9-4a8a-ac16-60fbab666ffe"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""d18c250b-2143-43f4-aca3-1ea7a879c897"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""NextTab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""be5627f5-efdc-46b5-a12e-ec25b977a640"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""PreviousTab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Ammount"",
-            ""id"": ""794c4a23-80ab-469e-b7c8-2ab81a9478d5"",
-            ""actions"": [
-                {
-                    ""name"": ""AddIngredient"",
-                    ""type"": ""Button"",
-                    ""id"": ""1a07056f-167c-4a39-b7fe-79701a89f953"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""RemoveIngredient"",
-                    ""type"": ""Button"",
-                    ""id"": ""06b54f4a-d8c0-41e3-b605-5ba57ece4443"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Confirm"",
-                    ""type"": ""Button"",
-                    ""id"": ""935cb9a3-759f-45e6-a3ef-18d2558731a7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Cancel"",
-                    ""type"": ""Button"",
-                    ""id"": ""a08bf5b8-22d3-4ec7-bea3-93b48239939c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""315f9207-e06c-4ed0-abbc-dda5aa36f7b7"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""AddIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4d572a22-ee53-44cf-8b63-72301a75d0fc"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""AddIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b8de735e-bb0c-4958-ab48-ab23c796faa1"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""AddIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""be63054a-245d-4952-ac46-01f425f94662"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""RemoveIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b1d8f130-da5f-43e1-a07c-5206b2a58e32"",
+                    ""id"": ""c02749fa-219c-4777-8e1a-4be7e429bc84"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""RemoveIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""904b9b05-dc10-4fb3-a1cb-0f4621d6bfe2"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""RemoveIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a78b317e-8044-406b-807e-80307f545b9d"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Confirm"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ec530f09-4428-46c0-916c-e719c55ce228"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Cancel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cd8562aa-92cc-4178-92ff-6bc75f99a83c"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Cancel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Debug"",
-            ""id"": ""5bc959d0-6276-4017-9445-5532c434ff99"",
-            ""actions"": [
-                {
-                    ""name"": ""SwitchCamera"",
-                    ""type"": ""Button"",
-                    ""id"": ""be473f9a-9d30-4dc0-9b6e-f36d6c5c9239"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""ae501db4-181b-4cc5-857c-3fbe068c86a7"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchCamera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7b642031-dc5f-454c-9534-2a245f36a803"",
-                    ""path"": ""<XInputController>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchCamera"",
+                    ""action"": ""PoorLiquidAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1913,6 +1966,20 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Ammount
+        m_Ammount = asset.FindActionMap("Ammount", throwIfNotFound: true);
+        m_Ammount_AddIngredient = m_Ammount.FindAction("AddIngredient", throwIfNotFound: true);
+        m_Ammount_RemoveIngredient = m_Ammount.FindAction("RemoveIngredient", throwIfNotFound: true);
+        m_Ammount_Confirm = m_Ammount.FindAction("Confirm", throwIfNotFound: true);
+        m_Ammount_Cancel = m_Ammount.FindAction("Cancel", throwIfNotFound: true);
+        // Tabs
+        m_Tabs = asset.FindActionMap("Tabs", throwIfNotFound: true);
+        m_Tabs_NextTab = m_Tabs.FindAction("NextTab", throwIfNotFound: true);
+        m_Tabs_PreviousTab = m_Tabs.FindAction("PreviousTab", throwIfNotFound: true);
+        // Amafood
+        m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
+        m_Amafood_ChangeList = m_Amafood.FindAction("ChangeList", throwIfNotFound: true);
+        m_Amafood_Order = m_Amafood.FindAction("Order", throwIfNotFound: true);
         // SpreadPaste
         m_SpreadPaste = asset.FindActionMap("SpreadPaste", throwIfNotFound: true);
         m_SpreadPaste_SpreadPasteAction = m_SpreadPaste.FindAction("SpreadPasteAction", throwIfNotFound: true);
@@ -1938,22 +2005,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CutPasteV2_DownAction = m_CutPasteV2.FindAction("DownAction", throwIfNotFound: true);
         m_CutPasteV2_RightAction = m_CutPasteV2.FindAction("RightAction", throwIfNotFound: true);
         m_CutPasteV2_LeftAction = m_CutPasteV2.FindAction("LeftAction", throwIfNotFound: true);
-        // Amafood
-        m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
-        m_Amafood_ChangeList = m_Amafood.FindAction("ChangeList", throwIfNotFound: true);
-        // Tabs
-        m_Tabs = asset.FindActionMap("Tabs", throwIfNotFound: true);
-        m_Tabs_NextTab = m_Tabs.FindAction("NextTab", throwIfNotFound: true);
-        m_Tabs_PreviousTab = m_Tabs.FindAction("PreviousTab", throwIfNotFound: true);
-        // Ammount
-        m_Ammount = asset.FindActionMap("Ammount", throwIfNotFound: true);
-        m_Ammount_AddIngredient = m_Ammount.FindAction("AddIngredient", throwIfNotFound: true);
-        m_Ammount_RemoveIngredient = m_Ammount.FindAction("RemoveIngredient", throwIfNotFound: true);
-        m_Ammount_Confirm = m_Ammount.FindAction("Confirm", throwIfNotFound: true);
-        m_Ammount_Cancel = m_Ammount.FindAction("Cancel", throwIfNotFound: true);
-        // Debug
-        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
-        m_Debug_SwitchCamera = m_Debug.FindAction("SwitchCamera", throwIfNotFound: true);
+        // PoorLiquid
+        m_PoorLiquid = asset.FindActionMap("PoorLiquid", throwIfNotFound: true);
+        m_PoorLiquid_PoorLiquidAction = m_PoorLiquid.FindAction("PoorLiquidAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2302,6 +2356,145 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public UIActions @UI => new UIActions(this);
 
+    // Ammount
+    private readonly InputActionMap m_Ammount;
+    private IAmmountActions m_AmmountActionsCallbackInterface;
+    private readonly InputAction m_Ammount_AddIngredient;
+    private readonly InputAction m_Ammount_RemoveIngredient;
+    private readonly InputAction m_Ammount_Confirm;
+    private readonly InputAction m_Ammount_Cancel;
+    public struct AmmountActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AmmountActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddIngredient => m_Wrapper.m_Ammount_AddIngredient;
+        public InputAction @RemoveIngredient => m_Wrapper.m_Ammount_RemoveIngredient;
+        public InputAction @Confirm => m_Wrapper.m_Ammount_Confirm;
+        public InputAction @Cancel => m_Wrapper.m_Ammount_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_Ammount; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AmmountActions set) { return set.Get(); }
+        public void SetCallbacks(IAmmountActions instance)
+        {
+            if (m_Wrapper.m_AmmountActionsCallbackInterface != null)
+            {
+                @AddIngredient.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
+                @AddIngredient.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
+                @RemoveIngredient.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
+                @RemoveIngredient.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
+                @Confirm.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
+                @Cancel.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
+            }
+            m_Wrapper.m_AmmountActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @AddIngredient.started += instance.OnAddIngredient;
+                @AddIngredient.performed += instance.OnAddIngredient;
+                @AddIngredient.canceled += instance.OnAddIngredient;
+                @RemoveIngredient.started += instance.OnRemoveIngredient;
+                @RemoveIngredient.performed += instance.OnRemoveIngredient;
+                @RemoveIngredient.canceled += instance.OnRemoveIngredient;
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+            }
+        }
+    }
+    public AmmountActions @Ammount => new AmmountActions(this);
+
+    // Tabs
+    private readonly InputActionMap m_Tabs;
+    private ITabsActions m_TabsActionsCallbackInterface;
+    private readonly InputAction m_Tabs_NextTab;
+    private readonly InputAction m_Tabs_PreviousTab;
+    public struct TabsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public TabsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextTab => m_Wrapper.m_Tabs_NextTab;
+        public InputAction @PreviousTab => m_Wrapper.m_Tabs_PreviousTab;
+        public InputActionMap Get() { return m_Wrapper.m_Tabs; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TabsActions set) { return set.Get(); }
+        public void SetCallbacks(ITabsActions instance)
+        {
+            if (m_Wrapper.m_TabsActionsCallbackInterface != null)
+            {
+                @NextTab.started -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
+                @NextTab.performed -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
+                @NextTab.canceled -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
+                @PreviousTab.started -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
+                @PreviousTab.performed -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
+                @PreviousTab.canceled -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
+            }
+            m_Wrapper.m_TabsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @NextTab.started += instance.OnNextTab;
+                @NextTab.performed += instance.OnNextTab;
+                @NextTab.canceled += instance.OnNextTab;
+                @PreviousTab.started += instance.OnPreviousTab;
+                @PreviousTab.performed += instance.OnPreviousTab;
+                @PreviousTab.canceled += instance.OnPreviousTab;
+            }
+        }
+    }
+    public TabsActions @Tabs => new TabsActions(this);
+
+    // Amafood
+    private readonly InputActionMap m_Amafood;
+    private IAmafoodActions m_AmafoodActionsCallbackInterface;
+    private readonly InputAction m_Amafood_ChangeList;
+    private readonly InputAction m_Amafood_Order;
+    public struct AmafoodActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ChangeList => m_Wrapper.m_Amafood_ChangeList;
+        public InputAction @Order => m_Wrapper.m_Amafood_Order;
+        public InputActionMap Get() { return m_Wrapper.m_Amafood; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AmafoodActions set) { return set.Get(); }
+        public void SetCallbacks(IAmafoodActions instance)
+        {
+            if (m_Wrapper.m_AmafoodActionsCallbackInterface != null)
+            {
+                @ChangeList.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @ChangeList.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @ChangeList.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @Order.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
+                @Order.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
+                @Order.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
+            }
+            m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ChangeList.started += instance.OnChangeList;
+                @ChangeList.performed += instance.OnChangeList;
+                @ChangeList.canceled += instance.OnChangeList;
+                @Order.started += instance.OnOrder;
+                @Order.performed += instance.OnOrder;
+                @Order.canceled += instance.OnOrder;
+            }
+        }
+    }
+    public AmafoodActions @Amafood => new AmafoodActions(this);
+
     // SpreadPaste
     private readonly InputActionMap m_SpreadPaste;
     private ISpreadPasteActions m_SpreadPasteActionsCallbackInterface;
@@ -2565,169 +2758,38 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public CutPasteV2Actions @CutPasteV2 => new CutPasteV2Actions(this);
 
-    // Amafood
-    private readonly InputActionMap m_Amafood;
-    private IAmafoodActions m_AmafoodActionsCallbackInterface;
-    private readonly InputAction m_Amafood_ChangeList;
-    public struct AmafoodActions
+    // PoorLiquid
+    private readonly InputActionMap m_PoorLiquid;
+    private IPoorLiquidActions m_PoorLiquidActionsCallbackInterface;
+    private readonly InputAction m_PoorLiquid_PoorLiquidAction;
+    public struct PoorLiquidActions
     {
         private @PlayerInput m_Wrapper;
-        public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ChangeList => m_Wrapper.m_Amafood_ChangeList;
-        public InputActionMap Get() { return m_Wrapper.m_Amafood; }
+        public PoorLiquidActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PoorLiquidAction => m_Wrapper.m_PoorLiquid_PoorLiquidAction;
+        public InputActionMap Get() { return m_Wrapper.m_PoorLiquid; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(AmafoodActions set) { return set.Get(); }
-        public void SetCallbacks(IAmafoodActions instance)
+        public static implicit operator InputActionMap(PoorLiquidActions set) { return set.Get(); }
+        public void SetCallbacks(IPoorLiquidActions instance)
         {
-            if (m_Wrapper.m_AmafoodActionsCallbackInterface != null)
+            if (m_Wrapper.m_PoorLiquidActionsCallbackInterface != null)
             {
-                @ChangeList.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
-                @ChangeList.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
-                @ChangeList.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
+                @PoorLiquidAction.started -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
+                @PoorLiquidAction.performed -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
+                @PoorLiquidAction.canceled -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
             }
-            m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
+            m_Wrapper.m_PoorLiquidActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @ChangeList.started += instance.OnChangeList;
-                @ChangeList.performed += instance.OnChangeList;
-                @ChangeList.canceled += instance.OnChangeList;
+                @PoorLiquidAction.started += instance.OnPoorLiquidAction;
+                @PoorLiquidAction.performed += instance.OnPoorLiquidAction;
+                @PoorLiquidAction.canceled += instance.OnPoorLiquidAction;
             }
         }
     }
-    public AmafoodActions @Amafood => new AmafoodActions(this);
-
-    // Tabs
-    private readonly InputActionMap m_Tabs;
-    private ITabsActions m_TabsActionsCallbackInterface;
-    private readonly InputAction m_Tabs_NextTab;
-    private readonly InputAction m_Tabs_PreviousTab;
-    public struct TabsActions
-    {
-        private @PlayerInput m_Wrapper;
-        public TabsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @NextTab => m_Wrapper.m_Tabs_NextTab;
-        public InputAction @PreviousTab => m_Wrapper.m_Tabs_PreviousTab;
-        public InputActionMap Get() { return m_Wrapper.m_Tabs; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TabsActions set) { return set.Get(); }
-        public void SetCallbacks(ITabsActions instance)
-        {
-            if (m_Wrapper.m_TabsActionsCallbackInterface != null)
-            {
-                @NextTab.started -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
-                @NextTab.performed -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
-                @NextTab.canceled -= m_Wrapper.m_TabsActionsCallbackInterface.OnNextTab;
-                @PreviousTab.started -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
-                @PreviousTab.performed -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
-                @PreviousTab.canceled -= m_Wrapper.m_TabsActionsCallbackInterface.OnPreviousTab;
-            }
-            m_Wrapper.m_TabsActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @NextTab.started += instance.OnNextTab;
-                @NextTab.performed += instance.OnNextTab;
-                @NextTab.canceled += instance.OnNextTab;
-                @PreviousTab.started += instance.OnPreviousTab;
-                @PreviousTab.performed += instance.OnPreviousTab;
-                @PreviousTab.canceled += instance.OnPreviousTab;
-            }
-        }
-    }
-    public TabsActions @Tabs => new TabsActions(this);
-
-    // Ammount
-    private readonly InputActionMap m_Ammount;
-    private IAmmountActions m_AmmountActionsCallbackInterface;
-    private readonly InputAction m_Ammount_AddIngredient;
-    private readonly InputAction m_Ammount_RemoveIngredient;
-    private readonly InputAction m_Ammount_Confirm;
-    private readonly InputAction m_Ammount_Cancel;
-    public struct AmmountActions
-    {
-        private @PlayerInput m_Wrapper;
-        public AmmountActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @AddIngredient => m_Wrapper.m_Ammount_AddIngredient;
-        public InputAction @RemoveIngredient => m_Wrapper.m_Ammount_RemoveIngredient;
-        public InputAction @Confirm => m_Wrapper.m_Ammount_Confirm;
-        public InputAction @Cancel => m_Wrapper.m_Ammount_Cancel;
-        public InputActionMap Get() { return m_Wrapper.m_Ammount; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(AmmountActions set) { return set.Get(); }
-        public void SetCallbacks(IAmmountActions instance)
-        {
-            if (m_Wrapper.m_AmmountActionsCallbackInterface != null)
-            {
-                @AddIngredient.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
-                @AddIngredient.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
-                @AddIngredient.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnAddIngredient;
-                @RemoveIngredient.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
-                @RemoveIngredient.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
-                @RemoveIngredient.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnRemoveIngredient;
-                @Confirm.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
-                @Confirm.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
-                @Confirm.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnConfirm;
-                @Cancel.started -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
-                @Cancel.performed -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
-                @Cancel.canceled -= m_Wrapper.m_AmmountActionsCallbackInterface.OnCancel;
-            }
-            m_Wrapper.m_AmmountActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @AddIngredient.started += instance.OnAddIngredient;
-                @AddIngredient.performed += instance.OnAddIngredient;
-                @AddIngredient.canceled += instance.OnAddIngredient;
-                @RemoveIngredient.started += instance.OnRemoveIngredient;
-                @RemoveIngredient.performed += instance.OnRemoveIngredient;
-                @RemoveIngredient.canceled += instance.OnRemoveIngredient;
-                @Confirm.started += instance.OnConfirm;
-                @Confirm.performed += instance.OnConfirm;
-                @Confirm.canceled += instance.OnConfirm;
-                @Cancel.started += instance.OnCancel;
-                @Cancel.performed += instance.OnCancel;
-                @Cancel.canceled += instance.OnCancel;
-            }
-        }
-    }
-    public AmmountActions @Ammount => new AmmountActions(this);
-
-    // Debug
-    private readonly InputActionMap m_Debug;
-    private IDebugActions m_DebugActionsCallbackInterface;
-    private readonly InputAction m_Debug_SwitchCamera;
-    public struct DebugActions
-    {
-        private @PlayerInput m_Wrapper;
-        public DebugActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SwitchCamera => m_Wrapper.m_Debug_SwitchCamera;
-        public InputActionMap Get() { return m_Wrapper.m_Debug; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
-        public void SetCallbacks(IDebugActions instance)
-        {
-            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
-            {
-                @SwitchCamera.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-                @SwitchCamera.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-                @SwitchCamera.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-            }
-            m_Wrapper.m_DebugActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @SwitchCamera.started += instance.OnSwitchCamera;
-                @SwitchCamera.performed += instance.OnSwitchCamera;
-                @SwitchCamera.canceled += instance.OnSwitchCamera;
-            }
-        }
-    }
-    public DebugActions @Debug => new DebugActions(this);
+    public PoorLiquidActions @PoorLiquid => new PoorLiquidActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2782,6 +2844,23 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
     }
+    public interface IAmmountActions
+    {
+        void OnAddIngredient(InputAction.CallbackContext context);
+        void OnRemoveIngredient(InputAction.CallbackContext context);
+        void OnConfirm(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface ITabsActions
+    {
+        void OnNextTab(InputAction.CallbackContext context);
+        void OnPreviousTab(InputAction.CallbackContext context);
+    }
+    public interface IAmafoodActions
+    {
+        void OnChangeList(InputAction.CallbackContext context);
+        void OnOrder(InputAction.CallbackContext context);
+    }
     public interface ISpreadPasteActions
     {
         void OnSpreadPasteAction(InputAction.CallbackContext context);
@@ -2814,24 +2893,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRightAction(InputAction.CallbackContext context);
         void OnLeftAction(InputAction.CallbackContext context);
     }
-    public interface IAmafoodActions
+    public interface IPoorLiquidActions
     {
-        void OnChangeList(InputAction.CallbackContext context);
-    }
-    public interface ITabsActions
-    {
-        void OnNextTab(InputAction.CallbackContext context);
-        void OnPreviousTab(InputAction.CallbackContext context);
-    }
-    public interface IAmmountActions
-    {
-        void OnAddIngredient(InputAction.CallbackContext context);
-        void OnRemoveIngredient(InputAction.CallbackContext context);
-        void OnConfirm(InputAction.CallbackContext context);
-        void OnCancel(InputAction.CallbackContext context);
-    }
-    public interface IDebugActions
-    {
-        void OnSwitchCamera(InputAction.CallbackContext context);
+        void OnPoorLiquidAction(InputAction.CallbackContext context);
     }
 }

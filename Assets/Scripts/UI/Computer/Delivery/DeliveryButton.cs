@@ -7,24 +7,40 @@ using UnityEngine.UI;
 
 public class DeliveryButton : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI stockText;
+    //[SerializeField] private AssetReference ammountPanelAsset;
     [SerializeField] private ListIngredient ingredients;
-    [SerializeField] private GameObject ammountPanel;
     [SerializeField] private RawImage productImage;
+    [SerializeField] private Button button;
 
     private List<GameObject> ingredientButtons;
-    public IngredientSO ingredient;
-    public ProductSO product;
-    [HideInInspector] public DeliveryManager deliveryManager;
+    private TextMeshProUGUI stockText;
+    private AmmountManager ammountManager;
+    private GameObject ammountPanel;
 
-    public int nbIngredient = 0;
+    [HideInInspector] public IngredientSO ingredient;
+    [HideInInspector] public ProductSO product;
+    [HideInInspector] public DeliveryManager deliveryManager;
+    [HideInInspector] public int nbIngredient = 0;
 
     void Start() {
         ingredientButtons = new List<GameObject>();
         nbIngredient = 0;
 
-        GetComponentInChildren<AmmountManager>(true).deliveryManager = deliveryManager;
-        GetComponentInChildren<AmmountManager>(true).deliveryButton = this;
+        ammountManager = FindObjectOfType<AmmountManager>(true);
+        ammountManager.deliveryManager = deliveryManager;
+
+        button.onClick.AddListener(DisplayAmmountPanel);
+    }
+
+    private void DisplayAmmountPanel() {
+        ammountManager.deliveryButton = this;
+
+        if (ingredient)
+            ammountManager.SetTexture(ingredient.image);
+        else
+            ammountManager.SetTexture(product.image);
+
+        ammountManager.gameObject.SetActive(true);
     }
 
     public void SetIngredientButton(List<GameObject> buttons) => ingredientButtons = buttons;
@@ -36,8 +52,9 @@ public class DeliveryButton : MonoBehaviour {
         }
         return null;
     }
-    public void UpdateStock() => stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
-
+    public void UpdateStock() {
+        //   stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
+    }
     public void SetIngredientSO(ListIngredient ingredients) => this.ingredients = ingredients;
 
     public void SetIngredient(IngredientSO ingredient) {
@@ -62,6 +79,7 @@ public class DeliveryButton : MonoBehaviour {
         foreach (IngredientSO ingredient in product.ingredients)
             totalPrice += ingredient.price;
 
+        nameText.text = product.name + " | " + totalPrice + " /U";
         productImage.texture = product.image;
     }
 }

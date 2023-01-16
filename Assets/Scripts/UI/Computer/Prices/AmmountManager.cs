@@ -4,50 +4,77 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.AddressableAssets;
+using System;
 
 public class AmmountManager : MonoBehaviour {
-    [SerializeField] private int amountToBuy;
+    [SerializeField] private int ammountToBuy;
     [SerializeField] private TextMeshProUGUI textAmmount;
-    [SerializeField] public DeliveryButton deliveryButton;
-    [SerializeField] public PlayerControllerSO playerController;
-    [SerializeField] public Controller controller;
+    [SerializeField] private RawImage imageProduct;
+    [SerializeField] private PlayerControllerSO playerController;
+    [SerializeField] private Controller controller;
 
-    public DeliveryManager deliveryManager;
+    [HideInInspector] public DeliveryButton deliveryButton;
+    [HideInInspector] public DeliveryManager deliveryManager;
 
-    private void Start() {
-        deliveryManager = FindObjectOfType<DeliveryManager>();
-        amountToBuy = deliveryButton.nbIngredient;      
-    }
+    private ProductSO ProductSO;
+    private IngredientSO Ingredient;
+    private int originalAmmount = 0;
 
     private void Confirm(InputAction.CallbackContext ctx) {
         StartCoroutine(WaitForGamepad());
+        deliveryButton.nbIngredient = ammountToBuy;
+        originalAmmount = ammountToBuy;
     }
 
     private void Cancel(InputAction.CallbackContext ctx) {
-        for (int i = amountToBuy; i > 0; i--, amountToBuy--) 
-            SetIngredientsInCart(false);
+        if (originalAmmount < ammountToBuy) {
+            while(ammountToBuy != originalAmmount) {
+                SetIngredientsInCart(false);
+                ammountToBuy--;
+            }
+        } else {
+            while (ammountToBuy != originalAmmount) {
+                SetIngredientsInCart(true);
+                ammountToBuy++;
+            }
+        }
 
         StartCoroutine(WaitForGamepad());
     }
 
+    public void SetTexture(Texture texture) {
+        imageProduct.texture = texture;
+    }
+
     private void OnEnable() {
+        deliveryManager = FindObjectOfType<DeliveryManager>();
+        ammountToBuy = deliveryButton.nbIngredient;
+        textAmmount.text = "Ammount : " + ammountToBuy;
+
         controller.RegisterCurrentSelectedButton();
         controller.SetEventSystemToStartButton(null);
 
         playerController.GetPlayerController().playerInput.UI.Disable();
+        playerController.GetPlayerController().playerInput.Amafood.Disable();
         playerController.GetPlayerController().playerInput.Ammount.Enable();
         playerController.GetPlayerController().playerInput.Ammount.AddIngredient.performed += PlusButtonIsClicked;
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed += MinusButtonIsClicked;
         playerController.GetPlayerController().playerInput.Ammount.Confirm.performed += Confirm;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
     }
 
     private void OnDisable() {
+        deliveryButton = null;
+
         playerController.GetPlayerController().playerInput.Ammount.AddIngredient.performed -= PlusButtonIsClicked;
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed -= MinusButtonIsClicked;
         playerController.GetPlayerController().playerInput.Ammount.Confirm.performed -= Confirm;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Cancel;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Confirm;
         playerController.GetPlayerController().playerInput.Ammount.Disable();
+        playerController.GetPlayerController().playerInput.Amafood.Enable();
         playerController.GetPlayerController().playerInput.UI.Enable();
     }
 
@@ -55,19 +82,20 @@ public class AmmountManager : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         controller.SetEventSystemToLastButton();
 
+        textAmmount.text = "Ammount : " + ammountToBuy.ToString();
         gameObject.SetActive(false);
     }
 
     public void MinusButtonIsClicked(InputAction.CallbackContext ctx) {
-        if (ctx.performed && amountToBuy > 0) {
-            amountToBuy -= 1;
+        if (ctx.performed && ammountToBuy > 0) {
+            ammountToBuy -= 1;
             SetIngredientsInCart(false);
         }
     }
 
     public void PlusButtonIsClicked(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
-            amountToBuy += 1;
+            ammountToBuy += 1;
             SetIngredientsInCart(true);
         }
     }
@@ -78,20 +106,20 @@ public class AmmountManager : MonoBehaviour {
         else
             foreach (IngredientSO ingredient in deliveryButton.product.ingredients) {
                 deliveryManager.SetIngredient(ingredient, add);
-                deliveryButton.GetIngredientButton(ingredient).GetComponentInChildren<AmmountManager>().SetTextAmount();
+                deliveryButton.GetIngredientButton(ingredient).nbIngredient++;
             }
 
-        textAmmount.text = amountToBuy.ToString();
+        textAmmount.text = "Ammount : " + ammountToBuy.ToString();
     }
 
     public void SetTextAmount() {
-        amountToBuy++;
-        textAmmount.text = amountToBuy.ToString();
+        ammountToBuy++;
+        textAmmount.text = ammountToBuy.ToString();
     }
 
-    public int GetAmount() => amountToBuy;
+    public int GetAmount() => ammountToBuy;
     public void ResetAmount() {
-        amountToBuy = 0;
-        textAmmount.text = amountToBuy.ToString();
+        ammountToBuy = 0;
+        textAmmount.text = ammountToBuy.ToString();
     }
 }

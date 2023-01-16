@@ -38,6 +38,7 @@ public class WorkstationManager : MonoBehaviour {
     private TextMeshProUGUI noRecipeText;
     private int firstIndexMinigame = -1;
     private int secondIndexMinigame = -1;
+    private bool ingredientPanelEnabled = true;
 
     [HideInInspector] public bool skipRequirement = false;
     [HideInInspector] public bool skipMinigame = false;
@@ -64,12 +65,15 @@ public class WorkstationManager : MonoBehaviour {
         foreach (StockIngredient stock in stocks)
             stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
 
+        //controller.SetEventSystemToStartButton(cookButton);
+
         //foreach (GameObject button in ingredientButtonList)
         //    button.GetComponent<WorkstationIngredientButton>().SetRequirement(CheckRequirement(button.GetComponent<WorkstationProductButton>().GetProduct()));
 
         if (ingredientButtonList.Count > 0)
             if (controller.IsGamepad())
                 StartCoroutine(waitForGamepad());
+
         DisplayIngredients();
     }
 
@@ -143,8 +147,14 @@ public class WorkstationManager : MonoBehaviour {
             }
             playerControllerSO.GetPlayerController().DisableInput();
         }
-    }
 
+        if (IngredientPanel.activeSelf && !ingredientPanelEnabled) {
+            if (ingredientButtonList.Count > 0)
+                if (controller.IsGamepad())
+                    StartCoroutine(waitForGamepad());
+            ingredientPanelEnabled = true;
+        }
+    }
 
     //public void SetProduct(ProductSO product) {
     //    this.currentProduct = product;
@@ -250,10 +260,7 @@ public class WorkstationManager : MonoBehaviour {
         noRecipeTextGO.SetActive(false);
     }
 
-
-
     public void LaunchIngredientMinigame() {
-
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
             int indexMinigame;
 
@@ -263,10 +270,11 @@ public class WorkstationManager : MonoBehaviour {
                 if (currentMinigameCounter > 0) {
                     while (indexMinigame == firstIndexMinigame || indexMinigame == secondIndexMinigame)
                         indexMinigame = UnityEngine.Random.Range(0, 5);
-                    if(currentMinigameCounter == 1) {
+                    if (currentMinigameCounter == 1) {
                         secondIndexMinigame = indexMinigame;
                     }
-                } else {
+                }
+                else {
                     firstIndexMinigame = indexMinigame;
                 }
             }
@@ -331,40 +339,13 @@ public class WorkstationManager : MonoBehaviour {
     public void DisplayRecipes() {
         IngredientPanel.SetActive(false);
         RecipePanel.SetActive(true);
+        ingredientPanelEnabled = false;
     }
 
     public void DisplayIngredients() {
         IngredientPanel.SetActive(true);
         RecipePanel.SetActive(false);
     }
-
-    //private void DisableButtons() {
-
-    //foreach (GameObject go in ingredientButtonList)
-    //    go.SetActive(false);
-
-    //foreach (IngredientSelected ingredientDisplay in ingredientsSelected)
-    //    ingredientDisplay.gameObject.SetActive(false);
-
-    //nbButton = 0;
-    //cookButton.SetActive(false);
-    //stockPanel.SetActive(false);
-    //}
-
-    //private void EnableButtons() {
-    //    if (controller.IsGamepad())
-    //        StartCoroutine(waitForGamepad());
-
-    //IngredientPanel.SetActive(true);
-    //foreach (GameObject go in ingredientButtonList)
-    //    go.SetActive(true);
-
-    //foreach (IngredientSelected ingredientDisplay in ingredientsSelected)
-    //    ingredientDisplay.gameObject.SetActive(true);
-
-    //cookButton.SetActive(true);
-    //stockPanel.SetActive(true);
-    //}
 
     private IEnumerator waitForGamepad() {
         yield return new WaitForEndOfFrame();
