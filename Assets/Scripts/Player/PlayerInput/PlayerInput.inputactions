@@ -1908,6 +1908,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Workstation",
+            "id": "8b7a84a5-4ca1-44c1-9d44-bdae276bc584",
+            "actions": [
+                {
+                    "name": "ChangeTab",
+                    "type": "Button",
+                    "id": "7290e45c-33b1-420d-a426-09054b675998",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cook",
+                    "type": "Button",
+                    "id": "00d04e5e-282c-4682-90ac-92cb7182f607",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aa792535-552f-4c2d-8e40-d6c58fc56381",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ChangeTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60fc6fc8-c1f6-4af4-9b56-48d74fa0b5a7",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Cook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

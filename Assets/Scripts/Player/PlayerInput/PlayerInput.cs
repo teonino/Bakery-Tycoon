@@ -1930,6 +1930,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Workstation"",
+            ""id"": ""8b7a84a5-4ca1-44c1-9d44-bdae276bc584"",
+            ""actions"": [
+                {
+                    ""name"": ""ChangeTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""7290e45c-33b1-420d-a426-09054b675998"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cook"",
+                    ""type"": ""Button"",
+                    ""id"": ""00d04e5e-282c-4682-90ac-92cb7182f607"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""aa792535-552f-4c2d-8e40-d6c58fc56381"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChangeTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60fc6fc8-c1f6-4af4-9b56-48d74fa0b5a7"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2039,6 +2087,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SwitchCamera = m_Debug.FindAction("SwitchCamera", throwIfNotFound: true);
+        // Workstation
+        m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
+        m_Workstation_ChangeTab = m_Workstation.FindAction("ChangeTab", throwIfNotFound: true);
+        m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2854,6 +2906,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // Workstation
+    private readonly InputActionMap m_Workstation;
+    private IWorkstationActions m_WorkstationActionsCallbackInterface;
+    private readonly InputAction m_Workstation_ChangeTab;
+    private readonly InputAction m_Workstation_Cook;
+    public struct WorkstationActions
+    {
+        private @PlayerInput m_Wrapper;
+        public WorkstationActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ChangeTab => m_Wrapper.m_Workstation_ChangeTab;
+        public InputAction @Cook => m_Wrapper.m_Workstation_Cook;
+        public InputActionMap Get() { return m_Wrapper.m_Workstation; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WorkstationActions set) { return set.Get(); }
+        public void SetCallbacks(IWorkstationActions instance)
+        {
+            if (m_Wrapper.m_WorkstationActionsCallbackInterface != null)
+            {
+                @ChangeTab.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
+                @ChangeTab.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
+                @ChangeTab.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
+                @Cook.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
+                @Cook.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
+                @Cook.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
+            }
+            m_Wrapper.m_WorkstationActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ChangeTab.started += instance.OnChangeTab;
+                @ChangeTab.performed += instance.OnChangeTab;
+                @ChangeTab.canceled += instance.OnChangeTab;
+                @Cook.started += instance.OnCook;
+                @Cook.performed += instance.OnCook;
+                @Cook.canceled += instance.OnCook;
+            }
+        }
+    }
+    public WorkstationActions @Workstation => new WorkstationActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -2964,5 +3057,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnSwitchCamera(InputAction.CallbackContext context);
+    }
+    public interface IWorkstationActions
+    {
+        void OnChangeTab(InputAction.CallbackContext context);
+        void OnCook(InputAction.CallbackContext context);
     }
 }

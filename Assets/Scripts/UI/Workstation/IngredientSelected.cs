@@ -10,11 +10,13 @@ public class IngredientSelected : MonoBehaviour {
     public void SetIngredient(IngredientSO ingredient) {
         this.ingredient = ingredient;
         image.texture = ingredient.image;
+        image.enabled = true;
     }
 
     public void RemoveIngredient() {
         this.ingredient = null;
         image.texture = null;
+        image.enabled = false;
     }
 
     public IngredientSO GetIngredient() => ingredient;
