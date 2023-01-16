@@ -50,7 +50,7 @@ public class TabsManagement : MonoBehaviour {
                 currentPanelIndex++;
             panels[currentPanelIndex].SetActive(true);
 
-            controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+            //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
         }
     }
 
@@ -63,19 +63,13 @@ public class TabsManagement : MonoBehaviour {
                 currentPanelIndex--;
             panels[currentPanelIndex].SetActive(true);
 
-            controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+            //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
         }
     }
 
     private IEnumerator WaitForGamepad() {
         yield return new WaitForEndOfFrame();
         controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
-    }
-
-    private void Update() {
-        //if (gameObject.transform.parent.gameObject.activeSelf && !controller.GetEventSystemCurrentlySelected()) {
-        //    controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
-        //}
     }
 
     private void OnDisable() {

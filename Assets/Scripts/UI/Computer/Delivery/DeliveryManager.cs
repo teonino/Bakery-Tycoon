@@ -39,19 +39,6 @@ public class DeliveryManager : MonoBehaviour {
 
     public Dictionary<IngredientSO, int> cart;
 
-    public void SwitchList(InputAction.CallbackContext context) {
-        if (ingredientsList.activeSelf) {
-            ingredientsList.SetActive(false);
-            productList.SetActive(true);
-            controller.SetEventSystemToStartButton(ingredientButtonList[0]);
-        }
-        else {
-            ingredientsList.SetActive(true);
-            productList.SetActive(false);
-            controller.SetEventSystemToStartButton(productButtonList[0]);
-        }
-        controller.SetEventSystemToStartButton(ingredientRackList[0]);
-    }
     void Awake() {
         ingredientScrollRectTransform = ingredientScroll.GetComponent<RectTransform>();
         productScrollRectTransform = productScroll.GetComponent<RectTransform>();
@@ -73,6 +60,13 @@ public class DeliveryManager : MonoBehaviour {
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
             playerControllerSO.GetPlayerController().playerInput.Amafood.Enable();
+        }
+
+        if (ingredientButtonList.Count > 0) {
+            if (ingredientsList.activeInHierarchy)
+                controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+            else
+                controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
         }
     }
 
@@ -127,9 +121,12 @@ public class DeliveryManager : MonoBehaviour {
 
             if (productButtonList.Count == 0)
                 SetupProductButton();
-            else
+            else {
                 foreach (GameObject go in productButtonList)
                     go.GetComponent<DeliveryButton>().SetIngredientButton(ingredientButtonList);
+
+                controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+            }
         }
     }
 
@@ -171,6 +168,18 @@ public class DeliveryManager : MonoBehaviour {
 
         CalculateCartCostAndWeight();
         DisplayCart();
+    }
+    public void SwitchList(InputAction.CallbackContext context) {
+        if (ingredientsList.activeSelf) {
+            ingredientsList.SetActive(false);
+            productList.SetActive(true);
+            controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
+        }
+        else {
+            ingredientsList.SetActive(true);
+            productList.SetActive(false);
+            controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+        }
     }
 
     private void CalculateCartCostAndWeight() {
