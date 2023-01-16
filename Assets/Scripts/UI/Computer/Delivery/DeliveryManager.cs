@@ -174,7 +174,6 @@ public class DeliveryManager : MonoBehaviour {
         cartWeight = 0;
         foreach (KeyValuePair<IngredientSO, int> ingredient in cart) {
             cartCost += ingredient.Key.price * ingredient.Value;
-            cartWeight += ingredient.Key.weight * ingredient.Value;
         }
     }
 

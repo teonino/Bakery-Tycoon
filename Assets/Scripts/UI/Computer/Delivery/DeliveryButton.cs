@@ -11,9 +11,11 @@ public class DeliveryButton : MonoBehaviour {
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private RawImage productImage;
     [SerializeField] private GameObject ammountPanel;
+    [SerializeField] private Button button;
 
     private List<GameObject> ingredientButtons;
     private TextMeshProUGUI stockText;
+    private AmmountManager ammountManager;
 
     [HideInInspector] public IngredientSO ingredient;
     [HideInInspector] public ProductSO product;
@@ -24,8 +26,21 @@ public class DeliveryButton : MonoBehaviour {
         ingredientButtons = new List<GameObject>();
         nbIngredient = 0;
 
-        GetComponentInChildren<AmmountManager>(true).deliveryManager = deliveryManager;
-        GetComponentInChildren<AmmountManager>(true).deliveryButton = this;
+        ammountManager = FindObjectOfType<AmmountManager>(true);
+        ammountManager.deliveryManager = deliveryManager;
+
+        button.onClick.AddListener(DisplayAmmountPanel);
+    }
+
+    private void DisplayAmmountPanel() {
+        ammountManager.deliveryButton = this;
+
+        if (ingredient)
+            ammountManager.SetTexture(ingredient.image);
+        else
+            ammountManager.SetTexture(product.image);
+
+        ammountManager.gameObject.SetActive(true);
     }
 
     public void SetIngredientButton(List<GameObject> buttons) => ingredientButtons = buttons;

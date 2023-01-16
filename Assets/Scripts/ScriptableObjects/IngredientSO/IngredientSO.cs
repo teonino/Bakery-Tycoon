@@ -6,10 +6,8 @@ using UnityEngine;
 public class IngredientSO : ScriptableObject {
 
     public new string name;
-    public string description;
     public int price;
     public Texture image;
-    public float weight;
 
     public MinigameInfo minigame;
 }
