@@ -21,9 +21,6 @@ public class AmmountManager : MonoBehaviour {
     private IngredientSO Ingredient;
     private int originalAmmount = 0;
 
-    private void Start() {     
-    }
-
     private void Confirm(InputAction.CallbackContext ctx) {
         StartCoroutine(WaitForGamepad());
         deliveryButton.nbIngredient = ammountToBuy;
@@ -79,8 +76,6 @@ public class AmmountManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.Ammount.Disable();
         playerController.GetPlayerController().playerInput.Amafood.Enable();
         playerController.GetPlayerController().playerInput.UI.Enable();
-
-        Addressables.ReleaseInstance(gameObject);
     }
 
     private IEnumerator WaitForGamepad() {
@@ -111,7 +106,7 @@ public class AmmountManager : MonoBehaviour {
         else
             foreach (IngredientSO ingredient in deliveryButton.product.ingredients) {
                 deliveryManager.SetIngredient(ingredient, add);
-                deliveryButton.GetIngredientButton(ingredient).GetComponentInChildren<AmmountManager>(true).SetTextAmount();
+                deliveryButton.GetIngredientButton(ingredient).nbIngredient++;
             }
 
         textAmmount.text = "Ammount : " + ammountToBuy.ToString();

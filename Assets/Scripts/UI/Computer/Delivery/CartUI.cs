@@ -57,7 +57,7 @@ public class CartUI : MonoBehaviour {
     }
 
     public void Order(InputAction.CallbackContext ctx) {
-        if (ctx.performed) {
+        if (ctx.performed && cart != null) {
             //Check if the order can be bought
             if (cartCost <= money.GetMoney()) {
                 Delivery delivery = new Delivery(day.GetCurrentDay());

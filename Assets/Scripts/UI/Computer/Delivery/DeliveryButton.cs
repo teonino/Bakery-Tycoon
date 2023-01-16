@@ -10,12 +10,12 @@ public class DeliveryButton : MonoBehaviour {
     //[SerializeField] private AssetReference ammountPanelAsset;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private RawImage productImage;
-    [SerializeField] private GameObject ammountPanel;
     [SerializeField] private Button button;
 
     private List<GameObject> ingredientButtons;
     private TextMeshProUGUI stockText;
     private AmmountManager ammountManager;
+    private GameObject ammountPanel;
 
     [HideInInspector] public IngredientSO ingredient;
     [HideInInspector] public ProductSO product;
@@ -53,7 +53,7 @@ public class DeliveryButton : MonoBehaviour {
         return null;
     }
     public void UpdateStock() {
-     //   stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
+        //   stockText.text = "Stock : " + ingredients.GetIngredientAmount(ingredient);
     }
     public void SetIngredientSO(ListIngredient ingredients) => this.ingredients = ingredients;
 
@@ -79,6 +79,7 @@ public class DeliveryButton : MonoBehaviour {
         foreach (IngredientSO ingredient in product.ingredients)
             totalPrice += ingredient.price;
 
+        nameText.text = product.name + " | " + totalPrice + " /U";
         productImage.texture = product.image;
     }
 }

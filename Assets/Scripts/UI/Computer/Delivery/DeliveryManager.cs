@@ -20,7 +20,9 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private int scrollSpeed;
     [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
+    [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
+    [SerializeField] private GameObject productList;
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -37,6 +39,19 @@ public class DeliveryManager : MonoBehaviour {
 
     public Dictionary<IngredientSO, int> cart;
 
+    public void SwitchList(InputAction.CallbackContext context) {
+        if (ingredientsList.activeSelf) {
+            ingredientsList.SetActive(false);
+            productList.SetActive(true);
+            controller.SetEventSystemToStartButton(ingredientButtonList[0]);
+        }
+        else {
+            ingredientsList.SetActive(true);
+            productList.SetActive(false);
+            controller.SetEventSystemToStartButton(productButtonList[0]);
+        }
+        controller.SetEventSystemToStartButton(ingredientRackList[0]);
+    }
     void Awake() {
         ingredientScrollRectTransform = ingredientScroll.GetComponent<RectTransform>();
         productScrollRectTransform = productScroll.GetComponent<RectTransform>();
@@ -57,22 +72,9 @@ public class DeliveryManager : MonoBehaviour {
             playerController.DisableInput();
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
+            playerControllerSO.GetPlayerController().playerInput.Amafood.Enable();
         }
     }
-
-    //private void Add(InputAction.CallbackContext ctx) {
-    //    DeliveryButton button;
-    //    controller.GetEventSystemCurrentlySelected().transform.parent.gameObject.TryGetComponent<DeliveryButton>(out button);
-    //    if (button)
-    //        button.GetComponentInChildren<AmmountManager>().PlusButtonIsClicked();
-    //}
-
-    //private void Remove(InputAction.CallbackContext ctx) {
-    //    DeliveryButton button;
-    //    controller.GetEventSystemCurrentlySelected().transform.parent.gameObject.TryGetComponent<DeliveryButton>(out button);
-    //    if (button)
-    //        button.GetComponentInChildren<AmmountManager>().MinusButtonIsClicked();
-    //}
 
     private void Start() {
         lenght = ingredients.GetIngredientLenght();
@@ -93,11 +95,13 @@ public class DeliveryManager : MonoBehaviour {
                 SetupRacks(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
             };
         }
+
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += SwitchList;
     }
 
     void SetupRacks(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
         if (buttonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / buttonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / buttonList[0].GetComponent<RectTransform>().sizeDelta.x) - 1;
             for (int i = 0; i < buttonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
                     rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
@@ -200,11 +204,11 @@ public class DeliveryManager : MonoBehaviour {
         cartWeight = 0;
         cartCost = 0;
 
-        foreach (GameObject go in ingredientButtonList)
-            go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
+        //foreach (GameObject go in ingredientButtonList)
+        //    go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
 
-        foreach (GameObject go in productButtonList)
-            go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
+        //foreach (GameObject go in productButtonList)
+        //    go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
     }
 
     public void Reset(bool resetCart) {
@@ -225,6 +229,14 @@ public class DeliveryManager : MonoBehaviour {
     public void UpdateStockButtons() {
         for (int i = 0; i < ingredientButtonList.Count; i++)
             ingredientButtonList[i].GetComponent<DeliveryButton>().UpdateStock();
+    }
+
+    private void OnDisable() {
+        playerControllerSO.GetPlayerController().playerInput.Amafood.Disable();
+    }
+
+    private void OnDestroy() {
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= SwitchList;
     }
 
     public void Quit(InputAction.CallbackContext context) {
