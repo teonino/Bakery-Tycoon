@@ -29,7 +29,6 @@ public class DebugCamera : MonoBehaviour
     public void SwitchCameraFunction(InputAction.CallbackContext context)
     {
         CameraOrthographic.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = -5;
-        print("SwitchCamera");
         if(orthographicCameraIsActive)
         {
             CameraOrthographic.SetActive(false);

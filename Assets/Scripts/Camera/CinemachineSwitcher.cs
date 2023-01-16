@@ -9,32 +9,30 @@ public class CinemachineSwitcher : MonoBehaviour
 
     [SerializeField] private PlayerControllerSO controller;
     [SerializeField] private Animator CinemachineAnimator;
-    [SerializeField] private CinemachineVirtualCamera perspectiveCamera;
-    [SerializeField] private CinemachineVirtualCamera OrthographicCamera;
     private bool perspectiveCameraIsUsed = true;
+    [SerializeField] CinemachineVirtualCamera perspectiveCamera;
+    [SerializeField] CinemachineVirtualCamera orthoCamera;
 
     private void Awake()
     {
         CinemachineAnimator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
-    {
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Disable();
-    }
-
     private void Start()
-    {
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed += _ => SwitchState();
+    { 
+        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Enable();
+        controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed += SwitchState;
     }
 
-    private void SwitchState()
+    private void OnDestroy()
     {
+
+        controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed -= SwitchState;
+    }
+
+    public void SwitchState(InputAction.CallbackContext context)
+    {
+        print("switchState");
         if(perspectiveCameraIsUsed)
         {
             CinemachineAnimator.Play("OrthographicCamera");
@@ -51,12 +49,12 @@ public class CinemachineSwitcher : MonoBehaviour
         if(perspectiveCameraIsUsed)
         {
             perspectiveCamera.Priority = 0;
-            OrthographicCamera.Priority = 1;
+            orthoCamera.Priority = 1;
         }
         else
         {
             perspectiveCamera.Priority = 1;
-            OrthographicCamera.Priority = 0;
+            orthoCamera.Priority = 0;
         }
         perspectiveCameraIsUsed = !perspectiveCameraIsUsed;
     }
