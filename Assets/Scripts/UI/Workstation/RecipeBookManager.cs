@@ -23,7 +23,7 @@ public class RecipeBookManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (controller.IsGamepad()) {
+        if (controller.IsGamepad() && gameObject.activeInHierarchy) {
             scrollRectTransform.position -= new Vector3(0, playerController.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
         }
     }
