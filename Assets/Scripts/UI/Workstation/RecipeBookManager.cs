@@ -20,6 +20,7 @@ public class RecipeBookManager : MonoBehaviour {
     private void Awake() {
         recipes = new List<GameObject>();
         scrollRectTransform = scroll.GetComponent<RectTransform>();
+
         productUnlocked.action += DisplayProduct;
     }
 
