@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ProductUnlocked", menuName = "Action/ProductUnlocked")]
+[CreateAssetMenu(fileName = "ProductUnlocked", menuName = "Event/ProductUnlocked")]
 public class ProductUnlockedSO : ScriptableObject
 {
     public Action<ProductSO> action;

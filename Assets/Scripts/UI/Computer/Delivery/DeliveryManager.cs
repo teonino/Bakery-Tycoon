@@ -19,6 +19,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private ProductUnlockedSO productUnlocked;
+    [SerializeField] private IngredientUnlockSO ingredientUnlocked;
     [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject ingredientsList;
@@ -53,6 +54,7 @@ public class DeliveryManager : MonoBehaviour {
 
         playerController = playerControllerSO.GetPlayerController();
         productUnlocked.action += EnableProductButton;
+        ingredientUnlocked.action += EnableIngredientButton;
     }
 
     private void EnableProductButton(ProductSO product) {
@@ -61,8 +63,17 @@ public class DeliveryManager : MonoBehaviour {
                 item.SetActive(true);
             }
         }
+        ResizeScroll(productRackList, productButtonList, productScroll, productScrollRectTransform);
     }
 
+    private void EnableIngredientButton(IngredientSO ingredient) {
+        foreach (GameObject item in ingredientButtonList) {
+            if (item.GetComponent<DeliveryButton>().ingredient == ingredient) {
+                item.SetActive(true);
+            }
+        }
+        ResizeScroll(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
+    }
 
     private void OnEnable() {
         if (gameObject.activeSelf) {
@@ -101,6 +112,10 @@ public class DeliveryManager : MonoBehaviour {
                 button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
                 button.SetIngredientSO(ingredients);
                 ingredientButtonList.Add(go.Result);
+
+                if (!ingredients.GetIngredientList()[nbButton].ingredient.unlocked)
+                    go.Result.SetActive(false);
+
                 nbButton++;
                 SetupRacks(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
             };
@@ -123,9 +138,15 @@ public class DeliveryManager : MonoBehaviour {
         }
     }
 
+    private void ResizeScroll(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
+        scrollRect.sizeDelta = new Vector2(
+            scroll.GetComponent<RectTransform>().rect.width, 
+            buttonList[0].GetComponent<RectTransform>().rect.height * (rackList.Count + 1));
+    }
+
     void SetupButtons(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
         if (rackList.Count * maxButtonInRack >= buttonList.Count) {
-            scrollRect.sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, buttonList[0].GetComponent<RectTransform>().rect.height * (rackList.Count + 1));
+            ResizeScroll(rackList, buttonList, scroll, scrollRect);
             for (int i = 0; i < lenght; i++) {
                 for (int j = 0; j < lenght; j++) {
                     if (j / maxButtonInRack < rackList.Count) {
