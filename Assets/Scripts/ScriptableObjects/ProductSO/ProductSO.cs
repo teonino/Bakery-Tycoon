@@ -10,7 +10,7 @@ public class ProductSO : ScriptableObject {
     public float recipePrice;
     public int nbCreated;
     public float cookingTime;
-    public bool unlocked;
+    public bool unlocked = false;
     public Texture image;
     public AssetReference asset;
 
@@ -22,7 +22,8 @@ public class ProductSO : ScriptableObject {
     [Space(5)]
     [Header("Requirement")]
     public CraftingStationType craftStationRequired;
-    public List<IngredientSO> ingredients;
+    public List<IngredientsForProduct> ingredients;
+
 
     [Space(5)]
     [Header("Minigames")]

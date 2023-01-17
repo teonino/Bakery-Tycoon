@@ -22,6 +22,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
+    [SerializeField] private ProductUnlockedSO productUnlocked;
 
     private List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -54,7 +55,7 @@ public class WorkstationManager : MonoBehaviour {
 
         deliveries.UpdateUI += UpdateStocksButton;
     }
-    
+
 
     private void OnEnable() {
         //Setup Stock
@@ -93,10 +94,8 @@ public class WorkstationManager : MonoBehaviour {
             };
         }
 
-
-        foreach(Transform t in ingredientSelectedParent.transform) {
+        foreach (Transform t in ingredientSelectedParent.transform) 
             ingredientsSelected.Add(t.gameObject.GetComponent<IngredientSelected>());
-        }
 
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
@@ -191,7 +190,7 @@ public class WorkstationManager : MonoBehaviour {
                     for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
                         bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
                         for (int j = 0; j < nbIngredientSelected; j++)
-                            if (product.ingredients[i] == ingredientsSelected[j].GetIngredient())
+                            if (product.ingredients[i].ingredient == ingredientsSelected[j].GetIngredient())
                                 checkMatchingIngredients = true;
 
                         if (!checkMatchingIngredients)
@@ -268,7 +267,10 @@ public class WorkstationManager : MonoBehaviour {
                     ResetManager();
                 };
             }
-
+            if (!currentProduct.unlocked) {
+                currentProduct.unlocked = true; //Action to display it on DeliveryManager + Almanach
+                productUnlocked.Invoke(currentProduct);
+            }
             RemoveIngredients();
         }
     }

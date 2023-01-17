@@ -25,19 +25,21 @@ public class WorkstationProductButton : MonoBehaviour {
         productNbCreated.SetText(product.name + " x" + product.nbCreated);
         productDescription.SetText("Ingredients :\n");
 
-        foreach(IngredientSO ingredient in product.ingredients) {
+        foreach (IngredientsForProduct ingredient in product.ingredients) {
             ingredientAsset.InstantiateAsync(layoutGroup.transform).Completed += (go) => {
                 IngredientSelected ingredientDisplay = go.Result.GetComponent<IngredientSelected>();
 
-
                 ingredientDisplay.DisableBackground();
                 ingredientDisplay.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
-                ingredientDisplay.SetIngredient(ingredient);
+                if (ingredient.isUnlocked())
+                    ingredientDisplay.SetIngredient(ingredient.ingredient);
             };
         }
 
         //CheckRequirement();
     }
+
+    public ProductSO GetProduct() => this.product;
 
     public void SetRequirement(bool requirementMet) {
         this.requirementMet = requirementMet;
@@ -48,7 +50,8 @@ public class WorkstationProductButton : MonoBehaviour {
         if (!requirementMet) {
             GetComponent<Button>().enabled = false;
             productRequirementPanel.SetActive(true);
-        } else {
+        }
+        else {
             GetComponent<Button>().enabled = true;
             productRequirementPanel.SetActive(false);
         }

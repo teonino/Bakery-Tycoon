@@ -12,13 +12,32 @@ public class RecipeBookManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientDisplayAsset;
     [SerializeField] private GameObject scroll;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
+    [SerializeField] private ProductUnlockedSO productUnlocked;
 
     private RectTransform scrollRectTransform;
     private List<GameObject> recipes;
+    private int nbProductUnlocked = 0;
 
     private void Awake() {
         recipes = new List<GameObject>();
         scrollRectTransform = scroll.GetComponent<RectTransform>();
+        productUnlocked.action += DisplayProduct;
+    }
+
+    private void DisplayProduct(ProductSO product) {
+        for (int i = 0; i < recipes.Count; i++) {
+            if (recipes[i].GetComponent<WorkstationProductButton>().GetProduct() == product) {
+                recipes[i].SetActive(true);
+                nbProductUnlocked++;
+            }
+        }
+        ResizeScroll();
+    }
+
+    private void ResizeScroll() {
+        scroll.GetComponent<RectTransform>().sizeDelta = new Vector2(
+               scroll.GetComponent<RectTransform>().rect.width,
+               (recipes[0].GetComponent<RectTransform>().rect.height + scroll.GetComponent<VerticalLayoutGroup>().spacing) * nbProductUnlocked);
     }
 
     private void Update() {
@@ -34,8 +53,15 @@ public class RecipeBookManager : MonoBehaviour {
                     go.Result.GetComponent<WorkstationProductButton>().SetProduct(product);
                     recipes.Add(go.Result);
 
+                    if (!product.unlocked) {
+                        go.Result.SetActive(false);
+                    } else {
+                        nbProductUnlocked++;
+                    }
+
                     if (recipes.Count == 1)
-                        scroll.GetComponent<RectTransform>().sizeDelta = new Vector2(scroll.GetComponent<RectTransform>().rect.width, (recipes[0].GetComponent<RectTransform>().rect.height + scroll.GetComponent<VerticalLayoutGroup>().spacing) * products.GetProductLenght());
+
+                        ResizeScroll();
                 };
             }
         }

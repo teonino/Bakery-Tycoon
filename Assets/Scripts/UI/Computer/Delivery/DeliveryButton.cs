@@ -76,8 +76,8 @@ public class DeliveryButton : MonoBehaviour {
             stockText.SetText(product.name);
 
         int totalPrice = 0;
-        foreach (IngredientSO ingredient in product.ingredients)
-            totalPrice += ingredient.price;
+        foreach (IngredientsForProduct ingredient in product.ingredients)
+            totalPrice += ingredient.ingredient.price;
 
         nameText.text = product.name + " | " + totalPrice + " /U";
         productImage.texture = product.image;

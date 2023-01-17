@@ -9,7 +9,7 @@ public class Computer : Interactable {
     private GameObject computerPanel;
 
     private void Awake() {
-        computerPanel = GameObject.FindGameObjectWithTag("MainCanvas").transform.Find("ComputerPanel").gameObject;
+        computerPanel = FindObjectOfType<ComputerManager>(true).gameObject;
     }
 
     public override void Effect() {

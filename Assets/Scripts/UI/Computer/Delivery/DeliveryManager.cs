@@ -18,6 +18,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Controller controller;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
+    [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject ingredientsList;
@@ -51,8 +52,18 @@ public class DeliveryManager : MonoBehaviour {
         deliveries.UpdateUI += UpdateStockButtons;
 
         playerController = playerControllerSO.GetPlayerController();
-
+        productUnlocked.action += EnableProductButton;
     }
+
+    private void EnableProductButton(ProductSO product) {
+        foreach (GameObject item in productButtonList) {
+            if (item.GetComponent<DeliveryButton>().product == product) {
+                item.SetActive(true);
+            }
+        }
+    }
+
+
     private void OnEnable() {
         if (gameObject.activeSelf) {
             //Manage Inputs
@@ -64,10 +75,15 @@ public class DeliveryManager : MonoBehaviour {
 
         if (ingredientButtonList.Count > 0) {
             if (ingredientsList.activeInHierarchy)
-                controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+                StartCoroutine(waitForGamepad(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject));
             else
-                controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
+                StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
         }
+    }
+
+    private IEnumerator waitForGamepad(GameObject obj) {
+        yield return new WaitForEndOfFrame();
+        controller.SetEventSystemToStartButton(obj);
     }
 
     private void Start() {
@@ -136,9 +152,14 @@ public class DeliveryManager : MonoBehaviour {
 
         for (int i = 0; i < lenght; i++) {
             buttonAsset.InstantiateAsync().Completed += (go) => {
-                go.Result.GetComponent<DeliveryButton>().deliveryManager = this;
-                go.Result.GetComponent<DeliveryButton>().SetProduct(products.GetProductList()[nbButton]);
+                DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
+                button.deliveryManager = this;
+                button.SetProduct(products.GetProductList()[nbButton]);
                 productButtonList.Add(go.Result);
+
+                if (!products.GetProductList()[nbButton].unlocked)
+                    go.Result.SetActive(false);
+
                 nbButton++;
                 SetupRacks(productRackList, productButtonList, productScroll, productScrollRectTransform);
             };
@@ -170,7 +191,7 @@ public class DeliveryManager : MonoBehaviour {
         DisplayCart();
     }
     public void SwitchList(InputAction.CallbackContext context) {
-        if (ingredientsList.activeSelf) {
+        if (ingredientsList.activeSelf && productButtonList.Count > 0) {
             ingredientsList.SetActive(false);
             productList.SetActive(true);
             controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
@@ -212,12 +233,6 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
         cartWeight = 0;
         cartCost = 0;
-
-        //foreach (GameObject go in ingredientButtonList)
-        //    go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
-
-        //foreach (GameObject go in productButtonList)
-        //    go.GetComponentInChildren<AmmountManager>(true).ResetAmount();
     }
 
     public void Reset(bool resetCart) {
