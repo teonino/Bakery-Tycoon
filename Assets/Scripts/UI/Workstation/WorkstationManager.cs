@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class WorkstationManager : MonoBehaviour {
     [SerializeField] private int nbIngredientMax = 3;
-    [SerializeField] private int scrollSpeed;
+    [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private GameObject IngredientPanel;
@@ -141,7 +141,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void Update() {
         if (controller.IsGamepad() && scroll.activeInHierarchy) {
-            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed.GetScrollSpeed(), 0);
         }
 
         if (gameObject.activeSelf) {

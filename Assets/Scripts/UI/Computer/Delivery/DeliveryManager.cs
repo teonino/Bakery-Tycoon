@@ -17,7 +17,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Controller controller;
-    [SerializeField] private int scrollSpeed;
+    [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject ingredientsList;
@@ -155,7 +155,7 @@ public class DeliveryManager : MonoBehaviour {
 
             float scrollValue = playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y;
             if (scrollValue != 0)
-                scroll.position -= new Vector3(0, scrollValue * scrollSpeed, 0);
+                scroll.position -= new Vector3(0, scrollValue * scrollSpeed.GetScrollSpeed(), 0);
         }
     }
 

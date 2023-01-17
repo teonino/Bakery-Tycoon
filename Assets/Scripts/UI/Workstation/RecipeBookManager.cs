@@ -11,8 +11,7 @@ public class RecipeBookManager : MonoBehaviour {
     [SerializeField] private AssetReference recipeAsset;
     [SerializeField] private AssetReference ingredientDisplayAsset;
     [SerializeField] private GameObject scroll;
-    [SerializeField] private GameObject button;
-    [SerializeField] private int scrollSpeed = 2;
+    [SerializeField] private ScrollSpeedSO scrollSpeed;
 
     private RectTransform scrollRectTransform;
     private List<GameObject> recipes;
@@ -24,13 +23,11 @@ public class RecipeBookManager : MonoBehaviour {
 
     private void Update() {
         if (controller.IsGamepad() && gameObject.activeInHierarchy) {
-            scrollRectTransform.position -= new Vector3(0, playerController.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+            scrollRectTransform.position -= new Vector3(0, playerController.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed.GetScrollSpeed(), 0);
         }
     }
 
-        private void OnEnable() {
-        controller.SetEventSystemToStartButton(button);
-
+    private void OnEnable() {
         if (recipes.Count == 0) {
             foreach (ProductSO product in products.GetProductList()) {
                 recipeAsset.InstantiateAsync(scroll.transform).Completed += (go) => {

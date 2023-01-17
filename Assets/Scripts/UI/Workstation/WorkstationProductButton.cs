@@ -28,6 +28,9 @@ public class WorkstationProductButton : MonoBehaviour {
         foreach(IngredientSO ingredient in product.ingredients) {
             ingredientAsset.InstantiateAsync(layoutGroup.transform).Completed += (go) => {
                 IngredientSelected ingredientDisplay = go.Result.GetComponent<IngredientSelected>();
+
+
+                ingredientDisplay.DisableBackground();
                 ingredientDisplay.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
                 ingredientDisplay.SetIngredient(ingredient);
             };
