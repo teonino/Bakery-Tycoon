@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 503964475494971352}
   - component: {fileID: 1489196272987129481}
   - component: {fileID: 3582878839625348426}
-  - component: {fileID: 2074634064255452718}
+  - component: {fileID: 1253312084591507446}
   m_Layer: 6
   m_Name: FT_RU_Showcase_Corner
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5534274878865972647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1480238, y: 2.8411403, z: -4.218213}
+  m_LocalPosition: {x: 3.031, y: 2.8411403, z: -4.314}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -170,8 +170,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2074634064255452718
-BoxCollider:
+--- !u!64 &1253312084591507446
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -180,6 +180,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.0728464, z: 1.0126331}
-  m_Center: {x: 0, y: 0.56256557, z: 0.0063165426}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1109594951042766793, guid: 31d26a4a50a7d7c4dbe19407d63c84eb, type: 3}
