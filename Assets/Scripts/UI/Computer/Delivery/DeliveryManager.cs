@@ -51,10 +51,10 @@ public class DeliveryManager : MonoBehaviour {
         productButtonList = new List<GameObject>();
 
         deliveries.UpdateUI += UpdateStockButtons;
-
-        playerController = playerControllerSO.GetPlayerController();
         productUnlocked.action += EnableProductButton;
         ingredientUnlocked.action += EnableIngredientButton;
+
+        playerController = playerControllerSO.GetPlayerController();
     }
 
     private void EnableProductButton(ProductSO product) {
@@ -282,6 +282,9 @@ public class DeliveryManager : MonoBehaviour {
 
     private void OnDestroy() {
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= SwitchList;
+        deliveries.UpdateUI -= UpdateStockButtons;
+        productUnlocked.action -= EnableProductButton;
+        ingredientUnlocked.action -= EnableIngredientButton;
     }
 
     public void Quit(InputAction.CallbackContext context) {

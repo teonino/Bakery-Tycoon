@@ -55,6 +55,7 @@ public class WorkstationManager : MonoBehaviour {
         noRecipeText = noRecipeTextGO.GetComponentInChildren<TextMeshProUGUI>();
 
         deliveries.UpdateUI += UpdateStocksButton;
+        ingredientUnlock.action += EnableIngredientButton;
     }
 
     private void EnableIngredientButton(IngredientSO ingredient) {
@@ -369,5 +370,9 @@ public class WorkstationManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
+
+
+        deliveries.UpdateUI -= UpdateStocksButton;
+        ingredientUnlock.action -= EnableIngredientButton;
     }
 }

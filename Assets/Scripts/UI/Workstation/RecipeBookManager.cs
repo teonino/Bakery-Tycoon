@@ -24,10 +24,16 @@ public class RecipeBookManager : MonoBehaviour {
         productUnlocked.action += DisplayProduct;
     }
 
+    private void OnDestroy() {
+        productUnlocked.action -= DisplayProduct;
+    }
+
     private void DisplayProduct(ProductSO product) {
+        WorkstationProductButton button;
         for (int i = 0; i < recipes.Count; i++) {
-            if (recipes[i].GetComponent<WorkstationProductButton>().GetProduct() == product) {
-                recipes[i].SetActive(true);
+            button = recipes[i].GetComponent<WorkstationProductButton>();
+            if (button.GetProduct() == product) {
+                button.SetProduct(product);
             }
         }
     }
