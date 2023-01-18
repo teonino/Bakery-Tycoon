@@ -20,12 +20,9 @@ public class RecipeBookManager : MonoBehaviour {
     private void Awake() {
         recipes = new List<GameObject>();
         scrollRectTransform = scroll.GetComponent<RectTransform>();
-
-        productUnlocked.action += DisplayProduct;
     }
 
     private void OnDestroy() {
-        productUnlocked.action -= DisplayProduct;
     }
 
     private void DisplayProduct(ProductSO product) {
@@ -62,5 +59,18 @@ public class RecipeBookManager : MonoBehaviour {
                 };
             }
         }
+        CheckButton();
+        productUnlocked.action += DisplayProduct;
+    }
+
+    private void CheckButton() {
+        foreach (GameObject item in recipes) {
+            if (item.GetComponent<WorkstationProductButton>().GetProduct().unlocked)
+                item.GetComponent<WorkstationProductButton>().DislayProduct();
+        }
+    }
+
+    private void OnDisable() {
+        productUnlocked.action -= DisplayProduct;
     }
 }

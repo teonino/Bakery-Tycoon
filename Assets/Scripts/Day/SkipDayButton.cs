@@ -14,6 +14,6 @@ public class SkipDayButton : MonoBehaviour
 
     public void SkipDay() {
         day.OnNewDay();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("FirstBakery_New");
     }
 }

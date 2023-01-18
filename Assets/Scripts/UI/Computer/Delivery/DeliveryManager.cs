@@ -50,10 +50,6 @@ public class DeliveryManager : MonoBehaviour {
         productRackList = new List<GameObject>();
         productButtonList = new List<GameObject>();
 
-        deliveries.UpdateUI += UpdateStockButtons;
-        productUnlocked.action += EnableProductButton;
-        ingredientUnlocked.action += EnableIngredientButton;
-
         playerController = playerControllerSO.GetPlayerController();
     }
 
@@ -82,6 +78,12 @@ public class DeliveryManager : MonoBehaviour {
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
             playerControllerSO.GetPlayerController().playerInput.Amafood.Enable();
+
+            deliveries.UpdateUI += UpdateStockButtons;
+            productUnlocked.action += EnableProductButton;
+            ingredientUnlocked.action += EnableIngredientButton;
+
+            CheckButton();
         }
 
         if (ingredientButtonList.Count > 0) {
@@ -90,6 +92,18 @@ public class DeliveryManager : MonoBehaviour {
             else
                 StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
         }
+    }
+
+    private void CheckButton() {
+        foreach(GameObject item in productButtonList) 
+            if (item.GetComponent<DeliveryButton>().product.unlocked)
+                item.SetActive(true);
+
+        foreach (GameObject item in ingredientButtonList) 
+            if (item.GetComponent<DeliveryButton>().ingredient.unlocked)
+                item.SetActive(true);
+
+        UpdateStockButtons();
     }
 
     private IEnumerator waitForGamepad(GameObject obj) {
@@ -254,6 +268,12 @@ public class DeliveryManager : MonoBehaviour {
         InitCart();
         cartWeight = 0;
         cartCost = 0;
+
+        foreach(GameObject item in ingredientButtonList) 
+            item.GetComponent<DeliveryButton>().nbIngredient = 0;
+        
+        foreach (GameObject item in productButtonList) 
+            item.GetComponent<DeliveryButton>().nbIngredient = 0;
     }
 
     public void Reset(bool resetCart) {
@@ -278,13 +298,13 @@ public class DeliveryManager : MonoBehaviour {
 
     private void OnDisable() {
         playerControllerSO.GetPlayerController().playerInput.Amafood.Disable();
+        deliveries.UpdateUI -= UpdateStockButtons;
+        productUnlocked.action -= EnableProductButton;
+        ingredientUnlocked.action -= EnableIngredientButton;
     }
 
     private void OnDestroy() {
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= SwitchList;
-        deliveries.UpdateUI -= UpdateStockButtons;
-        productUnlocked.action -= EnableProductButton;
-        ingredientUnlocked.action -= EnableIngredientButton;
     }
 
     public void Quit(InputAction.CallbackContext context) {
