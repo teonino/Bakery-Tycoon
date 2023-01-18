@@ -25,10 +25,9 @@ public class WallFade : MonoBehaviour {
                 {
                     
                     for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                        wallToDispawn.transform.GetChild(i).gameObject.SetActive(false);
+                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
 
-
-                }
+            }
         }
     }
 
@@ -37,9 +36,13 @@ public class WallFade : MonoBehaviour {
     
             if (stillInUse)
             {
-                
+
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    wallToDispawn.transform.GetChild(i).gameObject.SetActive(true);
+                {
+                    //wallToDispawn.transform.GetChild(i).gameObject.SetActive(true);
+                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
+                }
+                    
             }
     }
 
