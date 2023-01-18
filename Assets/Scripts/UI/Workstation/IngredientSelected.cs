@@ -4,20 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class IngredientSelected : MonoBehaviour {
-    [SerializeField] private RawImage image;
+    [SerializeField] private RawImage ingredientImage;
+    [SerializeField] private RawImage backgroundImage;
     private IngredientSO ingredient;
 
     public void SetIngredient(IngredientSO ingredient) {
         this.ingredient = ingredient;
-        image.texture = ingredient.image;
-        image.enabled = true;
+        ingredientImage.texture = ingredient.image;
+        ingredientImage.enabled = true;
     }
 
     public void RemoveIngredient() {
         this.ingredient = null;
-        image.texture = null;
-        image.enabled = false;
+        ingredientImage.texture = null;
+        ingredientImage.enabled = false;
     }
+
+    public void DisableBackground() => backgroundImage.enabled = false;
 
     public IngredientSO GetIngredient() => ingredient;
 }

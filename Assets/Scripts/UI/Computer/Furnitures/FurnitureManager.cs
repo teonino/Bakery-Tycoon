@@ -14,10 +14,9 @@ public class FurnitureManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Money money;
     [SerializeField] private Controller controller;
-    [SerializeField] private GameObject computerPanel;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private RectTransform scrollRectTransform;
-    [SerializeField] private int scrollSpeed;
+    [SerializeField] private ScrollSpeedSO scrollSpeed;
 
     private List<GameObject> furnitureButtonList;
     private List<GameObject> furnitureRackList;
@@ -111,7 +110,7 @@ public class FurnitureManager : MonoBehaviour {
 
     private void Update() {
         if (controller.IsGamepad()) {
-            scrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+            scrollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed.GetScrollSpeed(), 0);
         }
     }
 

@@ -9,5 +9,4 @@ public class ListProduct : ScriptableObject {
     public int GetProductLenght() => listProduct.Count;
     public ProductSO GetRandomProduct() => listProduct[Random.Range(0, GetProductLenght())];
     public List<ProductSO> GetProductList() => listProduct;
-
 }
