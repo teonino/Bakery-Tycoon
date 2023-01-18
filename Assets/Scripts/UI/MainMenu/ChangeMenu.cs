@@ -37,7 +37,7 @@ public class ChangeMenu : MonoBehaviour {
     }
 
     public void LoadBakery() {
-        mainMenuManager.StartCoroutine(mainMenuManager.BlackscreenTransition("FirstBakery_New"));
+        mainMenuManager.StartCoroutine(mainMenuManager.BlackscreenTransition("FirstBakery"));
         foreach (Data data in datas)
             data.ResetValues();
     }
