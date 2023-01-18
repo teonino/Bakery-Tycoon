@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class WorkstationManager : MonoBehaviour {
     [SerializeField] private int nbIngredientMax = 3;
-    [SerializeField] private int scrollSpeed;
+    [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private GameObject IngredientPanel;
@@ -22,6 +22,8 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
+    [SerializeField] private ProductUnlockedSO productUnlocked;
+    [SerializeField] private IngredientUnlockSO ingredientUnlock;
 
     private List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -54,20 +56,22 @@ public class WorkstationManager : MonoBehaviour {
 
         deliveries.UpdateUI += UpdateStocksButton;
     }
-    
+
+    private void EnableIngredientButton(IngredientSO ingredient) {
+        foreach(GameObject item in ingredientButtonList) {
+            if (item.GetComponent<WorkstationIngredientButton>().GetIngredient() == ingredient)
+                item.SetActive(true);
+        }
+
+        ResizeScroll();
+    }
 
     private void OnEnable() {
-        //Setup Stock
-        //stockListText.SetText("");
         List<StockIngredient> stocks = ingredients.GetIngredientList();
-
-        //foreach (StockIngredient stock in stocks)
-        //    stockListText.text += stock.ingredient.name + " : " + stock.amount + "\n";
 
         if (ingredientButtonList.Count > 0)
             if (controller.IsGamepad())
                 StartCoroutine(waitForGamepad());
-
 
         IngredientPanel.SetActive(true);
         RecipePanel.SetActive(false);
@@ -86,17 +90,18 @@ public class WorkstationManager : MonoBehaviour {
                 button.workplacePanel = this;
                 button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
                 button.SetIngredientSO(ingredients);
-                //button.SetRequirement(CheckRequirement(allProducts.GetProductList()[nbButton]));
                 ingredientButtonList.Add(go.Result);
+
+                if (!ingredients.GetIngredientList()[nbButton].ingredient.unlocked)
+                    go.Result.SetActive(false);
+
                 nbButton++;
                 SetupRacks();
             };
         }
 
-
-        foreach(Transform t in ingredientSelectedParent.transform) {
+        foreach (Transform t in ingredientSelectedParent.transform) 
             ingredientsSelected.Add(t.gameObject.GetComponent<IngredientSelected>());
-        }
 
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
@@ -116,10 +121,16 @@ public class WorkstationManager : MonoBehaviour {
         }
     }
 
+    private void ResizeScroll() {
+        scollRectTransform.sizeDelta = new Vector2(
+            scollRectTransform.rect.width, 
+            rackList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
+    }
+
     //Once enough button created, we position them
     private void SetupButton() {
         if (rackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
-            scollRectTransform.sizeDelta = new Vector2(scollRectTransform.rect.width, rackList[0].GetComponent<RectTransform>().rect.height * rackList.Count);
+            ResizeScroll();
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < rackList.Count) {
                     ingredientButtonList[i].transform.SetParent(rackList[i / maxButtonInRack].transform);
@@ -141,7 +152,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void Update() {
         if (controller.IsGamepad() && scroll.activeInHierarchy) {
-            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed, 0);
+            scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed.GetScrollSpeed(), 0);
         }
 
         if (gameObject.activeSelf) {
@@ -191,7 +202,7 @@ public class WorkstationManager : MonoBehaviour {
                     for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
                         bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
                         for (int j = 0; j < nbIngredientSelected; j++)
-                            if (product.ingredients[i] == ingredientsSelected[j].GetIngredient())
+                            if (product.ingredients[i].ingredient == ingredientsSelected[j].GetIngredient())
                                 checkMatchingIngredients = true;
 
                         if (!checkMatchingIngredients)
@@ -268,7 +279,10 @@ public class WorkstationManager : MonoBehaviour {
                     ResetManager();
                 };
             }
-
+            if (!currentProduct.unlocked) {
+                currentProduct.unlocked = true; //Action to display it on DeliveryManager + Almanach
+                productUnlocked.Invoke(currentProduct);
+            }
             RemoveIngredients();
         }
     }

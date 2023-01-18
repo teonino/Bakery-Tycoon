@@ -8,6 +8,7 @@ public class IngredientSO : ScriptableObject {
     public new string name;
     public int price;
     public Texture image;
+    public bool unlocked;
 
     public MinigameInfo minigame;
 }

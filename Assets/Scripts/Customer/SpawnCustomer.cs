@@ -132,8 +132,8 @@ public class SpawnCustomer : MonoBehaviour {
         bool doable;
         foreach (ProductSO product in products.GetProductList()) { //Go through all product
             doable = true;
-            foreach (IngredientSO ingredient in product.ingredients) //Go through ingredients needed
-                if (ingredients.GetIngredientAmount(ingredient) <= 0)
+            foreach (IngredientsForProduct ingredient in product.ingredients) //Go through ingredients needed
+                if (ingredients.GetIngredientAmount(ingredient.ingredient) <= 0)
                     doable = false;
 
             if (doable)

@@ -104,9 +104,9 @@ public class AmmountManager : MonoBehaviour {
         if (deliveryButton.ingredient)
             deliveryManager.SetIngredient(deliveryButton.ingredient, add);
         else
-            foreach (IngredientSO ingredient in deliveryButton.product.ingredients) {
-                deliveryManager.SetIngredient(ingredient, add);
-                deliveryButton.GetIngredientButton(ingredient).nbIngredient++;
+            foreach (IngredientsForProduct ingredient in deliveryButton.product.ingredients) {
+                deliveryManager.SetIngredient(ingredient.ingredient, add);
+                deliveryButton.GetIngredientButton(ingredient.ingredient).nbIngredient++;
             }
 
         textAmmount.text = "Ammount : " + ammountToBuy.ToString();

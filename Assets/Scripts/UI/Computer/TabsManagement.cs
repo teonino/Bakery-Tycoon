@@ -39,9 +39,9 @@ public class TabsManagement : MonoBehaviour {
         currentPanel = panels[currentPanelIndex];
         currentPanel.SetActive(true);
 
-        if (controller.IsGamepad()) {
-            StartCoroutine(WaitForGamepad());
-        }
+        //if (controller.IsGamepad()) {
+        //    StartCoroutine(WaitForGamepad());
+        //}
 
         playerController.GetPlayerController().playerInput.Tabs.Enable();
     }
