@@ -14,6 +14,8 @@ public abstract class Quest : ScriptableObject {
     [SerializeField] protected int rewardAmount;
     [SerializeField] private Money money;
     [SerializeField] private Reputation reputation;
+    [SerializeField] private NotificationEvent notifEvent;
+    [SerializeField] private NotificationType notifType;
     [SerializeField] protected bool isActive = false;
 
     public Action OnCompletedAction;
@@ -34,5 +36,6 @@ public abstract class Quest : ScriptableObject {
 
         isActive = false;
         OnCompletedAction?.Invoke();
+        notifEvent.Invoke(notifType);
     }
 }
