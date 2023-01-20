@@ -48,7 +48,7 @@ public class AICustomer : Interactable {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
             productCanvas.transform.position = transform.position + Vector3.up;
-            if (requestedProduct) 
+            if (requestedProduct)
                 productCanvas.GetComponentInChildren<RawImage>().texture = requestedProduct.image;
             else
                 Debug.LogError("RequestedProductNull");
@@ -99,13 +99,14 @@ public class AICustomer : Interactable {
     //Remove product panel + exit bakery
     protected virtual void Leave() {
         state = AIState.leaving;
-        agent.SetDestination(spawnPosition);
+        if (agent)
+            agent.SetDestination(spawnPosition);
     }
 
     //Display the payement
     public void DisplayPayment(GameObject displayGO) {
         int basePrice = item.GetComponent<ProductHolder>().product.productSO.price;
-        int totalPrice = (int) Mathf.Ceil(basePrice + basePrice * customerBonus.GetMultiplier());
+        int totalPrice = (int)Mathf.Ceil(basePrice + basePrice * customerBonus.GetMultiplier());
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
