@@ -12,6 +12,8 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private DelaySpawnCustomer delaySpawn;
     [SerializeField] private Day day;
     [SerializeField] private Reputation reputation;
+    [SerializeField] private NotificationEvent notifEvent;
+    [SerializeField] private NotificationType notifType;
     [SerializeField] private DebugState debugState;
     [Header("Spawn Variables")]
 
@@ -81,6 +83,8 @@ public class SpawnCustomer : MonoBehaviour {
                 nbCustomerSpawned++;
             };
         }
+
+        notifEvent.Invoke(notifType);
     }
 
     private void SetCustomer(AIRandomCustomer customer, ProductSO product = null) {

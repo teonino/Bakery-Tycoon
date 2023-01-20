@@ -20,14 +20,17 @@ public class RecipeBookManager : MonoBehaviour {
     private void Awake() {
         recipes = new List<GameObject>();
         scrollRectTransform = scroll.GetComponent<RectTransform>();
+    }
 
-        productUnlocked.action += DisplayProduct;
+    private void OnDestroy() {
     }
 
     private void DisplayProduct(ProductSO product) {
+        WorkstationProductButton button;
         for (int i = 0; i < recipes.Count; i++) {
-            if (recipes[i].GetComponent<WorkstationProductButton>().GetProduct() == product) {
-                recipes[i].SetActive(true);
+            button = recipes[i].GetComponent<WorkstationProductButton>();
+            if (button.GetProduct() == product) {
+                button.SetProduct(product);
             }
         }
     }
@@ -56,5 +59,18 @@ public class RecipeBookManager : MonoBehaviour {
                 };
             }
         }
+        CheckButton();
+        productUnlocked.action += DisplayProduct;
+    }
+
+    private void CheckButton() {
+        foreach (GameObject item in recipes) {
+            if (item.GetComponent<WorkstationProductButton>().GetProduct().unlocked)
+                item.GetComponent<WorkstationProductButton>().DislayProduct();
+        }
+    }
+
+    private void OnDisable() {
+        productUnlocked.action -= DisplayProduct;
     }
 }

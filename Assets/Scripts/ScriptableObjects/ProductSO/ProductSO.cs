@@ -16,7 +16,6 @@ public class ProductSO : ScriptableObject {
 
     [Space(5)]
     [Header("Paste")]
-    public bool hasPaste;
     public AssetReference pasteAsset = null;
 
     [Space(5)]
