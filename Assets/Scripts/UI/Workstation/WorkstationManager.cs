@@ -81,7 +81,10 @@ public class WorkstationManager : MonoBehaviour {
             if (item.GetComponent<WorkstationIngredientButton>().GetIngredient().unlocked)
                 item.SetActive(true);
         }
+
+        UpdateStocksButton();
     }
+
     private void EnableIngredientButton(IngredientSO ingredient) {
         foreach (GameObject item in ingredientButtonList) {
             if (item.GetComponent<WorkstationIngredientButton>().GetIngredient() == ingredient)
@@ -210,10 +213,13 @@ public class WorkstationManager : MonoBehaviour {
                     bool matchingIngredient = true;
                     for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
                         bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
-                        for (int j = 0; j < nbIngredientSelected; j++)
+                        for (int j = 0; j < nbIngredientSelected; j++) {
+                            while (!ingredientsSelected[j].GetIngredient())
+                                j++;
+
                             if (product.ingredients[i].ingredient == ingredientsSelected[j].GetIngredient())
                                 checkMatchingIngredients = true;
-
+                        }
                         if (!checkMatchingIngredients)
                             matchingIngredient = false;
                     }
@@ -267,6 +273,8 @@ public class WorkstationManager : MonoBehaviour {
             else {
                 indexMinigame = currentMinigameCounter;
             }
+            while (!ingredientsSelected[indexMinigame].GetIngredient())
+                indexMinigame++;
 
             ingredientsSelected[indexMinigame].GetIngredient().minigame.minigameAsset.InstantiateAsync(transform).Completed += (go) => {
                 go.Result.name = " Panel " + currentMinigameCounter;
