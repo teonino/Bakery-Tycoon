@@ -135,13 +135,18 @@ public class SpawnCustomer : MonoBehaviour {
     public bool CheckProducts() {
         bool doable;
         foreach (ProductSO product in products.GetProductList()) { //Go through all product
-            doable = true;
-            foreach (IngredientsForProduct ingredient in product.ingredients) //Go through ingredients needed
-                if (ingredients.GetIngredientAmount(ingredient.ingredient) <= 0)
-                    doable = false;
-
-            if (doable)
+            if (product.unlocked)
+            {
                 doableProduct.Add(product);
+            }
+
+            //doable = true;
+            //foreach (IngredientsForProduct ingredient in product.ingredients) //Go through ingredients needed
+            //    if (ingredients.GetIngredientAmount(ingredient.ingredient) <= 0)
+            //        doable = false;
+
+            //if (doable)
+            //    doableProduct.Add(product);
         }
 
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
