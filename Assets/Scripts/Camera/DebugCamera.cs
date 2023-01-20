@@ -31,12 +31,15 @@ public class DebugCamera : MonoBehaviour
         CameraOrthographic.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = -5;
         if(orthographicCameraIsActive)
         {
+            print("Camera Persp");
             CameraOrthographic.SetActive(false);
             CameraPerspective.SetActive(true);
             orthographicCameraIsActive = false;
         }
         else
         {
+            print("Camera Ortho");
+            
             CameraOrthographic.SetActive(true);
             CameraPerspective.SetActive(false);
             orthographicCameraIsActive = true;
