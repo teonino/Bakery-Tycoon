@@ -82,8 +82,6 @@ public class CraftingStation : Interactable {
                 progressBarScript.SetDuration((int)product.productSO.cookingTime);
 
             progressBarScript.onDestroy = FinishCooking;
-
-            //mettre un plane rouge dans le trou du four ici - mémo fourni par Matéo
         };
 
         cooking = true;
