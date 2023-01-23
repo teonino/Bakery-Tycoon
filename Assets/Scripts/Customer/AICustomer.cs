@@ -33,6 +33,7 @@ public class AICustomer : Interactable {
     protected SpawnCustomer spawner;
     protected Vector3 spawnPosition;
     protected bool tutorial;
+    protected Coroutine coroutine;
 
     protected void Awake() {
         spawner = FindObjectOfType<SpawnCustomer>();

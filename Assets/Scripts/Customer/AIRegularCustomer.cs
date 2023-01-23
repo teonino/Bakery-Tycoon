@@ -10,6 +10,7 @@ public class AIRegularCustomer : AICustomer {
     [Header("AI Regular Customer variables")]
     [SerializeField] private AssetReference plateAsset;
     [SerializeField] private int conversationRemaining = 2;
+    [SerializeField] private int eatingTime;
     [SerializeField] private InterractQuest onTalk;
 
     [HideInInspector] public Chair chair;
@@ -31,6 +32,7 @@ public class AIRegularCustomer : AICustomer {
 
         if (chair && state == AIState.idle) {
             Sit();
+            StartCoroutine(CustomerWaiting(waitingTime, Leave));
         }
 
         //Go to the Chair
@@ -46,7 +48,7 @@ public class AIRegularCustomer : AICustomer {
 
         if (table && table.GetItem(false) && state == AIState.sitting) {
             if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
-                //Take item
+                StopCoroutine(coroutine);
                 ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
                 if (!item) {
                     if (productholder.product.amount > 1) {
@@ -58,7 +60,7 @@ public class AIRegularCustomer : AICustomer {
                             if (tutorial)
                                 Leave();
                             else
-                                StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
+                                StartCoroutine(CustomerWaiting(eatingTime, Leave));
                         };
                         productholder.product.amount--;
                     }
@@ -70,7 +72,7 @@ public class AIRegularCustomer : AICustomer {
                         if (tutorial)
                             Leave();
                         else
-                            StartCoroutine(CustomerWaiting(waitingTime * 2, Leave));
+                            StartCoroutine(CustomerWaiting(eatingTime, Leave));
                     }
                 }
             }
@@ -78,7 +80,7 @@ public class AIRegularCustomer : AICustomer {
     }
 
     private void Sit() {
-        agent.SetDestination(chair.transform.position);
+        agent.SetDestination(chair.transform.position); 
         state = AIState.moving;
     }
     private void LeaveOnEvening() {
