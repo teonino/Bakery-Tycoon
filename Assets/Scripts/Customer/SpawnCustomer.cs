@@ -66,6 +66,8 @@ public class SpawnCustomer : MonoBehaviour {
                 }
                 else if (nbCustomerSpawned < nbCustomerPerDay)
                     SpawnCustomerAsset(false);
+
+                //if all Random customer has been spawned => spawn a regular
                 else if (nbCustomerRegularSpawned < nbCustomerRegulierPerDay)
                     SpawnCustomerAsset(true);
             }

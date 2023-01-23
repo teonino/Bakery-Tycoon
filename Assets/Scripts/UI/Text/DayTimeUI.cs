@@ -22,30 +22,25 @@ public class DayTimeUI : MonoBehaviour {
     }
 
     private void SetDay() {
-        if (day.GetDayTime() == DayTime.Day) {
-            StartCoroutine(TimeRemaining());
-        }
-        else {
-            text.SetText(GetDayTime());
-        }
+        text.SetText(GetDayTime());
     }
 
-    private IEnumerator TimeRemaining() {
-        duration = day.GetDayDuration();
+    //private IEnumerator TimeRemaining() {
+    //    duration = day.GetDayDuration();
 
-        int timeRemaining = duration - day.GetTimeElapsed();
+    //    int timeRemaining = duration - day.GetTimeElapsed();
 
-        text.SetText(GetDayTime() + " " + timeRemaining / 60 + ":"); // Display minutes
-        if (timeRemaining % 60 < 10)
-            text.text += "0" + timeRemaining % 60;
-        else
-            text.text += timeRemaining % 60;
+    //    text.SetText(GetDayTime() + " " + timeRemaining / 60 + ":"); // Display minutes
+    //    if (timeRemaining % 60 < 10)
+    //        text.text += "0" + timeRemaining % 60;
+    //    else
+    //        text.text += timeRemaining % 60;
 
-        yield return new WaitForSeconds(1);
-        day.AddTimeElpased(1);
-        if (day.GetTimeElapsed() > 0 && day.GetDayTime() != DayTime.Evening)
-            StartCoroutine(TimeRemaining());
-    }
+    //    yield return new WaitForSeconds(1);
+    //    day.AddTimeElpased(1);
+    //    if (day.GetTimeElapsed() > 0 && day.GetDayTime() != DayTime.Evening)
+    //        StartCoroutine(TimeRemaining());
+    //}
 
     public string GetDayTime() {
         string s = "";
