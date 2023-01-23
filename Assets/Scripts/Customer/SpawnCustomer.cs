@@ -9,24 +9,24 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private AssetReference regularCustomerAsset;
     [SerializeField] private ListProduct products;
     [SerializeField] private ListIngredient ingredients;
-    [SerializeField] private DelaySpawnCustomer delaySpawn;
     [SerializeField] private Day day;
     [SerializeField] private Reputation reputation;
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
-    [SerializeField] private DebugState debugState;
-    [Header("Spawn Variables")]
 
+    [Header("Spawn Variables")]
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
-    [SerializeField] private Vector2 debugDelaySpawn;
-    [SerializeField] private int nbCustomerMax = 5;
+    [SerializeField] private int nbCustomerPerDay;
+    [SerializeField] private int nbCustomerRegulierPerDay;
+    [SerializeField] private Vector2 delaySpawn;
+    [SerializeField] private int nbCustomerMax;
     [Tooltip("1 chance out of X to spawn")]
-    [SerializeField] private int spawnChanceRegularCustomer = 10;
+    [SerializeField] private int spawnChanceRegularCustomer;
 
-    private bool debug;
     private int nbCustomer = 0;
-    private int nbCustomerSpawned = 0; // only for customer's name
+    private int nbCustomerSpawned = 0;
+    private int nbCustomerRegularSpawned = 0;
     private Chair currentChair;
     private Table currentTable;
     private int indexChair = -1;
@@ -40,31 +40,37 @@ public class SpawnCustomer : MonoBehaviour {
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
 
-        if (!debugState.GetDebug())
-            debug = false;
-
         StartCoroutine(SpawnDelay());
     }
 
     private IEnumerator SpawnDelay() {
-        if (!debug)
-            randomTime = Random.Range(delaySpawn.GetDelaySpawn(reputation.GetLevel()).x, delaySpawn.GetDelaySpawn(reputation.GetLevel()).y);
-        else
-            randomTime = Random.Range(debugDelaySpawn.x, debugDelaySpawn.y);
+        randomTime = Random.Range(delaySpawn.x, delaySpawn.y);
 
         yield return new WaitForSeconds(randomTime);
         InstantiateCustomer();
-        StartCoroutine(SpawnDelay());
+
+        if (nbCustomerSpawned + nbCustomerRegularSpawned < nbCustomerPerDay + nbCustomerRegulierPerDay)
+            StartCoroutine(SpawnDelay());
+        else
+            FindObjectOfType<DayManager>().UpdateDay();
     }
 
     private void InstantiateCustomer() {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0)
-                SpawnCustomerAsset(true);
-            else
-                SpawnCustomerAsset(false);
+            if (enableSpawnRegularCustomer) {
+                if (Random.Range(0, spawnChanceRegularCustomer) == 0) {
+                    if (nbCustomerRegularSpawned < nbCustomerRegulierPerDay)
+                        SpawnCustomerAsset(true);
+                }
+                else if (nbCustomerSpawned < nbCustomerPerDay)
+                    SpawnCustomerAsset(false);
+
+                //if all Random customer has been spawned => spawn a regular
+                else if (nbCustomerRegularSpawned < nbCustomerRegulierPerDay)
+                    SpawnCustomerAsset(true);
+            }
         }
     }
 
@@ -73,7 +79,7 @@ public class SpawnCustomer : MonoBehaviour {
             regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                 go.Result.name = "RegularCustomer " + nbCustomerSpawned;
                 SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
-                nbCustomerSpawned++;
+                nbCustomerRegularSpawned++;
             };
         }
         else {
@@ -133,20 +139,10 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     public bool CheckProducts() {
-        bool doable;
         foreach (ProductSO product in products.GetProductList()) { //Go through all product
-            if (product.unlocked)
-            {
+            if (product.unlocked) {
                 doableProduct.Add(product);
             }
-
-            //doable = true;
-            //foreach (IngredientsForProduct ingredient in product.ingredients) //Go through ingredients needed
-            //    if (ingredients.GetIngredientAmount(ingredient.ingredient) <= 0)
-            //        doable = false;
-
-            //if (doable)
-            //    doableProduct.Add(product);
         }
 
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());

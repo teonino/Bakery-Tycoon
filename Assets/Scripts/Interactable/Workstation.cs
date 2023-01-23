@@ -27,10 +27,8 @@ public class Workstation : Interactable {
         workplacePanel = manager.gameObject;
     }
 
-
-
     public override void Effect() {
-        if (!playerControllerSO.GetPlayerController().GetItemHold() && day.GetDayTime() != DayTime.Evening) {
+        if (!playerControllerSO.GetPlayerController().GetItemHold()) {
             playerControllerSO.GetPlayerController().DisableInput();
 
             manager.gameObject.SetActive(true);
