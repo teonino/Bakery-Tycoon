@@ -106,7 +106,7 @@ public class AICustomer : Interactable {
     //Display the payement
     public void DisplayPayment(GameObject displayGO) {
         int basePrice = item.GetComponent<ProductHolder>().product.productSO.price;
-        int totalPrice = (int)Mathf.Ceil(basePrice + basePrice * customerBonus.GetMultiplier());
+        int totalPrice = (int)Mathf.Ceil(basePrice + basePrice * customerBonus.GetMoneyMultiplier());
 
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;

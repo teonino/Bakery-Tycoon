@@ -37,7 +37,7 @@ public class MainShelf : Shelf {
 
     public void RemoveCustomerInQueue(AICustomer customer) {
         for (int i = 0; i < queueCustomer.Count; i++) {
-            if (queueCustomer[i].customer == customer) {
+            if (customer && queueCustomer[i].customer == customer) {
                 queueCustomer[i].customer.inQueue = false;
                 queueCustomer[i].customer = null; ;
                 ForwardQueue(i);
