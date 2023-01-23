@@ -20,11 +20,11 @@ public class DayManager : MonoBehaviour {
     //private float goalIntensity = 1.75f;
 
     void Start() {
-        displaySkipButton = FindObjectOfType<SkipDayButton>().DisplayButton;
+        displaySkipButton = FindObjectOfType<SkipDayButton>(true).DisplayButton;
         displaySkipButton?.Invoke();
         lightComponent = GetComponent<Light>();
         initialColorTemperature = lightComponent.colorTemperature;
-        UpdateLightList();
+        //UpdateLightList();
     }
 
     void FixedUpdate() {
@@ -36,7 +36,6 @@ public class DayManager : MonoBehaviour {
                 if (timeElapsed > day.GetDayDuration() && day.GetDayTime() == DayTime.Day) {
                     UpdateDay();
                     initialColorTemperature = lightComponent.colorTemperature;
-                    //targetColorTemperature = 3000;
                 }
             }
 
