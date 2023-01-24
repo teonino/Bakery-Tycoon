@@ -7,16 +7,19 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class WorkstationProductButton : MonoBehaviour {
-    [SerializeField] private ProductSO product;
 
     [SerializeField] private RawImage image;
-    [SerializeField] private TextMeshProUGUI productNbCreated;
+    [SerializeField] private TextMeshProUGUI productName;
     [SerializeField] private TextMeshProUGUI productDescription;
-    [SerializeField] private GameObject layoutGroup;
     [SerializeField] private AssetReference ingredientAsset;
+    [SerializeField] private GameObject layoutGroup;
 
-    [SerializeField] private GameObject productRequirementPanel;
-    private bool requirementMet;
+    private ProductSO product;
+    private Texture defaultImage;
+
+    private void Awake() {
+        defaultImage = GetComponentInChildren<RawImage>().texture;
+    }
 
     public void SetProduct(ProductSO product) {
         this.product = product;
@@ -27,30 +30,29 @@ public class WorkstationProductButton : MonoBehaviour {
         if (product.unlocked) {
             image.texture = product.image;
 
-            productNbCreated.SetText(product.name + " x" + product.nbCreated);
+            productName.SetText(product.name);
             productDescription.SetText("Ingredients :\n");
+
         }
         else {
-            productNbCreated.SetText("??????????");
+            image.texture = defaultImage;
+
+            productName.SetText("??????????");
             productDescription.SetText("??????????");
+
         }
+        foreach(Transform item in layoutGroup.transform)
+            item.gameObject.SetActive(false);
 
+        for (int i = 0; i < product.ingredients.Count; i++) {
+            layoutGroup.transform.GetChild(i).gameObject.SetActive(true);
+            if (product.unlocked || product.ingredients[i].isUnlocked())
+                layoutGroup.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = product.ingredients[i].ingredient.name;
+            else
+                layoutGroup.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = "??????????";
 
-        foreach (IngredientsForProduct ingredient in product.ingredients) {
-            ingredientAsset.InstantiateAsync(layoutGroup.transform).Completed += (go) => {
-                IngredientSelected ingredientDisplay = go.Result.GetComponent<IngredientSelected>();
-
-                ingredientDisplay.DisableBackground();
-                ingredientDisplay.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
-                if (ingredient.isUnlocked() || product.unlocked)
-                    ingredientDisplay.SetIngredient(ingredient.ingredient);
-            };
         }
     }
 
     public ProductSO GetProduct() => this.product;
-
-    public void SetRequirement(bool requirementMet) {
-        this.requirementMet = requirementMet;
-    }
 }

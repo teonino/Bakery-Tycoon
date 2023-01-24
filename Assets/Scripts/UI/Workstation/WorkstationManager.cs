@@ -24,6 +24,10 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
+    [SerializeField] private InterractQuest addIngredientQuest;
+    [SerializeField] private InterractQuest cookQuest;
+    [SerializeField] private InterractQuest createPasteQuest;
+    [SerializeField] private Tutorial tutorial;
 
     private List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -150,8 +154,11 @@ public class WorkstationManager : MonoBehaviour {
                 }
             }
 
-            if (controller.IsGamepad())
+            if (controller.IsGamepad()) {
                 controller.SetEventSystemToStartButton(ingredientButtonList[0]);
+                if (tutorial.GetTutorial())
+                    tutorial.Invoke();
+            }
             else
                 controller.SetEventSystemToStartButton(null);
         }
@@ -183,6 +190,8 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     public void IngredientSelected(IngredientSO ingredient) {
+        addIngredientQuest?.OnInterract();
+
         //Check if ingredient already selected
         bool ingredientRemoved = false;
         for (int i = 0; i < ingredientsSelected.Count; i++)
@@ -207,6 +216,7 @@ public class WorkstationManager : MonoBehaviour {
 
     public void Cook(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
+            cookQuest?.OnInterract();
             //Check product with selected Ingredient
             foreach (ProductSO product in allProducts.GetProductList()) {
                 if (product.ingredients.Count == nbIngredientSelected) {
@@ -282,6 +292,9 @@ public class WorkstationManager : MonoBehaviour {
             };
         }
         else {
+
+            createPasteQuest?.OnInterract();
+
             if (currentProduct.pasteAsset == null) {
                 currentProduct.asset.InstantiateAsync().Completed += (go) => {
                     workplace.CloseWorkplace(go.Result);

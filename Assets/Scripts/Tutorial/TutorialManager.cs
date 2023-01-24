@@ -21,9 +21,14 @@ public class TutorialManager : MonoBehaviour {
 
         dialogueManager = FindObjectOfType<DialogueManager>(true);
         dialogueManager.OnDestroyDialoguePanel += LaunchQuest;
+        tutorial.action += SetDefaultButton;
 
         SetupDialogue();
         SetupQuest();
+    }
+
+    private void OnDestroy() {
+        tutorial.action += SetDefaultButton;
     }
 
     private void SetupDialogue() {
@@ -55,5 +60,9 @@ public class TutorialManager : MonoBehaviour {
         quests[indexQuest].OnCompletedAction += NextQuest;
         quests[indexQuest].SetActive(true);
         LaunchQuest();
+    }
+
+    private void SetDefaultButton() {
+        dialogueManager.SetDefaultButton();
     }
 }

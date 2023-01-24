@@ -94,6 +94,11 @@ public class DialogueManager : MonoBehaviour {
         controller.SetEventSystemToStartButton(go);
     }
 
+    public void SetDefaultButton() {
+        controller.RegisterCurrentSelectedButton();
+       StartCoroutine(WaitForGamepad(playerAnswersTxt[0].GetComponent<DialogueButton>().gameObject));
+    }
+
     public void OnDisable() {
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();

@@ -15,7 +15,6 @@ public class PriceButton : MonoBehaviour {
     [SerializeField] private RawImage image;
     [SerializeField] private AssetReference virtualkeyboard;
     [SerializeField] private Controller controller;
-    [SerializeField] private ChangePriceQuest changePriceQuest;
     private ProductSO product;
 
     private void Start() {
@@ -41,7 +40,6 @@ public class PriceButton : MonoBehaviour {
     }
 
     public void SetNewPrice(int newPrice) {
-        changePriceQuest.CheckPrice(product.price, newPrice);
         product.price = newPrice;
         priceText.text = product.price.ToString();
         controller.SetEventSystemToLastButton();

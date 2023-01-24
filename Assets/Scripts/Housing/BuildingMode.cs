@@ -147,23 +147,7 @@ public class BuildingMode : Interactable {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
             if (!selectedGo) {
-                selectedGo = hit.collider.gameObject;
-
-                selectedGo.AddComponent<CheckCollisionManager>();
-                selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
-                selectedGo.GetComponent<CheckCollisionManager>().layer = selectedGo.layer;
-
-                if (selectedGo.layer == LayerMask.NameToLayer("CustomizableWall"))
-                    currentRaycastlayer = putDownLayerWall;
-                else
-                    currentRaycastlayer = putDownLayerFloor;
-
-                initialGoLayer = selectedGo.layer;
-                selectedGo.layer = 3;
-                originalHeight = selectedGo.transform.position.y;
-
-                ChangeColliderSize(true);
+                SetSelectedGO(hit.collider.gameObject);
             }
             else {
                 if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
@@ -179,6 +163,26 @@ public class BuildingMode : Interactable {
                 }
             }
         }
+    }
+
+    public void SetSelectedGO(GameObject go) {
+        selectedGo = go;
+
+        selectedGo.AddComponent<CheckCollisionManager>();
+        selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
+        selectedGo.GetComponent<CheckCollisionManager>().layer = selectedGo.layer;
+
+        if (selectedGo.layer == LayerMask.NameToLayer("CustomizableWall"))
+            currentRaycastlayer = putDownLayerWall;
+        else
+            currentRaycastlayer = putDownLayerFloor;
+
+        initialGoLayer = selectedGo.layer;
+        selectedGo.layer = 3;
+        originalHeight = selectedGo.transform.position.y;
+
+        ChangeColliderSize(true);
     }
 
     private void ChangeColliderSize(bool remove) {
