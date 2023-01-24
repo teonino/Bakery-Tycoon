@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
     [SerializeField] private float interactionDistance;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
@@ -12,17 +13,23 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject itemSocket;
     [SerializeField] private GameObject interractPanel;
 
+    [Header("Outline")]
+    [SerializeField] Material outlineMaterial;
+
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
     private bool playerInputEnable = true;
+    bool interactableFound = false;
+ [SerializeField]private List<GameObject> gameObjectSelected;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
     public Controller GetController() => controller;
 
     // Start is called before the first frame update
-    void Awake() {
+    void Awake()
+    {
         playerControllerSO.SetPlayerController(this);
         playerInput = new PlayerInput();
         playerMovements = GetComponent<PlayerMovements>();
@@ -31,25 +38,58 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         //Player Movement
-        if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) { //Prevent reset rotation
+        if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1)
+        { //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
             animator.SetBool("isWalking", true);
         }
         else
             animator.SetBool("isWalking", false);
 
-        Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
+
+
+        RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
+        if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall")
+        {
+            for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
+            {
+                if (hitInfo[i].collider.GetComponent<Interactable>())
+                {
+                    hitInfo[i].collider.gameObject.layer = LayerMask.NameToLayer("Outline");
+
+                    gameObjectSelected.Add(hitInfo[i].collider.gameObject);
+                }
+            }
+
+            Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
+
+        }
+        else
+        {
+            foreach(GameObject go in gameObjectSelected)
+            {
+                go.layer = LayerMask.NameToLayer("Customizable");
+
+            }
+            gameObjectSelected.Clear();
+        }
+
     }
 
-    public void OnInterract(InputAction.CallbackContext context) {
-        if (context.performed) {
+    public void OnInterract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
             RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
-            bool interactableFound = false;
-            if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
-                for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                    if (hitInfo[i].collider.GetComponent<Interactable>()) {
+            if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall")
+            {
+                for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
+                {
+                    if (hitInfo[i].collider.GetComponent<Interactable>())
+                    {
                         hitInfo[i].collider.GetComponent<Interactable>().Effect();
                         interactableFound = true;
                     }
@@ -57,7 +97,8 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-    private void OnPause(InputAction.CallbackContext context) {
+    private void OnPause(InputAction.CallbackContext context)
+    {
         FindObjectOfType<PauseManager>(true).gameObject.SetActive(true);
         DisableInput();
     }
@@ -65,20 +106,23 @@ public class PlayerController : MonoBehaviour {
     public void SetItemHold(GameObject go) => itemHolded = go;
     public GameObject GetItemHold() => itemHolded;
 
-    public void EnableInput() {
+    public void EnableInput()
+    {
         playerInput.Player.Enable();
         //playerInUI = false;
         playerInputEnable = true;
         controller.InitInputType(this);
     }
 
-    public void DisableInput() {
+    public void DisableInput()
+    {
         //playerInUI = true;
         playerInputEnable = false;
         playerInput.Player.Disable();
     }
 
-    public string GetInput(InputAction action) {
+    public string GetInput(InputAction action)
+    {
         print(action.controls[0].ToString());
         string[] s = action.controls[0].ToString().Split("/");
         return s[s.Length - 1];
@@ -87,12 +131,14 @@ public class PlayerController : MonoBehaviour {
     public bool GetPlayerInputEnabled() => playerInputEnable;
     public GameObject GetItemSocket() => itemSocket;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         playerInput.Player.Interact.performed += OnInterract;
         playerInput.Player.Pause.performed += OnPause;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         playerInput.Player.Interact.performed -= OnInterract;
         playerInput.Player.Pause.performed -= OnPause;
     }
