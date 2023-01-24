@@ -20,13 +20,17 @@ public class WorkstationProductButton : MonoBehaviour {
 
     public void SetProduct(ProductSO product) {
         this.product = product;
+        DislayProduct();
+    }
 
+    public void DislayProduct() {
         if (product.unlocked) {
             image.texture = product.image;
 
             productNbCreated.SetText(product.name + " x" + product.nbCreated);
             productDescription.SetText("Ingredients :\n");
-        } else {
+        }
+        else {
             productNbCreated.SetText("??????????");
             productDescription.SetText("??????????");
         }

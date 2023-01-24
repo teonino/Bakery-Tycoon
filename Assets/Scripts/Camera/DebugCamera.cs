@@ -4,39 +4,42 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 
-public class DebugCamera : MonoBehaviour
-{
+public class DebugCamera : MonoBehaviour {
 
     [SerializeField] private GameObject CameraPerspective;
     [SerializeField] private GameObject CameraOrthographic;
     [SerializeField] private PlayerControllerSO controller;
     private bool orthographicCameraIsActive = false;
 
+
+    private void OnDisable() {
+        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Disable();
+    }
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Enable();
         controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed += SwitchCameraFunction;
         CameraOrthographic.SetActive(false);
         CameraPerspective.SetActive(true);
 
     }
 
-    private void OnEnable()
-    {
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Enable();
+    private void OnDestroy() {
+        controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed -= SwitchCameraFunction;
     }
 
-    public void SwitchCameraFunction(InputAction.CallbackContext context)
-    {
+
+    public void SwitchCameraFunction(InputAction.CallbackContext context) {
         CameraOrthographic.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = -5;
-        if(orthographicCameraIsActive)
-        {
+        if (orthographicCameraIsActive) {
+            print("Camera Persp");
             CameraOrthographic.SetActive(false);
             CameraPerspective.SetActive(true);
             orthographicCameraIsActive = false;
         }
-        else
-        {
+        else {
+            print("Camera Ortho");
             CameraOrthographic.SetActive(true);
             CameraPerspective.SetActive(false);
             orthographicCameraIsActive = true;

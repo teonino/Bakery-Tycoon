@@ -11,6 +11,8 @@ public class ListDeliveries : Data {
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private int timeDelivery = 15;
+    [SerializeField] private NotificationEvent notifEvent;
+    [SerializeField] private NotificationType notifType;
 
     private List<Delivery> deliveries = new List<Delivery>();
     private int timeDeliveryValue;
@@ -64,6 +66,7 @@ public class ListDeliveries : Data {
                     stockIngredient.amount += deliveryIngredient.amount;
 
         UpdateUI?.Invoke();
+        notifEvent.Invoke(notifType);
         deliveries.Remove(delivery);
     }
 

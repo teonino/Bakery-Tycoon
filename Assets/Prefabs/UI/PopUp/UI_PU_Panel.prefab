@@ -533,6 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9027546832312190882}
+  - component: {fileID: 741538354775095414}
   m_Layer: 5
   m_Name: UI_PU_Panel
   m_TagString: Untagged
@@ -561,6 +562,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0.0016022, y: -17}
   m_SizeDelta: {x: 640.81, y: 866.65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &741538354775095414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9046116726935863679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbb2f24689fc944e99d81bf86cb66b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayTxt: {fileID: 235987060892040581}
+  customerTxt: {fileID: 8338041459554696239}
+  questTxt: {fileID: 0}
+  button: {fileID: 1373836494031970070}
+  products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
+  quests: {fileID: 11400000, guid: 61c32948330d4af4b984202815b0bcf1, type: 2}
+  day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
 --- !u!1 &9157527859110914743
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,12 +851,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2004917256916054238, guid: 225c74f45f724324abfeeda26760af26, type: 3}
   m_PrefabInstance: {fileID: 715438284670964113}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1373836494031970070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1944823140068183687, guid: 225c74f45f724324abfeeda26760af26, type: 3}
+  m_PrefabInstance: {fileID: 715438284670964113}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2760948665329887490 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3440015068309534867, guid: 225c74f45f724324abfeeda26760af26, type: 3}
   m_PrefabInstance: {fileID: 715438284670964113}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1373836494031970070}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
