@@ -10,6 +10,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private ListProduct products;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private Day day;
+    [SerializeField] private CustomersSO customer;
     [SerializeField] private Reputation reputation;
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
@@ -17,9 +18,6 @@ public class SpawnCustomer : MonoBehaviour {
     [Header("Spawn Variables")]
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
-    [SerializeField] private int nbCustomerPerDay;
-    [SerializeField] private int nbCustomerRegulierPerDay;
-    [SerializeField] private Vector2 delaySpawn;
     [SerializeField] private int nbCustomerMax;
     [Tooltip("1 chance out of X to spawn")]
     [SerializeField] private int spawnChanceRegularCustomer;
@@ -44,12 +42,12 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     private IEnumerator SpawnDelay() {
-        randomTime = Random.Range(delaySpawn.x, delaySpawn.y);
+        randomTime = Random.Range(customer.GetDelaySpawn().x, customer.GetDelaySpawn().y);
 
         yield return new WaitForSeconds(randomTime);
         InstantiateCustomer();
 
-        if (nbCustomerSpawned + nbCustomerRegularSpawned < nbCustomerPerDay + nbCustomerRegulierPerDay)
+        if (nbCustomerSpawned + nbCustomerRegularSpawned < customer.GetNbRegularCustomer() + customer.GetNbRandomCustomer())
             StartCoroutine(SpawnDelay());
         else
             FindObjectOfType<DayManager>().UpdateDay();
@@ -59,16 +57,16 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (enableSpawnRegularCustomer) {
+            if (enableSpawnRegularCustomer && nbCustomer < nbCustomerMax) {
                 if (Random.Range(0, spawnChanceRegularCustomer) == 0) {
-                    if (nbCustomerRegularSpawned < nbCustomerRegulierPerDay)
+                    if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                         SpawnCustomerAsset(true);
                 }
-                else if (nbCustomerSpawned < nbCustomerPerDay)
+                else if (nbCustomerSpawned < customer.GetNbRandomCustomer())
                     SpawnCustomerAsset(false);
 
                 //if all Random customer has been spawned => spawn a regular
-                else if (nbCustomerRegularSpawned < nbCustomerRegulierPerDay)
+                else if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                     SpawnCustomerAsset(true);
             }
         }

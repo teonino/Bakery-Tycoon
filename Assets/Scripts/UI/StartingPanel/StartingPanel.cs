@@ -11,6 +11,7 @@ public class StartingPanel : MonoBehaviour {
     [SerializeField] private ListProduct products;
     [SerializeField] private ListQuest quests;
     [SerializeField] private Day day;
+    [SerializeField] private CustomersSO customer;
     [SerializeField] private Controller controller;
 
     // Start is called before the first frame update
@@ -22,7 +23,7 @@ public class StartingPanel : MonoBehaviour {
 
         Time.timeScale = 0;
         dayTxt.text = $"Day {day.GetCurrentDay()}";
-        customerTxt.text = $"X Customers expected";
+        customerTxt.text = $"{customer.GetNbRandomCustomer() + customer.GetNbRegularCustomer()} Customers expected";
 
         questTxt.text = "";
         foreach (Quest quest in quests.GetDailyQuests()) {
