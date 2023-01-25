@@ -136,6 +136,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2161934}
   m_Mesh: {fileID: 6083047051210464342, guid: d6377375c8bcff34e879607d37b3b0bb, type: 3}
+--- !u!114 &2161938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2161934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72bd18f409daca54e9e974ae8b71b661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControllerSO: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
+  item: {fileID: 0}
+  itemPosition: {fileID: 428052017}
+  spawnAsset: 0
+  debugAsset:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  debugState: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
+  interractQuest: {fileID: 0}
 --- !u!1 &3480118 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9140724075156502046, guid: ebfcbcc4300b1064fa3fc6f0ee7c2d0a, type: 3}
@@ -4170,6 +4193,11 @@ Transform:
   m_Father: {fileID: 1723908635}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &428052017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 513121538209488779, guid: f3c270f6515d8a24ba9b346043db7296, type: 3}
+  m_PrefabInstance: {fileID: 2121823576}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &437865597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1058403541615287128, guid: 43b7f9714b88d8f4390aff64a89554f0, type: 3}
@@ -8953,6 +8981,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.123
       objectReference: {fileID: 0}
@@ -8966,19 +8998,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 4.872279e-13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000005409121
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 4.872265e-13
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8986,7 +9018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 359.999
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -9263,19 +9295,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0000028312206
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 4.8722517e-13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 4.872238e-13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9283,7 +9315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 3117253425302647305, guid: 0d7eca3af180a884a9c1b277f0a65a5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -13392,6 +13424,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4362327519870635600, guid: 525c5bab6d79f684c9b71a71de0343a9, type: 3}
+      propertyPath: debugState
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
     - target: {fileID: 5534274878865972647, guid: 525c5bab6d79f684c9b71a71de0343a9, type: 3}
       propertyPath: m_Name
       value: RusticShowcaseCorner
@@ -15577,6 +15613,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 247133643}
     m_Modifications:
+    - target: {fileID: 1874935215, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 189515655147122069, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -4.700012
@@ -21802,6 +21842,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4362327519870635600, guid: 525c5bab6d79f684c9b71a71de0343a9, type: 3}
+      propertyPath: debugState
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
     - target: {fileID: 5534274878865972647, guid: 525c5bab6d79f684c9b71a71de0343a9, type: 3}
       propertyPath: m_Name
       value: RusticShowcaseCorner (1)
