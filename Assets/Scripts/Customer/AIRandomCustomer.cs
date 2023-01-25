@@ -50,7 +50,8 @@ public class AIRandomCustomer : AICustomer {
 
     new void FixedUpdate() {
         //Go to the Queue
-        if (agent.remainingDistance < 1 && state == AIState.moving) {
+        
+        if (Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving) {
             state = AIState.waiting;
             animator.SetTrigger("Idle");
             coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));

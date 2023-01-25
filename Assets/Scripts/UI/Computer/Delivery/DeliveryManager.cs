@@ -178,7 +178,7 @@ public class DeliveryManager : MonoBehaviour {
                     go.GetComponent<DeliveryButton>().SetIngredientButton(ingredientButtonList);
 
                 controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject); 
-                if (tutorial.GetTutorial())
+                if (tutorial && tutorial.GetTutorial())
                     tutorial.Invoke();
             }
         }

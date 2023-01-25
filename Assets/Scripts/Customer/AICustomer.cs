@@ -62,7 +62,6 @@ public class AICustomer : Interactable {
     private IEnumerator LaunchBonusTime() {
         yield return new WaitForSeconds(bonusTime);
         bonus = false;
-
     }
 
     protected void FixedUpdate() {

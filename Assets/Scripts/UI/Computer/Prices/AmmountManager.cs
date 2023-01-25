@@ -50,7 +50,7 @@ public class AmmountManager : MonoBehaviour {
     private void OnEnable() {
         deliveryManager = FindObjectOfType<DeliveryManager>();
         ammountToBuy = deliveryButton.nbIngredient;
-        textAmmount.text = "Ammount : " + ammountToBuy;
+        textAmmount.text = ammountToBuy.ToString();
 
         controller.RegisterCurrentSelectedButton();
         controller.SetEventSystemToStartButton(null);
@@ -82,7 +82,7 @@ public class AmmountManager : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         controller.SetEventSystemToLastButton();
 
-        textAmmount.text = "Ammount : " + ammountToBuy.ToString();
+        textAmmount.text = ammountToBuy.ToString();
         gameObject.SetActive(false);
     }
 
@@ -109,7 +109,7 @@ public class AmmountManager : MonoBehaviour {
                 deliveryButton.GetIngredientButton(ingredient.ingredient).nbIngredient++;
             }
 
-        textAmmount.text = "Ammount : " + ammountToBuy.ToString();
+        textAmmount.text = ammountToBuy.ToString();
     }
 
     public void SetTextAmount() {
