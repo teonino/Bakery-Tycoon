@@ -146,8 +146,9 @@ public class SaveManager : MonoBehaviour {
     public GameObject GetGameObject(string name) {
         GameObject returnObject = null;
         foreach (FurnitureSO furniture in furnitures) {
-            if (furniture.name == name)
-                returnObject = furniture.GetAssets();
+            if (furniture.name == name) {
+                //returnObject = furniture.GetAssets();
+            }
         }
         return returnObject;
     }

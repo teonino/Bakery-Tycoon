@@ -36,6 +36,6 @@ public abstract class Quest : ScriptableObject {
 
         isActive = false;
         OnCompletedAction?.Invoke();
-        notifEvent.Invoke(notifType);
+        notifEvent?.Invoke(notifType);
     }
 }

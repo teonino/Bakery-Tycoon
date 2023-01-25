@@ -1952,6 +1952,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""04803631-23d8-4888-b723-a94afdd779e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""c28417d2-5208-4264-bfcc-b6cc26627d5f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1974,6 +1992,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db0c3868-c61f-484c-83b8-cc752be8102f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8edfd2c0-26dd-4399-a83b-bc75bfd7f002"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousPage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2091,6 +2131,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
         m_Workstation_ChangeTab = m_Workstation.FindAction("ChangeTab", throwIfNotFound: true);
         m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
+        m_Workstation_NextPage = m_Workstation.FindAction("NextPage", throwIfNotFound: true);
+        m_Workstation_PreviousPage = m_Workstation.FindAction("PreviousPage", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2912,12 +2954,16 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IWorkstationActions m_WorkstationActionsCallbackInterface;
     private readonly InputAction m_Workstation_ChangeTab;
     private readonly InputAction m_Workstation_Cook;
+    private readonly InputAction m_Workstation_NextPage;
+    private readonly InputAction m_Workstation_PreviousPage;
     public struct WorkstationActions
     {
         private @PlayerInput m_Wrapper;
         public WorkstationActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChangeTab => m_Wrapper.m_Workstation_ChangeTab;
         public InputAction @Cook => m_Wrapper.m_Workstation_Cook;
+        public InputAction @NextPage => m_Wrapper.m_Workstation_NextPage;
+        public InputAction @PreviousPage => m_Wrapper.m_Workstation_PreviousPage;
         public InputActionMap Get() { return m_Wrapper.m_Workstation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2933,6 +2979,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cook.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
+                @NextPage.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
+                @NextPage.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
+                @NextPage.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
+                @PreviousPage.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
+                @PreviousPage.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
+                @PreviousPage.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
             }
             m_Wrapper.m_WorkstationActionsCallbackInterface = instance;
             if (instance != null)
@@ -2943,6 +2995,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
+                @NextPage.started += instance.OnNextPage;
+                @NextPage.performed += instance.OnNextPage;
+                @NextPage.canceled += instance.OnNextPage;
+                @PreviousPage.started += instance.OnPreviousPage;
+                @PreviousPage.performed += instance.OnPreviousPage;
+                @PreviousPage.canceled += instance.OnPreviousPage;
             }
         }
     }
@@ -3062,5 +3120,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnChangeTab(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
+        void OnNextPage(InputAction.CallbackContext context);
+        void OnPreviousPage(InputAction.CallbackContext context);
     }
 }

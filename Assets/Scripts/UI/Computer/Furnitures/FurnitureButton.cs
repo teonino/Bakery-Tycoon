@@ -31,7 +31,10 @@ public class FurnitureButton : MonoBehaviour {
     }
 
     private void BuyFurniture() {
-        furnitureManager.AddOwnedFurniture(furnitureSO);
+        furnitureSO.GetAssets().InstantiateAsync().Completed += (go) => {
+            furnitureManager.GetBuildingMode().SetSelectedGO(go.Result);
+            furnitureManager.Quit();
+        };
     }
 
     public void SetFurnitureManager(FurnitureManager value) => furnitureManager = value;
