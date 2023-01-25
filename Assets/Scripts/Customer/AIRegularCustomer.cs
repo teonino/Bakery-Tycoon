@@ -32,7 +32,7 @@ public class AIRegularCustomer : AICustomer {
 
         if (chair && state == AIState.idle) {
             Sit();
-            StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
         }
 
         //Go to the Chair
@@ -48,7 +48,8 @@ public class AIRegularCustomer : AICustomer {
 
         if (table && table.GetItem(false) && state == AIState.sitting) {
             if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
-                StopCoroutine(coroutine);
+                if (coroutine != null)
+                    StopCoroutine(coroutine);
                 ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
                 if (!item) {
                     if (productholder.product.amount > 1) {

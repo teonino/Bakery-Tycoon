@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
                         interactableFound = true;
                     }
                 }
+                interactableFound = false;
             }
         }
     }
