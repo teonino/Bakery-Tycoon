@@ -12,6 +12,7 @@ public class CraftingStation : Interactable {
     [SerializeField] private DebugState debugState;
     [SerializeField] private CraftingStationType type;
     [SerializeField] private CreateQuest createQuest;
+    [SerializeField] private CreateQuest CreateCerealQuest;
 
     [Header("Debug parameters")]
     [SerializeField] private bool skipCookingTime = false;

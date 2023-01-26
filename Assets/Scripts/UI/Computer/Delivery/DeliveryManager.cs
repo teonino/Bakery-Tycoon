@@ -20,12 +20,14 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlocked;
-    [SerializeField] private OrderQuest orderQuest;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
     [SerializeField] private GameObject productList;
+    [Header("Tutorial Variables")]
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private OrderQuest orderQuest;
+    [SerializeField] private InterractQuest productAmafoodInterract;
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -60,6 +62,7 @@ public class DeliveryManager : MonoBehaviour {
                 item.SetActive(true);
             }
         }
+        productAmafoodInterract?.OnInterract();
         ResizeScroll(productRackList, productButtonList, productScroll, productScrollRectTransform);
     }
 
@@ -224,7 +227,7 @@ public class DeliveryManager : MonoBehaviour {
         else
             cart[ingredient]--;
 
-        orderQuest.CheckOrder(ingredient, cart[ingredient]);
+        orderQuest.CheckIngredient(ingredient);
 
         CalculateCartCostAndWeight();
         DisplayCart();

@@ -17,8 +17,16 @@ public abstract class Quest : ScriptableObject {
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] protected bool isActive = false;
+    [Header("Unlock parameters")]
+    [SerializeField] private ProductUnlockedSO productUnlocked;
+    [SerializeField] private IngredientUnlockSO ingredientUnlocked;
+    [SerializeField] private bool unlockingSmth;
+    [SerializeField] private List<IngredientSO> ingredientsToUnlock;
+    [SerializeField] private List<ProductSO> productsToUnlock;
 
     public Action OnCompletedAction;
+    public Action<ProductSO> SpawnCustomer;
+
     protected enum RewardType { Reputation, Money }
     public void SetActive(bool active) => isActive = active;
     public void UpdateUI(TextMeshProUGUI text) => text.text = title;
@@ -32,6 +40,20 @@ public abstract class Quest : ScriptableObject {
             case RewardType.Reputation:
                 reputation.AddReputation(rewardAmount);
                 break;
+        }
+
+
+        if (unlockingSmth) {
+            if (ingredientsToUnlock != null)
+                foreach (IngredientSO ingredient in ingredientsToUnlock) {
+                    ingredient.unlocked = true;
+                    ingredientUnlocked.Invoke(ingredient);
+                }
+            if (productsToUnlock != null)
+                foreach (ProductSO product in productsToUnlock) {
+                    product.unlocked = true;
+                    productUnlocked.Invoke(product);
+                }
         }
 
         isActive = false;

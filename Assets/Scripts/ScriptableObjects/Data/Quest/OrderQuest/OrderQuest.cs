@@ -7,10 +7,22 @@ using UnityEngine;
 public class OrderQuest : Quest {
     [Header("Order Quest Parameters")]
     [SerializeField] private IngredientSO ingredient;
-    [SerializeField] private int amount;
+    [SerializeField] private List<StockIngredient> ingredients;
 
-    public void CheckOrder(IngredientSO ingredient, int amount) {
-        if (isActive && this.ingredient == ingredient && this.amount >= amount)
+    private int nbIngredientMatched = 0;
+
+    public void CheckOrder(Delivery delivery) {
+        foreach (StockIngredient expectedIngredient in ingredients)
+            foreach (StockIngredient ingredient in delivery.GetIngredients())
+                if (expectedIngredient == ingredient)
+                    nbIngredientMatched++;
+
+        if (isActive && nbIngredientMatched == ingredients.Count)
+            OnCompleted();
+    }
+
+    public void CheckIngredient(IngredientSO ingredient) {
+        if (isActive && ingredient == this.ingredient)
             OnCompleted();
     }
 }

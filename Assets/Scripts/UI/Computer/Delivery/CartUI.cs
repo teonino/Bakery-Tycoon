@@ -13,9 +13,9 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Money money;
     [SerializeField] private Day day;
-    [SerializeField] private Tutorial tutorial;
     [SerializeField] private PlayerControllerSO playerController;
-    [SerializeField] private OrderTypeQuest orderTypeQuest;
+
+    protected Delivery delivery;
 
     [HideInInspector] public DeliveryManager deliveryManager;
     [HideInInspector] public Dictionary<IngredientSO, int> cart;
@@ -25,10 +25,7 @@ public class CartUI : MonoBehaviour {
     private float cost = 0; //Display value of a ingredient, not used yet
 
     private void Awake() {
-        if (tutorial)
-            deliveries.SetExpressOrderTime(0);
-        else
-            deliveries.SetDefaultExpressOrderTime();
+        deliveries.SetDefaultExpressOrderTime();
     }
 
     private void OnEnable() {
@@ -56,19 +53,16 @@ public class CartUI : MonoBehaviour {
         totalCostText.SetText("");
     }
 
-    public void Order(InputAction.CallbackContext ctx) {
+    public virtual void Order(InputAction.CallbackContext ctx) {
         if (ctx.performed && cart != null) {
             //Check if the order can be bought
             if (cartCost <= money.GetMoney()) {
-                Delivery delivery = new Delivery(day.GetCurrentDay());
+                delivery = new Delivery(day.GetCurrentDay());
                 foreach (KeyValuePair<IngredientSO, int> stock in cart) {
                     if (stock.Value > 0) {
                         delivery.Add(stock.Key, stock.Value);
                     }
                 }
-
-                orderTypeQuest?.CheckDeliveryType();
-
                 //Express deliveries
                 if (delivery.GetDay() == day.GetCurrentDay())
                     StartCoroutine(deliveries.ExpressDelivery(delivery));

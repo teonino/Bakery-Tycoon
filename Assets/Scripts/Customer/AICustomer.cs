@@ -36,11 +36,10 @@ public class AICustomer : Interactable {
     protected Coroutine coroutine;
 
     protected void Awake() {
-        spawner = FindObjectOfType<SpawnCustomer>();
-
         day = FindObjectOfType<DayTimeUI>().GetDay();
-        reputation = FindObjectOfType<ReputationUI>().GetReputation();
         money = FindObjectOfType<MoneyUI>().GetMoney();
+        spawner = FindObjectOfType<SpawnCustomer>();
+        reputation = FindObjectOfType<ReputationUI>().GetReputation();
     }
 
     public void InitCustomer() {
@@ -62,7 +61,6 @@ public class AICustomer : Interactable {
     private IEnumerator LaunchBonusTime() {
         yield return new WaitForSeconds(bonusTime);
         bonus = false;
-
     }
 
     protected void FixedUpdate() {
