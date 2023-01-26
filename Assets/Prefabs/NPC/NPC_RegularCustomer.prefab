@@ -30,11 +30,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3406051452953038548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.25, y: 1.25, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4490748615080404720}
+  - {fileID: 8448455315808814487}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63,22 +63,19 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   agent: {fileID: 8224689622529937741}
   bonusTime: 0
-  money: {fileID: 11400000, guid: 2165d7b449c98dc409d632d23f2844b0, type: 2}
-  reputation: {fileID: 11400000, guid: 4bff35ce618f3f34eb389465ff98e553, type: 2}
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
-  day: {fileID: 0}
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
-  waitingTime: 10
+  waitingTime: 360
   saleReputation: 1
   requestedProduct: {fileID: 0}
   state: 0
-  dialoguePanel: {fileID: 0}
   plateAsset:
     m_AssetGUID: e4c125e2a7eeda84c9e60d4140b1e27f
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   conversationRemaining: 2
+  eatingTime: 90
   onTalk: {fileID: 0}
   chair: {fileID: 0}
   indexChair: 0
@@ -92,7 +89,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3406051452953038548}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.23
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -101,8 +98,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
+  m_Height: 1.49
+  m_BaseOffset: 0.01
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
 --- !u!33 &76043606779514469
@@ -181,11 +178,11 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.3437746
+  m_Radius: 0.22972898
+  m_Height: 1.2952622
   m_Direction: 1
-  m_Center: {x: 0, y: -0.2803089, z: 0}
---- !u!1001 &4168329326146388251
+  m_Center: {x: 0.0030037314, y: 0.6407245, z: 0}
+--- !u!1001 &8265310537487147644
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -197,12 +194,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.913
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
       propertyPath: m_LocalPosition.z
@@ -214,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
       propertyPath: m_LocalRotation.y
@@ -242,8 +251,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
---- !u!4 &4490748615080404720 stripped
+--- !u!4 &8448455315808814487 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
-  m_PrefabInstance: {fileID: 4168329326146388251}
+  m_PrefabInstance: {fileID: 8265310537487147644}
   m_PrefabAsset: {fileID: 0}

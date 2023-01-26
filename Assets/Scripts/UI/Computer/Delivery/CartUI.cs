@@ -43,12 +43,12 @@ public class CartUI : MonoBehaviour {
         string newText = "";
         foreach (KeyValuePair<IngredientSO, int> stock in cart) {
             if (stock.Value > 0) {
-                newText += stock.Key.name + " x" + stock.Value + " : " + stock.Key.price * stock.Value + "€\n";
+                newText += stock.Key.name + " x" + stock.Value + " : " + stock.Key.price * stock.Value + "\n";
                 cost += stock.Key.price * stock.Value;
             }
             orderSumary.SetText(newText);
         }
-        totalCostText.SetText("Total : " + cartCost + "€");
+        totalCostText.SetText("Total : " + cartCost);
     }
 
     public void ClearText() {

@@ -50,6 +50,7 @@ public class FurnitureManager : MonoBehaviour {
     }
 
     public void SetBuildingMode(BuildingMode building) => buildingMode = building;
+    public BuildingMode GetBuildingMode() => buildingMode;
 
     private void Start() {
         for (int i = 0; i < lenght; i++) {
@@ -238,7 +239,11 @@ public class FurnitureManager : MonoBehaviour {
         }
     }
 
-    public void Quit(InputAction.CallbackContext context) {
+    private void Quit(InputAction.CallbackContext context) {
+        Quit();
+    }
+
+    public void Quit() {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
         buildingMode.Effect();

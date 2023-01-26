@@ -25,6 +25,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
     [SerializeField] private GameObject productList;
+    [SerializeField] private Tutorial tutorial;
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -108,7 +109,7 @@ public class DeliveryManager : MonoBehaviour {
 
     private IEnumerator waitForGamepad(GameObject obj) {
         yield return new WaitForEndOfFrame();
-        controller.SetEventSystemToStartButton(obj);
+        controller.SetEventSystemToStartButton(obj); 
     }
 
     private void Start() {
@@ -176,7 +177,9 @@ public class DeliveryManager : MonoBehaviour {
                 foreach (GameObject go in productButtonList)
                     go.GetComponent<DeliveryButton>().SetIngredientButton(ingredientButtonList);
 
-                controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+                controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject); 
+                if (tutorial && tutorial.GetTutorial())
+                    tutorial.Invoke();
             }
         }
     }
@@ -220,6 +223,7 @@ public class DeliveryManager : MonoBehaviour {
             cart[ingredient]++;
         else
             cart[ingredient]--;
+
         orderQuest.CheckOrder(ingredient, cart[ingredient]);
 
         CalculateCartCostAndWeight();

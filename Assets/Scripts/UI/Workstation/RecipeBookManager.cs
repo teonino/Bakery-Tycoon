@@ -2,71 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class RecipeBookManager : MonoBehaviour {
     [SerializeField] private ListProduct products;
+    [SerializeField] private SwitchTabPanel switchTabPanel;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerController;
-    [SerializeField] private AssetReference recipeAsset;
     [SerializeField] private AssetReference ingredientDisplayAsset;
-    [SerializeField] private GameObject scroll;
-    [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private ProductUnlockedSO productUnlocked;
+    [SerializeField] private List<GameObject> productDescriptions;
+    [SerializeField] private InterractQuest interractQuest;
 
-    private RectTransform scrollRectTransform;
-    private List<GameObject> recipes;
-
+    private int indexProduct = 0;
+    private bool init = false;
     private void Awake() {
-        recipes = new List<GameObject>();
-        scrollRectTransform = scroll.GetComponent<RectTransform>();
+        playerController.GetPlayerController().playerInput.Workstation.NextPage.performed += NextPage;
+        playerController.GetPlayerController().playerInput.Workstation.PreviousPage.performed += PreviousPage;
     }
 
-    private void OnDestroy() {
+    private void OnEnable() {
+        if (init)
+            CheckButton();
+        productUnlocked.action += DisplayProduct;
+        interractQuest.OnInterract();
+    }
+
+    private void Start() {
+        Display();
+        init = true;
+    }
+
+    private void NextPage(InputAction.CallbackContext ctx) {
+        if (ctx.performed && indexProduct < products.GetProductList().Count / 4) {
+            indexProduct++;
+            switchTabPanel.GoOnNextTab();
+            Display();
+        }
+    }
+
+    private void PreviousPage(InputAction.CallbackContext ctx) {
+        if (ctx.performed && indexProduct > 0) {
+            indexProduct--;
+            switchTabPanel.GoOnPreviousTab();
+            Display();
+        }
+    }
+
+    private void Display() {
+        for (int i = 4 * indexProduct; i < 4 * (indexProduct + 1); i++) {
+            productDescriptions[i % 4].SetActive(true);
+            if (i < products.GetProductList().Count)
+                productDescriptions[i % 4].GetComponent<WorkstationProductButton>().SetProduct(products.GetProductList()[i]);
+            else
+                productDescriptions[i % 4].SetActive(false);
+        }
     }
 
     private void DisplayProduct(ProductSO product) {
         WorkstationProductButton button;
-        for (int i = 0; i < recipes.Count; i++) {
-            button = recipes[i].GetComponent<WorkstationProductButton>();
-            if (button.GetProduct() == product) {
-                button.SetProduct(product);
-            }
+        for (int i = 4 * indexProduct; i < 4 * (indexProduct + 1); i++) {
+            button = productDescriptions[i % 4].GetComponent<WorkstationProductButton>();
+            if (product == button.GetProduct())
+                button.DislayProduct();
         }
-    }
-
-    private void ResizeScroll() {
-        scroll.GetComponent<RectTransform>().sizeDelta = new Vector2(
-               scroll.GetComponent<RectTransform>().rect.width,
-               (recipes[0].GetComponent<RectTransform>().rect.height + scroll.GetComponent<VerticalLayoutGroup>().spacing) * products.GetProductLenght());
-    }
-
-    private void Update() {
-        if (controller.IsGamepad() && gameObject.activeInHierarchy) {
-            scrollRectTransform.position -= new Vector3(0, playerController.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed.GetScrollSpeed(), 0);
-        }
-    }
-
-    private void OnEnable() {
-        if (recipes.Count == 0) {
-            foreach (ProductSO product in products.GetProductList()) {
-                recipeAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
-                    go.Result.GetComponent<WorkstationProductButton>().SetProduct(product);
-                    recipes.Add(go.Result);
-
-                    if (recipes.Count == 1)
-                        ResizeScroll();
-                };
-            }
-        }
-        CheckButton();
-        productUnlocked.action += DisplayProduct;
     }
 
     private void CheckButton() {
-        foreach (GameObject item in recipes) {
-            if (item.GetComponent<WorkstationProductButton>().GetProduct().unlocked)
-                item.GetComponent<WorkstationProductButton>().DislayProduct();
+        for (int i = 0; i < productDescriptions.Count; i++) {
+            if (productDescriptions[i].GetComponent<WorkstationProductButton>().GetProduct().unlocked)
+                productDescriptions[i].GetComponent<WorkstationProductButton>().DislayProduct();
         }
     }
 

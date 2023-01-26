@@ -9,7 +9,6 @@ public class Day : Data {
     [SerializeField] private string currentScene;
     [SerializeField] private DayTime dayTime;
     [SerializeField] private int dayCount;
-    [SerializeField] private int dayDuration;
 
     private int timeElapsed;
     public Action DayTimeChange;
@@ -22,7 +21,6 @@ public class Day : Data {
 
     public DayTime GetDayTime() => dayTime;
     public int GetCurrentDay() => dayCount;
-    public int GetDayDuration() => dayDuration;
     public int GetTimeElapsed() => timeElapsed;
     public void AddTimeElpased(int time) => timeElapsed += time;
     public void OnNextDayPhase() {
@@ -34,6 +32,5 @@ public class Day : Data {
         dayTime = DayTime.Day;
         timeElapsed = 0;
         NewDay?.Invoke();
-        SceneManager.LoadSceneAsync(currentScene);
     }
 }
