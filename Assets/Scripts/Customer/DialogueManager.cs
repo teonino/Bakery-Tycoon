@@ -95,8 +95,10 @@ public class DialogueManager : MonoBehaviour {
     }
 
     public void SetDefaultButton() {
-        controller.RegisterCurrentSelectedButton();
-       StartCoroutine(WaitForGamepad(playerAnswersTxt[0].GetComponent<DialogueButton>().gameObject));
+        if (gameObject.activeSelf) {
+            controller.RegisterCurrentSelectedButton();
+            StartCoroutine(WaitForGamepad(playerAnswersTxt[0].GetComponent<DialogueButton>().gameObject));
+        }
     }
 
     public void OnDisable() {

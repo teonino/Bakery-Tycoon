@@ -22,6 +22,11 @@ public class SpawnCustomer : MonoBehaviour {
     [Tooltip("1 chance out of X to spawn")]
     [SerializeField] private int spawnChanceRegularCustomer;
 
+    [Header("Tutorial Variables")]
+    [SerializeField] private List<Quest> triggerSpawnOnCompletion;
+    [SerializeField] private List<ProductSO> tutoProduct;
+    private int indexProduct = 0;
+
     private int nbCustomer = 0;
     private int nbCustomerSpawned = 0;
     private int nbCustomerRegularSpawned = 0;
@@ -37,6 +42,9 @@ public class SpawnCustomer : MonoBehaviour {
         tables = new List<Table>(FindObjectsOfType<Table>());
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
+
+        foreach (Quest quest in triggerSpawnOnCompletion)
+            quest.OnCompletedAction += SpawnTutorialCustomer;
 
         StartCoroutine(SpawnDelay());
     }
@@ -81,14 +89,23 @@ public class SpawnCustomer : MonoBehaviour {
             };
         }
         else {
-            customerAsset.InstantiateAsync(transform).Completed += (go) => {
-                go.Result.name = "Customer " + nbCustomerSpawned;
-                SetCustomer(go.Result.GetComponent<AIRandomCustomer>(), product);
-                nbCustomerSpawned++;
-            };
+            SpawnRandomCustomer(product);
         }
-
         notifEvent.Invoke(notifType);
+    }
+
+    private void SpawnTutorialCustomer() {
+        for (int i = 0; i < tutoProduct[indexProduct].nbCreated; i++)
+            SpawnRandomCustomer(tutoProduct[indexProduct]);
+        indexProduct++;
+    }
+
+    private void SpawnRandomCustomer(ProductSO product) {
+        customerAsset.InstantiateAsync(transform).Completed += (go) => {
+            go.Result.name = "Customer " + nbCustomerSpawned;
+            SetCustomer(go.Result.GetComponent<AIRandomCustomer>(), product);
+            nbCustomerSpawned++;
+        };
     }
 
     private void SetCustomer(AIRandomCustomer customer, ProductSO product = null) {

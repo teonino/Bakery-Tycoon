@@ -6,13 +6,11 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public class Workstation : Interactable {
-    [SerializeField] private AssetReference workplacePanelAsset;
     [SerializeField] private Day day;
     [SerializeField] private DebugState debug;
     [Header("Debug parameters")]
     [SerializeField] private bool skipRequirement = false;
     [SerializeField] private bool skipMinigame = false;
-    [SerializeField] private InterractQuest interractQuest;
 
     private WorkstationManager manager;
     private GameObject workplacePanel;
@@ -35,8 +33,8 @@ public class Workstation : Interactable {
 
             playerControllerSO.GetPlayerController().playerInput.UI.Enable();
             playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
-            interractQuest.OnInterract();
         }
+
     }
 
     //Function when player quit the workstation by themself
@@ -51,9 +49,9 @@ public class Workstation : Interactable {
     }
 
     //Give the item to the player once its done
-    public void CloseWorkplace(GameObject go) {
+    public virtual void CloseWorkplace(GameObject go) {
         Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
-        
+
         playerControllerSO.GetPlayerController().SetItemHold(go);
         playerControllerSO.GetPlayerController().GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
         playerControllerSO.GetPlayerController().GetItemHold().transform.localPosition = Vector3.zero;
