@@ -7,8 +7,13 @@ using UnityEngine.SceneManagement;
 public class ChangeMenu : MonoBehaviour {
     [SerializeField] internal List<GameObject> Panel = new List<GameObject>();
     [SerializeField] private MainMenuManager mainMenuManager;
+    [SerializeField] private Tutorial tutorial;
+    [SerializeField] private Controller controller;
+    [SerializeField] private GameObject firstButton;
     [SerializeField] private List<Data> datas;
+
     void Start() {
+        controller.SetEventSystemToStartButton(firstButton);
         Panel[0].SetActive(false);
         Panel[1].SetActive(false);
     }
@@ -26,7 +31,10 @@ public class ChangeMenu : MonoBehaviour {
     }
 
     public void LoadTutorial() {
-        mainMenuManager.StartCoroutine(mainMenuManager.BlackscreenTransition("Tutorial"));
+        tutorial.SetTutorial(true);
+        mainMenuManager.StartCoroutine(mainMenuManager.BlackscreenTransition("Tutorial")); 
+        foreach (Data data in datas)
+            data.ResetValues();
     }
 
     public void Quit() {
@@ -37,6 +45,7 @@ public class ChangeMenu : MonoBehaviour {
     }
 
     public void LoadBakery() {
+        tutorial.SetTutorial(false);
         mainMenuManager.StartCoroutine(mainMenuManager.BlackscreenTransition("FirstBakery_New"));
         foreach (Data data in datas)
             data.ResetValues();

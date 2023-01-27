@@ -12,6 +12,7 @@ public class CraftingStation : Interactable {
     [SerializeField] private DebugState debugState;
     [SerializeField] private CraftingStationType type;
     [SerializeField] private CreateQuest createQuest;
+    [SerializeField] private CreateQuest CreateCerealQuest;
 
     [Header("Debug parameters")]
     [SerializeField] private bool skipCookingTime = false;
@@ -45,6 +46,7 @@ public class CraftingStation : Interactable {
                 go.Result.transform.localPosition = Vector3.zero;
 
                 createQuest?.CheckProduct(productItem.product.productSO);
+                CreateCerealQuest?.CheckProduct(productItem.product.productSO);
 
                 itemInStation = null;
                 Addressables.ReleaseInstance(readyText);
