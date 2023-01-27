@@ -4,7 +4,6 @@ using UnityEngine;
 public class AIRandomCustomer : AICustomer {
     protected MainShelf shelf;
     [HideInInspector] public bool inQueue = false;
-    [SerializeField] Animator animator;
 
     private new void Awake() {
         base.Awake();
@@ -21,7 +20,6 @@ public class AIRandomCustomer : AICustomer {
 
         day.DayTimeChange += LeaveOnEvening;
         state = AIState.moving;
-        animator.SetTrigger("Walk");
     }
 
     private new void TakeItem(ProductHolder product, GameObject displayGO) {
@@ -44,16 +42,13 @@ public class AIRandomCustomer : AICustomer {
 
     protected override void Leave() {
         base.Leave();
-        animator.SetTrigger("Walk");
         shelf.RemoveCustomerInQueue(this);
     }
 
     new void FixedUpdate() {
         //Go to the Queue
-        
-        if (Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving) {
+        if (agent.remainingDistance < 1 && state == AIState.moving) {
             state = AIState.waiting;
-            animator.SetTrigger("Idle");
             coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
         }
 
@@ -61,7 +56,7 @@ public class AIRandomCustomer : AICustomer {
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this)) {
             ProductHolder objectOnShelf = shelf.GetItem().GetComponent<ProductHolder>();
             if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste") {
-                if(coroutine != null)
+                if (coroutine != null)
                     StopCoroutine(coroutine);
                 //Take item
                 if (!item) {
