@@ -6,8 +6,8 @@ using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "InterractQuest", menuName = "Quest/InterractQuest")]
 public class InterractQuest : Quest {
-    [SerializeField] bool spawnCustomer = false;
-    [SerializeField] ProductSO breadSO;
+    [SerializeField] private bool spawnCustomer = false;
+    [SerializeField] private ProductSO breadSO;
 
     public void Init() {
         title = "Talk to a regular customer";
@@ -17,11 +17,14 @@ public class InterractQuest : Quest {
         rewardAmount = 5;
     }
 
-    public void OnInterract() {
+    public bool OnInterract() {
         if (isActive) {
             if (spawnCustomer)
                 FindObjectOfType<SpawnCustomer>()?.SpawnCustomerAsset(true, breadSO);
             OnCompleted();
+
+            return true;
         }
+        return false;
     }
 }

@@ -14,8 +14,6 @@ public class TutorialManager : MonoBehaviour {
     private Dialogue dialogue;
 
     private void Awake() {
-        tutorial.SetTutorial(true);
-
         foreach (Quest quest in quests)
             quest.SetActive(false);
 

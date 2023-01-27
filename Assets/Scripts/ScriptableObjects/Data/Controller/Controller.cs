@@ -45,8 +45,10 @@ public class Controller : ScriptableObject {
     }
 
     public void SetEventSystemToLastButton() {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(lastButton);
+        if (EventSystem.current) {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(lastButton);
+        }
     }
 
     public GameObject GetEventSystemCurrentlySelected() => EventSystem.current.currentSelectedGameObject;

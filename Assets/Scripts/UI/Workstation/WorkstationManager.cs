@@ -24,10 +24,6 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
-    [SerializeField] private InterractQuest addIngredientQuest;
-    [SerializeField] private InterractQuest cookQuest;
-    [SerializeField] private InterractQuest createPasteQuest;
-    [SerializeField] private Tutorial tutorial;
 
     private List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -144,7 +140,7 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     //Once enough button created, we position them
-    private void SetupButton() {
+    protected virtual void SetupButton() {
         if (rackList.Count * maxButtonInRack >= ingredientButtonList.Count) {
             ResizeScroll();
             for (int i = 0; i < lenght; i++) {
@@ -156,8 +152,7 @@ public class WorkstationManager : MonoBehaviour {
 
             if (controller.IsGamepad()) {
                 controller.SetEventSystemToStartButton(ingredientButtonList[0]);
-                if (tutorial.GetTutorial())
-                    tutorial.Invoke();
+
             }
             else
                 controller.SetEventSystemToStartButton(null);
@@ -189,8 +184,7 @@ public class WorkstationManager : MonoBehaviour {
         }
     }
 
-    public void IngredientSelected(IngredientSO ingredient) {
-        addIngredientQuest?.OnInterract();
+    public virtual void  IngredientSelected(IngredientSO ingredient) {
 
         //Check if ingredient already selected
         bool ingredientRemoved = false;
@@ -214,9 +208,8 @@ public class WorkstationManager : MonoBehaviour {
         }
     }
 
-    public void Cook(InputAction.CallbackContext ctx) {
+    public virtual void Cook(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
-            cookQuest?.OnInterract();
             //Check product with selected Ingredient
             foreach (ProductSO product in allProducts.GetProductList()) {
                 if (product.ingredients.Count == nbIngredientSelected) {
@@ -292,29 +285,30 @@ public class WorkstationManager : MonoBehaviour {
             };
         }
         else {
-
-            createPasteQuest?.OnInterract();
-
-            if (currentProduct.pasteAsset == null) {
-                currentProduct.asset.InstantiateAsync().Completed += (go) => {
-                    workplace.CloseWorkplace(go.Result);
-                    ResetManager();
-                };
-            }
-            else {
-                ProductSO tmpProduct = currentProduct;
-                currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
-                    go.Result.GetComponent<ProductHolder>().product.SetProduct(tmpProduct);
-                    workplace.CloseWorkplace(go.Result);
-                    ResetManager();
-                };
-            }
-            if (!currentProduct.unlocked) {
-                currentProduct.unlocked = true; //Action to display it on DeliveryManager + Almanach
-                productUnlocked.Invoke(currentProduct);
-            }
-            RemoveIngredients();
+            CreateProduct();
         }
+    }
+
+    protected virtual void CreateProduct() {
+        if (currentProduct.pasteAsset == null) {
+            currentProduct.asset.InstantiateAsync().Completed += (go) => {
+                workplace.CloseWorkplace(go.Result);
+                ResetManager();
+            };
+        }
+        else {
+            ProductSO tmpProduct = currentProduct;
+            currentProduct.pasteAsset.InstantiateAsync().Completed += (go) => {
+                go.Result.GetComponent<ProductHolder>().product.SetProduct(tmpProduct);
+                workplace.CloseWorkplace(go.Result);
+                ResetManager();
+            };
+        }
+        if (!currentProduct.unlocked) {
+            currentProduct.unlocked = true; //Action to display it on DeliveryManager + Almanach
+            productUnlocked.Invoke(currentProduct);
+        }
+        RemoveIngredients();
     }
 
     private void RemoveIngredients() {

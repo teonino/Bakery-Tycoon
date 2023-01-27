@@ -36,11 +36,10 @@ public class AICustomer : Interactable {
     protected Coroutine coroutine;
 
     protected void Awake() {
-        spawner = FindObjectOfType<SpawnCustomer>();
-
         day = FindObjectOfType<DayTimeUI>().GetDay();
-        reputation = FindObjectOfType<ReputationUI>().GetReputation();
         money = FindObjectOfType<MoneyUI>().GetMoney();
+        spawner = FindObjectOfType<SpawnCustomer>();
+        reputation = FindObjectOfType<ReputationUI>().GetReputation();
     }
 
     public void InitCustomer() {
@@ -48,7 +47,7 @@ public class AICustomer : Interactable {
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
-            productCanvas.transform.position = transform.position + Vector3.up;
+            productCanvas.transform.position = transform.position + Vector3.up *2;
             if (requestedProduct)
                 productCanvas.GetComponentInChildren<RawImage>().texture = requestedProduct.image;
             else
