@@ -15,7 +15,7 @@ public class ListIngredient : Data {
     public override void ResetValues() {
         for (int i = 0; i < listIngredient.Count; i++) {
             listIngredient[i].amount = 0;
-            listIngredient[i].ingredient.unlocked = false;
+            listIngredient[i].ingredient.unlocked = true;
             if (tutorial.GetTutorial()) {
                 for (int j = 0; j < tutoListIngredient.Count; j++) {
                     if (listIngredient[i].ingredient == tutoListIngredient[j].ingredient)
