@@ -14,11 +14,13 @@ public class OrderQuest : Quest {
     public void CheckOrder(Delivery delivery) {
         foreach (StockIngredient expectedIngredient in ingredients)
             foreach (StockIngredient ingredient in delivery.GetIngredients())
-                if (expectedIngredient == ingredient)
+                if (expectedIngredient.ingredient == ingredient.ingredient)
                     nbIngredientMatched++;
 
         if (isActive && nbIngredientMatched == ingredients.Count)
             OnCompleted();
+
+        nbIngredientMatched = 0;
     }
 
     public void CheckIngredient(IngredientSO ingredient) {

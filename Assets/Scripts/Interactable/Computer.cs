@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Computer : Interactable {
     [SerializeField] private InterractQuest interractQuest;
+    [SerializeField] private InterractQuest secondInterractQuest;
     private GameObject computerPanel;
 
     private void Awake() {
@@ -15,6 +16,7 @@ public class Computer : Interactable {
     public override void Effect() {
         if (computerPanel)
             computerPanel.SetActive(true);
-            interractQuest.OnInterract();    
+        interractQuest.OnInterract(); 
+        secondInterractQuest.OnInterract();
     }
 }

@@ -20,7 +20,9 @@ public class CreateQuest : Quest {
 
         reward = RewardType.Money;
         rewardAmount = 25;
-    }   
+    }
+
+    public ProductSO GetProduct() => product;
 
     public void CheckProduct(ProductSO product) {
         if (isActive) {
@@ -32,5 +34,9 @@ public class CreateQuest : Quest {
                 OnCompleted();
             }
         }
+    }
+
+    public void Completed() {
+        OnCompleted();
     }
 }

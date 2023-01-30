@@ -25,7 +25,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
 
-    private List<IngredientSelected> ingredientsSelected;
+    protected List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
     private List<GameObject> rackList;
     private Workstation workplace;
@@ -212,22 +212,8 @@ public class WorkstationManager : MonoBehaviour {
         if (ctx.performed) {
             //Check product with selected Ingredient
             foreach (ProductSO product in allProducts.GetProductList()) {
-                if (product.ingredients.Count == nbIngredientSelected) {
-                    bool matchingIngredient = true;
-                    for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
-                        bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
-                        for (int j = 0; j < nbIngredientSelected; j++) {
-                            while (!ingredientsSelected[j].GetIngredient())
-                                j++;
-
-                            if (product.ingredients[i].ingredient == ingredientsSelected[j].GetIngredient())
-                                checkMatchingIngredients = true;
-                        }
-                        if (!checkMatchingIngredients)
-                            matchingIngredient = false;
-                    }
-                    if (matchingIngredient)
-                        currentProduct = product;
+                if (CheckProduct(product)) {
+                    currentProduct = product;
                 }
             }
 
@@ -245,6 +231,27 @@ public class WorkstationManager : MonoBehaviour {
             else
                 StartCoroutine(DisplayErrorText("This Recipe Doesn't Exist"));
         }
+    }
+
+    protected bool CheckProduct(ProductSO product) {
+        if (product.ingredients.Count == nbIngredientSelected) {
+            bool matchingIngredient = true;
+            for (int i = 0; i < product.ingredients.Count && matchingIngredient; i++) {
+                bool checkMatchingIngredients = false; //Check if ingredient in product is in ingredient selected
+                for (int j = 0; j < nbIngredientSelected; j++) {
+                    while (!ingredientsSelected[j].GetIngredient())
+                        j++;
+
+                    if (product.ingredients[i].ingredient == ingredientsSelected[j].GetIngredient())
+                        checkMatchingIngredients = true;
+                }
+                if (!checkMatchingIngredients)
+                    matchingIngredient = false;
+            }
+            if (matchingIngredient)
+                return true;
+        }
+        return false;
     }
 
     private IEnumerator DisplayErrorText(string msg) {

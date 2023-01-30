@@ -14,6 +14,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private Reputation reputation;
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
+    [SerializeField] private Tutorial tutorial;
 
     [Header("Spawn Variables")]
     [SerializeField] private bool enableSpawn;
@@ -45,8 +46,9 @@ public class SpawnCustomer : MonoBehaviour {
 
         foreach (Quest quest in triggerSpawnOnCompletion)
             quest.OnCompletedAction += SpawnTutorialCustomer;
-
-        StartCoroutine(SpawnDelay());
+        
+        if (tutorial.GetTutorial()) 
+            StartCoroutine(SpawnDelay()); 
     }
 
     private IEnumerator SpawnDelay() {
