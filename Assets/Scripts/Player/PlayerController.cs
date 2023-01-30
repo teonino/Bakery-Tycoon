@@ -15,13 +15,16 @@ public class PlayerController : MonoBehaviour
 
     [Header("Outline")]
     [SerializeField] Material outlineMaterial;
+    [SerializeField] private List<GameObject> gameObjectSelected;
+    [SerializeField] private List<GameObject> ChildGameObjectSelected;
+    [SerializeField] private List<LayerMask> ChildLayerSelected;
 
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private GameObject itemHolded;
     private bool playerInputEnable = true;
     bool interactableFound = false;
- [SerializeField]private List<GameObject> gameObjectSelected;
+
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -56,11 +59,11 @@ public class PlayerController : MonoBehaviour
         {
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
             {
-                if (hitInfo[i].collider.GetComponent<Interactable>())
+                for(int j = 0; j < hitInfo[0].transform.childCount; j++)
                 {
-                    hitInfo[i].collider.gameObject.layer = LayerMask.NameToLayer("Outline");
-
-                    gameObjectSelected.Add(hitInfo[i].collider.gameObject);
+                    ChildGameObjectSelected.Add(hitInfo[0].transform.GetChild(i).gameObject);
+                    ChildLayerSelected.Add(hitInfo[0].transform.GetChild(i).gameObject.layer);
+                    ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
                 }
             }
 
@@ -74,7 +77,14 @@ public class PlayerController : MonoBehaviour
                 go.layer = LayerMask.NameToLayer("Customizable");
 
             }
+            for (int k = 0; k < hitInfo[0].transform.childCount; k++)
+            {
+                ChildGameObjectSelected[k].gameObject.layer = ChildLayerSelected[k];
+            }
             gameObjectSelected.Clear();
+            //ChildGameObjectSelected.Clear();
+            //ChildLayerSelected.Clear();
+            
         }
 
     }
