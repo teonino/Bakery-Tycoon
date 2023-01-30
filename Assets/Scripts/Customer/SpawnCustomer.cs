@@ -131,7 +131,7 @@ public class SpawnCustomer : MonoBehaviour {
 
         if (product) {
             customer.requestedProduct = product;
-            customer.SetWaitingTime(120);
+            customer.SetWaitingTime(9999);
         }
         else
             customer.requestedProduct = GetRandomProduct();

@@ -47,7 +47,7 @@ public class AICustomer : Interactable {
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
-            productCanvas.transform.position = transform.position + Vector3.up * 2;
+            productCanvas.transform.position = transform.position + Vector3.up *2;
             if (requestedProduct)
                 productCanvas.GetComponentInChildren<RawImage>().texture = requestedProduct.image;
             else
