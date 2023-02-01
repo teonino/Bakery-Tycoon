@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f74e176dc9cbd45b2d26cbadc6b824, type: 3}
   m_Name: TutoOrderProduct
   m_EditorClassIdentifier: 
-  title: 
+  title: Order ingredients for bread cereal
   randomize: 0
   reward: 0
   rewardAmount: 0
@@ -21,5 +21,14 @@ MonoBehaviour:
   notifEvent: {fileID: 0}
   notifType: {fileID: 0}
   isActive: 0
+  productUnlocked: {fileID: 0}
+  ingredientUnlocked: {fileID: 0}
+  unlockingSmth: 0
+  ingredientsToUnlock: []
+  productsToUnlock: []
   ingredient: {fileID: 0}
-  amount: 0
+  ingredients:
+  - ingredient: {fileID: 11400000, guid: 0df0ca16d75623a43b0c2718542710bc, type: 2}
+    amount: 0
+  - ingredient: {fileID: 11400000, guid: fc06532ee3d7df34da736f29fd63ffc5, type: 2}
+    amount: 0

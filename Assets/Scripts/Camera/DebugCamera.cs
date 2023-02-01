@@ -22,6 +22,7 @@ public class DebugCamera : MonoBehaviour {
         controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed += SwitchCameraFunction;
         CameraOrthographic.SetActive(false);
         CameraPerspective.SetActive(true);
+        CameraOrthographic.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = -5;
 
     }
 
@@ -31,7 +32,7 @@ public class DebugCamera : MonoBehaviour {
 
 
     public void SwitchCameraFunction(InputAction.CallbackContext context) {
-        CameraOrthographic.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = -5;
+        CameraOrthographic.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = -10f;
         if (orthographicCameraIsActive) {
             print("Camera Persp");
             CameraOrthographic.SetActive(false);

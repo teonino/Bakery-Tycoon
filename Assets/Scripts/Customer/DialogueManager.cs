@@ -104,6 +104,13 @@ public class DialogueManager : MonoBehaviour {
     public void OnDisable() {
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();
+
+        foreach(TextMeshProUGUI button in playerAnswersTxt) {
+            if (controller.GetEventSystemCurrentlySelected() == button.gameObject)
+                controller.SetEventSystemToStartButton(null);
+        }
+
+        print(controller.GetEventSystemCurrentlySelected());
         Time.timeScale = 1;
         OnDestroyDialoguePanel?.Invoke();
         Addressables.ReleaseInstance(gameObject);

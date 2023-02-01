@@ -14,9 +14,9 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private GameObject computerPanel;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private ListProduct products;
-    [SerializeField] private PlayerControllerSO playerControllerSO;
+    [SerializeField] protected PlayerControllerSO playerControllerSO;
     [SerializeField] private ListDeliveries deliveries;
-    [SerializeField] private Controller controller;
+    [SerializeField] protected Controller controller;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlocked;
@@ -25,9 +25,6 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private GameObject productScroll;
     [SerializeField] private GameObject productList;
     [Header("Tutorial Variables")]
-    [SerializeField] private Tutorial tutorial;
-    [SerializeField] private OrderQuest orderQuest;
-    [SerializeField] private InterractQuest productAmafoodInterract;
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -41,6 +38,7 @@ public class DeliveryManager : MonoBehaviour {
     private float cartWeight = 0;
     private int cartCost = 0;
     private int maxButtonInRack;
+    private bool buttonSetuped = false;
 
     public Dictionary<IngredientSO, int> cart;
 
@@ -62,7 +60,6 @@ public class DeliveryManager : MonoBehaviour {
                 item.SetActive(true);
             }
         }
-        productAmafoodInterract?.OnInterract();
         ResizeScroll(productRackList, productButtonList, productScroll, productScrollRectTransform);
     }
 
@@ -91,31 +88,28 @@ public class DeliveryManager : MonoBehaviour {
         }
 
         if (ingredientButtonList.Count > 0) {
-            if (ingredientsList.activeInHierarchy)
-                StartCoroutine(waitForGamepad(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject));
-            else
-                StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
+            SetButtonForGamepad();
         }
     }
 
     private void CheckButton() {
-        foreach(GameObject item in productButtonList) 
+        foreach (GameObject item in productButtonList)
             if (item.GetComponent<DeliveryButton>().product.unlocked)
                 item.SetActive(true);
 
-        foreach (GameObject item in ingredientButtonList) 
+        foreach (GameObject item in ingredientButtonList)
             if (item.GetComponent<DeliveryButton>().ingredient.unlocked)
                 item.SetActive(true);
 
         UpdateStockButtons();
     }
 
-    private IEnumerator waitForGamepad(GameObject obj) {
+    protected virtual IEnumerator waitForGamepad(GameObject obj) {
         yield return new WaitForEndOfFrame();
-        controller.SetEventSystemToStartButton(obj); 
+        controller.SetEventSystemToStartButton(obj);
     }
 
-    private void Start() {
+    protected virtual void Start() {
         lenght = ingredients.GetIngredientLenght();
 
         //Init Cart
@@ -139,7 +133,7 @@ public class DeliveryManager : MonoBehaviour {
             };
         }
 
-        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += SwitchList;
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayIngredientList;
     }
 
     void SetupRacks(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
@@ -158,7 +152,7 @@ public class DeliveryManager : MonoBehaviour {
 
     private void ResizeScroll(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
         scrollRect.sizeDelta = new Vector2(
-            scroll.GetComponent<RectTransform>().rect.width, 
+            scroll.GetComponent<RectTransform>().rect.width,
             buttonList[0].GetComponent<RectTransform>().rect.height * (rackList.Count + 1));
     }
 
@@ -177,12 +171,7 @@ public class DeliveryManager : MonoBehaviour {
             if (productButtonList.Count == 0)
                 SetupProductButton();
             else {
-                foreach (GameObject go in productButtonList)
-                    go.GetComponent<DeliveryButton>().SetIngredientButton(ingredientButtonList);
-
-                controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject); 
-                if (tutorial && tutorial.GetTutorial())
-                    tutorial.Invoke();
+                SetupIngredientForProductButton();
             }
         }
     }
@@ -207,6 +196,20 @@ public class DeliveryManager : MonoBehaviour {
         }
     }
 
+    protected void SetupIngredientForProductButton() {
+        foreach (GameObject go in productButtonList)
+            go.GetComponent<DeliveryButton>().SetIngredientButton(ingredientButtonList);
+        buttonSetuped = true;
+        SetButtonForGamepad();
+    }
+
+    protected virtual void SetButtonForGamepad() {
+        if (ingredientsList.activeInHierarchy)
+            StartCoroutine(waitForGamepad(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject));
+        else
+            StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
+    }
+
     private void Update() {
         if (controller.IsGamepad()) {
             RectTransform scroll;
@@ -218,31 +221,44 @@ public class DeliveryManager : MonoBehaviour {
             float scrollValue = playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y;
             if (scrollValue != 0)
                 scroll.position -= new Vector3(0, scrollValue * scrollSpeed.GetScrollSpeed(), 0);
+
+            if (controller.GetEventSystemCurrentlySelected() == null) {
+                if (buttonSetuped) {
+                    if (ingredientsList.activeInHierarchy)
+                        controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+                    else
+                        controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
+                }
+            }
         }
     }
 
-    public void SetIngredient(IngredientSO ingredient, bool add) {
+    public virtual void SetIngredient(IngredientSO ingredient, bool add) {
         if (add)
             cart[ingredient]++;
         else
             cart[ingredient]--;
 
-        orderQuest.CheckIngredient(ingredient);
-
         CalculateCartCostAndWeight();
         DisplayCart();
     }
-    public void SwitchList(InputAction.CallbackContext context) {
-        if (ingredientsList.activeSelf && productButtonList.Count > 0) {
-            ingredientsList.SetActive(false);
-            productList.SetActive(true);
-            controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
-        }
-        else {
-            ingredientsList.SetActive(true);
-            productList.SetActive(false);
-            controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
-        }
+
+    public void DisplayIngredientList(InputAction.CallbackContext context) {
+        ingredientsList.SetActive(true);
+        productList.SetActive(false);
+        controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
+
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayIngredientList;
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayProductList;
+    }
+
+    public virtual void DisplayProductList(InputAction.CallbackContext context) {
+        ingredientsList.SetActive(false);
+        productList.SetActive(true);
+        controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
+
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayProductList;
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayIngredientList;
     }
 
     private void CalculateCartCostAndWeight() {
@@ -276,10 +292,10 @@ public class DeliveryManager : MonoBehaviour {
         cartWeight = 0;
         cartCost = 0;
 
-        foreach(GameObject item in ingredientButtonList) 
+        foreach (GameObject item in ingredientButtonList)
             item.GetComponent<DeliveryButton>().nbIngredient = 0;
-        
-        foreach (GameObject item in productButtonList) 
+
+        foreach (GameObject item in productButtonList)
             item.GetComponent<DeliveryButton>().nbIngredient = 0;
     }
 
@@ -311,7 +327,8 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= SwitchList;
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayIngredientList;
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayProductList;
     }
 
     public void Quit(InputAction.CallbackContext context) {

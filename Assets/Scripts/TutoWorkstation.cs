@@ -6,10 +6,12 @@ public class TutoWorkstation : Workstation {
     [Header("Tutorial Parameters")]
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private InterractQuest interractQuest;
+    [SerializeField] private InterractQuest secondInterractQuest;
     public override void Effect() {
         if (tutorial.CanInterractWorkstation()) {
             base.Effect();
             interractQuest?.OnInterract();
+            secondInterractQuest?.OnInterract();
         }
     }
 

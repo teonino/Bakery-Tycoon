@@ -5,9 +5,10 @@ using UnityEngine.InputSystem;
 
 public class TutoWorkstationPanel : WorkstationManager {
     [SerializeField] private InterractQuest addIngredientQuest;
-    [SerializeField] private InterractQuest cookQuest;
+    [SerializeField] private CreateQuest cookQuest;
     [SerializeField] private InterractQuest createPasteQuest;
     [SerializeField] private Tutorial tutorial;
+    private bool canCook = true;
 
     protected override void SetupButton() {
         base.SetupButton();
@@ -15,16 +16,21 @@ public class TutoWorkstationPanel : WorkstationManager {
     }
 
     public override void IngredientSelected(IngredientSO ingredient) {
-        if(addIngredientQuest.OnInterract())
+        if (addIngredientQuest.OnInterract())
             tutorial.UnlockAddIngredient();
-            
+
         if (tutorial.CanAddIngredient())
             base.IngredientSelected(ingredient);
     }
 
     public override void Cook(InputAction.CallbackContext ctx) {
-        cookQuest?.OnInterract();
-        base.Cook(ctx);
+        if (CheckProduct(cookQuest.GetProduct())) {
+            cookQuest.Completed();
+            canCook = true;
+        }
+
+        if(canCook)
+            base.Cook(ctx);
     }
 
     protected override void CreateProduct() {
