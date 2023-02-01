@@ -5,11 +5,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.Extensions;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
 public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
+    [SerializeField] private LocalizeStringEvent totalCostString;
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private Money money;
     [SerializeField] private Day day;
@@ -23,9 +29,20 @@ public class CartUI : MonoBehaviour {
     [HideInInspector] public int cartCost;
 
     private float cost = 0; //Display value of a ingredient, not used yet
+    private LocalizedString localizedString;
+    private IntVariable localizedCartCost = null;
 
     private void Awake() {
         deliveries.SetDefaultExpressOrderTime();
+
+        localizedString = totalCostString.StringReference;
+        if (!localizedString.TryGetValue("totalCost", out IVariable value)) {
+            localizedCartCost = new IntVariable();
+            localizedString.Add("totalCost", localizedCartCost);
+        }
+        else {
+            localizedCartCost = value as IntVariable;
+        }
     }
 
     private void OnEnable() {
@@ -46,6 +63,7 @@ public class CartUI : MonoBehaviour {
             orderSumary.SetText(newText);
         }
         totalCostText.SetText("Total : " + cartCost);
+        localizedCartCost.Value = cartCost;
     }
 
     public void ClearText() {

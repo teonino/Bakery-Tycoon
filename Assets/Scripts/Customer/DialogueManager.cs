@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour {
             controller.RegisterCurrentSelectedButton();
             Time.timeScale = 0;
         }
-    } 
+    }
     private void Start() {
         playerControllerSO.GetPlayerController().DisableInput();
         controller.RegisterCurrentSelectedButton();
@@ -105,12 +105,10 @@ public class DialogueManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();
 
-        foreach(TextMeshProUGUI button in playerAnswersTxt) {
+        foreach (TextMeshProUGUI button in playerAnswersTxt)
             if (controller.GetEventSystemCurrentlySelected() == button.gameObject)
                 controller.SetEventSystemToStartButton(null);
-        }
 
-        print(controller.GetEventSystemCurrentlySelected());
         Time.timeScale = 1;
         OnDestroyDialoguePanel?.Invoke();
         Addressables.ReleaseInstance(gameObject);

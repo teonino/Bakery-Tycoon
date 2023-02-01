@@ -16,7 +16,7 @@ public class Computer : Interactable {
     public override void Effect() {
         if (computerPanel)
             computerPanel.SetActive(true);
-        interractQuest.OnInterract(); 
-        secondInterractQuest.OnInterract();
+        interractQuest?.OnInterract(); 
+        secondInterractQuest?.OnInterract();
     }
 }
