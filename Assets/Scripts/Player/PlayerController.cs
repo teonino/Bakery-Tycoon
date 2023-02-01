@@ -20,8 +20,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private List<LayerMask> ChildLayerSelected;
     [SerializeField] private GameObject interactedItem;
     private GameObject childrenWithGlass;
+    [Header("UI Interaction")]
     [SerializeField] private GameObject interactionText;
     [SerializeField] private TextMeshProUGUI modulableInteractionText;
+    [SerializeField] private TextMeshProUGUI pressText;
 
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
