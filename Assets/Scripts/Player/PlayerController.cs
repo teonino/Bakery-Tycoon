@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private List<GameObject> gameObjectSelected;
     [SerializeField] private List<GameObject> ChildGameObjectSelected;
     [SerializeField] private List<LayerMask> ChildLayerSelected;
+    [SerializeField] private GameObject interactedItem;
+    private GameObject childrenWithGlass;
 
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
@@ -59,35 +61,49 @@ public class PlayerController : MonoBehaviour
         {
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
             {
-                for(int j = 0; j < hitInfo[0].transform.childCount; j++)
+                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable))
                 {
-                    ChildGameObjectSelected.Add(hitInfo[0].transform.GetChild(i).gameObject);
-                    ChildLayerSelected.Add(hitInfo[0].transform.GetChild(i).gameObject.layer);
-                    ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
+                    if (interactedItem)
+                    {
+                        ClearOutline();
+                    }
+                    interactedItem = interactable.gameObject;
+                    interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
+                    for (int j = 0; j < interactedItem.transform.childCount; j++)
+                    {
+                        ChildGameObjectSelected.Add(interactedItem.transform.GetChild(j).gameObject);
+                        ChildLayerSelected.Add(interactedItem.transform.GetChild(j).gameObject.layer);
+                        ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
+                    }
                 }
             }
-
             Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
-
         }
         else
         {
-            foreach(GameObject go in gameObjectSelected)
-            {
-                go.layer = LayerMask.NameToLayer("Customizable");
-
-            }
-            for (int k = 0; k < hitInfo[0].transform.childCount; k++)
-            {
-                ChildGameObjectSelected[k].gameObject.layer = ChildLayerSelected[k];
-            }
-            gameObjectSelected.Clear();
-            //ChildGameObjectSelected.Clear();
-            //ChildLayerSelected.Clear();
-            
+            ClearOutline();
         }
 
     }
+
+    private void ClearOutline()
+    {
+        if (interactedItem)
+        {
+            interactedItem.gameObject.layer = LayerMask.NameToLayer("Customizable");
+            foreach (GameObject item in gameObjectSelected)
+                item.layer = LayerMask.NameToLayer("Customizable");
+
+            for (int k = 0; k < interactedItem.transform.childCount; k++)
+                ChildGameObjectSelected[k].gameObject.layer = ChildLayerSelected[k];
+
+            gameObjectSelected.Clear();
+            ChildGameObjectSelected.Clear();
+            ChildLayerSelected.Clear();
+            interactedItem = null;
+        }
+    }
+
 
     public void OnInterract(InputAction.CallbackContext context)
     {
