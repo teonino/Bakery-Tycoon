@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1554458103451511820}
   - component: {fileID: 1554458103451511818}
   - component: {fileID: 1554458103451511821}
+  - component: {fileID: 5576056573572360007}
   m_Layer: 5
   m_Name: CartTotalCost
   m_TagString: Untagged
@@ -212,6 +213,41 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5576056573572360007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554458103451511823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:0692c7bfc5cc3a24fbee2d4cff8d3766
+    m_TableEntryReference:
+      m_KeyId: 558189809679
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables:
+    - name: totalCost
+      variable:
+        rid: 5604114039160700930
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5604114039160700930
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
 --- !u!1 &2070463883095151065
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,12 +649,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderSumary: {fileID: 1981124984486183488}
   totalCostText: {fileID: 1554458103451511821}
-  deliveries: {fileID: 0}
+  totalCostString: {fileID: 5576056573572360007}
+  deliveries: {fileID: 11400000, guid: 8bbd279cb8297d640a6c554ec4bdf9d1, type: 2}
   money: {fileID: 11400000, guid: 2165d7b449c98dc409d632d23f2844b0, type: 2}
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
-  tutorial: {fileID: 0}
-  playerController: {fileID: 0}
-  orderTypeQuest: {fileID: 0}
+  playerController: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
   deliveryManager: {fileID: 0}
   cartWeight: 0
   cartCost: 0
