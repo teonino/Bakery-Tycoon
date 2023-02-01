@@ -184,7 +184,7 @@ public class WorkstationManager : MonoBehaviour {
         }
     }
 
-    public virtual void  IngredientSelected(IngredientSO ingredient) {
+    public virtual void IngredientSelected(IngredientSO ingredient) {
 
         //Check if ingredient already selected
         bool ingredientRemoved = false;
@@ -228,8 +228,10 @@ public class WorkstationManager : MonoBehaviour {
                 else
                     StartCoroutine(DisplayErrorText("Crafting Station Missing"));
             }
-            else
+            else {
                 StartCoroutine(DisplayErrorText("This Recipe Doesn't Exist"));
+                RemoveIngredients(false);
+            }
         }
     }
 
@@ -315,13 +317,14 @@ public class WorkstationManager : MonoBehaviour {
             currentProduct.unlocked = true; //Action to display it on DeliveryManager + Almanach
             productUnlocked.Invoke(currentProduct);
         }
-        RemoveIngredients();
+        RemoveIngredients(true);
     }
 
-    private void RemoveIngredients() {
+    private void RemoveIngredients(bool removeInStock) {
         foreach (IngredientSelected ingredientSelected in ingredientsSelected) {
             if (ingredientSelected.GetIngredient()) {
-                ingredients.RemoveIngredientStock(ingredientSelected.GetIngredient(), 1); //Remove from stock
+                if (removeInStock)
+                    ingredients.RemoveIngredientStock(ingredientSelected.GetIngredient(), 1); //Remove from stock
                 ingredientSelected.RemoveIngredient(); //Set to null 
                 nbIngredientSelected--;
             }

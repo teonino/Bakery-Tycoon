@@ -40,7 +40,7 @@ public class ListDeliveries : Data {
         deliveries.Add(delivery);
     }
 
-    public IEnumerator ExpressDelivery(Delivery delivery) {
+    public IEnumerator WaitDelivery(Delivery delivery) {
         yield return new WaitForSeconds(timeDeliveryValue);
         DeliverOrder(delivery);
     }
@@ -59,7 +59,7 @@ public class ListDeliveries : Data {
 
     }
 
-    private void DeliverOrder(Delivery delivery) {
+    public void DeliverOrder(Delivery delivery) {
         foreach (StockIngredient stockIngredient in ingredients.GetIngredientList())
             foreach (StockIngredient deliveryIngredient in delivery.GetIngredients())
                 if (stockIngredient.ingredient == deliveryIngredient.ingredient)
