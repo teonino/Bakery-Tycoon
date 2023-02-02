@@ -58,7 +58,6 @@ public class SliderVolume : MonoBehaviour
         {
             currentVolumeLevel = volumeSlider.value;
             volumeSlider.value = volumeSlider.minValue;
-            print(currentVolumeLevel);
         }
     }
 
@@ -87,13 +86,13 @@ public class SliderVolume : MonoBehaviour
     }
     public void PlayPreviewAudio()
     {
-        print("audio launched");
-        previewSound.Play();
+        if(debugSound)
+            previewSound.Play();
     }
     public void StopPreviewAudio()
     {
-        print("audio stopped");
-        previewSound.Stop();
+        if (previewSound.isPlaying)
+            previewSound.Stop();
     }
 
     private void OnDisable()
