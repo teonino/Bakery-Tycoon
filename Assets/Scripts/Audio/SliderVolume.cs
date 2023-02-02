@@ -15,12 +15,20 @@ public class SliderVolume : MonoBehaviour
         Environment
     };
 
+    [Header("Ref")]
+    public AudioMixer audioMixer;
     private Slider volumeSlider;
     [SerializeField] private MixerGroup groupName;
-    [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Toggle toggleButton;
-    [SerializeField] private float currentVolumeLevel;
+
+    [Header("Preview AudioSource")]
+    [SerializeField] public AudioSource previewSound;
+    private float lastSliderValue;
+    [SerializeField] private bool debugSound = true;
+
+    private float currentVolumeLevel;
     private float modificationMultiplier = 30f;
+
 
     private void Awake()
     {
@@ -34,7 +42,7 @@ public class SliderVolume : MonoBehaviour
     {
         if (enableSound)
         {
-            if(currentVolumeLevel <= 0.0150)
+            if (currentVolumeLevel <= 0.0150)
             {
                 volumeSlider.value = 0.0200f;
                 currentVolumeLevel = volumeSlider.value;
@@ -56,12 +64,27 @@ public class SliderVolume : MonoBehaviour
     {
         audioMixer.SetFloat(groupName.ToString(), Mathf.Log10(volume) * modificationMultiplier);
         toggleButton.isOn = volumeSlider.value > volumeSlider.minValue;
+
+        if (debugSound)
+        {
+            if (volumeSlider.value != lastSliderValue)
+            {
+                if (!previewSound.isPlaying && debugSound)
+                {
+                    previewSound.volume = volumeSlider.value;
+                    previewSound.Play();
+                }
+            }
+            else if (volumeSlider.value <= 0.0f)
+            {
+                previewSound.Stop();
+            }
+            lastSliderValue = volumeSlider.value;
+        }
     }
 
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(groupName.ToString(), volumeSlider.value);
     }
-
-
 }
