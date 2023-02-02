@@ -12,6 +12,7 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private CartUI cartPanel;
     [SerializeField] private GameObject computerPanel;
+    [SerializeField] private GameObject ammountPanel;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private ListProduct products;
     [SerializeField] protected PlayerControllerSO playerControllerSO;
@@ -223,7 +224,7 @@ public class DeliveryManager : MonoBehaviour {
                 scroll.position -= new Vector3(0, scrollValue * scrollSpeed.GetScrollSpeed(), 0);
 
             if (controller.GetEventSystemCurrentlySelected() == null) {
-                if (buttonSetuped) {
+                if (buttonSetuped && !ammountPanel.activeSelf) {
                     if (ingredientsList.activeInHierarchy)
                         controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
                     else
