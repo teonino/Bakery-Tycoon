@@ -35,7 +35,7 @@ public class TutorialManager : MonoBehaviour {
     }
 
     private void LaunchQuest() {
-        if (indexQuest < quests.Count + 1) {
+        if (indexQuest < quests.Count) {
             questTxt.gameObject.SetActive(true);
             quests[indexQuest].UpdateUI(questTxt);
         }
