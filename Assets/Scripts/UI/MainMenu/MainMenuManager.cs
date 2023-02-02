@@ -78,6 +78,9 @@ public class MainMenuManager : MonoBehaviour
 
         InternalMenu.Panel[MenuToSwitch].SetActive(true);
         InternalMenu.Panel[MenuToSwitch].transform.SetAsFirstSibling();
+        yield return new WaitForSeconds(1.5f);
+        Blackscreen.transform.SetAsFirstSibling();
+
     }
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using System;
+using UnityEngine.EventSystems;
 
 public class SliderVolume : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class SliderVolume : MonoBehaviour
         currentVolumeLevel = volumeSlider.value;
     }
 
+
     public void HandleToggleValueChanged(bool enableSound)
     {
         if (enableSound)
@@ -65,22 +67,33 @@ public class SliderVolume : MonoBehaviour
         audioMixer.SetFloat(groupName.ToString(), Mathf.Log10(volume) * modificationMultiplier);
         toggleButton.isOn = volumeSlider.value > volumeSlider.minValue;
 
-        if (debugSound)
-        {
-            if (volumeSlider.value != lastSliderValue)
-            {
-                if (!previewSound.isPlaying && debugSound)
-                {
-                    previewSound.volume = volumeSlider.value;
-                    previewSound.Play();
-                }
-            }
-            else if (volumeSlider.value <= 0.0f)
-            {
-                previewSound.Stop();
-            }
-            lastSliderValue = volumeSlider.value;
-        }
+        //if (debugSound)
+        //{
+        //    if (volumeSlider.value != lastSliderValue)
+        //    {
+        //        if (!previewSound.isPlaying && debugSound)
+        //        {
+        //            previewSound.volume = volumeSlider.value;
+        //            previewSound.Play();
+        //        }
+        //    }
+        //    else if (volumeSlider.value == lastSliderValue)
+        //    {
+        //        print(previewSound + " is stopped");
+        //        previewSound.Stop();
+        //    }
+        //    lastSliderValue = volumeSlider.value;
+        //}
+    }
+    public void PlayPreviewAudio()
+    {
+        print("audio launched");
+        previewSound.Play();
+    }
+    public void StopPreviewAudio()
+    {
+        print("audio stopped");
+        previewSound.Stop();
     }
 
     private void OnDisable()
