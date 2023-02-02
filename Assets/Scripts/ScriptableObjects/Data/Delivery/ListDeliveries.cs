@@ -22,7 +22,7 @@ public class ListDeliveries : Data {
     private void OnEnable() {
         day.NewDay += CheckDeliveries;
 
-        if (tutorial)
+        if (tutorial.GetTutorial())
             timeDeliveryValue = 0;
         else
             timeDeliveryValue = timeDelivery;
@@ -41,7 +41,8 @@ public class ListDeliveries : Data {
     }
 
     public IEnumerator ExpressDelivery(Delivery delivery) {
-        yield return new WaitForSeconds(timeDeliveryValue);
+        if (!tutorial.GetTutorial())
+            yield return new WaitForSeconds(timeDeliveryValue);
         DeliverOrder(delivery);
     }
 

@@ -13,9 +13,9 @@ public class Tutorial : ScriptableObject {
     public Action action;
 
     private void OnEnable() {
-        tutorial = false;
         workstation = AddIngredient = false;
     }
+
     public void UnlockWorkstation() => workstation = true;
     public bool CanInterractWorkstation() => workstation;
     public void UnlockAddIngredient() => AddIngredient = true;

@@ -23,7 +23,8 @@ public class AIRegularCustomer : AICustomer {
         base.InitCustomer();
         day.DayTimeChange += LeaveOnEvening;
 
-        onTalk = FindObjectOfType<QuestHolder>().GetInterractQuest();
+        if (!tutorial)
+            onTalk = FindObjectOfType<QuestHolder>().GetInterractQuest();
         dialoguePanel = FindObjectOfType<DialogueManager>(true);
     }
 
@@ -81,7 +82,7 @@ public class AIRegularCustomer : AICustomer {
     }
 
     private void Sit() {
-        agent.SetDestination(chair.transform.position); 
+        agent.SetDestination(chair.transform.position);
         state = AIState.moving;
     }
     private void LeaveOnEvening() {
