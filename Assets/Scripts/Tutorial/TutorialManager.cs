@@ -45,7 +45,7 @@ public class TutorialManager : MonoBehaviour {
 
     private void NextQuest() {
         indexQuest++;
-        if (indexQuest < quests.Count + 1) {
+        if (indexQuest < quests.Count) {
             SetupDialogue();
             SetupQuest();
         }
