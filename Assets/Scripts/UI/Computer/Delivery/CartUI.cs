@@ -81,11 +81,7 @@ public class CartUI : MonoBehaviour {
                         delivery.Add(stock.Key, stock.Value);
                     }
                 }
-                //Express deliveries
-                if (delivery.GetDay() == day.GetCurrentDay())
-                    StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                deliveries.Add(delivery);
+                FindObjectOfType<Computer>().StartCoroutine(deliveries.WaitDelivery(delivery));
                 money.AddMoney(-cartCost);
                 Clear();
             }

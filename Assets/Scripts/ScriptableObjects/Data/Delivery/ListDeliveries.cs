@@ -22,7 +22,7 @@ public class ListDeliveries : Data {
     private void OnEnable() {
         day.NewDay += CheckDeliveries;
 
-        if (tutorial.GetTutorial())
+        if (tutorial)
             timeDeliveryValue = 0;
         else
             timeDeliveryValue = timeDelivery;
@@ -40,9 +40,8 @@ public class ListDeliveries : Data {
         deliveries.Add(delivery);
     }
 
-    public IEnumerator ExpressDelivery(Delivery delivery) {
-        if (!tutorial.GetTutorial())
-            yield return new WaitForSeconds(timeDeliveryValue);
+    public IEnumerator WaitDelivery(Delivery delivery) {
+        yield return new WaitForSeconds(timeDeliveryValue);
         DeliverOrder(delivery);
     }
 
@@ -60,7 +59,7 @@ public class ListDeliveries : Data {
 
     }
 
-    private void DeliverOrder(Delivery delivery) {
+    public void DeliverOrder(Delivery delivery) {
         foreach (StockIngredient stockIngredient in ingredients.GetIngredientList())
             foreach (StockIngredient deliveryIngredient in delivery.GetIngredients())
                 if (stockIngredient.ingredient == deliveryIngredient.ingredient)

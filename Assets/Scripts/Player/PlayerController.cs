@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,19 +14,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject interractPanel;
 
     [Header("Outline")]
+    [SerializeField] Material outlineMaterial;
     [SerializeField] private List<GameObject> gameObjectSelected;
     [SerializeField] private List<GameObject> ChildGameObjectSelected;
     [SerializeField] private List<LayerMask> ChildLayerSelected;
     [SerializeField] private GameObject interactedItem;
     private GameObject childrenWithGlass;
-    [Header("UI Interaction")]
-    [SerializeField] private GameObject interactionText;
-    [SerializeField] private TextMeshProUGUI modulableInteractionText;
-    [SerializeField] private TextMeshProUGUI pressText;
 
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
-    private LocalizedStringComponent localizedStringComponent;
     private GameObject itemHolded;
     private bool playerInputEnable = true;
     bool interactableFound = false;
@@ -87,62 +82,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             ClearOutline();
-        }
-
-        if (interactedItem != null && interactionText.activeSelf == false)
-        {
-            if (interactedItem.GetComponent<Shelf>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Workstation>())
-            {
-                //modulableInteractionText.text = "to prepare your product";
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<CraftingStation>())
-            {
-                //modulableInteractionText.text = "to cook your products";
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Sink>())
-            {
-                //modulableInteractionText.text = "to wash the plates";
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Sink");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Computer>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Computer");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<BuildingMode>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Custom");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Table>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Table");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<EntranceDoor>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
-                interactionText.SetActive(true);
-            }
-            else
-            {
-                modulableInteractionText.text = "to interact";
-                interactionText.SetActive(true);
-            }
-        }
-        else if (interactedItem == null && interactionText.activeSelf == true)
-        {
-            interactionText.SetActive(false);
         }
 
     }
