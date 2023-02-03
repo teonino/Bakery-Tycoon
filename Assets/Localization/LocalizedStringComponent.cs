@@ -16,7 +16,7 @@ public class LocalizedStringComponent : MonoBehaviour {
         table.TableChanged -= LoadStrings;
     }
 
-    private void LoadStrings(StringTable stringTable) {
+    public void LoadStrings(StringTable stringTable) {
         text.text = GetLocalizedString(stringTable, key);
     }
     static string GetLocalizedString(StringTable table, string entryName) {
@@ -24,4 +24,6 @@ public class LocalizedStringComponent : MonoBehaviour {
         StringTableEntry entry = table.GetEntry(entryName);
         return entry.GetLocalizedString(); // We can pass in optional arguments for Smart Format or String.Format here.
     }
+
+    public void SetKey(string value) => key = value;
 }

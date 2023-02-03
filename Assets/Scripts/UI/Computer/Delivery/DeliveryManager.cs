@@ -21,7 +21,6 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlocked;
-    [SerializeField] private GameObject popupReminder;
     [SerializeField] private GameObject ingredientScroll;
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
@@ -87,9 +86,6 @@ public class DeliveryManager : MonoBehaviour {
             ingredientUnlocked.action += EnableIngredientButton;
 
             CheckButton();
-
-            ingredientScroll.SetActive(true);
-            productScroll.SetActive(true);
         }
 
         if (ingredientButtonList.Count > 0) {
@@ -302,9 +298,6 @@ public class DeliveryManager : MonoBehaviour {
 
         foreach (GameObject item in productButtonList)
             item.GetComponent<DeliveryButton>().nbIngredient = 0;
-
-        if (popupReminder.activeSelf)
-            Quit();
     }
 
     public void Reset(bool resetCart) {
@@ -340,23 +333,10 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     public void Quit(InputAction.CallbackContext context) {
-        Quit();
-    }
+        playerController.playerInput.UI.Quit.performed -= Quit;
+        playerController.playerInput.UI.Disable();
 
-    private void Quit() {
-        if (cartCost > 0 && !popupReminder.activeSelf) {
-            popupReminder.SetActive(true);
-            ingredientScroll.SetActive(false);
-            productScroll.SetActive(false);
-        }
-        else {
-            playerController.playerInput.UI.Quit.performed -= Quit;
-            playerController.playerInput.UI.Disable();
-
-            playerController.EnableInput();
-            computerPanel.SetActive(false);
-            if (popupReminder.activeSelf)
-                popupReminder.SetActive(false);
-        }
+        playerController.EnableInput();
+        computerPanel.SetActive(false);
     }
 }
