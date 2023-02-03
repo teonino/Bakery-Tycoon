@@ -19,7 +19,7 @@ public class LocalizedStringComponent : MonoBehaviour {
     public void LoadStrings(StringTable stringTable) {
         text.text = GetLocalizedString(stringTable, key);
     }
-    static string GetLocalizedString(StringTable table, string entryName) {
+    private string GetLocalizedString(StringTable table, string entryName) {
         // Get the table entry. The entry contains the localized string and Metadata
         StringTableEntry entry = table.GetEntry(entryName);
         return entry.GetLocalizedString(); // We can pass in optional arguments for Smart Format or String.Format here.
