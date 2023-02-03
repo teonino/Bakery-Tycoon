@@ -2021,10 +2021,10 @@ RectTransform:
   m_Father: {fileID: 901942289}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 190.62, y: -196.7967}
-  m_SizeDelta: {x: 147, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 147, y: 150}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &222702554
 MonoBehaviour:
@@ -9270,7 +9270,6 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   cartPanel: {fileID: 2134005921}
   computerPanel: {fileID: 1431001226}
-  ammountPanel: {fileID: 1922394328}
   ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
   products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
   playerControllerSO: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
@@ -9279,6 +9278,7 @@ MonoBehaviour:
   scrollSpeed: {fileID: 11400000, guid: 2c549f2c7daf75c49a723080eab755aa, type: 2}
   productUnlocked: {fileID: 11400000, guid: 59d1f15e89a2cdb4e9c55ac82360eb17, type: 2}
   ingredientUnlocked: {fileID: 11400000, guid: 1907c422024316f4abb26c4dcc20b137, type: 2}
+  popupReminder: {fileID: 0}
   ingredientScroll: {fileID: 1998212855}
   ingredientsList: {fileID: 497638607}
   productScroll: {fileID: 585466855}
@@ -17413,20 +17413,36 @@ PrefabInstance:
       value: NaN
       objectReference: {fileID: 0}
     - target: {fileID: 3939970912473470235, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3939970912473470235, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3939970912473470235, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200.70001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3939970912473470235, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.69995
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchorMin.y
@@ -17438,7 +17454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 3939970914111430703, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -19396,11 +19412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1922394328 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5250339220882546147, guid: 52b58c3ec4499434ca56836fa1e18037, type: 3}
-  m_PrefabInstance: {fileID: 1099832006}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1923050568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3797028200986697733, guid: 9339e6608ea31044abe23a95bea22a7b, type: 3}
@@ -21322,10 +21333,10 @@ RectTransform:
   m_Father: {fileID: 901942289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 192.12, y: 0}
-  m_SizeDelta: {x: 150, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2072925410
 MonoBehaviour:

@@ -72,14 +72,19 @@ public class PlayerController : MonoBehaviour
                     {
                         ClearOutline();
                     }
-                    interactedItem = interactable.gameObject;
-                    interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
-                    //for (int j = 0; j < interactedItem.transform.childCount; j++)
-                    //{
-                    //    ChildGameObjectSelected.Add(interactedItem.transform.GetChild(j).gameObject);
-                    //    ChildLayerSelected.Add(interactedItem.transform.GetChild(j).gameObject.layer);
-                    //    ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
-                    //}
+
+
+                    if (!hitInfo[i].collider.GetComponent<AICustomer>())
+                    {
+                        interactedItem = interactable.gameObject;
+                        interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
+                        //for (int j = 0; j < interactedItem.transform.childCount; j++)
+                        //{
+                        //    ChildGameObjectSelected.Add(interactedItem.transform.GetChild(j).gameObject);
+                        //    ChildLayerSelected.Add(interactedItem.transform.GetChild(j).gameObject.layer);
+                        //    ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
+                        //}
+                    }
                 }
             }
             Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
@@ -139,6 +144,7 @@ public class PlayerController : MonoBehaviour
                 modulableInteractionText.text = "to interact";
                 interactionText.SetActive(true);
             }
+
         }
         else if (interactedItem == null && interactionText.activeSelf == true)
         {
