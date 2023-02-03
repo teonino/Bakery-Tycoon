@@ -445,7 +445,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 417bbe8f1aa48814bbd60357e04ac2b3, type: 2}
+  - {fileID: -3632888510105634020, guid: 3730135d7cce1784c8e5ad8292123091, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2184,7 +2184,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1609817454
 PrefabInstance:
@@ -2360,6 +2360,13 @@ MonoBehaviour:
   animator: {fileID: 0}
   itemSocket: {fileID: 0}
   interractPanel: {fileID: 0}
+  gameObjectSelected: []
+  ChildGameObjectSelected: []
+  ChildLayerSelected: []
+  interactedItem: {fileID: 0}
+  interactionText: {fileID: 0}
+  modulableInteractionText: {fileID: 0}
+  pressText: {fileID: 0}
 --- !u!4 &1646374481
 Transform:
   m_ObjectHideFlags: 0
@@ -2794,17 +2801,18 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   products: {fileID: 0}
   ingredients: {fileID: 0}
-  delaySpawn: {fileID: 0}
   day: {fileID: 0}
+  customer: {fileID: 0}
   reputation: {fileID: 0}
   notifEvent: {fileID: 0}
   notifType: {fileID: 0}
-  debugState: {fileID: 0}
+  tutorial: {fileID: 0}
   enableSpawn: 1
   enableSpawnRegularCustomer: 0
-  debugDelaySpawn: {x: 0, y: 0}
   nbCustomerMax: 4
   spawnChanceRegularCustomer: 10
+  triggerSpawnOnCompletion: []
+  tutoProduct: []
 --- !u!1001 &2130874774
 PrefabInstance:
   m_ObjectHideFlags: 0
