@@ -7,6 +7,7 @@ public class Money : Data
 {
     [SerializeField] private int money;
     [SerializeField] private Statistics stats;
+    [SerializeField] private SFX_SO sfx;
 
     public Action<int> OnMoneyChanged;
 
@@ -19,7 +20,10 @@ public class Money : Data
         money += value;
         OnMoneyChanged?.Invoke(money);
         if (value > 0)
+        {
+            sfx.Invoke("Money");
             stats.AddMoney(value);
+        }
         else
             stats.RemoveMoney(value);
     }

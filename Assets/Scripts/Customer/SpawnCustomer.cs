@@ -47,7 +47,7 @@ public class SpawnCustomer : MonoBehaviour {
         foreach (Quest quest in triggerSpawnOnCompletion)
             quest.OnCompletedAction += SpawnTutorialCustomer;
         
-        if (tutorial.GetTutorial()) 
+        if (!tutorial.GetTutorial()) 
             StartCoroutine(SpawnDelay()); 
     }
 
