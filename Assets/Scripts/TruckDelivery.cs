@@ -10,6 +10,7 @@ public class TruckDelivery : MonoBehaviour
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private TruckDeliveryTime time;
     private bool moving;
+    private bool isOpen;
     private Vector3 dest;
     private Vector3 velocity = Vector3.zero;
     private Delivery delivery;
