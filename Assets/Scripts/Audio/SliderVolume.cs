@@ -28,10 +28,10 @@ public class SliderVolume : MonoBehaviour
     private float lastSliderValue;
     [SerializeField] private bool debugSound = true;
 
-    private bool enableSound = false;
+    private bool SetEnableSound = true;
     private bool actuallySelected = false;
 
-    private float currentVolumeLevel;
+    [SerializeField] private float currentVolumeLevel;
     private float modificationMultiplier = 30f;
 
 
@@ -43,37 +43,44 @@ public class SliderVolume : MonoBehaviour
         currentVolumeLevel = volumeSlider.value;
     }
 
-    private void Start()
-    {
-        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed += MuteSourceVolume;
-    }
-
     private void MuteSourceVolume(InputAction.CallbackContext ctx)
     {
-        if (actuallySelected)
-            HandleToggleValueChanged();
+        if (ctx.performed)
+        {
+            if (actuallySelected && SetEnableSound == false)
+            {
+                currentVolumeLevel = volumeSlider.value;
+                HandleToggleValueChanged(true);
+                SetEnableSound = true;
+            }
+            else if (actuallySelected && SetEnableSound == true)
+            {
+                HandleToggleValueChanged(false);
+                SetEnableSound = false;
+            }
+        }
     }
 
-    public void HandleToggleValueChanged()
+    public void HandleToggleValueChanged(bool enableSound)
     {
         if (enableSound)
         {
             if (currentVolumeLevel <= 0.0150)
             {
-                volumeSlider.value = 0.0200f;
+                volumeSlider.value = 0.300f;
                 currentVolumeLevel = volumeSlider.value;
             }
             else
             {
                 volumeSlider.value = currentVolumeLevel;
             }
-            enableSound = false;
         }
         else
         {
             currentVolumeLevel = volumeSlider.value;
+            print(currentVolumeLevel + " line 85");
             volumeSlider.value = volumeSlider.minValue;
-            enableSound = true;
+
         }
     }
 
@@ -85,7 +92,7 @@ public class SliderVolume : MonoBehaviour
     }
     public void PlayPreviewAudio()
     {
-        if(debugSound)
+        if (debugSound)
             previewSound.Play();
     }
     public void StopPreviewAudio()
@@ -96,7 +103,7 @@ public class SliderVolume : MonoBehaviour
 
     public void SetSeleted(bool selected)
     {
-        if(selected)
+        if (selected)
             actuallySelected = true;
         else
             actuallySelected = false;
@@ -104,6 +111,7 @@ public class SliderVolume : MonoBehaviour
 
     private void OnEnable()
     {
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed += MuteSourceVolume;
         playerController.GetPlayerController().playerInput.Audio.MuteSource.Enable();
     }
 
@@ -111,5 +119,6 @@ public class SliderVolume : MonoBehaviour
     {
         PlayerPrefs.SetFloat(groupName.ToString(), volumeSlider.value);
         playerController.GetPlayerController().playerInput.Audio.MuteSource.Disable();
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed -= MuteSourceVolume;
     }
 }
