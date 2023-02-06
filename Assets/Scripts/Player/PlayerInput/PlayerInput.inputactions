@@ -1996,6 +1996,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Audio",
+            "id": "6da5665e-f77f-419f-85fd-39e16c4e19bf",
+            "actions": [
+                {
+                    "name": "MuteSource",
+                    "type": "Button",
+                    "id": "48e0df87-8ac9-4ec5-8e1c-d19679e065a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "50d0a988-5843-42b2-9819-35b536fbe696",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MuteSource",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aaea0759-3149-4ad9-8de2-a49b74ed01be",
+                    "path": "<XInputController>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MuteSource",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

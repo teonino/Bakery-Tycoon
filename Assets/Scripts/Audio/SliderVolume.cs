@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using System;
-using UnityEngine.EventSystems;
 
 public class SliderVolume : MonoBehaviour
 {
@@ -21,11 +21,15 @@ public class SliderVolume : MonoBehaviour
     private Slider volumeSlider;
     [SerializeField] private MixerGroup groupName;
     [SerializeField] private Toggle toggleButton;
+    [SerializeField] private PlayerControllerSO playerController;
 
     [Header("Preview AudioSource")]
     [SerializeField] public AudioSource previewSound;
     private float lastSliderValue;
     [SerializeField] private bool debugSound = true;
+
+    private bool enableSound = false;
+    private bool actuallySelected = false;
 
     private float currentVolumeLevel;
     private float modificationMultiplier = 30f;
@@ -39,8 +43,18 @@ public class SliderVolume : MonoBehaviour
         currentVolumeLevel = volumeSlider.value;
     }
 
+    private void Start()
+    {
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed += MuteSourceVolume;
+    }
 
-    public void HandleToggleValueChanged(bool enableSound)
+    private void MuteSourceVolume(InputAction.CallbackContext ctx)
+    {
+        if (actuallySelected)
+            HandleToggleValueChanged();
+    }
+
+    public void HandleToggleValueChanged()
     {
         if (enableSound)
         {
@@ -53,11 +67,13 @@ public class SliderVolume : MonoBehaviour
             {
                 volumeSlider.value = currentVolumeLevel;
             }
+            enableSound = false;
         }
         else
         {
             currentVolumeLevel = volumeSlider.value;
             volumeSlider.value = volumeSlider.minValue;
+            enableSound = true;
         }
     }
 
@@ -66,23 +82,6 @@ public class SliderVolume : MonoBehaviour
         audioMixer.SetFloat(groupName.ToString(), Mathf.Log10(volume) * modificationMultiplier);
         toggleButton.isOn = volumeSlider.value > volumeSlider.minValue;
 
-        //if (debugSound)
-        //{
-        //    if (volumeSlider.value != lastSliderValue)
-        //    {
-        //        if (!previewSound.isPlaying && debugSound)
-        //        {
-        //            previewSound.volume = volumeSlider.value;
-        //            previewSound.Play();
-        //        }
-        //    }
-        //    else if (volumeSlider.value == lastSliderValue)
-        //    {
-        //        print(previewSound + " is stopped");
-        //        previewSound.Stop();
-        //    }
-        //    lastSliderValue = volumeSlider.value;
-        //}
     }
     public void PlayPreviewAudio()
     {
@@ -95,10 +94,22 @@ public class SliderVolume : MonoBehaviour
             previewSound.Stop();
     }
 
+    public void SetSeleted(bool selected)
+    {
+        if(selected)
+            actuallySelected = true;
+        else
+            actuallySelected = false;
+    }
 
+    private void OnEnable()
+    {
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.Enable();
+    }
 
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(groupName.ToString(), volumeSlider.value);
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.Disable();
     }
 }

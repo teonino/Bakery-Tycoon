@@ -589,6 +589,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: b16b13deecc9ab7409fb02c77576f9da, type: 2}
   groupName: 0
   toggleButton: {fileID: 3679470833346163704}
+  playerController: {fileID: 0}
   previewSound: {fileID: 0}
   debugSound: 1
 --- !u!1 &5126188841232655701
@@ -986,6 +987,38 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SliderVolume, Assembly-CSharp
           m_MethodName: StopPreviewAudio
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2448018162225292897}
+          m_TargetAssemblyTypeName: SliderVolume, Assembly-CSharp
+          m_MethodName: SetSeleted
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2448018162225292897}
+          m_TargetAssemblyTypeName: SliderVolume, Assembly-CSharp
+          m_MethodName: SetSeleted
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
