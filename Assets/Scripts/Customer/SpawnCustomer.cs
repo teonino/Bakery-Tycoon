@@ -15,6 +15,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private List<RegularSO> regularCustomers;
 
     [Header("Spawn Variables")]
     [SerializeField] private bool enableSpawn;
@@ -84,6 +85,11 @@ public class SpawnCustomer : MonoBehaviour {
 
     public void SpawnCustomerAsset(bool regular, ProductSO product = null) {
         if (regular && CheckChairs()) {
+            
+            
+            //Select which regular to spawn
+
+
             regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
                 go.Result.name = "RegularCustomer " + nbCustomerSpawned;
                 SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);

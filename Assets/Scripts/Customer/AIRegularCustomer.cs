@@ -12,6 +12,7 @@ public class AIRegularCustomer : AICustomer {
     [SerializeField] private int conversationRemaining = 2;
     [SerializeField] private int eatingTime;
     [SerializeField] private InterractQuest onTalk;
+    [SerializeField] private RegularSO regularSO;
 
     [HideInInspector] public Chair chair;
     [HideInInspector] public int indexChair;
@@ -111,11 +112,10 @@ public class AIRegularCustomer : AICustomer {
 
     public override void Effect() {
         if (conversationRemaining > 0 && state == AIState.eating) {
-
             onTalk?.OnInterract();
-
             dialoguePanel.gameObject.SetActive(true);
-            dialoguePanel.GetDialogues(1, "classeur");
+            dialoguePanel.GetDialogues(regularSO.GetFriendship(), regularSO.GetName());
+            regularSO.IncreaseFrienship();
             conversationRemaining--;
         }
     }

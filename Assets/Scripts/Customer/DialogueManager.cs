@@ -10,11 +10,13 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI npcSpeechTxt;
+    [SerializeField] private TextMeshProUGUI npcNameTxt;
     [SerializeField] private List<TextMeshProUGUI> playerAnswersTxt;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
 
     private Dialogue dialogue;
+    private string npcName;
     public Action OnDestroyDialoguePanel;
 
     private void OnEnable() {
@@ -32,6 +34,7 @@ public class DialogueManager : MonoBehaviour {
 
     public void GetDialogues(int id, string character) {
         dialogue = new Dialogue();
+        npcName = character;
 
         try {
             StreamReader s = new StreamReader($"Assets\\Dialogues\\{character}\\{character}{id}.csv");
@@ -72,6 +75,7 @@ public class DialogueManager : MonoBehaviour {
         for (int i = 0; i < playerAnswersTxt.Count; i++)
             playerAnswersTxt[i].gameObject.SetActive(false);
 
+        npcNameTxt.SetText(npcName);
         npcSpeechTxt.SetText(dialogue.npcSpeech);
 
         for (int i = 0; i < dialogue.answers.Count; i++) {
