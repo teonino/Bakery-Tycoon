@@ -21,6 +21,9 @@ public class CraftingStation : Interactable {
     private Product itemInStation;
     private GameObject readyText;
 
+    [SerializeField] private AudioSource BurningSound;
+    [SerializeField] private AudioSource TingSound;
+
     private void Start() {
         if (!debugState.GetDebug())
             skipCookingTime = false;
@@ -72,6 +75,8 @@ public class CraftingStation : Interactable {
 
     private void CookingTime(Product product) {
         progressBarAsset.InstantiateAsync(transform).Completed += (go) => {
+            TingSound.Stop();
+            BurningSound.Play();
             GameObject progressBar = go.Result;
             go.Result.transform.localPosition = Vector3.up * 2;
             go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
@@ -101,6 +106,8 @@ public class CraftingStation : Interactable {
     }
 
     private void FinishCooking() {
+        BurningSound.Stop();
+        TingSound.Play();
         cooking = false;
         readyText.SetActive(true);
     }

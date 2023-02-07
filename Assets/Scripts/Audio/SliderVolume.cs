@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using System;
-using UnityEngine.EventSystems;
 
 public class SliderVolume : MonoBehaviour
 {
@@ -21,13 +21,17 @@ public class SliderVolume : MonoBehaviour
     private Slider volumeSlider;
     [SerializeField] private MixerGroup groupName;
     [SerializeField] private Toggle toggleButton;
+    [SerializeField] private PlayerControllerSO playerController;
 
     [Header("Preview AudioSource")]
     [SerializeField] public AudioSource previewSound;
     private float lastSliderValue;
     [SerializeField] private bool debugSound = true;
 
-    private float currentVolumeLevel;
+    private bool SetEnableSound = true;
+    private bool actuallySelected = false;
+
+    [SerializeField] private float currentVolumeLevel;
     private float modificationMultiplier = 30f;
 
 
@@ -39,6 +43,23 @@ public class SliderVolume : MonoBehaviour
         currentVolumeLevel = volumeSlider.value;
     }
 
+    private void MuteSourceVolume(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            if (actuallySelected && SetEnableSound == false)
+            {
+                currentVolumeLevel = volumeSlider.value;
+                HandleToggleValueChanged(true);
+                SetEnableSound = true;
+            }
+            else if (actuallySelected && SetEnableSound == true)
+            {
+                HandleToggleValueChanged(false);
+                SetEnableSound = false;
+            }
+        }
+    }
 
     public void HandleToggleValueChanged(bool enableSound)
     {
@@ -46,7 +67,7 @@ public class SliderVolume : MonoBehaviour
         {
             if (currentVolumeLevel <= 0.0150)
             {
-                volumeSlider.value = 0.0200f;
+                volumeSlider.value = 0.300f;
                 currentVolumeLevel = volumeSlider.value;
             }
             else
@@ -57,7 +78,9 @@ public class SliderVolume : MonoBehaviour
         else
         {
             currentVolumeLevel = volumeSlider.value;
+            print(currentVolumeLevel + " line 85");
             volumeSlider.value = volumeSlider.minValue;
+
         }
     }
 
@@ -66,27 +89,10 @@ public class SliderVolume : MonoBehaviour
         audioMixer.SetFloat(groupName.ToString(), Mathf.Log10(volume) * modificationMultiplier);
         toggleButton.isOn = volumeSlider.value > volumeSlider.minValue;
 
-        //if (debugSound)
-        //{
-        //    if (volumeSlider.value != lastSliderValue)
-        //    {
-        //        if (!previewSound.isPlaying && debugSound)
-        //        {
-        //            previewSound.volume = volumeSlider.value;
-        //            previewSound.Play();
-        //        }
-        //    }
-        //    else if (volumeSlider.value == lastSliderValue)
-        //    {
-        //        print(previewSound + " is stopped");
-        //        previewSound.Stop();
-        //    }
-        //    lastSliderValue = volumeSlider.value;
-        //}
     }
     public void PlayPreviewAudio()
     {
-        if(debugSound)
+        if (debugSound)
             previewSound.Play();
     }
     public void StopPreviewAudio()
@@ -95,10 +101,24 @@ public class SliderVolume : MonoBehaviour
             previewSound.Stop();
     }
 
+    public void SetSeleted(bool selected)
+    {
+        if (selected)
+            actuallySelected = true;
+        else
+            actuallySelected = false;
+    }
 
+    private void OnEnable()
+    {
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed += MuteSourceVolume;
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.Enable();
+    }
 
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(groupName.ToString(), volumeSlider.value);
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.Disable();
+        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed -= MuteSourceVolume;
     }
 }
