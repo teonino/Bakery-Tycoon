@@ -13,8 +13,8 @@ public class ListDeliveries : Data
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private int timeDelivery = 15;
     [SerializeField] private TruckDeliveryTime truckDeliveryTime;
-    [SerializeField] private NotificationEvent notifEvent;
-    [SerializeField] private NotificationType notifType;
+    [SerializeField] private TruckDelivery truckDelivery;
+    [SerializeField] private float timeBeforeTruckDeparture;
 
     private List<Delivery> deliveries = new List<Delivery>();
     private int timeDeliveryValue;
@@ -48,13 +48,17 @@ public class ListDeliveries : Data
 
     public IEnumerator ExpressDelivery(Delivery delivery)
     {
+        if(!truckDelivery)
+            truckDelivery = FindObjectOfType<TruckDelivery>();
+
         if (!tutorial.GetTutorial())
         {
+            yield return new WaitForSeconds(timeBeforeTruckDeparture);
+            truckDelivery.DeliveryDeparture();
             yield return new WaitForSeconds(timeDeliveryValue - truckDeliveryTime.GetTime());
-            FindObjectOfType<TruckDelivery>().DeliveryArriving();
             yield return new WaitForSeconds(truckDeliveryTime.GetTime());
         }
-        DeliverOrder(delivery);
+        //DeliverOrder(delivery);
     }
 
     public Delivery GetDeliveries()
@@ -100,7 +104,6 @@ public class ListDeliveries : Data
                     stockIngredient.amount += deliveryIngredient.amount;
 
         UpdateUI?.Invoke();
-        notifEvent.Invoke(notifType);
         deliveries.Remove(delivery);
     }
 
