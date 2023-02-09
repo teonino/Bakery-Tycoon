@@ -25,7 +25,7 @@ public class AIRegularCustomer : AICustomer {
         day.DayTimeChange += LeaveOnEvening;
 
         if (!tutorial)
-            onTalk = FindObjectOfType<QuestHolder>().GetInterractQuest();
+            onTalk = FindObjectOfType<QuestHolder>()?.GetInterractQuest();
         dialoguePanel = FindObjectOfType<DialogueManager>(true);
     }
 
@@ -114,8 +114,7 @@ public class AIRegularCustomer : AICustomer {
         if (conversationRemaining > 0 && state == AIState.eating) {
             onTalk?.OnInterract();
             dialoguePanel.gameObject.SetActive(true);
-            dialoguePanel.GetDialogues(regularSO.GetFriendship(), regularSO.GetName());
-            regularSO.IncreaseFrienship();
+            dialoguePanel.GetDialogues(regularSO.GetFriendship(), regularSO.GetName(), regularSO);
             conversationRemaining--;
         }
     }
