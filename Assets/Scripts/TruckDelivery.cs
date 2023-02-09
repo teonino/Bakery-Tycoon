@@ -2,30 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TruckDelivery : MonoBehaviour
+public class TruckDelivery : Interactable
 {
-    [SerializeField] private GameObject PathPoint1;
-    [SerializeField] private GameObject PathPoint2;
-    
+    [SerializeField] private GameObject pathPoint1;
+    [SerializeField] private GameObject pathPoint2;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private ListDeliveries deliveries;
+    [SerializeField] private TruckDeliveryTime time;
+    [SerializeField] private NotificationEvent notifEvent;
+    [SerializeField] private NotificationType notifType;
 
-    private void Start()
-    {
-        this.gameObject.SetActive(false);
-    }
+    private bool moving;
+    private bool fetchingOrder = false;
+    private Vector3 dest;
+    private Vector3 velocity = Vector3.zero;
+    private Delivery delivery;
 
-    //Trigger this when truck is close to arriving
-    void DeliveryArriving()
+    private void FixedUpdate()
     {
-        this.gameObject.transform.position = new Vector3(PathPoint2.transform.position.x, PathPoint2.transform.position.y, PathPoint2.transform.position.z);
-        this.gameObject.SetActive(true);
-        Vector3.Lerp(this.transform.position, PathPoint1.transform.position, 5f);
+        if (moving)
+            transform.position = Vector3.SmoothDamp(transform.position, dest, ref velocity, time.GetTime());
+
+        if (Vector3.Distance(transform.position, pathPoint2.transform.position) < 0.1f && moving && fetchingOrder)
+        {
+            DeliveryArriving();
+        }
+        if (Vector3.Distance(transform.position, pathPoint1.transform.position) < 0.1 && moving && !fetchingOrder)
+        {
+            if (delivery != null)
+                notifEvent.Invoke(notifType);
+
+            moving = false;
+            audioSource.Stop();
+        }
+
+        if(delivery != null && moving == false)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Outline");
+        }
+        else
+        {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+        }
     }
 
     //Trigger this when the player interacted with the truck to collect the delivery
-    void DeliveryDeparture()
+    public void DeliveryDeparture()
     {
-        this.gameObject.transform.position = new Vector3(PathPoint1.transform.position.x, PathPoint1.transform.position.y, PathPoint1.transform.position.z);
-        this.gameObject.SetActive(true);
-        Vector3.Lerp(this.transform.position, PathPoint2.transform.position, 5f);
+        gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
+        gameObject.SetActive(true);
+        dest = pathPoint2.transform.position;
+        moving = true;
+        fetchingOrder = true;
+        audioSource.Play();
+    }
+
+    //Trigger this when truck is close to arriving
+    public void DeliveryArriving()
+    {
+        delivery = deliveries.GetDeliveries();
+        gameObject.transform.position = new Vector3(pathPoint2.transform.position.x, pathPoint2.transform.position.y, pathPoint2.transform.position.z);
+        gameObject.SetActive(true);
+        moving = true;
+        fetchingOrder = false;
+        dest = pathPoint1.transform.position;
+        audioSource.Play();
+    }
+
+    public override void Effect()
+    {
+        if (delivery != null && !moving)
+        {
+            deliveries.DeliverOrder(delivery);
+            delivery = null;
+        }
     }
 }
