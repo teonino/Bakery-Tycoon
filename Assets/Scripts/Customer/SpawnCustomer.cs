@@ -131,7 +131,7 @@ public class SpawnCustomer : MonoBehaviour {
         customer.chair = currentChair;
         customer.chair.ocuppied = true;
         customer.chair.customer = customer;
-        customer.indexChair = indexChair;
+        customer.SetIndexChair(indexChair);
         customer.table = currentTable;
         indexChair = -1;
         currentChair = null;
@@ -149,11 +149,16 @@ public class SpawnCustomer : MonoBehaviour {
         availableProduct.Clear();
     }
     private bool CheckChairs() {
-        foreach (Table table in tables) {
-            indexChair = table.GetChairAvailable();
+        for(int i = 0; i < tables.Count && !currentChair; i++) {
+            indexChair = tables[i].GetChairAvailable();
             if (indexChair >= 0)
-                currentChair = table.chairs[indexChair];
+                currentChair = tables[i].chairs[indexChair];
         }
+        //foreach (Table table in tables) {
+        //    indexChair = table.GetChairAvailable();
+        //    if (indexChair < 0)
+        //        currentChair = table.chairs[indexChair];
+        //}
         if (currentChair) {
             currentTable = currentChair.table;
             return true;

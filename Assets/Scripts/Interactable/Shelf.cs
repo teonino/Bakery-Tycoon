@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
+
 public class Shelf : Interactable {
     [SerializeField] private GameObject item;
     [SerializeField] private GameObject itemPosition;
@@ -45,6 +46,7 @@ public class Shelf : Interactable {
         item = go;
         go = null;
         item.transform.localPosition = itemPosition.transform.localPosition;
+        
     }
 
     private void TakeItem() {

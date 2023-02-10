@@ -72,7 +72,7 @@ public class CartUI : MonoBehaviour
             orderSumary.SetText(newText);
         }
         totalCostText.SetText("Total : " + cartCost);
-        localizedCartCost.Value = cartCost;
+        //localizedCartCost.Value = cartCost;
     }
 
     public void ClearText()

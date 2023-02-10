@@ -14,10 +14,13 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private CharacterTables characterTables;
+    [SerializeField] private LocalizedStringTable tutorialDialogueTable;
+    [SerializeField] private Tutorial tutorial;
 
     private string npcName;
     private int idDialogue;
     private RegularSO currentRegular;
+    private int tutorialId = 1;
     public Action OnDestroyDialoguePanel;
 
     private void OnEnable() {
@@ -31,54 +34,97 @@ public class DialogueManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().DisableInput();
         controller.RegisterCurrentSelectedButton();
         Time.timeScale = 0;
+
+
+        for (int i = 0; i < playerAnswersTxt.Count; i++)
+            playerAnswersTxt[0].GetComponent<DialogueButton>().tutorial = tutorial;
     }
 
     public void GetDialogues(int id, string character, RegularSO regular = null) {
+        currentRegular = regular;
         npcName = character;
         idDialogue = id;
-        currentRegular = regular;
-        SetDialogue(id);
+        if (!tutorial.GetTutorial()) 
+            SetDialogue(id);
+        else 
+            SetTutorialDialogue();
+    }
 
+    /*Old dialogue code
+     * dialogue = new Dialogue();
 
-        /*dialogue = new Dialogue();
+try {
+    StreamReader s = new StreamReader($"Assets\\Dialogues\\{character}\\{character}{id}.csv");
 
-        try {
-            StreamReader s = new StreamReader($"Assets\\Dialogues\\{character}\\{character}{id}.csv");
+    int answerDialogueId = 0;
+    bool npcSpeechNext = true;
+    Dialogue currentDialogue = dialogue;
+    while (!s.EndOfStream) {
+        string line = s.ReadLine();
 
-            int answerDialogueId = 0;
-            bool npcSpeechNext = true;
-            Dialogue currentDialogue = dialogue;
-            while (!s.EndOfStream) {
-                string line = s.ReadLine();
-
-                if (line == "") {
-                    currentDialogue = dialogue.answers[answerDialogueId].nextDialogue;
-                    answerDialogueId++;
-                    npcSpeechNext = true;
-                }
-                else if (npcSpeechNext) {
-                    currentDialogue.npcSpeech = line;
-                    npcSpeechNext = false;
-                }
-                else {
-                    string[] values = line.Split("/");
-                    if (values.Length == 2)
-                        currentDialogue.answers.Add(new Answer(values[0], int.Parse(values[1]), new Dialogue()));
-                    else
-                        currentDialogue.answers.Add(new Answer(values[0], 0, new Dialogue()));
-                }
-            }
-            s.Close();
+        if (line == "") {
+            currentDialogue = dialogue.answers[answerDialogueId].nextDialogue;
+            answerDialogueId++;
+            npcSpeechNext = true;
         }
-        catch (Exception e) {
-            print("Error, Dialoge Manager... " + e.Message);
+        else if (npcSpeechNext) {
+            currentDialogue.npcSpeech = line;
+            npcSpeechNext = false;
         }
-        */
+        else {
+            string[] values = line.Split("/");
+            if (values.Length == 2)
+                currentDialogue.answers.Add(new Answer(values[0], int.Parse(values[1]), new Dialogue()));
+            else
+                currentDialogue.answers.Add(new Answer(values[0], 0, new Dialogue()));
+        }
+    }
+    s.Close();
+}
+catch (Exception e) {
+    print("Error, Dialoge Manager... " + e.Message);
+}
+*/
 
+    public void SetTutorialDialogue() {
+        LocalizedStringTable table = tutorialDialogueTable;
+
+        npcNameTxt.SetText(npcName);
+
+        npcSpeechTxt.enabled = false;
+        npcSpeechTxt.SetTable(table);
+        npcSpeechTxt.SetKey("Speech" + tutorialId + "." + 1);
+        npcSpeechTxt.enabled = true;
+
+        for (int i = 0; i < playerAnswersTxt.Count; i++)
+            playerAnswersTxt[i].gameObject.SetActive(false);
+        
+        string key = "Answer";
+        playerAnswersTxt[0].gameObject.SetActive(true);
+        playerAnswersTxt[0].enabled = false;
+        playerAnswersTxt[0].SetTable(table);
+        playerAnswersTxt[0].SetKey(key);
+        playerAnswersTxt[0].enabled = true;
+
+
+        DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
+        button.dialogueManager = this;
+
+        if (table.GetTable().GetEntry("Speech" + tutorialId + "." + 2) != null) {
+            button.SetNextDialogue(1);
+        } else {
+            button.SetNextDialogue(0);
+        }
+
+        tutorialId++;
+        StartCoroutine(WaitForGamepad(button.gameObject));
     }
 
     public void SetDialogue(int id) {
         LocalizedStringTable table = characterTables.GetTable(npcName);
+
+        if (table == null)
+            table = tutorialDialogueTable;
 
         npcNameTxt.SetText(npcName);
 
@@ -115,9 +161,25 @@ public class DialogueManager : MonoBehaviour {
         }
     }
 
+
+    internal void SetTutorialAnswer(int id) {
+        npcSpeechTxt.enabled = false;
+        npcSpeechTxt.SetKey("Speech" + (tutorialId - 1) + "." + (id + 1));
+        npcSpeechTxt.enabled = true;
+
+        playerAnswersTxt[0].enabled = false;
+        playerAnswersTxt[0].SetKey("Answer");
+        playerAnswersTxt[0].enabled = true;
+
+        DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
+        button.SetNextDialogue(0);
+
+        StartCoroutine(WaitForGamepad(button.gameObject));
+    }
+
     public void SetAnswer(int id, int relation) {
         npcSpeechTxt.enabled = false;
-        npcSpeechTxt.SetKey("Speech" + idDialogue + "." + id);
+        npcSpeechTxt.SetKey("Speech" + idDialogue + "." + (id + 1));
         npcSpeechTxt.enabled = true;
 
         for (int i = 0; i < playerAnswersTxt.Count; i++)
@@ -128,10 +190,11 @@ public class DialogueManager : MonoBehaviour {
         playerAnswersTxt[0].SetKey("Answer" + idDialogue + "." + 1);
         playerAnswersTxt[0].enabled = true;
 
-        currentRegular.AddFrienship(relation);
+        currentRegular?.AddFrienship(relation);
 
         DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
         button.SetNextDialogue(0);
+        button.SetRelationReward(0);
         StartCoroutine(WaitForGamepad(button.gameObject));
     }
 

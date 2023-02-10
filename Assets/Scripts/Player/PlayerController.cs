@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float interactionDistance;
@@ -13,24 +16,24 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject itemSocket;
     [SerializeField] private GameObject interractPanel;
 
-    [Header("Outline")]
-    [SerializeField] private List<GameObject> gameObjectSelected;
-    [SerializeField] private List<GameObject> ChildGameObjectSelected;
-    [SerializeField] private List<LayerMask> ChildLayerSelected;
     [Header("UI Interaction")]
     [SerializeField] private GameObject interactionText;
-    [SerializeField] private LocalizedStringComponent modulableInteractionText;
-    [SerializeField] private TextMeshProUGUI pressText;
+    [SerializeField] private TextMeshProUGUI modulableInteractionText;
+    [SerializeField] private TextMeshProUGUI productAmountText;
 
-    private GameObject interactedItem;
-    private GameObject childrenWithGlass;
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private LocalizedStringComponent localizedStringComponent;
     private GameObject itemHolded;
     private bool playerInputEnable = true;
-    bool interactableFound = false;
-
+    private bool interactableFound = false;
+    private List<GameObject> gameObjectSelected;
+    private GameObject interactedItem;
+    private GameObject childrenWithGlass;
+    private LocalizedString localizedString;
+    private IntVariable productDisplayedAmount = null;
+    private StringVariable productDisplayedName = null;
+    //[SerializeField] private LocalizeStringEvent ProductDisplayedString;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -43,6 +46,23 @@ public class PlayerController : MonoBehaviour {
         playerMovements = GetComponent<PlayerMovements>();
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
         EnableInput();
+
+        localizedString = productAmountText.GetComponent<LocalizeStringEvent>().StringReference;
+        if (!localizedString.TryGetValue("ProductDisplayedAmount", out IVariable value)) {
+            productDisplayedAmount = new IntVariable();
+            localizedString.Add("ProductDisplayedAmount", productDisplayedAmount);
+        }
+        else {
+            productDisplayedAmount = value as IntVariable;
+        }
+
+        if (!localizedString.TryGetValue("ProductDisplayedName", out IVariable valueString)) {
+            productDisplayedName = new StringVariable();
+            localizedString.Add("ProductDisplayedName", productDisplayedAmount);
+        }
+        else {
+            productDisplayedName = valueString as StringVariable;
+        }
     }
 
     // Update is called once per frame
@@ -55,17 +75,16 @@ public class PlayerController : MonoBehaviour {
         else
             animator.SetBool("isWalking", false);
 
-        Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
-        Outline();
-    }
 
-    private void Outline() {
+
         RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
         if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
-            for (int i = 0; i < hitInfo.Length; i++) {
-                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable)) {
-                    if (interactedItem)
+            for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
+                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable) && interactable.gameObject != interactedItem) {
+                    if (interactedItem) {
                         ClearOutline();
+                    }
+
 
                     if (!hitInfo[i].collider.GetComponent<AICustomer>()) {
                         interactedItem = interactable.gameObject;
@@ -73,54 +92,83 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
+            Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
         }
         else {
             ClearOutline();
         }
 
-        if (modulableInteractionText) {
-            if (interactedItem) {
-                if (interactedItem.GetComponent<Shelf>())
-                    modulableInteractionText.SetKey("PlayerInteract_Shelf");
+        if (interactedItem != null /*&& interactionText.activeSelf == false*/) {
+            if (interactedItem.GetComponent<Shelf>()) {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
+                interactionText.SetActive(true);
+                if (interactedItem.GetComponent<Shelf>().GetItem() != null) {
 
-                else if (interactedItem.GetComponent<Workstation>())
-                    modulableInteractionText.SetKey("PlayerInteract_Workstation");
+                    Product productInDisplayedText = interactedItem.GetComponent<Shelf>().GetItem().GetComponent<ProductHolder>().product;
 
-                else if (interactedItem.GetComponent<CraftingStation>())
-                    modulableInteractionText.SetKey("PlayerInteract_CookingStation");
+                    productDisplayedAmount.Value = productInDisplayedText.amount;
+                    productDisplayedName.Value = productInDisplayedText.GetName();
+                    productAmountText.enabled = true;
 
-                else if (interactedItem.GetComponent<Sink>())
-                    modulableInteractionText.SetKey("PlayerInteract_Sink");
+                }
+                else {
+                    productAmountText.enabled = false;
+                }
+            }
+            else {
+                productAmountText.enabled = false;
+            }
 
-                else if (interactedItem.GetComponent<Computer>())
-                    modulableInteractionText.SetKey("PlayerInteract_Computer");
-
-                else if (interactedItem.GetComponent<BuildingMode>())
-                    modulableInteractionText.SetKey("PlayerInteract_Custom");
-
-                else if (interactedItem.GetComponent<Table>())
-                    modulableInteractionText.SetKey("PlayerInteract_Table");
-
-                else if (interactedItem.GetComponent<EntranceDoor>())
-                    modulableInteractionText.SetKey("PlayerInteract_Doors");
-
-
-                interactionText.SetActive(false);
+            if (interactedItem.GetComponent<Workstation>()) {
+                //modulableInteractionText.text = "to prepare your product";
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
                 interactionText.SetActive(true);
             }
-            else if (!interactedItem && interactionText.activeSelf) {
-                interactionText.SetActive(false);
+            else if (interactedItem.GetComponent<CraftingStation>()) {
+                //modulableInteractionText.text = "to cook your products";
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Sink>()) {
+                //modulableInteractionText.text = "to wash the plates";
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Sink");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Computer>()) {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Computer");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<BuildingMode>()) {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Custom");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Table>()) {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Table");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<EntranceDoor>()) {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
+                interactionText.SetActive(true);
+            }
+
+            else {
+                modulableInteractionText.text = "to interact";
+                interactionText.SetActive(true);
             }
         }
+        else if (interactedItem == null && interactionText.activeSelf == true) {
+            interactionText.SetActive(false);
+        }
+
     }
 
     private void ClearOutline() {
         if (interactedItem) {
             interactedItem.gameObject.layer = LayerMask.NameToLayer("Customizable");
-            foreach (GameObject item in gameObjectSelected)
-                item.layer = LayerMask.NameToLayer("Customizable");
 
-            gameObjectSelected.Clear();
+            //foreach (GameObject item in gameObjectSelected)
+            //    item.layer = LayerMask.NameToLayer("Customizable");
+            //gameObjectSelected.Clear();
             interactedItem = null;
         }
     }
@@ -156,6 +204,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void DisableInput() {
+        //playerInUI = true;
         playerInputEnable = false;
         playerInput.Player.Disable();
     }

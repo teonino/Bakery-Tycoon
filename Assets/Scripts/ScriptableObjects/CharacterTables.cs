@@ -43,7 +43,7 @@ public class CharacterTables : ScriptableObject
                 table = quenouilleTable;
                 break;
             default:
-                table = noaTable;
+                table = null;
                 break;
         }
         return table;
