@@ -31,6 +31,6 @@ public class SFX_SO : ScriptableObject
                 break;
         }
 
-        action.Invoke(clip);
+        action?.Invoke(clip);
     }
 }

@@ -20,10 +20,16 @@ public class LocalizedStringComponent : MonoBehaviour {
         text.text = GetLocalizedString(stringTable, key);
     }
     private string GetLocalizedString(StringTable table, string entryName) {
-        // Get the table entry. The entry contains the localized string and Metadata
         StringTableEntry entry = table.GetEntry(entryName);
-        return entry.GetLocalizedString(); // We can pass in optional arguments for Smart Format or String.Format here.
+        if (entry != null)
+            if (entry.GetLocalizedString().Contains('+'))
+                return entry.GetLocalizedString().Replace('+', ' ');
+            else
+                return entry.GetLocalizedString();
+        else
+            return string.Empty;
     }
 
     public void SetKey(string value) => key = value;
+    public void SetTable(LocalizedStringTable table) => this.table = table;
 }
