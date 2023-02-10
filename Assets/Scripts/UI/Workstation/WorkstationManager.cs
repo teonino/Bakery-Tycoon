@@ -173,7 +173,7 @@ public class WorkstationManager : MonoBehaviour {
             if (!controller.GetEventSystemCurrentlySelected() && ingredientButtonList.Count > 0) {
                 controller.SetEventSystemToStartButton(ingredientButtonList[0]);
             }
-            playerControllerSO.GetPlayerController().DisableInput();
+            //playerControllerSO.GetPlayerController().DisableInput();
         }
 
         if (ingredientPanel.activeSelf && !ingredientPanelEnabled) {

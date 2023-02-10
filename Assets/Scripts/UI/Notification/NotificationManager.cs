@@ -10,6 +10,7 @@ public class NotificationManager : MonoBehaviour {
     [SerializeField] private NotificationEvent notificationSO;
     [SerializeField] private float displayTimeInSecond;
     [SerializeField] private SFX_SO sfx;
+    [SerializeField] private NotificationType notifType;
 
     private Queue<NotificationType> queue;
     private bool notificationDisplayed = false;
@@ -54,6 +55,10 @@ public class NotificationManager : MonoBehaviour {
         yield return new WaitForSeconds(0.5f); //Waiting time before next notif
 
         if (queue.Count > 0)
-            DisplayNotification();
+            StartCoroutine(DisplayNotification());
+    }
+
+    public void DebugCreateNotif() {
+        AddNotif(notifType);
     }
 }
