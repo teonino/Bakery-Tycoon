@@ -331,7 +331,7 @@ public class DeliveryManager : MonoBehaviour
         currentCart.InitCart();
     }
 
-    public void ResetCart()
+    public void ResetCart(bool ordered)
     {
         cart.Clear();
         cartPanel.ClearText();
@@ -345,7 +345,7 @@ public class DeliveryManager : MonoBehaviour
         foreach (GameObject item in productButtonList)
             item.GetComponent<DeliveryButton>().nbIngredient = 0;
 
-        if (popupReminder.activeSelf)
+        if (popupReminder.activeSelf && ordered)
             Quit();
     }
 
@@ -362,7 +362,7 @@ public class DeliveryManager : MonoBehaviour
         ingredientRackList.Clear();
 
         if (resetCart)
-            ResetCart();
+            ResetCart(false);
     }
 
     public void UpdateStockButtons()
@@ -402,7 +402,7 @@ public class DeliveryManager : MonoBehaviour
         {
             playerController.playerInput.UI.Quit.performed -= Quit;
             playerController.playerInput.UI.Disable();
-
+            ResetCart(false);
             playerController.EnableInput();
             computerPanel.SetActive(false);
             if (popupReminder.activeSelf)

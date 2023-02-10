@@ -110,6 +110,6 @@ public class CartUI : MonoBehaviour
     {
         cartCost = 0;
         if (deliveryManager)
-            deliveryManager.ResetCart();
+            deliveryManager.ResetCart(true);
     }
 }
