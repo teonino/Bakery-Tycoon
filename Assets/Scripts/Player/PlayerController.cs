@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject interactionText;
     [SerializeField] private TextMeshProUGUI modulableInteractionText;
     [SerializeField] private TextMeshProUGUI pressText;
+    [SerializeField] private TextMeshProUGUI productAmountText;
 
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
@@ -32,6 +36,10 @@ public class PlayerController : MonoBehaviour
     private bool playerInputEnable = true;
     bool interactableFound = false;
 
+    private LocalizedString localizedString;
+    private IntVariable productDisplayedAmount = null;
+    private StringVariable productDisplayedName = null;
+    //[SerializeField] private LocalizeStringEvent ProductDisplayedString;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -45,6 +53,27 @@ public class PlayerController : MonoBehaviour
         playerMovements = GetComponent<PlayerMovements>();
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
         EnableInput();
+
+        localizedString = productAmountText.GetComponent<LocalizeStringEvent>().StringReference;
+        if (!localizedString.TryGetValue("ProductDisplayedAmount", out IVariable value))
+        {
+            productDisplayedAmount = new IntVariable();
+            localizedString.Add("ProductDisplayedAmount", productDisplayedAmount);
+        }
+        else
+        {
+            productDisplayedAmount = value as IntVariable;
+        }
+
+        if (!localizedString.TryGetValue("ProductDisplayedName", out IVariable valueString))
+        {
+            productDisplayedName = new StringVariable();
+            localizedString.Add("ProductDisplayedName", productDisplayedAmount);
+        }
+        else
+        {
+            productDisplayedName = valueString as StringVariable;
+        }
     }
 
     // Update is called once per frame
@@ -84,6 +113,7 @@ public class PlayerController : MonoBehaviour
                         //    ChildLayerSelected.Add(interactedItem.transform.GetChild(j).gameObject.layer);
                         //    ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
                         //}
+
                     }
                 }
             }
@@ -94,14 +124,33 @@ public class PlayerController : MonoBehaviour
             ClearOutline();
         }
 
-        if (interactedItem != null && interactionText.activeSelf == false)
+        if (interactedItem != null /*&& interactionText.activeSelf == false*/)
         {
             if (interactedItem.GetComponent<Shelf>())
             {
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
                 interactionText.SetActive(true);
+                if (interactedItem.GetComponent<Shelf>().GetItem() != null)
+                {
+
+                    Product productInDisplayedText = interactedItem.GetComponent<Shelf>().GetItem().GetComponent<ProductHolder>().product;
+
+                    productDisplayedAmount.Value = productInDisplayedText.amount;
+                    productDisplayedName.Value = productInDisplayedText.GetName();
+                    productAmountText.enabled =true;
+
+                }
+                else
+                {
+                    productAmountText.enabled = false;
+                }
             }
-            else if (interactedItem.GetComponent<Workstation>())
+            else
+            {
+                productAmountText.enabled = false;
+            }
+
+            if (interactedItem.GetComponent<Workstation>())
             {
                 //modulableInteractionText.text = "to prepare your product";
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
@@ -139,12 +188,12 @@ public class PlayerController : MonoBehaviour
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
                 interactionText.SetActive(true);
             }
+
             else
             {
                 modulableInteractionText.text = "to interact";
                 interactionText.SetActive(true);
             }
-
         }
         else if (interactedItem == null && interactionText.activeSelf == true)
         {
