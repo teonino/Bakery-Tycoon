@@ -379,7 +379,6 @@ public class WorkstationManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
         deliveries.UpdateUI -= UpdateStocksButton;
         ingredientUnlock.action -= EnableIngredientButton;
-        rackList.Clear();
     }
 
     private void OnDestroy() {
