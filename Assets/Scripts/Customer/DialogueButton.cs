@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class DialogueButton : Button {
     public DialogueManager dialogueManager;
+    public Tutorial tutorial;
     public int nextDialogue = 0;
     public int relationReward;
 
@@ -15,7 +16,10 @@ public class DialogueButton : Button {
             print("Relation : " + relationReward);
 
         if (nextDialogue != 0)
-            dialogueManager.SetAnswer(nextDialogue, relationReward);
+            if (tutorial.GetTutorial())
+                dialogueManager.SetTutorialAnswer(nextDialogue);
+            else
+                dialogueManager.SetAnswer(nextDialogue, relationReward);
         else
             dialogueManager.gameObject.SetActive(false);
     }

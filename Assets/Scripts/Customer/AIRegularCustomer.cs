@@ -15,10 +15,10 @@ public class AIRegularCustomer : AICustomer {
     [SerializeField] private RegularSO regularSO;
 
     [HideInInspector] public Chair chair;
-    [HideInInspector] public int indexChair;
     [HideInInspector] public Table table;
 
     private DialogueManager dialoguePanel;
+    private int indexChair;
 
     public new void InitCustomer() {
         base.InitCustomer();
@@ -81,6 +81,7 @@ public class AIRegularCustomer : AICustomer {
             }
         }
     }
+    public void SetIndexChair(int value) => indexChair = value; 
 
     private void Sit() {
         agent.SetDestination(chair.transform.position);
