@@ -188,6 +188,11 @@ public class PlayerController : MonoBehaviour
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
                 interactionText.SetActive(true);
             }
+            else if (interactedItem.GetComponent<TruckDelivery>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Truck");
+                interactionText.SetActive(true);
+            }
 
             else
             {
