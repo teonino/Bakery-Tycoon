@@ -26,7 +26,9 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
     [SerializeField] private GameObject productList;
+    [SerializeField] private TabsManagement tabsManagement;
     [Header("Tutorial Variables")]
+    
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -397,6 +399,7 @@ public class DeliveryManager : MonoBehaviour
             popupReminder.SetActive(true);
             ingredientScroll.SetActive(false);
             productScroll.SetActive(false);
+            tabsManagement.canChangeTab = false;
         }
         else
         {
@@ -406,7 +409,11 @@ public class DeliveryManager : MonoBehaviour
             playerController.EnableInput();
             computerPanel.SetActive(false);
             if (popupReminder.activeSelf)
+            {
                 popupReminder.SetActive(false);
+                tabsManagement.canChangeTab = true;
+            }
+
         }
     }
 }

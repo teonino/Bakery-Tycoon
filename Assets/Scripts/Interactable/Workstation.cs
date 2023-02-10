@@ -45,7 +45,7 @@ public class Workstation : Interactable {
             playerControllerSO.GetPlayerController().playerInput.UI.Disable();
             playerControllerSO.GetPlayerController().EnableInput();
             workplacePanel.gameObject.SetActive(false);
-            manager.rackList.Clear();
+            //manager.
         }
     }
 

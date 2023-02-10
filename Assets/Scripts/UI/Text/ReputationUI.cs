@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ReputationUI : MonoBehaviour {
     [SerializeField] Reputation reputation;
+    [SerializeField] private TextMeshProUGUI ReputationLevel;
+    [SerializeField] private Image progressBar;
+    public TextMeshProUGUI debugText;
 
     private void OnEnable() {
         reputation.UpdateUI += SetReputation;
@@ -15,7 +19,17 @@ public class ReputationUI : MonoBehaviour {
     }
     public Reputation GetReputation() => reputation;
 
+    private void Update()
+    {
+        SetReputation();
+    }
+
     public void SetReputation() {
-        GetComponent<TextMeshProUGUI>().SetText("Reputation Lv " + reputation.GetLevel() + 1  + " : " + reputation.GetExperience() + " / " + reputation.GetExpNeeded());
+        float a = reputation.GetExperience(), b = reputation.GetExpNeeded();
+        float dividedRep = a / b;
+        progressBar.fillAmount = dividedRep;
+        print(dividedRep);
+        ReputationLevel.SetText(reputation.GetLevel().ToString());
+        //debugText.SetText("Reputation Lv " + reputation.GetLevel() + 1  + " : " + reputation.GetExperience() + " / " + reputation.GetExpNeeded());
     }
 }

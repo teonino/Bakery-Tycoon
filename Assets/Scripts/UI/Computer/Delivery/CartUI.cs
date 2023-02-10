@@ -78,30 +78,33 @@ public class CartUI : MonoBehaviour
     public void ClearText()
     {
         orderSumary.SetText("");
-        totalCostText.SetText("");
+        totalCostText.SetText("Total: ");
     }
 
     public virtual void Order(InputAction.CallbackContext ctx)
     {
         if (ctx.performed && cart != null)
         {
-            //Check if the order can be bought
-            if (cartCost <= money.GetMoney())
+            if (cart.Count > 0)
             {
-                delivery = new Delivery(day.GetCurrentDay());
-                foreach (KeyValuePair<IngredientSO, int> stock in cart)
+                //Check if the order can be bought
+                if (cartCost <= money.GetMoney())
                 {
-                    if (stock.Value > 0)
+                    delivery = new Delivery(day.GetCurrentDay());
+                    foreach (KeyValuePair<IngredientSO, int> stock in cart)
                     {
-                        delivery.Add(stock.Key, stock.Value);
+                        if (stock.Value > 0)
+                        {
+                            delivery.Add(stock.Key, stock.Value);
+                        }
                     }
+
+                    FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                    deliveries.Add(delivery);
+                    money.AddMoney(-cartCost);
+                    Clear();
                 }
-
-                FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                deliveries.Add(delivery);
-                money.AddMoney(-cartCost);
-                Clear();
             }
         }
     }
