@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
     [SerializeField] private float interactionDistance;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
@@ -17,13 +21,14 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private List<GameObject> gameObjectSelected;
     [SerializeField] private List<GameObject> ChildGameObjectSelected;
     [SerializeField] private List<LayerMask> ChildLayerSelected;
+    [SerializeField] private GameObject interactedItem;
+    private GameObject childrenWithGlass;
     [Header("UI Interaction")]
     [SerializeField] private GameObject interactionText;
-    [SerializeField] private LocalizedStringComponent modulableInteractionText;
+    [SerializeField] private TextMeshProUGUI modulableInteractionText;
     [SerializeField] private TextMeshProUGUI pressText;
+    [SerializeField] private TextMeshProUGUI productAmountText;
 
-    private GameObject interactedItem;
-    private GameObject childrenWithGlass;
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private LocalizedStringComponent localizedStringComponent;
@@ -31,107 +36,202 @@ public class PlayerController : MonoBehaviour {
     private bool playerInputEnable = true;
     bool interactableFound = false;
 
+    private LocalizedString localizedString;
+    private IntVariable productDisplayedAmount = null;
+    private StringVariable productDisplayedName = null;
+    //[SerializeField] private LocalizeStringEvent ProductDisplayedString;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
     public Controller GetController() => controller;
 
     // Start is called before the first frame update
-    void Awake() {
+    void Awake()
+    {
         playerControllerSO.SetPlayerController(this);
         playerInput = new PlayerInput();
         playerMovements = GetComponent<PlayerMovements>();
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
         EnableInput();
+
+        localizedString = productAmountText.GetComponent<LocalizeStringEvent>().StringReference;
+        if (!localizedString.TryGetValue("ProductDisplayedAmount", out IVariable value))
+        {
+            productDisplayedAmount = new IntVariable();
+            localizedString.Add("ProductDisplayedAmount", productDisplayedAmount);
+        }
+        else
+        {
+            productDisplayedAmount = value as IntVariable;
+        }
+
+        if (!localizedString.TryGetValue("ProductDisplayedName", out IVariable valueString))
+        {
+            productDisplayedName = new StringVariable();
+            localizedString.Add("ProductDisplayedName", productDisplayedAmount);
+        }
+        else
+        {
+            productDisplayedName = valueString as StringVariable;
+        }
     }
 
     // Update is called once per frame
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         //Player Movement
-        if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1) { //Prevent reset rotation
+        if (playerInput.Player.Move.ReadValue<Vector2>().normalized.magnitude == 1)
+        { //Prevent reset rotation
             playerMovements.Move(playerInput.Player.Move.ReadValue<Vector2>());
             animator.SetBool("isWalking", true);
         }
         else
             animator.SetBool("isWalking", false);
 
-        Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
-        Outline();
-    }
 
-    private void Outline() {
+
         RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
-        if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
-            for (int i = 0; i < hitInfo.Length; i++) {
-                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable)) {
+        if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall")
+        {
+            for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
+            {
+                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable))
+                {
                     if (interactedItem)
+                    {
                         ClearOutline();
+                    }
 
-                    if (!hitInfo[i].collider.GetComponent<AICustomer>()) {
+
+                    if (!hitInfo[i].collider.GetComponent<AICustomer>())
+                    {
                         interactedItem = interactable.gameObject;
                         interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
+                        //for (int j = 0; j < interactedItem.transform.childCount; j++)
+                        //{
+                        //    ChildGameObjectSelected.Add(interactedItem.transform.GetChild(j).gameObject);
+                        //    ChildLayerSelected.Add(interactedItem.transform.GetChild(j).gameObject.layer);
+                        //    ChildGameObjectSelected[j].gameObject.layer = LayerMask.NameToLayer("Outline");
+                        //}
+
                     }
                 }
             }
+            Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
         }
-        else {
+        else
+        {
             ClearOutline();
         }
 
-        if (modulableInteractionText) {
-            if (interactedItem) {
-                if (interactedItem.GetComponent<Shelf>())
-                    modulableInteractionText.SetKey("PlayerInteract_Shelf");
+        if (interactedItem != null /*&& interactionText.activeSelf == false*/)
+        {
+            if (interactedItem.GetComponent<Shelf>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
+                interactionText.SetActive(true);
+                if (interactedItem.GetComponent<Shelf>().GetItem() != null)
+                {
 
-                else if (interactedItem.GetComponent<Workstation>())
-                    modulableInteractionText.SetKey("PlayerInteract_Workstation");
+                    Product productInDisplayedText = interactedItem.GetComponent<Shelf>().GetItem().GetComponent<ProductHolder>().product;
 
-                else if (interactedItem.GetComponent<CraftingStation>())
-                    modulableInteractionText.SetKey("PlayerInteract_CookingStation");
+                    productDisplayedAmount.Value = productInDisplayedText.amount;
+                    productDisplayedName.Value = productInDisplayedText.GetName();
+                    productAmountText.enabled =true;
 
-                else if (interactedItem.GetComponent<Sink>())
-                    modulableInteractionText.SetKey("PlayerInteract_Sink");
+                }
+                else
+                {
+                    productAmountText.enabled = false;
+                }
+            }
+            else
+            {
+                productAmountText.enabled = false;
+            }
 
-                else if (interactedItem.GetComponent<Computer>())
-                    modulableInteractionText.SetKey("PlayerInteract_Computer");
-
-                else if (interactedItem.GetComponent<BuildingMode>())
-                    modulableInteractionText.SetKey("PlayerInteract_Custom");
-
-                else if (interactedItem.GetComponent<Table>())
-                    modulableInteractionText.SetKey("PlayerInteract_Table");
-
-                else if (interactedItem.GetComponent<EntranceDoor>())
-                    modulableInteractionText.SetKey("PlayerInteract_Doors");
-
-
-                interactionText.SetActive(false);
+            if (interactedItem.GetComponent<Workstation>())
+            {
+                //modulableInteractionText.text = "to prepare your product";
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
                 interactionText.SetActive(true);
             }
-            else if (!interactedItem && interactionText.activeSelf) {
-                interactionText.SetActive(false);
+            else if (interactedItem.GetComponent<CraftingStation>())
+            {
+                //modulableInteractionText.text = "to cook your products";
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Sink>())
+            {
+                //modulableInteractionText.text = "to wash the plates";
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Sink");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Computer>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Computer");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<BuildingMode>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Custom");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Table>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Table");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<EntranceDoor>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
+                interactionText.SetActive(true);
+            }
+
+            else
+            {
+                modulableInteractionText.text = "to interact";
+                interactionText.SetActive(true);
             }
         }
+        else if (interactedItem == null && interactionText.activeSelf == true)
+        {
+            interactionText.SetActive(false);
+        }
+
     }
 
-    private void ClearOutline() {
-        if (interactedItem) {
+    private void ClearOutline()
+    {
+        if (interactedItem)
+        {
             interactedItem.gameObject.layer = LayerMask.NameToLayer("Customizable");
             foreach (GameObject item in gameObjectSelected)
                 item.layer = LayerMask.NameToLayer("Customizable");
 
+            //for (int k = 0; k < interactedItem.transform.childCount; k++)
+            //    ChildGameObjectSelected[k].gameObject.layer = ChildLayerSelected[k];
+
             gameObjectSelected.Clear();
+            //ChildGameObjectSelected.Clear();
+            //ChildLayerSelected.Clear();
             interactedItem = null;
         }
     }
 
 
-    public void OnInterract(InputAction.CallbackContext context) {
-        if (context.performed) {
+    public void OnInterract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
             RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
-            if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
-                for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                    if (hitInfo[i].collider.GetComponent<Interactable>()) {
+            if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall")
+            {
+                for (int i = 0; i < hitInfo.Length && !interactableFound; i++)
+                {
+                    if (hitInfo[i].collider.GetComponent<Interactable>())
+                    {
                         hitInfo[i].collider.GetComponent<Interactable>().Effect();
                         interactableFound = true;
                     }
@@ -140,7 +240,8 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-    private void OnPause(InputAction.CallbackContext context) {
+    private void OnPause(InputAction.CallbackContext context)
+    {
         FindObjectOfType<PauseManager>(true).gameObject.SetActive(true);
         DisableInput();
     }
@@ -148,19 +249,23 @@ public class PlayerController : MonoBehaviour {
     public void SetItemHold(GameObject go) => itemHolded = go;
     public GameObject GetItemHold() => itemHolded;
 
-    public void EnableInput() {
+    public void EnableInput()
+    {
         playerInput.Player.Enable();
         //playerInUI = false;
         playerInputEnable = true;
         controller.InitInputType(this);
     }
 
-    public void DisableInput() {
+    public void DisableInput()
+    {
+        //playerInUI = true;
         playerInputEnable = false;
         playerInput.Player.Disable();
     }
 
-    public string GetInput(InputAction action) {
+    public string GetInput(InputAction action)
+    {
         print(action.controls[0].ToString());
         string[] s = action.controls[0].ToString().Split("/");
         return s[s.Length - 1];
@@ -169,12 +274,14 @@ public class PlayerController : MonoBehaviour {
     public bool GetPlayerInputEnabled() => playerInputEnable;
     public GameObject GetItemSocket() => itemSocket;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         playerInput.Player.Interact.performed += OnInterract;
         playerInput.Player.Pause.performed += OnPause;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         playerInput.Player.Interact.performed -= OnInterract;
         playerInput.Player.Pause.performed -= OnPause;
     }
