@@ -1376,6 +1376,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Order"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c3fbd5f-ea13-4d3a-a300-dbc21a216abb"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Order"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1997,6 +2008,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b0886008-f6f6-425a-b661-fae75ced13e7"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""db0c3868-c61f-484c-83b8-cc752be8102f"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
@@ -2014,6 +2036,45 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""PreviousPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Audio"",
+            ""id"": ""6da5665e-f77f-419f-85fd-39e16c4e19bf"",
+            ""actions"": [
+                {
+                    ""name"": ""MuteSource"",
+                    ""type"": ""Button"",
+                    ""id"": ""48e0df87-8ac9-4ec5-8e1c-d19679e065a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""50d0a988-5843-42b2-9819-35b536fbe696"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MuteSource"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aaea0759-3149-4ad9-8de2-a49b74ed01be"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MuteSource"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2133,6 +2194,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
         m_Workstation_NextPage = m_Workstation.FindAction("NextPage", throwIfNotFound: true);
         m_Workstation_PreviousPage = m_Workstation.FindAction("PreviousPage", throwIfNotFound: true);
+        // Audio
+        m_Audio = asset.FindActionMap("Audio", throwIfNotFound: true);
+        m_Audio_MuteSource = m_Audio.FindAction("MuteSource", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3005,6 +3069,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public WorkstationActions @Workstation => new WorkstationActions(this);
+
+    // Audio
+    private readonly InputActionMap m_Audio;
+    private IAudioActions m_AudioActionsCallbackInterface;
+    private readonly InputAction m_Audio_MuteSource;
+    public struct AudioActions
+    {
+        private @PlayerInput m_Wrapper;
+        public AudioActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MuteSource => m_Wrapper.m_Audio_MuteSource;
+        public InputActionMap Get() { return m_Wrapper.m_Audio; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AudioActions set) { return set.Get(); }
+        public void SetCallbacks(IAudioActions instance)
+        {
+            if (m_Wrapper.m_AudioActionsCallbackInterface != null)
+            {
+                @MuteSource.started -= m_Wrapper.m_AudioActionsCallbackInterface.OnMuteSource;
+                @MuteSource.performed -= m_Wrapper.m_AudioActionsCallbackInterface.OnMuteSource;
+                @MuteSource.canceled -= m_Wrapper.m_AudioActionsCallbackInterface.OnMuteSource;
+            }
+            m_Wrapper.m_AudioActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MuteSource.started += instance.OnMuteSource;
+                @MuteSource.performed += instance.OnMuteSource;
+                @MuteSource.canceled += instance.OnMuteSource;
+            }
+        }
+    }
+    public AudioActions @Audio => new AudioActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -3122,5 +3219,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCook(InputAction.CallbackContext context);
         void OnNextPage(InputAction.CallbackContext context);
         void OnPreviousPage(InputAction.CallbackContext context);
+    }
+    public interface IAudioActions
+    {
+        void OnMuteSource(InputAction.CallbackContext context);
     }
 }

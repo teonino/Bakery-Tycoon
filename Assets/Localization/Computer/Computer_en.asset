@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 0692c7bfc5cc3a24fbee2d4cff8d3766, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 2914283273198764040
   m_TableData:
   - m_Id: 558181421056
     m_Localized: Hire
@@ -83,9 +84,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 558189809679
-    m_Localized: Total
+    m_Localized: Total {totalCost}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2914283273198764040
   - m_Id: 558189809680
     m_Localized: Select
     m_Metadata:
@@ -124,4 +126,8 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2914283273198764040
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0f90b4f681000000

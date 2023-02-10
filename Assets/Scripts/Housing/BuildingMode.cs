@@ -34,7 +34,7 @@ public class BuildingMode : Interactable {
     private bool inBuildingMode = false;
     private float originalHeight;
 
-    private void Start() {
+    private void OnEnable() {
         currentRaycastlayer = pickUpLayer;
         playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed += Sell;
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;

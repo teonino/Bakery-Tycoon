@@ -12,4 +12,10 @@ public class StockIngredient
         this.ingredient = ingredient;
         this.amount = amount;
     }
+
+    public StockIngredient(IngredientSO ingredient)
+    {
+        this.ingredient = ingredient;
+        this.amount = 0;
+    }
 }
