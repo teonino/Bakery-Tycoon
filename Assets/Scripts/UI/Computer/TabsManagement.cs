@@ -11,7 +11,7 @@ public class TabsManagement : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
-    internal bool canChangeTab = true;
+    [SerializeField] internal bool canChangeTab = true;
 
     [Header("ButtonAnimation")]
     [SerializeField] private Vector3 normalScale;

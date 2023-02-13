@@ -16,10 +16,12 @@ public class DeliveryButton : MonoBehaviour {
     private TextMeshProUGUI stockText;
     private AmmountManager ammountManager;
     private GameObject ammountPanel;
+    
 
     [HideInInspector] public IngredientSO ingredient;
     [HideInInspector] public ProductSO product;
     [HideInInspector] public DeliveryManager deliveryManager;
+    [HideInInspector] public TabsManagement tabs;
     [HideInInspector] public int nbIngredient = 0;
 
     void Start() {
@@ -33,14 +35,21 @@ public class DeliveryButton : MonoBehaviour {
     }
 
     private void DisplayAmmountPanel() {
-        ammountManager.deliveryButton = this;
 
-        if (ingredient)
-            ammountManager.SetTexture(ingredient.image);
-        else
-            ammountManager.SetTexture(product.image);
+        if (tabs.canChangeTab)
+        {
+            print("Ammountmanager true");
+            tabs.canChangeTab = false;
+            ammountManager.deliveryButton = this;
 
-        ammountManager.gameObject.SetActive(true);
+            if (ingredient)
+                ammountManager.SetTexture(ingredient.image);
+            else
+                ammountManager.SetTexture(product.image);
+
+            ammountManager.gameObject.SetActive(true);
+        }
+
     }
 
     public void SetIngredientButton(List<GameObject> buttons) => ingredientButtons = buttons;

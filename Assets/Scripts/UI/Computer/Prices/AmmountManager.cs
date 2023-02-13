@@ -83,6 +83,7 @@ public class AmmountManager : MonoBehaviour {
         controller.SetEventSystemToLastButton();
 
         textAmmount.text = ammountToBuy.ToString();
+        deliveryButton.tabs.canChangeTab = true;
         gameObject.SetActive(false);
     }
 

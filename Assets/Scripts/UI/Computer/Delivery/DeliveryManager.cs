@@ -142,6 +142,7 @@ public class DeliveryManager : MonoBehaviour
             buttonAsset.InstantiateAsync().Completed += (go) => {
                 DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
                 button.deliveryManager = this;
+                button.tabs = tabsManagement;
                 button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
                 button.SetIngredientSO(ingredients);
                 ingredientButtonList.Add(go.Result);
