@@ -26,9 +26,8 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
     [SerializeField] private GameObject productList;
+    [SerializeField] private GameObject amountPanel;
     [SerializeField] private TabsManagement tabsManagement;
-    [Header("Tutorial Variables")]
-    
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -139,7 +138,8 @@ public class DeliveryManager : MonoBehaviour
         //Instantiate buttons
         for (int i = 0; i < lenght; i++)
         {
-            buttonAsset.InstantiateAsync().Completed += (go) => {
+            buttonAsset.InstantiateAsync().Completed += (go) =>
+            {
                 DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
                 button.deliveryManager = this;
                 button.SetIngredient(ingredients.GetIngredientList()[nbButton].ingredient);
@@ -166,7 +166,8 @@ public class DeliveryManager : MonoBehaviour
             {
                 if (i % maxButtonInRack == 0)
                 {
-                    rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
+                    rackAsset.InstantiateAsync(scroll.transform).Completed += (go) =>
+                    {
                         rackList.Add(go.Result);
                         SetupButtons(rackList, buttonList, scroll, scrollRect);
                     };
@@ -215,7 +216,8 @@ public class DeliveryManager : MonoBehaviour
 
         for (int i = 0; i < lenght; i++)
         {
-            buttonAsset.InstantiateAsync().Completed += (go) => {
+            buttonAsset.InstantiateAsync().Completed += (go) =>
+            {
                 DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
                 button.deliveryManager = this;
                 button.SetProduct(products.GetProductList()[nbButton]);
@@ -262,7 +264,7 @@ public class DeliveryManager : MonoBehaviour
 
             if (controller.GetEventSystemCurrentlySelected() == null)
             {
-                if (buttonSetuped)
+                if (buttonSetuped && !amountPanel.activeSelf)
                 {
                     if (ingredientsList.activeInHierarchy)
                         controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
