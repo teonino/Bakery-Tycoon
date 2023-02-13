@@ -13,6 +13,8 @@ public class AmmountManager : MonoBehaviour {
     [SerializeField] private RawImage imageProduct;
     [SerializeField] private PlayerControllerSO playerController;
     [SerializeField] private Controller controller;
+    [SerializeField] private Animator upArrowAnimator;
+    [SerializeField] private Animator downArrowAnimator;
 
     [HideInInspector] public DeliveryButton deliveryButton;
     [HideInInspector] public DeliveryManager deliveryManager;
@@ -90,6 +92,7 @@ public class AmmountManager : MonoBehaviour {
     public void MinusButtonIsClicked(InputAction.CallbackContext ctx) {
         if (ctx.performed && ammountToBuy > 0) {
             ammountToBuy -= 1;
+            downArrowAnimator.SetTrigger("Move");
             SetIngredientsInCart(false);
         }
     }
@@ -97,6 +100,7 @@ public class AmmountManager : MonoBehaviour {
     public void PlusButtonIsClicked(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
             ammountToBuy += 1;
+            downArrowAnimator.SetTrigger("Move");
             SetIngredientsInCart(true);
         }
     }
