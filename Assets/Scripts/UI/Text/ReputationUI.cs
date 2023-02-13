@@ -25,9 +25,10 @@ public class ReputationUI : MonoBehaviour {
     }
 
     public void SetReputation() {
-        float a = reputation.GetExperience();
-        float b = reputation.GetExpNeeded();
-        progressBar.fillAmount = a / b;
+        float a = reputation.GetExperience(), b = reputation.GetExpNeeded();
+        float dividedRep = a / b;
+        progressBar.fillAmount = dividedRep;
         ReputationLevel.SetText(reputation.GetLevel().ToString());
+        //debugText.SetText("Reputation Lv " + reputation.GetLevel() + 1  + " : " + reputation.GetExperience() + " / " + reputation.GetExpNeeded());
     }
 }
