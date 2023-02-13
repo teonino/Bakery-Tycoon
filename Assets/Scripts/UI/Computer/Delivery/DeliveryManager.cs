@@ -26,7 +26,9 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private GameObject ingredientsList;
     [SerializeField] private GameObject productScroll;
     [SerializeField] private GameObject productList;
+    [SerializeField] private TabsManagement tabsManagement;
     [Header("Tutorial Variables")]
+    
 
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
@@ -331,7 +333,7 @@ public class DeliveryManager : MonoBehaviour
         currentCart.InitCart();
     }
 
-    public void ResetCart()
+    public void ResetCart(bool ordered)
     {
         cart.Clear();
         cartPanel.ClearText();
@@ -345,7 +347,7 @@ public class DeliveryManager : MonoBehaviour
         foreach (GameObject item in productButtonList)
             item.GetComponent<DeliveryButton>().nbIngredient = 0;
 
-        if (popupReminder.activeSelf)
+        if (popupReminder.activeSelf && ordered)
             Quit();
     }
 
@@ -362,7 +364,7 @@ public class DeliveryManager : MonoBehaviour
         ingredientRackList.Clear();
 
         if (resetCart)
-            ResetCart();
+            ResetCart(false);
     }
 
     public void UpdateStockButtons()
@@ -397,16 +399,21 @@ public class DeliveryManager : MonoBehaviour
             popupReminder.SetActive(true);
             ingredientScroll.SetActive(false);
             productScroll.SetActive(false);
+            tabsManagement.canChangeTab = false;
         }
         else
         {
             playerController.playerInput.UI.Quit.performed -= Quit;
             playerController.playerInput.UI.Disable();
-
+            ResetCart(false);
             playerController.EnableInput();
             computerPanel.SetActive(false);
             if (popupReminder.activeSelf)
+            {
                 popupReminder.SetActive(false);
+                tabsManagement.canChangeTab = true;
+            }
+
         }
     }
 }

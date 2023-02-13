@@ -27,7 +27,7 @@ public class WorkstationManager : MonoBehaviour {
 
     protected List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
-    private List<GameObject> rackList;
+    public List<GameObject> rackList;
     private Workstation workplace;
     private int nbButton = 0;
     private int currentMinigameCounter = 0;
@@ -322,12 +322,17 @@ public class WorkstationManager : MonoBehaviour {
         foreach (IngredientSelected ingredientSelected in ingredientsSelected) {
             if (ingredientSelected.GetIngredient()) {
                 ingredients.RemoveIngredientStock(ingredientSelected.GetIngredient(), 1); //Remove from stock
-                ingredientSelected.RemoveIngredient(); //Set to null 
-                nbIngredientSelected--;
+                RemoveIngredientSelected(ingredientSelected);
             }
         }
 
         UpdateStocksButton();
+    }
+
+    private void RemoveIngredientSelected(IngredientSelected ingredientSelected)
+    {
+        ingredientSelected.RemoveIngredient(); //Set to null 
+        nbIngredientSelected--;
     }
 
     public void ResetManager() {
@@ -379,6 +384,10 @@ public class WorkstationManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
         deliveries.UpdateUI -= UpdateStocksButton;
         ingredientUnlock.action -= EnableIngredientButton;
+
+        foreach (IngredientSelected ingredientSelected in ingredientsSelected)
+            if (ingredientSelected.GetIngredient())  
+                RemoveIngredientSelected(ingredientSelected);
     }
 
     private void OnDestroy() {
