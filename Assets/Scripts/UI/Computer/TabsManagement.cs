@@ -11,6 +11,7 @@ public class TabsManagement : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
+    internal bool canChangeTab = true;
 
     [Header("ButtonAnimation")]
     [SerializeField] private Vector3 normalScale;
@@ -48,27 +49,35 @@ public class TabsManagement : MonoBehaviour {
 
     private void NextTab(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
-            panels[currentPanelIndex].SetActive(false);
-            if (currentPanelIndex == panels.Count - 1)
-                currentPanelIndex = 0;
-            else
-                currentPanelIndex++;
-            panels[currentPanelIndex].SetActive(true);
+            if (canChangeTab)
+            {
+                print("tabs changed");
+                panels[currentPanelIndex].SetActive(false);
+                if (currentPanelIndex == panels.Count - 1)
+                    currentPanelIndex = 0;
+                else
+                    currentPanelIndex++;
+                panels[currentPanelIndex].SetActive(true);
 
-            //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+                //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+            }
         }
     }
 
     private void PreviousTab(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
-            panels[currentPanelIndex].SetActive(false);
-            if (currentPanelIndex == 0)
-                currentPanelIndex = panels.Count - 1;
-            else
-                currentPanelIndex--;
-            panels[currentPanelIndex].SetActive(true);
+            if (canChangeTab)
+            {
+                print("tabs changed");
+                panels[currentPanelIndex].SetActive(false);
+                if (currentPanelIndex == 0)
+                    currentPanelIndex = panels.Count - 1;
+                else
+                    currentPanelIndex--;
+                panels[currentPanelIndex].SetActive(true);
 
-            //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+                //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
+            }
         }
     }
 
