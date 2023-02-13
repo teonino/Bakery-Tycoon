@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.352, y: 37.4}
+  m_AnchoredPosition: {x: -52.39347, y: -2.5020065}
   m_SizeDelta: {x: 100, y: 190.2322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7907831552601041606
@@ -250,7 +250,7 @@ Animator:
   m_GameObject: {fileID: 1966010105667396225}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6c0a6d878bfeea947baca01aa5bb6c6f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3e9af6ab6c1b2eb4b87ff23b06a6672d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d127fdaabd0d8a24fbd0c2b25edaa60c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4f6bd133a3e3a74da26345a8f391ff6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -372,10 +372,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.24086507, y: 0.17186567}
-  m_AnchorMax: {x: 0.7586748, y: 0.83800006}
-  m_AnchoredPosition: {x: -0.5, y: -0.50001526}
-  m_SizeDelta: {x: -2.1098022, y: -2.1098022}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1, y: 44.539}
+  m_SizeDelta: {x: -709.1098, y: -88.923}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1919863483982493450
 MonoBehaviour:
@@ -390,12 +390,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammountToBuy: 0
+  maxAmmountToBuy: 0
   textAmmount: {fileID: 5014744855235548027}
   imageProduct: {fileID: 4226961580695913332}
   playerController: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
   controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
-  upArrowAnimator: {fileID: 1967796286766104936}
   downArrowAnimator: {fileID: 3813195351676936463}
+  upArrowAnimator: {fileID: 1967796286766104936}
+  popSource: {fileID: 0}
+  popClip: {fileID: 0}
+  mixer: {fileID: 0}
   deliveryButton: {fileID: 0}
   deliveryManager: {fileID: 0}
 --- !u!1 &5014744855235548025
@@ -570,7 +574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.11667651, y: 0.5}
   m_AnchorMax: {x: 0.28920424, y: 0.776}
-  m_AnchoredPosition: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 3.5065308, y: -84.40201}
   m_SizeDelta: {x: -3, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3630789322974809990
@@ -617,7 +621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 701069706170405698}
-  - component: {fileID: 966438107671051004}
+  - component: {fileID: 8160836275154160531}
   m_Layer: 5
   m_Name: Input Panel
   m_TagString: Untagged
@@ -642,12 +646,12 @@ RectTransform:
   m_Father: {fileID: 5014744854765586254}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.30152115, y: 0.10464272}
-  m_AnchorMax: {x: 0.9185211, y: 0.27957088}
-  m_AnchoredPosition: {x: -0.22520447, y: -0.13742065}
-  m_SizeDelta: {x: 0.12548828, y: -0.27469635}
+  m_AnchorMin: {x: 0.59900004, y: 0.24400002}
+  m_AnchorMax: {x: 0.86432195, y: 0.5803267}
+  m_AnchoredPosition: {x: 0.3000183, y: -0.099990845}
+  m_SizeDelta: {x: 0.5870056, y: 2.1875}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &966438107671051004
+--- !u!114 &8160836275154160531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -656,7 +660,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6831918381698879683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -664,8 +668,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 16.84
+  m_ChildAlignment: 0
+  m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
