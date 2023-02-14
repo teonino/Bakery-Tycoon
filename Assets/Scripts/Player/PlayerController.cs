@@ -119,6 +119,8 @@ public class PlayerController : MonoBehaviour {
                 productAmountText.enabled = false;
             }
 
+
+            interactionText.SetActive(false);
             if (interactedItem.GetComponent<Workstation>()) {
                 //modulableInteractionText.text = "to prepare your product";
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
@@ -153,6 +155,11 @@ public class PlayerController : MonoBehaviour {
             else if (interactedItem.GetComponent<TruckDelivery>())
             {
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Truck");
+                interactionText.SetActive(true);
+            }
+            else if (interactedItem.GetComponent<Shelf>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
                 interactionText.SetActive(true);
             }
 

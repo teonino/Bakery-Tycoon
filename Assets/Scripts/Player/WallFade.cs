@@ -53,7 +53,6 @@ public class WallFade : MonoBehaviour {
         while (go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght") != opacity) {
             float a = go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght");
             go.GetComponent<Renderer>().material.SetFloat("_AlphaStrenght", Mathf.Lerp(a, opacity, lerpTime));
-            print(opacity);
             yield return new WaitForEndOfFrame();
         }
         yield return null;
