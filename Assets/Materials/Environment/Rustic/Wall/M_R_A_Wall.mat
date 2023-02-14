@@ -22,15 +22,17 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_R_A_Wall
   m_Shader: {fileID: -6465566751694194690, guid: 9f6e0ca37b0f60b4e81d33e40c0ce59d, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: Opaque
-  disabledShaderPasses: []
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -148,7 +150,7 @@ Material:
     - _DetailsNormalStrenght: 0
     - _DetailsScale: 1
     - _DetailsScale_1: 0
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EmissiveIntensity: 0
     - _EmissivePower: 1
     - _FallOffSize: 0.05
@@ -169,8 +171,8 @@ Material:
     - _RougnessRatio: 0
     - _SmoothMapTiling: 0
     - _Smoothness: 0.867
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _UV: 1
     - _UseAO: 1
     - _UseEmissive: 0
@@ -180,7 +182,7 @@ Material:
     - _WallThrough: 0
     - _WorkflowMode: 1
     - _ZTest: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
     - _CutoutPosition: {r: 0.5, g: 0.25, b: 0, a: 0}
