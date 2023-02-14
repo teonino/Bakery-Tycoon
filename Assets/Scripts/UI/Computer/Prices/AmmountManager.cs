@@ -25,8 +25,6 @@ public class AmmountManager : MonoBehaviour {
 
     private bool canUp;
     private bool canDown;
-    private bool upCoroutineFinished;
-    private bool downCoroutineFinished;
     private int timesToTest;
     
 
@@ -39,12 +37,16 @@ public class AmmountManager : MonoBehaviour {
     private int originalAmmount = 0;
 
     private void Confirm(InputAction.CallbackContext ctx) {
+        print("ammount to buy: " + ammountToBuy);
+        print("original ammount: " + originalAmmount);
         StartCoroutine(WaitForGamepad());
         deliveryButton.nbIngredient = ammountToBuy;
         originalAmmount = ammountToBuy;
     }
 
     private void Cancel(InputAction.CallbackContext ctx) {
+        print("ammount to buy: " + ammountToBuy);
+        print("original ammount: " + originalAmmount);
         if (originalAmmount < ammountToBuy) {
             while(ammountToBuy != originalAmmount) {
                 SetIngredientsInCart(false);
@@ -69,6 +71,7 @@ public class AmmountManager : MonoBehaviour {
         ammountToBuy = deliveryButton.nbIngredient;
         textAmmount.text = ammountToBuy.ToString();
 
+
         controller.RegisterCurrentSelectedButton();
         controller.SetEventSystemToStartButton(null);
 
@@ -80,8 +83,8 @@ public class AmmountManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed += MinusButtonIsClicked;
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.canceled += ReleaseButton;
         playerController.GetPlayerController().playerInput.Ammount.Confirm.performed += Confirm;
-        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
     }
 
     private void OnDisable() {
@@ -92,8 +95,8 @@ public class AmmountManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed -= MinusButtonIsClicked;
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.canceled -= ReleaseButton;
         playerController.GetPlayerController().playerInput.Ammount.Confirm.performed -= Confirm;
-        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Cancel;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Confirm;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Confirm;
         playerController.GetPlayerController().playerInput.Ammount.Disable();
         playerController.GetPlayerController().playerInput.Amafood.Enable();
         playerController.GetPlayerController().playerInput.UI.Enable();
@@ -105,8 +108,6 @@ public class AmmountManager : MonoBehaviour {
         {
             canDown = false;
             canUp = false;
-            upCoroutineFinished = false;
-            downCoroutineFinished = false;
             timesToTest = 0;
             StopAllCoroutines();
             upArrowAnimator.SetTrigger("MoveToIdle");
