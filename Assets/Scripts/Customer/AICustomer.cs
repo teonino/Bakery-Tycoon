@@ -25,7 +25,6 @@ public class AICustomer : Interactable {
 
     public AIState state = AIState.idle;
     protected CustomerInteractable interactable;
-    protected List<CustomerInteractable> listCustomerInteractable;
     protected Money money;
     protected Reputation reputation;
     protected Day day;
@@ -44,7 +43,6 @@ public class AICustomer : Interactable {
     }
 
     public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
-    public void SetInteractables(List<CustomerInteractable> list) => this.listCustomerInteractable = list;
 
     public virtual void InitCustomer() {
 
