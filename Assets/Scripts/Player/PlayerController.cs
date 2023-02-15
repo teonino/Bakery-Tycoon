@@ -126,10 +126,13 @@ public class PlayerController : MonoBehaviour {
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
                 interactionText.SetActive(true);
             }
-            else if (interactedItem.GetComponent<CraftingStation>()) {
-                //modulableInteractionText.text = "to cook your products";
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
-                interactionText.SetActive(true);
+            else if (interactedItem.GetComponent<CraftingStation>() && itemHolded != null) {
+                if(itemHolded.name.Contains("Paste"))
+                {
+                    //modulableInteractionText.text = "to cook your products";
+                    modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
+                    interactionText.SetActive(true);
+                }
             }
             else if (interactedItem.GetComponent<Sink>()) {
                 //modulableInteractionText.text = "to wash the plates";
@@ -163,10 +166,11 @@ public class PlayerController : MonoBehaviour {
                 interactionText.SetActive(true);
             }
 
-            else {
-                modulableInteractionText.text = "to interact";
-                interactionText.SetActive(true);
-            }
+            //else {
+            //    print("Other object detected");
+            //    modulableInteractionText.text = "to interact";
+            //    interactionText.SetActive(true);
+            //}
         }
         else if (interactedItem == null && interactionText.activeSelf == true) {
             interactionText.SetActive(false);

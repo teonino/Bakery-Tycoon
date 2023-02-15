@@ -20,6 +20,8 @@ public class TabsManagement : MonoBehaviour {
 
     private GameObject currentPanel;
     private int currentPanelIndex = 0;
+    private Color normalColor = new Color(1,1, 1, 1);
+    private Color selectedColor = new Color(0.8f,0.8f, 0.8f, 1);
 
     private void Awake() {
         day.DayTimeChange += EnableStatistic;
@@ -39,6 +41,7 @@ public class TabsManagement : MonoBehaviour {
     private void OnEnable() {
         currentPanel = panels[currentPanelIndex];
         currentPanel.SetActive(true);
+        tabs[currentPanelIndex].GetComponentInChildren<Image>().color = selectedColor;
 
         //if (controller.IsGamepad()) {
         //    StartCoroutine(WaitForGamepad());
@@ -53,12 +56,15 @@ public class TabsManagement : MonoBehaviour {
             {
                 print("tabs changed");
                 panels[currentPanelIndex].SetActive(false);
+
+                tabs[currentPanelIndex].GetComponentInChildren<Image>().color = normalColor;
+
                 if (currentPanelIndex == panels.Count - 1)
                     currentPanelIndex = 0;
                 else
                     currentPanelIndex++;
                 panels[currentPanelIndex].SetActive(true);
-
+                tabs[currentPanelIndex].GetComponentInChildren<Image>().color = selectedColor;
                 //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
             }
         }
@@ -70,12 +76,13 @@ public class TabsManagement : MonoBehaviour {
             {
                 print("tabs changed");
                 panels[currentPanelIndex].SetActive(false);
+                tabs[currentPanelIndex].GetComponentInChildren<Image>().color = normalColor;
                 if (currentPanelIndex == 0)
                     currentPanelIndex = panels.Count - 1;
                 else
                     currentPanelIndex--;
                 panels[currentPanelIndex].SetActive(true);
-
+                tabs[currentPanelIndex].GetComponentInChildren<Image>().color = selectedColor;
                 //controller.SetEventSystemToStartButton(tabs[currentPanelIndex]);
             }
         }

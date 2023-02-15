@@ -16,7 +16,6 @@ public class SpawnCustomer : MonoBehaviour
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] private Tutorial tutorial;
-    [SerializeField] private List<CustomerInteractable> listCustomerInteractable;
     [SerializeField] private List<RegularSO> regularCustomersDayOne;
     [SerializeField] private List<RegularSO> regularCustomersDayTwo;
     [SerializeField] private List<RegularSO> regularCustomersDayThree;
@@ -162,7 +161,6 @@ public class SpawnCustomer : MonoBehaviour
             customer.requestedProduct = GetRandomProduct();
 
         customer.SetSpawner(this);
-        customer.SetInteractables(listCustomerInteractable);
         customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
@@ -188,7 +186,6 @@ public class SpawnCustomer : MonoBehaviour
             customer.requestedProduct = GetRandomProduct();
 
         customer.SetSpawner(this);
-        customer.SetInteractables(listCustomerInteractable);
         customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
