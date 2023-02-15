@@ -16,11 +16,7 @@ public class MainShelf : Shelf {
             if (child.GetComponent<QueueShelf>())
                 queueCustomer.Add(child.GetComponent<QueueShelf>());
 
-        QueueShelf[] list = FindObjectsOfType<QueueShelf>();
-        foreach (QueueShelf shelf in list) {
-            if (!queueCustomer.Contains(shelf))
-                queueCustomerInteracting.Add(shelf);
-        }
+        List<QueueBakery> list = new List<QueueBakery>(FindObjectsOfType<QueueBakery>());
     }
 
     public void GetAvailableQueuePosition(AIRandomCustomer customer) {
@@ -34,10 +30,11 @@ public class MainShelf : Shelf {
 
         if (!customer.inQueue) {
             //ShuffleQueue();
-            foreach (QueueShelf queuePosition in queueCustomerInteracting) {
+            foreach (QueueBakery queuePosition in queueCustomerInteracting) {
                 if (!queuePosition.customer && !customer.inQueue) {
                     queuePosition.customer = customer;
                     customer.inQueue = true;
+                    customer.SetInteracting(queuePosition);
                     customer.SetDestination(queuePosition.transform.position);
                 }
             }
@@ -56,6 +53,7 @@ public class MainShelf : Shelf {
         if (queueCustomerInteracting[0].customer) {
             queueCustomer[queueCustomer.Count - 1].customer = queueCustomerInteracting[0].customer;
             queueCustomerInteracting[0].customer = null;
+            queueCustomer[queueCustomer.Count - 1].customer.SetInteracting(null);
             queueCustomer[queueCustomer.Count - 1].customer.SetDestination(queueCustomer[queueCustomer.Count - 1].transform.position);
         }
 
