@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class QueueBakery : QueueShelf
 {
-    [SerializeField] private int animationToTrigger;
+    [SerializeField] private Animator animator;
 
     public void Interact() {
-        //TriggerAnimation
+        animator.SetTrigger("Sit");
     }
 }
