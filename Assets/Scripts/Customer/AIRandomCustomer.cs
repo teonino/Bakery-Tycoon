@@ -8,10 +8,10 @@ public class AIRandomCustomer : AICustomer
     [HideInInspector] public bool inQueue = false;
     [SerializeField] private Animator animator;
 
-    private bool interacting;
-
-    public bool GetInteracting() => interacting;
-    public void SetInteracting(bool interacting) => this.interacting = interacting;
+    private QueueBakery interacting;
+    private bool hasInteract = false;
+    public QueueBakery GetInteracting() => interacting;
+    public void SetInteracting(QueueBakery interacting) => this.interacting = interacting;
 
     private new void Awake()
     {
@@ -64,8 +64,15 @@ public class AIRandomCustomer : AICustomer
         if (Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving)
         {
             state = AIState.waiting;
-            animator.SetTrigger("Idle");
             coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            if (!interacting) {
+                animator.SetTrigger("Idle");
+            }
+        }
+
+        if (interacting && Vector3.Distance(transform.position, agent.destination) < 1 && !hasInteract) {
+            interacting.Interact(); // trigger animation according to item
+            hasInteract = true;
         }
 
         //Buy item and leave
