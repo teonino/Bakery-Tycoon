@@ -23,9 +23,12 @@ public class WallFade : MonoBehaviour {
         if (thisRoomIsActive) {
                 if (stillInUse)
                 {
-                    
-                    for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                {
+                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
+                    //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
 
             }
         }
@@ -37,19 +40,20 @@ public class WallFade : MonoBehaviour {
             if (stillInUse)
             {
 
-                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                {
-                    //wallToDispawn.transform.GetChild(i).gameObject.SetActive(true);
-                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
-                }
-                    
+            for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+            {
+                StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
+                //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
+
+        }
     }
 
     private IEnumerator ChangeColor(Transform go, float opacity) {
         while (go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght") != opacity) {
             float a = go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght");
             go.GetComponent<Renderer>().material.SetFloat("_AlphaStrenght", Mathf.Lerp(a, opacity, lerpTime));
+            print(opacity);
             yield return new WaitForEndOfFrame();
         }
         yield return null;

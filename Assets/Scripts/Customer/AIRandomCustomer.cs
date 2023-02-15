@@ -8,28 +8,17 @@ public class AIRandomCustomer : AICustomer
     [HideInInspector] public bool inQueue = false;
     [SerializeField] private Animator animator;
 
+    private bool interacting;
+
+    public bool GetInteracting() => interacting;
+    public void SetInteracting(bool interacting) => this.interacting = interacting;
+
     private new void Awake()
     {
         base.Awake();
         shelf = FindObjectOfType<MainShelf>();
         //Check Queue positions
         shelf.GetAvailableQueuePosition(this);
-
-        if (!inQueue)
-            FindInteraction();
-    }
-
-    private void FindInteraction()
-    {
-        foreach(CustomerInteractable interactable in listCustomerInteractable)
-        {
-            if (!interactable.HasCustomer())
-            {
-                this.interactable = interactable;
-                interactable.SetCustomer(this);
-                agent.SetDestination(interactable.GetPosition());
-            }
-        }
     }
 
     public override void InitCustomer()
@@ -72,7 +61,7 @@ public class AIRandomCustomer : AICustomer
     new void FixedUpdate()
     {
         //Go to the Queue
-        if ((Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving))
+        if (Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving)
         {
             state = AIState.waiting;
             animator.SetTrigger("Idle");
