@@ -24,6 +24,8 @@ public class AICustomer : Interactable {
     [HideInInspector] public ProductSO requestedProduct;
 
     public AIState state = AIState.idle;
+    protected CustomerInteractable interactable;
+    protected List<CustomerInteractable> listCustomerInteractable;
     protected Money money;
     protected Reputation reputation;
     protected Day day;
@@ -38,11 +40,13 @@ public class AICustomer : Interactable {
     protected void Awake() {
         day = FindObjectOfType<DayTimeUI>().GetDay();
         money = FindObjectOfType<MoneyUI>().GetMoney();
-        spawner = FindObjectOfType<SpawnCustomer>();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
     }
 
-    public void InitCustomer() {
+    public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
+    public void SetInteractables(List<CustomerInteractable> list) => this.listCustomerInteractable = list;
+
+    public virtual void InitCustomer() {
 
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;

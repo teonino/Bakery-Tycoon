@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class SpawnCustomer : MonoBehaviour {
+public class SpawnCustomer : MonoBehaviour
+{
     [Header("References")]
     [SerializeField] private AssetReference customerAsset;
     [SerializeField] private AssetReference regularCustomerAsset;
@@ -15,7 +16,11 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] private Tutorial tutorial;
-    [SerializeField] private List<RegularSO> regularCustomers;
+    [SerializeField] private List<CustomerInteractable> listCustomerInteractable;
+    [SerializeField] private List<RegularSO> regularCustomersDayOne;
+    [SerializeField] private List<RegularSO> regularCustomersDayTwo;
+    [SerializeField] private List<RegularSO> regularCustomersDayThree;
+    [SerializeField] private List<RegularSO> regularCustomersDayFour;
 
     [Header("Spawn Variables")]
     [SerializeField] private bool enableSpawn;
@@ -40,19 +45,21 @@ public class SpawnCustomer : MonoBehaviour {
     private List<Table> tables;
     private float randomTime;
 
-    void Start() {
+    void Start()
+    {
         tables = new List<Table>(FindObjectsOfType<Table>());
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
 
         foreach (Quest quest in triggerSpawnOnCompletion)
             quest.OnCompletedAction += SpawnTutorialCustomer;
-        
-        if (!tutorial.GetTutorial()) 
-            StartCoroutine(SpawnDelay()); 
+
+        if (!tutorial.GetTutorial())
+            StartCoroutine(SpawnDelay());
     }
 
-    private IEnumerator SpawnDelay() {
+    private IEnumerator SpawnDelay()
+    {
         randomTime = Random.Range(customer.GetDelaySpawn().x, customer.GetDelaySpawn().y);
 
         yield return new WaitForSeconds(randomTime);
@@ -64,12 +71,16 @@ public class SpawnCustomer : MonoBehaviour {
             FindObjectOfType<DayManager>().UpdateDay();
     }
 
-    private void InstantiateCustomer() {
+    private void InstantiateCustomer()
+    {
         //Spawn a customer
-        if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
+        if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts())
+        {
             nbCustomer++;
-            if (enableSpawnRegularCustomer && nbCustomer < nbCustomerMax) {
-                if (Random.Range(0, spawnChanceRegularCustomer) == 0) {
+            if (enableSpawnRegularCustomer && nbCustomer < nbCustomerMax)
+            {
+                if (Random.Range(0, spawnChanceRegularCustomer) == 0)
+                {
                     if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                         SpawnCustomerAsset(true);
                 }
@@ -83,51 +94,82 @@ public class SpawnCustomer : MonoBehaviour {
         }
     }
 
-    public void SpawnCustomerAsset(bool regular, ProductSO product = null) {
-        if (regular && CheckChairs()) {
-            
-            
-            //Select which regular to spawn
+    public void SpawnCustomerAsset(bool regular, ProductSO product = null)
+    {
+        if (regular && CheckChairs())
+        {
+            AssetReference customerAsset = null;
+            switch (day.GetDayCount() % 4)
+            {
+                case 0:
+                    customerAsset = regularCustomersDayOne[nbCustomerRegularSpawned].GetModel();
+                    break;
+                case 1:
+                    customerAsset = regularCustomersDayTwo[nbCustomerRegularSpawned].GetModel();
+                    break;
+                case 2:
+                    customerAsset = regularCustomersDayThree[nbCustomerRegularSpawned].GetModel();
+                    break;
+                case 3:
+                    customerAsset = regularCustomersDayFour[nbCustomerRegularSpawned].GetModel();
+                    break;
+            }
 
-
-            regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
-                go.Result.name = "RegularCustomer " + nbCustomerSpawned;
-                SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
-                nbCustomerRegularSpawned++;
-            };
+            if (customerAsset.IsValid())
+                customerAsset.InstantiateAsync(transform).Completed += (go) =>
+                {
+                    go.Result.name = "RegularCustomer " + nbCustomerSpawned;
+                    SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
+                    nbCustomerRegularSpawned++;
+                };
+            else
+                regularCustomerAsset.InstantiateAsync(transform).Completed += (go) =>
+                {
+                    go.Result.name = "RegularCustomer " + nbCustomerSpawned;
+                    SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
+                    nbCustomerRegularSpawned++;
+                };
         }
-        else {
+        else
+        {
             SpawnRandomCustomer(product);
         }
         notifEvent.Invoke(notifType);
     }
 
-    private void SpawnTutorialCustomer() {
+    private void SpawnTutorialCustomer()
+    {
         for (int i = 0; i < tutoProduct[indexProduct].nbCreated; i++)
             SpawnRandomCustomer(tutoProduct[indexProduct]);
         indexProduct++;
     }
 
-    private void SpawnRandomCustomer(ProductSO product) {
-        customerAsset.InstantiateAsync(transform).Completed += (go) => {
+    private void SpawnRandomCustomer(ProductSO product)
+    {
+        customerAsset.InstantiateAsync(transform).Completed += (go) =>
+        {
             go.Result.name = "Customer " + nbCustomerSpawned;
             SetCustomer(go.Result.GetComponent<AIRandomCustomer>(), product);
             nbCustomerSpawned++;
         };
     }
 
-    private void SetCustomer(AIRandomCustomer customer, ProductSO product = null) {
-
+    private void SetCustomer(AIRandomCustomer customer, ProductSO product = null)
+    {
         if (product)
             customer.requestedProduct = product;
         else
             customer.requestedProduct = GetRandomProduct();
+
+        customer.SetSpawner(this);
+        customer.SetInteractables(listCustomerInteractable);
         customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
     }
 
-    private void SetRegularCustomer(AIRegularCustomer customer, ProductSO product = null) {
+    private void SetRegularCustomer(AIRegularCustomer customer, ProductSO product = null)
+    {
         customer.chair = currentChair;
         customer.chair.ocuppied = true;
         customer.chair.customer = customer;
@@ -137,45 +179,52 @@ public class SpawnCustomer : MonoBehaviour {
         currentChair = null;
         currentTable = null;
 
-        if (product) {
+        if (product)
+        {
             customer.requestedProduct = product;
             customer.SetWaitingTime(120);
         }
         else
             customer.requestedProduct = GetRandomProduct();
 
+        customer.SetSpawner(this);
+        customer.SetInteractables(listCustomerInteractable);
         customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
     }
-    private bool CheckChairs() {
-        for(int i = 0; i < tables.Count && !currentChair; i++) {
+    private bool CheckChairs()
+    {
+        for (int i = 0; i < tables.Count && !currentChair; i++)
+        {
             indexChair = tables[i].GetChairAvailable();
             if (indexChair >= 0)
                 currentChair = tables[i].chairs[indexChair];
         }
-        //foreach (Table table in tables) {
-        //    indexChair = table.GetChairAvailable();
-        //    if (indexChair < 0)
-        //        currentChair = table.chairs[indexChair];
-        //}
-        if (currentChair) {
+
+        if (currentChair)
+        {
             currentTable = currentChair.table;
             return true;
         }
         return false;
     }
 
-    public bool CheckProducts() {
-        foreach (ProductSO product in products.GetProductList()) { //Go through all product
-            if (product.unlocked) {
+    public bool CheckProducts()
+    {
+        foreach (ProductSO product in products.GetProductList())
+        { //Go through all product
+            if (product.unlocked)
+            {
                 doableProduct.Add(product);
             }
         }
 
         List<Shelf> shelves = new List<Shelf>(FindObjectsOfType<Shelf>());
-        foreach (Shelf shelf in shelves) {
-            if (shelf.GetItem() && shelf.GetItem().tag != "Plate") {
+        foreach (Shelf shelf in shelves)
+        {
+            if (shelf.GetItem() && shelf.GetItem().tag != "Plate")
+            {
                 availableProduct.Add(shelf.GetItem().GetComponent<ProductHolder>().product.productSO);
             }
         }
@@ -183,7 +232,8 @@ public class SpawnCustomer : MonoBehaviour {
         return doableProduct.Count > 0 || availableProduct.Count > 0;
     }
 
-    public ProductSO GetRandomProduct() {
+    public ProductSO GetRandomProduct()
+    {
         if (doableProduct.Count > 0)
             return doableProduct[Random.Range(0, doableProduct.Count)];
         else

@@ -4,15 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
 using UnityEngine.AddressableAssets;
 using System;
 
 public class AmmountManager : MonoBehaviour {
     [SerializeField] private int ammountToBuy;
+    [SerializeField] private int maxAmmountToBuy;
     [SerializeField] private TextMeshProUGUI textAmmount;
     [SerializeField] private RawImage imageProduct;
     [SerializeField] private PlayerControllerSO playerController;
     [SerializeField] private Controller controller;
+    [SerializeField] private Animator downArrowAnimator;
+    [SerializeField] private Animator upArrowAnimator;
+
+
+    [SerializeField] private AudioSource popSource;
+    [SerializeField] private AudioClip popClip;
+    [SerializeField] private AudioMixer mixer;
+
+    private bool canUp;
+    private bool canDown;
+    private int timesToTest;
+    
+
 
     [HideInInspector] public DeliveryButton deliveryButton;
     [HideInInspector] public DeliveryManager deliveryManager;
@@ -22,12 +37,16 @@ public class AmmountManager : MonoBehaviour {
     private int originalAmmount = 0;
 
     private void Confirm(InputAction.CallbackContext ctx) {
+        print("ammount to buy: " + ammountToBuy);
+        print("original ammount: " + originalAmmount);
         StartCoroutine(WaitForGamepad());
         deliveryButton.nbIngredient = ammountToBuy;
         originalAmmount = ammountToBuy;
     }
 
     private void Cancel(InputAction.CallbackContext ctx) {
+        print("ammount to buy: " + ammountToBuy);
+        print("original ammount: " + originalAmmount);
         if (originalAmmount < ammountToBuy) {
             while(ammountToBuy != originalAmmount) {
                 SetIngredientsInCart(false);
@@ -52,6 +71,7 @@ public class AmmountManager : MonoBehaviour {
         ammountToBuy = deliveryButton.nbIngredient;
         textAmmount.text = ammountToBuy.ToString();
 
+
         controller.RegisterCurrentSelectedButton();
         controller.SetEventSystemToStartButton(null);
 
@@ -59,23 +79,40 @@ public class AmmountManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.Amafood.Disable();
         playerController.GetPlayerController().playerInput.Ammount.Enable();
         playerController.GetPlayerController().playerInput.Ammount.AddIngredient.performed += PlusButtonIsClicked;
+        playerController.GetPlayerController().playerInput.Ammount.AddIngredient.canceled += ReleaseButton;
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed += MinusButtonIsClicked;
+        playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.canceled += ReleaseButton;
         playerController.GetPlayerController().playerInput.Ammount.Confirm.performed += Confirm;
-        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
     }
 
     private void OnDisable() {
         deliveryButton = null;
 
         playerController.GetPlayerController().playerInput.Ammount.AddIngredient.performed -= PlusButtonIsClicked;
+        playerController.GetPlayerController().playerInput.Ammount.AddIngredient.canceled -= ReleaseButton;
         playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed -= MinusButtonIsClicked;
+        playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.canceled -= ReleaseButton;
         playerController.GetPlayerController().playerInput.Ammount.Confirm.performed -= Confirm;
-        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Cancel;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Confirm;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed -= Confirm;
         playerController.GetPlayerController().playerInput.Ammount.Disable();
         playerController.GetPlayerController().playerInput.Amafood.Enable();
         playerController.GetPlayerController().playerInput.UI.Enable();
+    }
+
+    private void ReleaseButton(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled)
+        {
+            canDown = false;
+            canUp = false;
+            timesToTest = 0;
+            StopAllCoroutines();
+            upArrowAnimator.SetTrigger("MoveToIdle");
+            upArrowAnimator.SetTrigger("MoveToIdle");
+        }
     }
 
     private IEnumerator WaitForGamepad() {
@@ -83,23 +120,125 @@ public class AmmountManager : MonoBehaviour {
         controller.SetEventSystemToLastButton();
 
         textAmmount.text = ammountToBuy.ToString();
+        deliveryButton.tabs.canChangeTab = true;
         gameObject.SetActive(false);
     }
 
     public void MinusButtonIsClicked(InputAction.CallbackContext ctx) {
         if (ctx.performed && ammountToBuy > 0) {
-            ammountToBuy -= 1;
-            SetIngredientsInCart(false);
+            //ammountToBuy -= 1;
+            canDown = true;
+            canUp = false;
+            StartCoroutine(DecrementAmmountToBuy());
         }
     }
 
     public void PlusButtonIsClicked(InputAction.CallbackContext ctx) {
-        if (ctx.performed) {
-            ammountToBuy += 1;
-            SetIngredientsInCart(true);
+        if (ctx.performed && ammountToBuy < maxAmmountToBuy) {
+            //ammountToBuy += 1;
+            canUp = true;
+            canDown = false;
+            StartCoroutine(IncrementAmmountToBuy());
         }
     }
 
+    //private void Update()
+    //{
+    //    if (canUp && ammountToBuy < maxAmmountToBuy)
+    //    {
+    //        StartCoroutine(IncrementAmmountToBuy());
+    //        if(!upCoroutineFinished)
+    //        {
+    //            StartCoroutine(waitingtoGoFast(0));
+    //        }
+    //    }
+    //    else if (canDown && ammountToBuy > 0)
+    //    {
+    //        StartCoroutine(DecrementAmmountToBuy());
+    //        if (!downCoroutineFinished)
+    //        {
+    //            StartCoroutine(waitingtoGoFast(1));
+    //        }
+    //    }
+    //}
+
+    private IEnumerator IncrementAmmountToBuy()
+    {
+        if (canUp && ammountToBuy < maxAmmountToBuy)
+        {
+            if (timesToTest < 3)
+            {
+                upArrowAnimator.SetTrigger("MoveUp");
+                popSource.PlayOneShot(popClip);
+                timesToTest += 1;
+                ammountToBuy += 1;
+                textAmmount.text = ammountToBuy.ToString();
+                SetIngredientsInCart(true);
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(IncrementAmmountToBuy());
+            }
+            else if (timesToTest >= 3)
+            {
+                StartCoroutine(IncrementFastAmmountToBuy());
+                timesToTest = 0;
+            }
+            yield return null;
+        } 
+    }
+
+    private IEnumerator IncrementFastAmmountToBuy()
+    {
+        if (canUp && ammountToBuy < maxAmmountToBuy)
+        {
+            yield return new WaitForSeconds(0.1f);
+            upArrowAnimator.SetTrigger("MoveUp");
+            popSource.PlayOneShot(popClip);
+            ammountToBuy += 1;
+            textAmmount.text = ammountToBuy.ToString(); 
+            SetIngredientsInCart(true);
+            StartCoroutine(IncrementFastAmmountToBuy());
+        }
+        yield return null;
+    }
+
+    private IEnumerator DecrementAmmountToBuy()
+    {
+        if (canDown && ammountToBuy > 0)
+        {
+            if (timesToTest < 3)
+            {
+                downArrowAnimator.SetTrigger("MoveDown");
+                popSource.PlayOneShot(popClip);
+                timesToTest += 1;
+                ammountToBuy -= 1;
+                textAmmount.text = ammountToBuy.ToString(); 
+                SetIngredientsInCart(false);
+                yield return new WaitForSeconds(0.3f);
+                StartCoroutine(DecrementAmmountToBuy());
+            }
+            else if (timesToTest >= 3)
+            {
+                StartCoroutine(DecrementFastAmmountToBuy());
+                timesToTest = 0;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator DecrementFastAmmountToBuy()
+    {
+        if (canDown && ammountToBuy > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            downArrowAnimator.SetTrigger("MoveDown");
+            popSource.PlayOneShot(popClip);
+            ammountToBuy -= 1;
+            textAmmount.text = ammountToBuy.ToString();
+            SetIngredientsInCart(false);
+            StartCoroutine(DecrementFastAmmountToBuy());
+        }
+        yield return null;
+    }
     private void SetIngredientsInCart(bool add) {
         if (deliveryButton.ingredient)
             deliveryManager.SetIngredient(deliveryButton.ingredient, add);

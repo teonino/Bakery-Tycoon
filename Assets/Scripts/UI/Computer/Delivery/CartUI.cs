@@ -90,7 +90,7 @@ public class CartUI : MonoBehaviour
                 //Check if the order can be bought
                 if (cartCost <= money.GetMoney())
                 {
-                    delivery = new Delivery(day.GetCurrentDay());
+                    delivery = new Delivery(day.GetDayCount());
                     foreach (KeyValuePair<IngredientSO, int> stock in cart)
                     {
                         if (stock.Value > 0)

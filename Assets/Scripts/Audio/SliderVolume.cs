@@ -109,16 +109,8 @@ public class SliderVolume : MonoBehaviour
             actuallySelected = false;
     }
 
-    private void OnEnable()
-    {
-        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed += MuteSourceVolume;
-        playerController.GetPlayerController().playerInput.Audio.MuteSource.Enable();
-    }
-
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(groupName.ToString(), volumeSlider.value);
-        playerController.GetPlayerController().playerInput.Audio.MuteSource.Disable();
-        playerController.GetPlayerController().playerInput.Audio.MuteSource.performed -= MuteSourceVolume;
     }
 }

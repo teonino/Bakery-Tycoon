@@ -23,9 +23,12 @@ public class WallFade : MonoBehaviour {
         if (thisRoomIsActive) {
                 if (stillInUse)
                 {
-                    
-                    for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+                {
+                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
+                    //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
 
             }
         }
@@ -37,13 +40,13 @@ public class WallFade : MonoBehaviour {
             if (stillInUse)
             {
 
-                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                {
-                    //wallToDispawn.transform.GetChild(i).gameObject.SetActive(true);
-                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
-                }
-                    
+            for (int i = 0; i < wallToDispawn.transform.childCount; i++)
+            {
+                StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
+                //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
+
+        }
     }
 
     private IEnumerator ChangeColor(Transform go, float opacity) {

@@ -6,6 +6,12 @@ public class ComputerManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
     [SerializeField] private List<GameObject> tabs;
+    [SerializeField] private TabsManagement tabsManagement;
+
+    private void Awake()
+    {
+        tabsManagement.canChangeTab = true;
+    }
 
     private void Update() {
         if (gameObject.activeSelf && playerControllerSO.GetPlayerInputState())
@@ -15,7 +21,7 @@ public class ComputerManager : MonoBehaviour {
     private void OnDisable() {
         for (int i = 0; i < tabs.Count; i++)
             tabs[i]?.gameObject.SetActive(false);
-
+        tabsManagement.canChangeTab = true;
         controller?.SetEventSystemToStartButton(null);
     }
 }
