@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 using System;
 
 public class AmmountManager : MonoBehaviour {
-    [SerializeField] private int ammountToBuy;
+    [SerializeField] internal int ammountToBuy;
     [SerializeField] private int maxAmmountToBuy;
     [SerializeField] private TextMeshProUGUI textAmmount;
     [SerializeField] private RawImage imageProduct;
@@ -17,6 +17,7 @@ public class AmmountManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private Animator downArrowAnimator;
     [SerializeField] private Animator upArrowAnimator;
+    [SerializeField] private List<Vector2> inCartList = new List<Vector2>();
 
 
     [SerializeField] private AudioSource popSource;
@@ -34,19 +35,15 @@ public class AmmountManager : MonoBehaviour {
 
     private ProductSO ProductSO;
     private IngredientSO Ingredient;
-    private int originalAmmount = 0;
+    internal int originalAmmount = 0;
 
     private void Confirm(InputAction.CallbackContext ctx) {
-        print("ammount to buy: " + ammountToBuy);
-        print("original ammount: " + originalAmmount);
         StartCoroutine(WaitForGamepad());
         deliveryButton.nbIngredient = ammountToBuy;
         originalAmmount = ammountToBuy;
     }
 
     private void Cancel(InputAction.CallbackContext ctx) {
-        print("ammount to buy: " + ammountToBuy);
-        print("original ammount: " + originalAmmount);
         if (originalAmmount < ammountToBuy) {
             while(ammountToBuy != originalAmmount) {
                 SetIngredientsInCart(false);
