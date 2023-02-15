@@ -17,6 +17,6 @@ public abstract class CustomerInteractable : MonoBehaviour
         else
             return false;
     }
-    public Vector3 GetPosition() => transform.position;
+    public Vector3 GetPosition() => targetPosition.position;
     protected abstract void Interactable();
 }

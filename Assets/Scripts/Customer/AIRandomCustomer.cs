@@ -8,28 +8,17 @@ public class AIRandomCustomer : AICustomer
     [HideInInspector] public bool inQueue = false;
     [SerializeField] private Animator animator;
 
+    private QueueBakery interacting;
+    private bool hasInteract = false;
+    public QueueBakery GetInteracting() => interacting;
+    public void SetInteracting(QueueBakery interacting) => this.interacting = interacting;
+
     private new void Awake()
     {
         base.Awake();
         shelf = FindObjectOfType<MainShelf>();
         //Check Queue positions
         shelf.GetAvailableQueuePosition(this);
-
-        if (!inQueue)
-            FindInteraction();
-    }
-
-    private void FindInteraction()
-    {
-        foreach(CustomerInteractable interactable in listCustomerInteractable)
-        {
-            if (!interactable.HasCustomer())
-            {
-                this.interactable = interactable;
-                interactable.SetCustomer(this);
-                agent.SetDestination(interactable.GetPosition());
-            }
-        }
     }
 
     public override void InitCustomer()
@@ -72,11 +61,18 @@ public class AIRandomCustomer : AICustomer
     new void FixedUpdate()
     {
         //Go to the Queue
-        if ((Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving))
+        if (Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving)
         {
             state = AIState.waiting;
-            animator.SetTrigger("Idle");
             coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            if (!interacting) {
+                animator.SetTrigger("Idle");
+            }
+        }
+
+        if (interacting && Vector3.Distance(transform.position, agent.destination) < 1 && !hasInteract) {
+            interacting.Interact(); // trigger animation according to item
+            hasInteract = true;
         }
 
         //Buy item and leave
