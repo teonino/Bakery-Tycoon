@@ -6,7 +6,6 @@ public class AIRandomCustomer : AICustomer
 {
     protected MainShelf shelf;
     [HideInInspector] public bool inQueue = false;
-    [SerializeField] private Animator animator;
 
     private QueueBakery interacting;
     private bool hasInteract = false;
@@ -60,18 +59,25 @@ public class AIRandomCustomer : AICustomer
 
     new void FixedUpdate()
     {
+        if (Vector3.Distance(transform.position, agent.destination) < 0.5 && agent.speed != 0) {
+            transform.rotation.SetLookRotation(agent.destination);
+            agent.speed = 0;
+        }
+
+
         //Go to the Queue
-        if (Vector3.Distance(transform.position, agent.destination) < 1 && state == AIState.moving)
+        if (Vector3.Distance(transform.position, agent.destination) < 0.5 && state == AIState.moving)
         {
             state = AIState.waiting;
             coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+
             if (!interacting) {
                 animator.SetTrigger("Idle");
             }
         }
 
-        if (interacting && Vector3.Distance(transform.position, agent.destination) < 1 && !hasInteract) {
-            interacting.Interact(); // trigger animation according to item
+        if (interacting && Vector3.Distance(transform.position, agent.destination) < 0.2 && !hasInteract) {
+            interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;
         }
 
@@ -107,6 +113,8 @@ public class AIRandomCustomer : AICustomer
         }
         base.FixedUpdate();
     }
+
+    public Animator GetAnimator() => animator;
 
     public override void Effect()
     {

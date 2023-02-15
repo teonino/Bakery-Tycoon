@@ -65,12 +65,12 @@ MonoBehaviour:
   bonusTime: 0
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
+  animator: {fileID: 1055256963091979644}
   waitingTime: 360
   saleReputation: 1
   requestedProduct: {fileID: 0}
   state: 0
   inQueue: 0
-  animator: {fileID: 1055256963091979644}
 --- !u!195 &8224689622529937741
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -287,6 +287,23 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
   m_PrefabInstance: {fileID: 6903898605667115245}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5984996820304485820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
+  m_PrefabInstance: {fileID: 6903898605667115245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3811524593122107799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984996820304485820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40cc3e2355fca384680d5e195c7af336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6360536543541004038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
