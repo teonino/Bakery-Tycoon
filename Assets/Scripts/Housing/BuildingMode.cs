@@ -78,8 +78,15 @@ public class BuildingMode : Interactable {
     public void Sell(CallbackContext ctx) {
         if (ctx.performed && selectedGo) {
             if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
-                money.AddMoney(holder.GetFurniturePrice());
-                print($"Add {holder.GetFurniturePrice()} €");
+                if (holder.CanRemoveSelectedItem()) {
+                    money.AddMoney(holder.GetFurniturePrice());
+                    print($"Add {holder.GetFurniturePrice()} €");
+                    Destroy(holder.gameObject);
+                    currentRaycastlayer = pickUpLayer;
+                    selectedGo = null;
+                }
+                else
+                    print("Furniture mandatory, you can't sell this unless you have another one");
             }
             else {
                 print("Furniture not implemented");
@@ -231,11 +238,11 @@ public class BuildingMode : Interactable {
             RaycastHit hit;
             Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
-                selectedGo.transform.position = hit.point;
+                selectedGo.transform.position = hit.point; //Set position to hitpoint
 
                 if (initialGoLayer == LayerMask.NameToLayer("CustomizableWall")) {
                     selectedGo.transform.rotation = hit.transform.rotation;
-                    selectedGo.transform.localPosition = new Vector3(selectedGo.transform.localPosition.x, originalHeight, selectedGo.transform.localPosition.z);
+                    selectedGo.transform.localPosition = new Vector3(selectedGo.transform.localPosition.x, originalHeight, selectedGo.transform.localPosition.z); //set correct height
                 }
                 else
                     selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), originalHeight, RoundToNearestGrid(selectedGo.transform.localPosition.z));
