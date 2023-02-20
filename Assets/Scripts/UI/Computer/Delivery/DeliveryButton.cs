@@ -38,7 +38,6 @@ public class DeliveryButton : MonoBehaviour {
 
         if (tabs.canChangeTab)
         {
-            print("Ammountmanager true");
             tabs.canChangeTab = false;
             ammountManager.deliveryButton = this;
 
@@ -48,6 +47,7 @@ public class DeliveryButton : MonoBehaviour {
                 ammountManager.SetTexture(product.image);
 
             ammountManager.gameObject.SetActive(true);
+            ammountManager.originalAmmount = ammountManager.ammountToBuy;
         }
 
     }
