@@ -11,6 +11,7 @@ public class WallFade : MonoBehaviour {
     private List<Coroutine> invisibleCoroutines;
     private List<Coroutine> visibleCoroutines;
     [SerializeField] private bool stillInUse = false;
+    [SerializeField] private float actualOpacity;
 
     private void Start() {
         lerpTime = time * Time.deltaTime;
@@ -21,13 +22,14 @@ public class WallFade : MonoBehaviour {
     public void DisableWall()
     {
         if (thisRoomIsActive) {
-                if (stillInUse)
-                {
+            if (stillInUse)
+            {
 
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++)
                 {
-                    //StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
-                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    actualOpacity = wallToDispawn.transform.GetChild(i).GetComponent<Renderer>().material.GetFloat("_Opacity");
+                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
+                    //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
 
             }
@@ -35,24 +37,26 @@ public class WallFade : MonoBehaviour {
     }
 
     public void EnableWall()
-    { 
-    
-            if (stillInUse)
-            {
+    {
+
+        if (stillInUse)
+        {
 
             for (int i = 0; i < wallToDispawn.transform.childCount; i++)
             {
-                //StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
-                wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
+                actualOpacity = wallToDispawn.transform.GetChild(i).GetComponent<Renderer>().material.GetFloat("_Opacity");
+                StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
+                //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
             }
 
         }
     }
 
     private IEnumerator ChangeColor(Transform go, float opacity) {
-        while (go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght") != opacity) {
-            float a = go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght");
-            go.GetComponent<Renderer>().material.SetFloat("_AlphaStrenght", Mathf.Lerp(a, opacity, lerpTime));
+        while (go.GetComponent<Renderer>().material.GetFloat("_Opacity") != opacity) {
+            print(go.GetComponent<Renderer>().material.GetFloat("_Opacity") + " = " + opacity);
+            //float a = go.GetComponent<Renderer>().material.GetFloat("_Opacity");
+            go.GetComponent<Renderer>().material.SetFloat("_Opacity", Mathf.Lerp(actualOpacity, opacity, lerpTime));
             yield return new WaitForEndOfFrame();
         }
         yield return null;
