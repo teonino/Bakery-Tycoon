@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2b0c090f4ad304ba1f52fd931125d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customer: {fileID: 0}
   animationKey: Sit
 --- !u!1 &2794371502952473774
 GameObject:
@@ -58,6 +57,7 @@ GameObject:
   - component: {fileID: 2794371502952473773}
   - component: {fileID: 2794371502952473772}
   - component: {fileID: 7794909250091038084}
+  - component: {fileID: 3882532875976730000}
   m_Layer: 6
   m_Name: FT_RU_Couch
   m_TagString: Untagged
@@ -144,3 +144,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9447649, y: 1.165108, z: 0.955624}
   m_Center: {x: -0.0000013113022, y: 0.582554, z: 0.0068123355}
+--- !u!114 &3882532875976730000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2794371502952473774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: b8d5a25a5c406b7409ad737d925a192c, type: 2}
+  mandatoryList: {fileID: 0}

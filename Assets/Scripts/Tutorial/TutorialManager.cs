@@ -11,7 +11,6 @@ public class TutorialManager : MonoBehaviour {
 
     private int indexQuest = 0;
     private DialogueManager dialogueManager;
-    private Dialogue dialogue;
 
     private void Awake() {
         foreach (Quest quest in quests)

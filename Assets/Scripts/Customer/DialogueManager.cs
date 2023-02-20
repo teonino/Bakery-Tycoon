@@ -19,8 +19,9 @@ public class DialogueManager : MonoBehaviour {
 
     private string npcName;
     private int idDialogue;
-    private RegularSO currentRegular;
     private int tutorialId = 1;
+    private RegularSO currentRegular;
+
     public Action OnDestroyDialoguePanel;
 
     private void OnEnable() {

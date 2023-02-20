@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4521696200431039402}
   - component: {fileID: 8859447426532463563}
   - component: {fileID: 5643892328595676478}
+  - component: {fileID: 640302133613710944}
   m_Layer: 6
   m_Name: FT_RU_Showcase
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2720375166352970367}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -3.5, y: 0, z: -3.5000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -37,7 +38,7 @@ Transform:
   - {fileID: 9048041567062614859}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &1811781810795579232
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -125,6 +126,20 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   debugState: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
   interractQuest: {fileID: 11400000, guid: 987d86c3e174c2c42ae44bfb1c1ba112, type: 2}
+--- !u!114 &640302133613710944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720375166352970367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: 6fdfeba24f2bcff42b721c1ce63d5eff, type: 2}
+  mandatoryList: {fileID: 0}
 --- !u!1 &7081228627498850670
 GameObject:
   m_ObjectHideFlags: 0
