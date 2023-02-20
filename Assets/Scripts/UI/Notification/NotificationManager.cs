@@ -9,6 +9,7 @@ public class NotificationManager : MonoBehaviour {
     [SerializeField] private AssetReference notificationPanelAsset;
     [SerializeField] private NotificationEvent notificationSO;
     [SerializeField] private float displayTimeInSecond;
+    [SerializeField] private float timeBetweenEachNotification = 0.5f;
     [SerializeField] private SFX_SO sfx;
     [SerializeField] private NotificationType notifType;
 
@@ -35,13 +36,13 @@ public class NotificationManager : MonoBehaviour {
 
     private IEnumerator DisplayNotification() {
         NotificationPanel panel = null;
-
-        sfx.Invoke("Notification");
+       
         notificationPanelAsset.InstantiateAsync(transform).Completed += (go) => {
             panel = go.Result.GetComponent<NotificationPanel>(); 
             panel.SetTitleText(queue.Peek().GetTitle());
             panel.SetDescriptionText(queue.Peek().GetDescription());
             panel.SetImage(queue.Peek().GetSprite());
+            sfx.Invoke("Notification");
         };
 
         notificationDisplayed = true;
@@ -49,16 +50,16 @@ public class NotificationManager : MonoBehaviour {
         yield return new WaitForSeconds(displayTimeInSecond);
 
         queue.Dequeue();
-        Addressables.ReleaseInstance(panel.gameObject);
         notificationDisplayed = false;
+        Addressables.ReleaseInstance(panel.gameObject);
 
-        yield return new WaitForSeconds(0.5f); //Waiting time before next notif
+        yield return new WaitForSeconds(timeBetweenEachNotification);
 
         if (queue.Count > 0)
             StartCoroutine(DisplayNotification());
     }
 
-    public void DebugCreateNotif() {
+    public void DEBUG_CreateNotif() {
         AddNotif(notifType);
     }
 }
