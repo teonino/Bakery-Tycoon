@@ -24,6 +24,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
+    [SerializeField] private GameObject LetsCookPanel;
 
     protected List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -205,6 +206,15 @@ public class WorkstationManager : MonoBehaviour {
                     ingredientAdded = true;
                 }
             }
+        }
+        print("ingredient count: " + ingredientsSelected.Count);
+        if (ingredientsSelected[0].inUse || ingredientsSelected[1].inUse || ingredientsSelected[2].inUse)
+        {
+            LetsCookPanel.SetActive(true);
+        }
+        else
+        {
+            LetsCookPanel.SetActive(false);
         }
     }
 
