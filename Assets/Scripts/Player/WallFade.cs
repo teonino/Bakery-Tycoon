@@ -26,8 +26,8 @@ public class WallFade : MonoBehaviour {
 
                 for (int i = 0; i < wallToDispawn.transform.childCount; i++)
                 {
-                    StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
-                    //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    //StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
+                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
 
             }
@@ -42,8 +42,8 @@ public class WallFade : MonoBehaviour {
 
             for (int i = 0; i < wallToDispawn.transform.childCount; i++)
             {
-                StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
-                //wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
+                //StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
+                wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
             }
 
         }

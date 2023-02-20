@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject itemSocket;
     [SerializeField] private GameObject interractPanel;
 
+    [SerializeField] private GameObject recipesBook;
+    private bool bookDisplayed = false;
+
     [Header("UI Interaction")]
     [SerializeField] private GameObject interactionText;
     [SerializeField] private TextMeshProUGUI modulableInteractionText;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour {
         playerInput = new PlayerInput();
         playerMovements = GetComponent<PlayerMovements>();
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
+        playerInput.UI.DisplayRecipesBook.Enable();
         EnableInput();
 
         localizedString = productAmountText.GetComponent<LocalizeStringEvent>().StringReference;
@@ -204,6 +208,21 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
+    private void DisplayBook(InputAction.CallbackContext context)
+    {
+        if (bookDisplayed)
+        {
+            recipesBook.SetActive(false);
+            bookDisplayed = false;
+        }
+        else if(!bookDisplayed)
+        {
+            recipesBook.SetActive(true);
+            bookDisplayed = true;
+        }
+    }
+
     private void OnPause(InputAction.CallbackContext context) {
         FindObjectOfType<PauseManager>(true).gameObject.SetActive(true);
         DisableInput();
@@ -237,10 +256,12 @@ public class PlayerController : MonoBehaviour {
     private void OnEnable() {
         playerInput.Player.Interact.performed += OnInterract;
         playerInput.Player.Pause.performed += OnPause;
+        playerInput.UI.DisplayRecipesBook.performed += DisplayBook;
     }
 
     private void OnDestroy() {
         playerInput.Player.Interact.performed -= OnInterract;
         playerInput.Player.Pause.performed -= OnPause;
+        playerInput.UI.DisplayRecipesBook.performed -= DisplayBook;
     }
 }
