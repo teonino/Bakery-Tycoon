@@ -40,13 +40,11 @@ public class WallFade : MonoBehaviour
         if (isHiding)
         {
             hideOpacity = Mathf.Lerp(hideOpacity, 0f, hideSpeed * Time.deltaTime);
-            print("H " + hideOpacity);
             SetOpacity(hideOpacity);
         }
         else if (isShowing)
         {
             showOpacity = Mathf.Lerp(showOpacity, 1f, showSpeed * Time.deltaTime);
-            print("S " + showOpacity);
             SetOpacity(showOpacity);
         }
 
