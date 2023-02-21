@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "DisplayRecipesBook",
+                    "type": "Button",
+                    "id": "f96b00fe-e89d-4810-ba76-42eaab2f76fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -227,6 +236,28 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "AllowCameraMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f20c6b3d-93c2-410c-8608-4aee64118af6",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplayRecipesBook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d84447c4-4c04-4855-915d-737936c6e0ff",
+                    "path": "<XInputController>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplayRecipesBook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -626,15 +657,6 @@
                     "type": "PassThrough",
                     "id": "70e907ca-fdd9-4f94-a29a-10d63e5d04fa",
                     "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DisplayRecipesBook",
-                    "type": "Button",
-                    "id": "dfd68966-ee8a-4ab4-bb28-d74710cca325",
-                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1102,28 +1124,6 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "e0a0dc57-7469-476e-bda2-9313db6a2323",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DisplayRecipesBook",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "10fc19a2-2b75-4145-a779-b6327db79448",
-                    "path": "<XInputController>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DisplayRecipesBook",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },

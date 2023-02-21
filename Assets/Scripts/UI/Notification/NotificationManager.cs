@@ -11,6 +11,8 @@ public class NotificationManager : MonoBehaviour {
     [SerializeField] private float displayTimeInSecond;
     [SerializeField] private float timeBetweenEachNotification = 0.5f;
     [SerializeField] private SFX_SO sfx;
+    [SerializeField] private AudioSource notifSource;
+    [SerializeField] private AudioClip notifClip;
     [SerializeField] private NotificationType notifType;
 
     private Queue<NotificationType> queue;
@@ -42,8 +44,8 @@ public class NotificationManager : MonoBehaviour {
             panel.SetTitleText(queue.Peek().GetTitle());
             panel.SetDescriptionText(queue.Peek().GetDescription());
             panel.SetImage(queue.Peek().GetSprite());
-            sfx.Invoke("Notification");
         };
+        notifSource.PlayOneShot(notifClip);
 
         notificationDisplayed = true;
 

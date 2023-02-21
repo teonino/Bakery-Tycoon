@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallFade : MonoBehaviour {
+public class WallFade : MonoBehaviour
+{
 
     [SerializeField] private Transform parentObject;
     [SerializeField] private float hideSpeed = 2f;
@@ -20,7 +21,7 @@ public class WallFade : MonoBehaviour {
         {
             isHiding = true;
             isShowing = false;
-            showOpacity = 1;
+            hideOpacity = 1;
         }
     }
 
@@ -38,12 +39,14 @@ public class WallFade : MonoBehaviour {
     {
         if (isHiding)
         {
-            hideOpacity = Mathf.MoveTowards(hideOpacity, 0f, hideSpeed * Time.deltaTime);
+            hideOpacity = Mathf.Lerp(hideOpacity, 0f, hideSpeed * Time.deltaTime);
+            print("H " + hideOpacity);
             SetOpacity(hideOpacity);
         }
         else if (isShowing)
         {
-            showOpacity = Mathf.MoveTowards(showOpacity, 1f, showSpeed * Time.deltaTime);
+            showOpacity = Mathf.Lerp(showOpacity, 1f, showSpeed * Time.deltaTime);
+            print("S " + showOpacity);
             SetOpacity(showOpacity);
         }
 
@@ -55,7 +58,7 @@ public class WallFade : MonoBehaviour {
         {
             Renderer renderer = child.GetComponent<Renderer>();
             float actualOpacity = renderer.material.GetFloat("_Opacity");
-            renderer.material.SetFloat("_Opacity", Mathf.Lerp(actualOpacity, amount, lerpTime));
+            renderer.material.SetFloat("_Opacity", amount);
         }
     }
 }
