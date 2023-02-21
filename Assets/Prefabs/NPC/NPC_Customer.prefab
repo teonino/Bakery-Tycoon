@@ -65,7 +65,7 @@ MonoBehaviour:
   bonusTime: 0
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
-  animator: {fileID: 1055256963091979644}
+  animator: {fileID: 0}
   waitingTime: 360
   saleReputation: 1
   requestedProduct: {fileID: 0}
@@ -251,7 +251,7 @@ PrefabInstance:
     - target: {fileID: -6970043576544895838, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e95ca7261d5273542874a975b058cee5, type: 2}
+      objectReference: {fileID: 2100000, guid: ba36d6e1661003c4fbd52ad2a4c73690, type: 2}
     - target: {fileID: -6953241765192019141, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -267,11 +267,11 @@ PrefabInstance:
     - target: {fileID: 3086374635022113264, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e95ca7261d5273542874a975b058cee5, type: 2}
+      objectReference: {fileID: 2100000, guid: ba36d6e1661003c4fbd52ad2a4c73690, type: 2}
     - target: {fileID: 3555099938122279862, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e95ca7261d5273542874a975b058cee5, type: 2}
+      objectReference: {fileID: 2100000, guid: ba36d6e1661003c4fbd52ad2a4c73690, type: 2}
     - target: {fileID: 5866666021909216657, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
       propertyPath: m_Controller
       value: 
@@ -282,11 +282,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d3d9a177d975a4147982f115508c51e2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
---- !u!95 &1055256963091979644 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
-  m_PrefabInstance: {fileID: 6903898605667115245}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5984996820304485820 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
@@ -304,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40cc3e2355fca384680d5e195c7af336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customer: {fileID: 0}
 --- !u!4 &6360536543541004038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 085ca1e820edd3d4a934435b9df1b2ed, type: 3}
