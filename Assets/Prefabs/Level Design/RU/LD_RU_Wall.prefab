@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1058403541615287128}
   - component: {fileID: 5621011861977031950}
-  m_Layer: 0
+  - component: {fileID: -6483232539035002729}
+  m_Layer: 11
   m_Name: LD_RU_Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -46,6 +47,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0243477, y: 2.5056467, z: 0.04999977}
   m_Center: {x: -0.4946323, y: 1.2528234, z: 0.024999885}
+--- !u!114 &-6483232539035002729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431189725383934434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: 03ab389786bfcd6478011fb77c64c8fe, type: 2}
+  mandatoryList: {fileID: 0}
 --- !u!1 &3054687144535125698
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +72,7 @@ GameObject:
   - component: {fileID: 2644336595519392567}
   - component: {fileID: 8539453886221263158}
   - component: {fileID: 4244729841625705782}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

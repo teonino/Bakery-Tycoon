@@ -14,6 +14,7 @@ public class FurnitureManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Money money;
     [SerializeField] private Controller controller;
+    [SerializeField] private GameObject assetChoicePanel;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
@@ -230,6 +231,14 @@ public class FurnitureManager : MonoBehaviour {
             }
         }
         SetVerticalLayoutGroup();
+    }
+
+    public void DisplayAssetChoice(FurnitureSO furniture) {
+        assetChoicePanel.SetActive(true);
+        AssetChoiceManager choiceManager = assetChoicePanel.GetComponent<AssetChoiceManager>();
+
+        choiceManager.SetFurnitureSO(furniture);
+        choiceManager.SetFurnitureManager(this);
     }
 
     public void AddOwnedFurniture(FurnitureSO furniture) {
