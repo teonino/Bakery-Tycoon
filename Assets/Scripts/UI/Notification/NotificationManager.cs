@@ -46,13 +46,13 @@ public class NotificationManager : MonoBehaviour {
         };
 
         notificationDisplayed = true;
-        queue.Dequeue();
 
         yield return new WaitForSeconds(displayTimeInSecond);
         Addressables.ReleaseInstance(panel.gameObject);
         yield return new WaitForSeconds(timeBetweenEachNotification);
 
         notificationDisplayed = false;
+        queue.Dequeue();
 
         if (queue.Count > 0)
             StartCoroutine(DisplayNotification());

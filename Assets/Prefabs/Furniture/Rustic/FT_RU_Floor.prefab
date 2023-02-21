@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7766399890108419748}
   - component: {fileID: 7766399890108419749}
   - component: {fileID: 5257597248504565105}
+  - component: {fileID: -7704463005485441246}
   m_Layer: 7
   m_Name: FT_RU_Floor
   m_TagString: Floor
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7766399890108419747}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,3 +98,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.015411889, z: 1}
   m_Center: {x: -0.5, y: 0.0077059455, z: -0.5}
+--- !u!114 &-7704463005485441246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766399890108419747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: c615a21b7fdb23f4f8ca5c3a432797eb, type: 2}
+  mandatoryList: {fileID: 0}
