@@ -177,33 +177,40 @@ public class FurnitureManager : MonoBehaviour {
         else {
             //Set buttons in racks
             for (int i = 0; i < buttonLenght; i++) {
-                bool inFilter = false;
+                bool inStyleFilter = false;
                 FurnitureButton button = furnitureButtonList[i].GetComponent<FurnitureButton>();
 
                 //Check if button match with style filter
                 lenght = furnitureStyleFilter.Count;
                 for (int j = 0; j < lenght; j++) {
                     if (button.GetFurniture().GetStyle() == furnitureStyleFilter[j]) {
-                        inFilter = true;
+                        inStyleFilter = true;
                     }
                 }
+
+                //If no style filter, then true
+                if (lenght == 0)
+                    inStyleFilter = true;
 
                 //Check if button match with type filter
+                bool inTypeFilter = false;
                 lenght = furnitureTypeFilter.Count;
 
-                if (!inFilter) {
-                    for (int j = 0; j < lenght; j++) {
-                        if (button.GetFurniture().GetType() == furnitureTypeFilter[j]) {
-                            inFilter = true;
-                        }
+                for (int j = 0; j < lenght; j++) {
+                    if (button.GetFurniture().GetType() == furnitureTypeFilter[j]) {
+                        inTypeFilter = true;
                     }
                 }
 
+                //If no type filter, then true
+                if (lenght == 0)
+                    inTypeFilter = true;
+
                 //If button is in filter, set true
-                if (inFilter)
+                if (inStyleFilter && inTypeFilter)
                     activeButtons.Add(furnitureButtonList[i]);
 
-                furnitureButtonList[i].SetActive(inFilter);
+                furnitureButtonList[i].SetActive(inStyleFilter && inTypeFilter);
             }
 
 
