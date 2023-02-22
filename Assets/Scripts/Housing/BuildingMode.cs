@@ -201,7 +201,6 @@ public class BuildingMode : Interactable {
             else {
                 selectedGo.transform.position = originalPosition;
                 selectedGo.transform.rotation = originalRotation;
-
                 ResetValue();
             }
         }
