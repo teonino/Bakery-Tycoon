@@ -246,6 +246,10 @@ public class FurnitureManager : MonoBehaviour {
 
         choiceManager.SetFurnitureSO(furniture);
         choiceManager.SetFurnitureManager(this);
+
+
+        playerController.playerInput.UI.Quit.performed -= Quit;
+        playerController.playerInput.UI.Quit.performed += choiceManager.Quit;
     }
 
     public void AddOwnedFurniture(FurnitureSO furniture) {
@@ -255,7 +259,7 @@ public class FurnitureManager : MonoBehaviour {
         }
     }
 
-    private void Quit(InputAction.CallbackContext context) {
+    public void Quit(InputAction.CallbackContext context) {
         Quit();
     }
 

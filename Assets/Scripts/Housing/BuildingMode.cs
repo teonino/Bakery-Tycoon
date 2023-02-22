@@ -35,7 +35,10 @@ public class BuildingMode : Interactable {
     private bool inBuildingMode = false;
     private bool selectedGoIsFloor = false;
     private bool selectedGoIsWall = false;
+    private bool selectedGoIsBought = false;
     private float originalHeight;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
 
     private void OnEnable() {
         currentRaycastlayer = pickUpLayer;
@@ -165,23 +168,45 @@ public class BuildingMode : Interactable {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
                 if (!selectedGo) {
+                    selectedGoIsBought = false;
+                    originalPosition = hit.collider.transform.position;
+                    originalRotation = hit.collider.transform.rotation;
                     SetSelectedGO(hit.collider.gameObject);
                 }
                 else if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
-                    Destroy(selectedGo.GetComponent<CheckCollisionManager>());
-                    Destroy(selectedGo.GetComponent<Rigidbody>());
-
-                    currentRaycastlayer = pickUpLayer;
-                    selectedGo.layer = initialGoLayer;
-                    selectedGoIsFloor = selectedGoIsWall = false;
-                    ChangeColliderSize(false);
-                    selectedGo = null;
+                    ResetValue();
                 }
             }
         }
     }
 
-    public void SetSelectedGO(GameObject go) {
+    private void ResetValue() {
+        Destroy(selectedGo.GetComponent<CheckCollisionManager>());
+        Destroy(selectedGo.GetComponent<Rigidbody>());
+        currentRaycastlayer = pickUpLayer;
+        selectedGo.layer = initialGoLayer;
+        selectedGoIsFloor = selectedGoIsWall = false;
+        selectedGoIsBought = false;
+        ChangeColliderSize(false);
+        selectedGo = null;
+    }
+
+    public void SetSelectedGO(GameObject go, bool bought = false) {
+        if (selectedGo) {
+            if (disabledGo)
+                disabledGo.SetActive(true);
+
+            if (selectedGoIsBought)
+                Addressables.ReleaseInstance(selectedGo);
+            else {
+                selectedGo.transform.position = originalPosition;
+                selectedGo.transform.rotation = originalRotation;
+
+                ResetValue();
+            }
+        }
+
+        selectedGoIsBought = bought;
         selectedGo = go;
 
         FurnitureType type = selectedGo.GetComponent<FurnitureHolder>().GetFurniture().GetType();
