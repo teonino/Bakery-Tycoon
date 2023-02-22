@@ -104,5 +104,9 @@ public class CheckCollisionManager : MonoBehaviour {
     private void OnDestroy() {
         foreach (GameObject go in furnitureColliderList)
             Destroy(go.GetComponent<CheckCollision>());
+
+        for (int i = 0; i < furnitureMeshRendererList.Count; i++) {
+            furnitureMeshRendererList[i].material = initialMaterials[i];
+        }
     }
 }
