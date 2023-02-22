@@ -2,59 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallFade : MonoBehaviour {
+public class WallFade : MonoBehaviour
+{
 
-    [SerializeField] private GameObject wallToDispawn;
-    [SerializeField][Range(5f, 15f)] float time;
-    private float lerpTime;
-    public bool thisRoomIsActive;
-    private List<Coroutine> invisibleCoroutines;
-    private List<Coroutine> visibleCoroutines;
-    [SerializeField] private bool stillInUse = false;
+    [SerializeField] private Transform parentObject;
+    [SerializeField] private float hideSpeed = 2f;
+    [SerializeField] private float showSpeed = 2f;
+    [SerializeField] private float lerpTime = 0.5f;
 
-    private void Start() {
-        lerpTime = time * Time.deltaTime;
-        invisibleCoroutines = new List<Coroutine>();
-        visibleCoroutines = new List<Coroutine>();
-    }
+    private bool isHiding = false;
+    private bool isShowing = false;
+    private float hideOpacity = 1f;
+    private float showOpacity = 0f;
 
-    public void DisableWall()
+    private void OnTriggerEnter(Collider other)
     {
-        if (thisRoomIsActive) {
-                if (stillInUse)
-                {
-
-                for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-                {
-                    //StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 0));
-                    wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = false;
-                }
-
-            }
+        if (other.CompareTag("Player"))
+        {
+            isHiding = true;
+            isShowing = false;
+            hideOpacity = 1;
         }
     }
 
-    public void EnableWall()
-    { 
-    
-            if (stillInUse)
-            {
-
-            for (int i = 0; i < wallToDispawn.transform.childCount; i++)
-            {
-                //StartCoroutine(ChangeColor(wallToDispawn.transform.GetChild(i), 1));
-                wallToDispawn.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = true;
-            }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isHiding = false;
+            isShowing = true;
+            showOpacity = 0;
         }
     }
 
-    private IEnumerator ChangeColor(Transform go, float opacity) {
-        while (go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght") != opacity) {
-            float a = go.GetComponent<Renderer>().material.GetFloat("_AlphaStrenght");
-            go.GetComponent<Renderer>().material.SetFloat("_AlphaStrenght", Mathf.Lerp(a, opacity, lerpTime));
-            yield return new WaitForEndOfFrame();
+    private void Update()
+    {
+        if (isHiding)
+        {
+            hideOpacity = Mathf.Lerp(hideOpacity, 0f, hideSpeed * Time.deltaTime);
+            SetOpacity(hideOpacity);
         }
-        yield return null;
+        else if (isShowing)
+        {
+            showOpacity = Mathf.Lerp(showOpacity, 1f, showSpeed * Time.deltaTime);
+            SetOpacity(showOpacity);
+        }
+
+    }
+
+    private void SetOpacity(float amount)
+    {
+        foreach (Transform child in parentObject)
+        {
+            Renderer renderer = child.GetComponent<Renderer>();
+            float actualOpacity = renderer.material.GetFloat("_Opacity");
+            renderer.material.SetFloat("_Opacity", amount);
+        }
     }
 }

@@ -23,6 +23,7 @@ public class BuildingMode : Interactable {
     [Header("Gamepad Parameters")]
     [SerializeField] private int cursorSpeed = 1;
 
+    [SerializeField] private SFXPlayer sfxPlayer;
     private FurnitureManager furnitureManager;
     private GameObject mainCamera;
     private GameObject buildingCamera;
@@ -62,7 +63,7 @@ public class BuildingMode : Interactable {
         if (day.GetDayTime() != DayTime.Day) {
             playerControllerSO.GetPlayerController().DisableInput();
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
-
+            sfxPlayer.InteractSound();
             CreateCursor();
             //if (controller.IsGamepad())
             //    if (!cursorObject)

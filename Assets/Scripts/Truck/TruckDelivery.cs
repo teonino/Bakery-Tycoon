@@ -10,6 +10,7 @@ public class TruckDelivery : Interactable {
     [SerializeField] private TruckDeliveryTime time;
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
+    [SerializeField] private SFXPlayer sfxPlayer;
 
     private bool moving;
     private bool fetchingOrder = false;
@@ -66,6 +67,7 @@ public class TruckDelivery : Interactable {
     public override void Effect() {
         if (delivery != null && !moving) {
             deliveries.DeliverOrder(delivery);
+            sfxPlayer.InteractSound();
             delivery = null;
         }
     }

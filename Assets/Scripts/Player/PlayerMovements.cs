@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovements : MonoBehaviour {
     [SerializeField] private float speed = 5;
+    [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private AudioSource footstepSource;
 
     private Rigidbody rb;
     private Camera cam;
@@ -12,7 +14,8 @@ public class PlayerMovements : MonoBehaviour {
         cam = Camera.main;
     }
 
-    public void Move(Vector2 movement) {
+    public void Move(Vector2 movement)
+    {
         Vector3 velocity = new Vector3(movement.x, 0, movement.y);
         velocity = cam.transform.TransformDirection(velocity);
         velocity.y = 0;
