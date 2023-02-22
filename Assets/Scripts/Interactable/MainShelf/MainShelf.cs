@@ -7,6 +7,7 @@ public class MainShelf : Shelf {
     private List<QueueShelf> queueCustomer;
     private List<QueueBakery> queueCustomerInteracting;
 
+
     private new void Start() {
         base.Start();
         queueCustomer = new List<QueueShelf>();
