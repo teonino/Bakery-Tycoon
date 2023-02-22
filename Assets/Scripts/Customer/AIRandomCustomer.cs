@@ -26,7 +26,7 @@ public class AIRandomCustomer : AICustomer
 
         day.DayTimeChange += LeaveOnEvening;
         state = AIState.moving;
-        animator.SetTrigger("Walk");
+        //animator.SetTrigger("Walk");
     }
 
     private new void TakeItem(ProductHolder product, GameObject displayGO)
@@ -72,7 +72,7 @@ public class AIRandomCustomer : AICustomer
             coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
 
             if (!interacting) {
-                animator.SetTrigger("Idle");
+                //animator.SetTrigger("Idle");
             }
         }
 
