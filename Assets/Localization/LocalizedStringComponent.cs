@@ -20,14 +20,16 @@ public class LocalizedStringComponent : MonoBehaviour {
         text.text = GetLocalizedString(stringTable, key);
     }
     private string GetLocalizedString(StringTable table, string entryName) {
-        StringTableEntry entry = table.GetEntry(entryName);
-        if (entry != null)
-            if (entry.GetLocalizedString().Contains('+'))
-                return entry.GetLocalizedString().Replace('+', ' ');
-            else
-                return entry.GetLocalizedString();
-        else
-            return string.Empty;
+        if (table) {
+            StringTableEntry entry = table.GetEntry(entryName);
+            if (entry != null)
+                if (entry.GetLocalizedString().Contains('+'))
+                    return entry.GetLocalizedString().Replace('+', ' ');
+                else
+                    return entry.GetLocalizedString();
+        }
+
+        return string.Empty;
     }
 
     public void SetKey(string value) => key = value;

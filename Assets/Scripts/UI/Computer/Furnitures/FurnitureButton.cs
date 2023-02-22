@@ -25,13 +25,20 @@ public class FurnitureButton : MonoBehaviour {
             "Style : " + furnitureSO.GetStyle() + "\n" +
             "Type : " + furnitureSO.GetType();
 
-        image.texture = furnitureSO.GetTexture();
+        image.texture = furnitureSO.GetTextureA();
 
-        button.onClick.AddListener(BuyFurniture);
+        if (furnitureSO.hasTwoAsset())
+            button.onClick.AddListener(DisplayAssetChoiceWindow);
+        else
+            button.onClick.AddListener(BuyFurniture);
+    }
+
+    private void DisplayAssetChoiceWindow() {
+        furnitureManager.DisplayAssetChoice(furnitureSO);
     }
 
     private void BuyFurniture() {
-        furnitureSO.GetAssets().InstantiateAsync().Completed += (go) => {
+        furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
             furnitureManager.GetBuildingMode().SetSelectedGO(go.Result);
             furnitureManager.Quit();
         };
