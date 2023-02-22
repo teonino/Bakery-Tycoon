@@ -12,6 +12,7 @@ public class TruckDelivery : Interactable {
     [SerializeField] private NotificationType notifType;
     [SerializeField] private SFXPlayer sfxPlayer;
 
+    internal bool isInDelivery = false;
     private bool moving;
     private bool fetchingOrder = false;
     private Vector3 dest;
@@ -43,7 +44,6 @@ public class TruckDelivery : Interactable {
         }
     }
 
-    //Trigger this when the player interacted with the truck to collect the delivery
     public void DeliveryDeparture() {
         gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
         gameObject.SetActive(true);
@@ -51,6 +51,7 @@ public class TruckDelivery : Interactable {
         moving = true;
         fetchingOrder = true;
         audioSource.Play();
+        isInDelivery = true;
     }
 
     //Trigger this when truck is close to arriving
@@ -69,6 +70,7 @@ public class TruckDelivery : Interactable {
             deliveries.DeliverOrder(delivery);
             sfxPlayer.InteractSound();
             delivery = null;
+            isInDelivery = false;
         }
     }
 }
