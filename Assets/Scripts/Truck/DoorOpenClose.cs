@@ -14,7 +14,6 @@ public class DoorOpenClose : MonoBehaviour
         if (Vector3.Distance(transform.position, truck.transform.position) < 3f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, openPosition, ref velocity, 0.8f);
-            print("inferieur");
         }
         else
         {
