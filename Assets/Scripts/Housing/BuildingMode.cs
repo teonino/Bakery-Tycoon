@@ -32,8 +32,14 @@ public class BuildingMode : Interactable {
     private LayerMask initialGoLayer;
     private GameObject cursorObject;
     private GameObject selectedGo;
+    private GameObject disabledGo;
     private bool inBuildingMode = false;
+    private bool selectedGoIsFloor = false;
+    private bool selectedGoIsWall = false;
+    private bool selectedGoIsBought = false;
     private float originalHeight;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
 
     private void OnEnable() {
         currentRaycastlayer = pickUpLayer;
@@ -81,7 +87,7 @@ public class BuildingMode : Interactable {
             if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
                 if (holder.CanRemoveSelectedItem()) {
                     money.AddMoney(holder.GetFurniturePrice());
-                    print($"Add {holder.GetFurniturePrice()} €");
+                    print($"Sold {holder.name} => Add {holder.GetFurniturePrice()} €");
                     Destroy(holder.gameObject);
                     currentRaycastlayer = pickUpLayer;
                     selectedGo = null;
@@ -146,51 +152,87 @@ public class BuildingMode : Interactable {
     }
 
     private void Select(CallbackContext context) {
-        Ray ray;
-        if (controller.IsGamepad())
-            ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
-        else
-            ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (selectedGoIsWall || selectedGoIsFloor && selectedGo) {
+            Destroy(disabledGo);
+            currentRaycastlayer = pickUpLayer;
+            selectedGo.layer = initialGoLayer;
+            selectedGoIsFloor = selectedGoIsWall = false;
+            selectedGo = null;
+        }
+        else {
+            Ray ray;
+            if (controller.IsGamepad())
+                ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(cursorObject.transform.position);
+            else
+                ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
-            if (!selectedGo) {
-                SetSelectedGO(hit.collider.gameObject);
-            }
-            else {
-                if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
-
-                    currentRaycastlayer = pickUpLayer;
-                    selectedGo.layer = initialGoLayer;
-                    Destroy(selectedGo.GetComponent<CheckCollisionManager>());
-                    Destroy(selectedGo.GetComponent<Rigidbody>());
-
-                    ChangeColliderSize(false);
-
-                    selectedGo = null;
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
+                if (!selectedGo) {
+                    selectedGoIsBought = false;
+                    originalPosition = hit.collider.transform.position;
+                    originalRotation = hit.collider.transform.rotation;
+                    SetSelectedGO(hit.collider.gameObject);
+                }
+                else if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
+                    ResetValue();
                 }
             }
         }
     }
 
-    public void SetSelectedGO(GameObject go) {
+    private void ResetValue() {
+        Destroy(selectedGo.GetComponent<CheckCollisionManager>());
+        Destroy(selectedGo.GetComponent<Rigidbody>());
+        currentRaycastlayer = pickUpLayer;
+        selectedGo.layer = initialGoLayer;
+        selectedGoIsFloor = selectedGoIsWall = false;
+        selectedGoIsBought = false;
+        ChangeColliderSize(false);
+        selectedGo = null;
+    }
+
+    public void SetSelectedGO(GameObject go, bool bought = false) {
+        if (selectedGo) {
+            if (disabledGo)
+                disabledGo.SetActive(true);
+
+            if (selectedGoIsBought)
+                Addressables.ReleaseInstance(selectedGo);
+            else {
+                selectedGo.transform.position = originalPosition;
+                selectedGo.transform.rotation = originalRotation;
+                ResetValue();
+            }
+        }
+
+        selectedGoIsBought = bought;
         selectedGo = go;
 
-        selectedGo.AddComponent<CheckCollisionManager>();
-        selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
-        selectedGo.GetComponent<CheckCollisionManager>().layer = selectedGo.layer;
+        FurnitureType type = selectedGo.GetComponent<FurnitureHolder>().GetFurniture().GetType();
 
-        if (selectedGo.layer == LayerMask.NameToLayer("CustomizableWall"))
+        if (type == FurnitureType.Wall) {
+            selectedGoIsWall = true;
+        }
+        else if (type == FurnitureType.Floor) {
+            selectedGoIsFloor = true;
+        }
+        else {
+            selectedGo.AddComponent<CheckCollisionManager>();
+            selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            selectedGo.GetComponent<CheckCollisionManager>().collidingMaterial = collidingMaterial;
+            selectedGo.GetComponent<CheckCollisionManager>().layer = selectedGo.layer;
+
+            ChangeColliderSize(true);
+        }
+
+        if (selectedGo.layer == LayerMask.NameToLayer("CustomizableWall") || (selectedGo.layer == LayerMask.NameToLayer("Walls") && type == FurnitureType.Wall))
             currentRaycastlayer = putDownLayerWall;
         else
             currentRaycastlayer = putDownLayerFloor;
-
         initialGoLayer = selectedGo.layer;
         selectedGo.layer = 3;
         originalHeight = selectedGo.transform.position.y;
-
-        ChangeColliderSize(true);
     }
 
     private void ChangeColliderSize(bool remove) {
@@ -213,23 +255,73 @@ public class BuildingMode : Interactable {
 
     private void FixedUpdate() {
         if (inBuildingMode) {
-            if (controller.IsGamepad() && cursorObject) {
-                cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
-                SnapGameObject(cursorObject.transform.position);
+            if (selectedGoIsWall) {
+                if (controller.IsGamepad() && cursorObject) {
+                    cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                    ReplaceWall(cursorObject.transform.position);
+                }
+                else {
+                    ReplaceWall(Mouse.current.position.ReadValue());
+                }
+            }
+            else if (selectedGoIsFloor) {
+                if (controller.IsGamepad() && cursorObject) {
+                    cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                    ReplaceFloor(cursorObject.transform.position);
+                }
+                else {
+                    ReplaceFloor(Mouse.current.position.ReadValue());
+                }
             }
             else {
-                SnapGameObject(Mouse.current.position.ReadValue());
+                if (controller.IsGamepad() && cursorObject) {
+                    cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                    SnapGameObject(cursorObject.transform.position);
+                }
+                else {
+                    SnapGameObject(Mouse.current.position.ReadValue());
+                }
             }
         }
     }
 
     private void RotateGameObject(InputAction.CallbackContext ctx) {
-        if (selectedGo && initialGoLayer != LayerMask.NameToLayer("CustomizableWall")) {
+        if (selectedGo && !selectedGoIsWall && initialGoLayer != LayerMask.NameToLayer("CustomizableWall")) {
             if (playerControllerSO.GetPlayerController().playerInput.Building.Rotate.ReadValue<float>() > 0) {
                 selectedGo.transform.Rotate(Vector3.up * 90);
             }
             else if (playerControllerSO.GetPlayerController().playerInput.Building.Rotate.ReadValue<float>() < 0) {
                 selectedGo.transform.Rotate(Vector3.up * -90);
+            }
+        }
+    }
+
+
+    private void ReplaceFloor(Vector3 pos) {
+        if (selectedGo) {
+            RaycastHit hit;
+            Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
+                if (disabledGo)
+                    disabledGo.SetActive(true);
+                disabledGo = hit.collider.gameObject;
+                disabledGo.SetActive(false);
+                selectedGo.transform.position = hit.collider.transform.position;
+            }
+        }
+    }
+
+    private void ReplaceWall(Vector3 pos) {
+        if (selectedGo) {
+            RaycastHit hit;
+            Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
+                if (disabledGo)
+                    disabledGo.SetActive(true);
+                disabledGo = hit.collider.gameObject;
+                disabledGo.SetActive(false);
+                selectedGo.transform.position = hit.collider.transform.position;
+                selectedGo.transform.rotation = hit.collider.transform.rotation;
             }
         }
     }
@@ -245,8 +337,9 @@ public class BuildingMode : Interactable {
                     selectedGo.transform.rotation = hit.transform.rotation;
                     selectedGo.transform.localPosition = new Vector3(selectedGo.transform.localPosition.x, originalHeight, selectedGo.transform.localPosition.z); //set correct height
                 }
-                else
+                else {
                     selectedGo.transform.localPosition = new Vector3(RoundToNearestGrid(selectedGo.transform.localPosition.x), originalHeight, RoundToNearestGrid(selectedGo.transform.localPosition.z));
+                }
             }
         }
     }

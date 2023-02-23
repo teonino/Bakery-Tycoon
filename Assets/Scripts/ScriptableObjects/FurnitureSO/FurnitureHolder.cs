@@ -13,11 +13,12 @@ public class FurnitureHolder : MonoBehaviour {
     }
 
     public bool CanRemoveSelectedItem() {
-        if (mandatoryList)
-            if (mandatoryList.MoreThanOne())
+        if (mandatoryList) {
+            if (mandatoryList.MoreThanOne()) 
                 return mandatoryList.Remove(gameObject);
-
-        return false;
+            else return false;
+        }
+        else return true;
     }
 
     public FurnitureSO GetFurniture() => furniture;

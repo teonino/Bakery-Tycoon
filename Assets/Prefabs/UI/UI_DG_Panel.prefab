@@ -56,15 +56,16 @@ MonoBehaviour:
   npcSpeechTxt: {fileID: 560188014}
   npcNameTxt: {fileID: 8171001178770725082}
   playerAnswersTxt:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 947019694}
+  - {fileID: 1559646320}
+  - {fileID: 1306331364}
   controller: {fileID: 11400000, guid: 2616ac78187aa0c4b95e5f7975c52f01, type: 2}
   playerControllerSO: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
   characterTables: {fileID: 11400000, guid: 40ca815136f29f14082ad15f28bffae9, type: 2}
   tutorialDialogueTable:
     m_TableReference:
       m_TableCollectionName: GUID:37830838c6e349d45af83304c2af433d
+  tutorial: {fileID: 11400000, guid: a2f389f5f47836d428a654a8ed6d23b8, type: 2}
 --- !u!222 &9107808656133581
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -682,6 +683,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   dialogueManager: {fileID: 0}
+  tutorial: {fileID: 0}
   nextDialogue: 0
   relationReward: 0
 --- !u!222 &2997680386155364600
@@ -895,6 +897,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   dialogueManager: {fileID: 0}
+  tutorial: {fileID: 0}
   nextDialogue: 0
   relationReward: 0
 --- !u!222 &4473010320631935788
@@ -1108,6 +1111,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   dialogueManager: {fileID: 0}
+  tutorial: {fileID: 0}
   nextDialogue: 0
   relationReward: 0
 --- !u!222 &4127145343461176773
