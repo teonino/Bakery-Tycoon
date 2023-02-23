@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17023882, g: 0.21081136, b: 0.2729291, a: 1}
+  m_IndirectSpecularColor: {r: 0.18376257, g: 0.22913326, b: 0.30448174, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1163,7 +1163,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 976a63f9dcfe033489af08b82158bf2c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7e76cdc50d79bf641a3297e0425cb13e, type: 2}
+      objectReference: {fileID: 2100000, guid: 879977f6b465b5747bbee71905cec730, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 976a63f9dcfe033489af08b82158bf2c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2598895151143240110, guid: 523b558a42407f44891b366cd2224534, type: 3}
     - target: {fileID: 919132149155446097, guid: 976a63f9dcfe033489af08b82158bf2c, type: 3}
       propertyPath: m_Name
       value: ENV_RU_LAMP_MODEL (1)
@@ -4697,7 +4701,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 14762eb4bac553e47b51c5e94d260293, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d5716b4965b69e348afabd958ccbc960, type: 2}
+      objectReference: {fileID: 2100000, guid: 0d913d41501818f4aba9786477205314, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 14762eb4bac553e47b51c5e94d260293, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3754614185353263554, guid: 39cd36cc166ba284887680fad6e615aa, type: 3}
     - target: {fileID: 919132149155446097, guid: 14762eb4bac553e47b51c5e94d260293, type: 3}
       propertyPath: m_Name
       value: ENV_RU_CHAIR_MODEL
@@ -5532,7 +5540,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1949857402}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &281427432
 PrefabInstance:
@@ -5871,7 +5879,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 8a9c84eca1895144c9cac7e0979ea14c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7c01191597d889d4d84461c166da4ce8, type: 2}
+      objectReference: {fileID: 2100000, guid: c6ad07b9f76a79442b3d978d8c38c55d, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 8a9c84eca1895144c9cac7e0979ea14c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -486249950456911550, guid: d8dbfb33bb9540f4cae80b5f4516ceb7, type: 3}
     - target: {fileID: 919132149155446097, guid: 8a9c84eca1895144c9cac7e0979ea14c, type: 3}
       propertyPath: m_Name
       value: ENV_RU_SMALLTABLE_MODEL (1)
@@ -11689,6 +11701,7 @@ MonoBehaviour:
   daySystemEnable: 1
   startLightRotation: 20
   endLightRotation: 160
+  secondBeforeLightMovement: 0
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
 --- !u!114 &705507997
 MonoBehaviour:
@@ -12117,7 +12130,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 79676907}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &711300175
 GameObject:
@@ -14868,72 +14881,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 040fd3c13dc392c4ab59f7aab863e272, type: 3}
   m_PrefabInstance: {fileID: 860529107}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &869632947
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 948808946}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5e7853eac62ab4944adbc4e0d8353016, type: 2}
-    - target: {fileID: 919132149155446097, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-      propertyPath: m_Name
-      value: ENV_RU_COUCH_MODEL
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
---- !u!4 &869632948 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
-  m_PrefabInstance: {fileID: 869632947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &874410660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16070,7 +16017,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1096662805}
-  - {fileID: 869632948}
+  - {fileID: 1265244308}
   m_Father: {fileID: 659949826}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16830,7 +16777,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: fcec84bfa0e5f65449ea034baa219ab4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ef4bbdab8a7241e4a95402cf6bbcfc27, type: 2}
+      objectReference: {fileID: 2100000, guid: cd6af718f2430c64f9ffc91c4fef93b0, type: 2}
+    - target: {fileID: -5754084199372789682, guid: fcec84bfa0e5f65449ea034baa219ab4, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6941342946741893725, guid: 012adbcdbfcdb14438405f9d34e7d0a9, type: 3}
     - target: {fileID: 919132149155446097, guid: fcec84bfa0e5f65449ea034baa219ab4, type: 3}
       propertyPath: m_Name
       value: ENV_RU_PAINTINGS_MODEL
@@ -18023,7 +17974,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 10d05cfbcb7e2c045835633133221ff3, type: 2}
+      objectReference: {fileID: 2100000, guid: d9382bbf8c647c24f84b463510f6496f, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 622389796222500101, guid: be0f41f4e468ac6458de1a235c3abf0b, type: 3}
     - target: {fileID: 919132149155446097, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
       propertyPath: m_Name
       value: ENV_RU_COUCH_MODEL (1)
@@ -21222,6 +21177,76 @@ Transform:
   m_Father: {fileID: 1437227835}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1265244307
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 948808946}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 92ef299fdcc3677438316531407b0217, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 622389796222500101, guid: be0f41f4e468ac6458de1a235c3abf0b, type: 3}
+    - target: {fileID: 919132149155446097, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+      propertyPath: m_Name
+      value: ENV_RU_COUCH_MODEL (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+--- !u!4 &1265244308 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6414526cd1ec9de478bee55af9d59c58, type: 3}
+  m_PrefabInstance: {fileID: 1265244307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1265922231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21276,7 +21301,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 8a9c84eca1895144c9cac7e0979ea14c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 93bd50e4c87634847b7bc3e6c937c3a8, type: 2}
+      objectReference: {fileID: 2100000, guid: 7388eea706f6dd2479e7777ff7bc2dca, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 8a9c84eca1895144c9cac7e0979ea14c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -486249950456911550, guid: d8dbfb33bb9540f4cae80b5f4516ceb7, type: 3}
     - target: {fileID: 919132149155446097, guid: 8a9c84eca1895144c9cac7e0979ea14c, type: 3}
       propertyPath: m_Name
       value: ENV_RU_SMALLTABLE_MODEL
@@ -21904,7 +21933,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1464553036}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1319799901
 PrefabInstance:
@@ -22798,7 +22827,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: fcec84bfa0e5f65449ea034baa219ab4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5cc61926bd2348a448da5da6b44e1100, type: 2}
+      objectReference: {fileID: 2100000, guid: 1a38abd428cdb834e8586c7a8706767a, type: 2}
+    - target: {fileID: -5754084199372789682, guid: fcec84bfa0e5f65449ea034baa219ab4, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6941342946741893725, guid: 012adbcdbfcdb14438405f9d34e7d0a9, type: 3}
     - target: {fileID: 919132149155446097, guid: fcec84bfa0e5f65449ea034baa219ab4, type: 3}
       propertyPath: m_Name
       value: ENV_RU_PAINTINGS_MODEL (1)
@@ -24948,7 +24981,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1e16708603e277b40a2851b34de24996, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ed735189855b8b544a4af595bcf9f412, type: 2}
+      objectReference: {fileID: 2100000, guid: ec7271691bb73614b96148b71a885d8b, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 1e16708603e277b40a2851b34de24996, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8268657819845960459, guid: c6ccfb0e4656f294a9bd44203eedea26, type: 3}
     - target: {fileID: 919132149155446097, guid: 1e16708603e277b40a2851b34de24996, type: 3}
       propertyPath: m_Name
       value: ENV_RU_WORKSTATIONSINK_MODEL
@@ -25074,7 +25111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.034
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
       propertyPath: m_LocalPosition.z
@@ -25108,6 +25145,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e04fd643ff60c1543a0ccb3577ca9daf, type: 2}
     - target: {fileID: 919132149155446097, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
       propertyPath: m_Name
       value: PROPS_OTHER_SINK_MODEL
@@ -25616,6 +25657,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ffca3b10f0d2933449135557658472dc, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 8a3f18e4490ede448bca54a134b16aee, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 989167237224809805, guid: 8a3f18e4490ede448bca54a134b16aee, type: 3}
     - target: {fileID: 919132149155446097, guid: 8a3f18e4490ede448bca54a134b16aee, type: 3}
       propertyPath: m_Name
       value: ENV_RU_CARPET_MODEL
@@ -29680,7 +29725,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1e16708603e277b40a2851b34de24996, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ed735189855b8b544a4af595bcf9f412, type: 2}
+      objectReference: {fileID: 2100000, guid: 5232cb860c7c0af4ab7987d2ec618da3, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 1e16708603e277b40a2851b34de24996, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8268657819845960459, guid: c6ccfb0e4656f294a9bd44203eedea26, type: 3}
     - target: {fileID: 919132149155446097, guid: 1e16708603e277b40a2851b34de24996, type: 3}
       propertyPath: m_Name
       value: ENV_RU_WORKSTATIONSINK_MODEL
@@ -32227,6 +32276,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 076a62d62995a3848b5a6b5a6dfc0220, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e6bedcfe23474241bc2a13657358f8a, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 076a62d62995a3848b5a6b5a6dfc0220, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 7625918639920693240, guid: 26abb19a076493d4cbd7482a276afab8, type: 3}
     - target: {fileID: 919132149155446097, guid: 076a62d62995a3848b5a6b5a6dfc0220, type: 3}
       propertyPath: m_Name
       value: ENV_RU_SHELF_MODEL (1)
@@ -32416,7 +32473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32450,6 +32507,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e04fd643ff60c1543a0ccb3577ca9daf, type: 2}
     - target: {fileID: 919132149155446097, guid: f228acc34d7a3874bad0e6c933adef30, type: 3}
       propertyPath: m_Name
       value: PROPS_OTHER_SINK_MODEL
@@ -34351,7 +34412,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 14762eb4bac553e47b51c5e94d260293, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 066b780937631a445b2ff7704be490db, type: 2}
+      objectReference: {fileID: 2100000, guid: 020e978879092304b927d39feef78f21, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 14762eb4bac553e47b51c5e94d260293, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3754614185353263554, guid: 39cd36cc166ba284887680fad6e615aa, type: 3}
     - target: {fileID: 919132149155446097, guid: 14762eb4bac553e47b51c5e94d260293, type: 3}
       propertyPath: m_Name
       value: ENV_RU_CHAIR_MODEL (1)
@@ -36775,6 +36840,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 076a62d62995a3848b5a6b5a6dfc0220, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d4baa2bb5c5b5784a9ab2564a9cd08eb, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 076a62d62995a3848b5a6b5a6dfc0220, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 7625918639920693240, guid: 26abb19a076493d4cbd7482a276afab8, type: 3}
     - target: {fileID: 919132149155446097, guid: 076a62d62995a3848b5a6b5a6dfc0220, type: 3}
       propertyPath: m_Name
       value: ENV_RU_SHELF_MODEL
@@ -37102,7 +37175,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 976a63f9dcfe033489af08b82158bf2c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ebcec872748f8bf4c82d9cdd19596433, type: 2}
+      objectReference: {fileID: 2100000, guid: a650563563f23b74eb7673aa6f1a9ecc, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 976a63f9dcfe033489af08b82158bf2c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2598895151143240110, guid: 523b558a42407f44891b366cd2224534, type: 3}
     - target: {fileID: 919132149155446097, guid: 976a63f9dcfe033489af08b82158bf2c, type: 3}
       propertyPath: m_Name
       value: ENV_RU_LAMP_MODEL
