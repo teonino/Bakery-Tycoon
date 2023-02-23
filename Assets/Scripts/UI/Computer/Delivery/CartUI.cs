@@ -21,6 +21,7 @@ public class CartUI : MonoBehaviour
     [SerializeField] private Money money;
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
+    [SerializeField] private TruckDelivery truckReference;
 
     protected Delivery delivery;
 
@@ -87,23 +88,26 @@ public class CartUI : MonoBehaviour
         {
             if (cart.Count > 0)
             {
-                //Check if the order can be bought
-                if (cartCost <= money.GetMoney())
+                if (truckReference.isInDelivery)
                 {
-                    delivery = new Delivery(day.GetDayCount());
-                    foreach (KeyValuePair<IngredientSO, int> stock in cart)
+                    //Check if the order can be bought
+                    if (cartCost <= money.GetMoney())
                     {
-                        if (stock.Value > 0)
+                        delivery = new Delivery(day.GetDayCount());
+                        foreach (KeyValuePair<IngredientSO, int> stock in cart)
                         {
-                            delivery.Add(stock.Key, stock.Value);
+                            if (stock.Value > 0)
+                            {
+                                delivery.Add(stock.Key, stock.Value);
+                            }
                         }
+
+                        FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                        deliveries.Add(delivery);
+                        money.AddMoney(-cartCost);
+                        Clear();
                     }
-
-                    FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                    deliveries.Add(delivery);
-                    money.AddMoney(-cartCost);
-                    Clear();
                 }
             }
         }

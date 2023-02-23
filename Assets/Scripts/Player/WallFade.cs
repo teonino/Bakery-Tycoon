@@ -8,7 +8,7 @@ public class WallFade : MonoBehaviour
     [SerializeField] private Transform parentObject;
     [SerializeField] private float hideSpeed = 2f;
     [SerializeField] private float showSpeed = 2f;
-    [SerializeField] private float lerpTime = 0.5f;
+    //[SerializeField] private float lerpTime = 0.5f;
 
     private bool isHiding = false;
     private bool isShowing = false;

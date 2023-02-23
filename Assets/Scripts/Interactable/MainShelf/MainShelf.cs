@@ -57,7 +57,7 @@ public class MainShelf : Shelf {
             queueCustomer[queueCustomer.Count - 1].GetCustomer().SetDestination(queueCustomer[queueCustomer.Count - 1].transform.position);
 
 
-            queueCustomer[queueCustomer.Count - 1].GetCustomer().GetAnimator().SetBool("Talk 0", false);
+            //queueCustomer[queueCustomer.Count - 1].GetCustomer().GetAnimator().SetBool("Talk 0", false);
         }
 
         //set 2nd queueCustomerInteracting place first 
