@@ -7,7 +7,8 @@ public class OutdoorManager : MonoBehaviour
 {
     public PlayerControllerSO playercontroller;
     [SerializeField] private List<GameObject> PathPoint;
-    [SerializeField] private List<Material> CarMaterial;
+    [SerializeField] private List<Material> Car1Material;
+    [SerializeField] private List<Material> Car2Material;
     [SerializeField] private List<Material> TruckMaterial;
     [SerializeField] private int carSpawnPercentage;
     [SerializeField] private List<GameObject> carAndTruckModel;
@@ -24,21 +25,40 @@ public class OutdoorManager : MonoBehaviour
 
     private IEnumerator spawnVehicule()
     {
-        
         int randomVehicule = Random.Range(0, 100);
-        if (randomVehicule <= carSpawnPercentage)
+        print(randomVehicule);
+        if (randomVehicule <= carSpawnPercentage / 2)
         {
+            print("voiture 1");
             Vehicule = carAndTruckModel[0];
 
-            int randomColor = Random.Range(0, CarMaterial.Count);
-            Vehicule.GetComponentInChildren<MeshRenderer>().material = CarMaterial[randomColor];
+            int randomColor = Random.Range(0, Car2Material.Count);
+            Vehicule.GetComponentInChildren<MeshRenderer>().material = Car1Material[randomColor];
 
             int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
+            destroyLastVehicule();
             Carspawned.Add(Instantiate(Vehicule, spawnPoint[randomSpawnPoint].transform));
+            Carspawned[Carspawned.Count - 1].transform.position = spawnPoint[randomSpawnPoint].transform.position;
+            Carspawned[Carspawned.Count - 1].transform.rotation = spawnPoint[randomSpawnPoint].transform.rotation;
         }
-        else
+        else if (randomVehicule >= (carSpawnPercentage / 2) + 1 && randomVehicule < carSpawnPercentage + 1)
         {
+            print("voiture 2");
             Vehicule = carAndTruckModel[1];
+
+            int randomColor = Random.Range(0, Car2Material.Count);
+            Vehicule.GetComponentInChildren<MeshRenderer>().material = Car1Material[randomColor];
+
+            int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
+            destroyLastVehicule();
+            Carspawned.Add(Instantiate(Vehicule, spawnPoint[randomSpawnPoint].transform));
+            Carspawned[Carspawned.Count - 1].transform.position = spawnPoint[randomSpawnPoint].transform.position;
+            Carspawned[Carspawned.Count - 1].transform.rotation = spawnPoint[randomSpawnPoint].transform.rotation;
+        }
+        else if (randomVehicule > carSpawnPercentage)
+        {
+            print("truck");
+            Vehicule = carAndTruckModel[2];
 
             int randomColor = Random.Range(0, TruckMaterial.Count);
             Vehicule.GetComponentInChildren<MeshRenderer>().material = TruckMaterial[randomColor];
@@ -46,12 +66,11 @@ public class OutdoorManager : MonoBehaviour
             print("Vehicule: + " + Vehicule);
             int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
             print(randomSpawnPoint);
+            destroyLastVehicule();
             Truckspawned.Add(Instantiate(Vehicule, spawnPoint[randomSpawnPoint].transform));
         }
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(deletelastveihucleCoroutine());
+        yield return new WaitForSeconds(5f);
         StartCoroutine(spawnVehicule());
-        destroyLastVehicule();
     }
 
     IEnumerator deletelastveihucleCoroutine()
@@ -78,8 +97,17 @@ public class OutdoorManager : MonoBehaviour
     {
         //Destroy(Carspawned[Carspawned.Count-1]);
         //Carspawned.Remove(Carspawned[Carspawned.Count-1]);
-        Destroy(Truckspawned[Truckspawned.Count-1]);
-        Truckspawned.Remove(Truckspawned[Truckspawned.Count-1]);
+        if(Truckspawned.Count > 0)
+        {
+            Destroy(Truckspawned[Truckspawned.Count - 1]);
+            Truckspawned.Remove(Truckspawned[Truckspawned.Count - 1]);
+        }
+        if(Carspawned.Count > 0)
+        {
+            Destroy(Carspawned[Carspawned.Count -1]);
+
+            Carspawned.Remove(Carspawned[Carspawned.Count - 1]);
+        }
     }
 
 }
