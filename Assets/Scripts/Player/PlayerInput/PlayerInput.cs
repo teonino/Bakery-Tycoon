@@ -1979,6 +1979,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpawnTruck"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1325ed1-580e-47c1-9078-60ec1d0e334c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1990,6 +1999,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52f2d5d5-6023-4513-bda5-430f3fc70f12"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpawnTruck"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2242,6 +2262,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SwitchCamera = m_Debug.FindAction("SwitchCamera", throwIfNotFound: true);
+        m_Debug_SpawnTruck = m_Debug.FindAction("SpawnTruck", throwIfNotFound: true);
         // Workstation
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
         m_Workstation_ChangeTab = m_Workstation.FindAction("ChangeTab", throwIfNotFound: true);
@@ -3046,11 +3067,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Debug;
     private IDebugActions m_DebugActionsCallbackInterface;
     private readonly InputAction m_Debug_SwitchCamera;
+    private readonly InputAction m_Debug_SpawnTruck;
     public struct DebugActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @SwitchCamera => m_Wrapper.m_Debug_SwitchCamera;
+        public InputAction @SpawnTruck => m_Wrapper.m_Debug_SpawnTruck;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3063,6 +3086,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SwitchCamera.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
                 @SwitchCamera.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
                 @SwitchCamera.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
+                @SpawnTruck.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
+                @SpawnTruck.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
+                @SpawnTruck.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
             }
             m_Wrapper.m_DebugActionsCallbackInterface = instance;
             if (instance != null)
@@ -3070,6 +3096,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SwitchCamera.started += instance.OnSwitchCamera;
                 @SwitchCamera.performed += instance.OnSwitchCamera;
                 @SwitchCamera.canceled += instance.OnSwitchCamera;
+                @SpawnTruck.started += instance.OnSpawnTruck;
+                @SpawnTruck.performed += instance.OnSpawnTruck;
+                @SpawnTruck.canceled += instance.OnSpawnTruck;
             }
         }
     }
@@ -3275,6 +3304,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnSwitchCamera(InputAction.CallbackContext context);
+        void OnSpawnTruck(InputAction.CallbackContext context);
     }
     public interface IWorkstationActions
     {

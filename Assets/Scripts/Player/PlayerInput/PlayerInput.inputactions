@@ -1957,6 +1957,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SpawnTruck",
+                    "type": "Button",
+                    "id": "c1325ed1-580e-47c1-9078-60ec1d0e334c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1968,6 +1977,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52f2d5d5-6023-4513-bda5-430f3fc70f12",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpawnTruck",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
