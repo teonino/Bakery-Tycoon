@@ -87,7 +87,7 @@ public class OutdoorManager : MonoBehaviour
         }
     }
 
-    private void destroyLastVehicule()
+    public void destroyLastVehicule()
     {
         if(Truckspawned.Count > 0)
         {

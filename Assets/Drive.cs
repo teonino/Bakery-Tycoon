@@ -21,23 +21,23 @@ public class Drive : MonoBehaviour
         PathPointVertical = vehiculeSpawner.HorizontalPathPointParent;
         PathPointHorizontal = vehiculeSpawner.VerticalPathPointParent;
 
-        //if (Vector3.Distance(gameObject.transform.position, vehiculeSpawner.spawnPoint[0].transform.position) < 1)
-        //{
-        //    horizontalPathTaken = true;
-        //    verticalPathTaken = false;
-        //}
-        //else if (Vector3.Distance(gameObject.transform.position, vehiculeSpawner.spawnPoint[1].transform.position) < 0.1)
-        //{
-        //    horizontalPathTaken = false;
-        //    verticalPathTaken = true;
-        //}
+        if (Vector3.Distance(gameObject.transform.position, vehiculeSpawner.spawnPoint[0].transform.position) < 1)
+        {
+            horizontalPathTaken = true;
+            verticalPathTaken = false;
+        }
+        else if (Vector3.Distance(gameObject.transform.position, vehiculeSpawner.spawnPoint[1].transform.position) < 0.1)
+        {
+            horizontalPathTaken = false;
+            verticalPathTaken = true;
+        }
 
         for (int i = 0; i < PathPointVertical.transform.childCount; i++)
         {
             PathPointVerticalChildren.Add(PathPointVertical.transform.GetChild(i));
-            
+
         }
-        for(int j = 0; j < PathPointHorizontal.transform.childCount; j++)
+        for (int j = 0; j < PathPointHorizontal.transform.childCount; j++)
         {
             PathPointHorizontalChildren.Add(PathPointHorizontal.transform.GetChild(j));
         }
@@ -46,24 +46,31 @@ public class Drive : MonoBehaviour
         canDrive = true;
     }
 
+    private int index = 0;
+
     private void FixedUpdate()
     {
-            if (canDrive)
+        if (canDrive)
+        {
+            if (Vector3.Distance(gameObject.transform.position, PathPointVerticalChildren[index].position) < 0.1f)
             {
-                for (int i = 0; i < PathPointVerticalChildren.Count;)
-                {
-                    if (Vector3.Distance(gameObject.transform.position, PathPointVerticalChildren[i].position) < 0.1f)
-                        i++;
-                    else
-                        gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, PathPointVerticalChildren[i].transform.position, ref velocity, 20f/*, carSpeed*/);
-                        print("ma bien cassé les couilles");
-                }
-                //else if (horizontalPathTaken)
-                //{
-                //    gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, PathPointVerticalChildren[1].transform.position, ref velocity, 1, carSpeed);
-                //}
-
+                index++;
+                //gameObject.transform.LookAt(PathPointVerticalChildren[index]);
+            }
+            else
+            {
+                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, PathPointVerticalChildren[index].rotation, 0.1f);
+                gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, PathPointVerticalChildren[index].transform.position, ref velocity, 1f, carSpeed);
+            }
+            if ( index == PathPointVerticalChildren.Count)
+            {
+                vehiculeSpawner.destroyLastVehicule();
+            }
         }
-    }
+        //else if (horizontalPathTaken)
+        //{
+        //    gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, PathPointVerticalChildren[1].transform.position, ref velocity, 1, carSpeed);
+        //}
 
+    }
 }
