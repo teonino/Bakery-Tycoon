@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5009015900436519618}
   - component: {fileID: 5009015900436519619}
   - component: {fileID: 3947087024851010894}
+  - component: {fileID: -4344177045502182029}
+  - component: {fileID: 7116759921759917377}
   m_Layer: 6
   m_Name: FT_MainWorkstation
   m_TagString: Untagged
@@ -116,6 +118,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0007095, y: 0.64639485, z: 0.9974623}
   m_Center: {x: 0, y: 0.32680255, z: 0.0012688637}
+--- !u!114 &-4344177045502182029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009015900436519622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: beaff6a538ffe40428fd27b193ff7266, type: 2}
+  mandatoryList: {fileID: 11400000, guid: e10c55c155e19b145b2febe316a624de, type: 2}
+--- !u!114 &7116759921759917377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009015900436519622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: beaff6a538ffe40428fd27b193ff7266, type: 2}
+  mandatoryList: {fileID: 11400000, guid: e10c55c155e19b145b2febe316a624de, type: 2}
 --- !u!1001 &6187808649370139679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174,6 +204,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f5cb88f1f5f4ea847bb56962b6395861, type: 3}
       propertyPath: m_Name
       value: ENV_RU_NAPKIN_MODEL
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f5cb88f1f5f4ea847bb56962b6395861, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5cb88f1f5f4ea847bb56962b6395861, type: 3}

@@ -20,12 +20,13 @@ public class Day : Data {
     }
 
     public DayTime GetDayTime() => dayTime;
-    public int GetCurrentDay() => dayCount;
     public int GetTimeElapsed() => timeElapsed;
+    public int GetDayCount() => dayCount;
     public void AddTimeElpased(int time) => timeElapsed += time;
     public void OnNextDayPhase() {
         dayTime++;
         DayTimeChange?.Invoke();
+        Debug.Log("c'est passé par la");
     }
     public void OnNewDay() {
         dayCount++;

@@ -62,6 +62,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DisplayRecipesBook"",
+                    ""type"": ""Button"",
+                    ""id"": ""f96b00fe-e89d-4810-ba76-42eaab2f76fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -249,6 +258,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""AllowCameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f20c6b3d-93c2-410c-8608-4aee64118af6"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisplayRecipesBook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d84447c4-4c04-4855-915d-737936c6e0ff"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisplayRecipesBook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -507,11 +538,33 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9600311e-cf8b-46f0-ae08-afc23d0e44c4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Sell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8c820a11-c504-424a-86b5-ec579444dfc4"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""EnablePreview"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7153df7-0b5e-436a-9b44-87212b4e4568"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
                     ""action"": ""EnablePreview"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -2117,6 +2170,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_AllowCameraMovement = m_Player.FindAction("AllowCameraMovement", throwIfNotFound: true);
+        m_Player_DisplayRecipesBook = m_Player.FindAction("DisplayRecipesBook", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Unpause = m_Pause.FindAction("Unpause", throwIfNotFound: true);
@@ -2260,6 +2314,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_AllowCameraMovement;
+    private readonly InputAction m_Player_DisplayRecipesBook;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -2268,6 +2323,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @AllowCameraMovement => m_Wrapper.m_Player_AllowCameraMovement;
+        public InputAction @DisplayRecipesBook => m_Wrapper.m_Player_DisplayRecipesBook;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2289,6 +2345,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AllowCameraMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAllowCameraMovement;
                 @AllowCameraMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAllowCameraMovement;
                 @AllowCameraMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAllowCameraMovement;
+                @DisplayRecipesBook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayRecipesBook;
+                @DisplayRecipesBook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayRecipesBook;
+                @DisplayRecipesBook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayRecipesBook;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -2305,6 +2364,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AllowCameraMovement.started += instance.OnAllowCameraMovement;
                 @AllowCameraMovement.performed += instance.OnAllowCameraMovement;
                 @AllowCameraMovement.canceled += instance.OnAllowCameraMovement;
+                @DisplayRecipesBook.started += instance.OnDisplayRecipesBook;
+                @DisplayRecipesBook.performed += instance.OnDisplayRecipesBook;
+                @DisplayRecipesBook.canceled += instance.OnDisplayRecipesBook;
             }
         }
     }
@@ -3126,6 +3188,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnAllowCameraMovement(InputAction.CallbackContext context);
+        void OnDisplayRecipesBook(InputAction.CallbackContext context);
     }
     public interface IPauseActions
     {

@@ -23,6 +23,7 @@ public class CraftingStation : Interactable {
 
     [SerializeField] private AudioSource BurningSound;
     [SerializeField] private AudioSource TingSound;
+    [SerializeField] private SFXPlayer sfxPlayer;
 
     private void Start() {
         if (!debugState.GetDebug())
@@ -37,6 +38,7 @@ public class CraftingStation : Interactable {
             Addressables.ReleaseInstance(playerControllerSO.GetPlayerController().GetItemHold());
             playerControllerSO.GetPlayerController().SetItemHold(null);
             CookingTime(itemInStation);
+            sfxPlayer.InteractSound();
         }
         else if (itemInStation != null && !playerControllerSO.GetPlayerController().GetItemHold() && !cooking) {
             itemInStation.productSO.asset.InstantiateAsync().Completed += (go) => {

@@ -9,13 +9,19 @@ public class FurnitureSO : ScriptableObject {
     [SerializeField] private int price;
     [SerializeField] private FurnitureStyle style;
     [SerializeField] private FurnitureType type;
-    [SerializeField] private AssetReference asset;
-    [SerializeField] private Texture image;
+    [SerializeField] private AssetReference assetA;
+    [SerializeField] private AssetReference assetB;
+    [SerializeField] private Texture imageA;
+    [SerializeField] private Texture imageB;
 
     public string GetName() => name;
     public int GetPrice() => price;
     public FurnitureStyle GetStyle() => style;
     public new FurnitureType GetType() => type;
-    public AssetReference GetAssets() => asset;
-    public Texture GetTexture() => image;
+    public AssetReference GetAssetA() => assetA;
+    public AssetReference GetAssetB() => assetB;
+
+    public bool hasTwoAsset() => assetA.RuntimeKeyIsValid() && assetB.RuntimeKeyIsValid();
+    public Texture GetTextureA() => imageA;
+    public Texture GetTextureB() => imageB;
 }

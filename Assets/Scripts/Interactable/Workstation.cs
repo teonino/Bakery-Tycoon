@@ -15,6 +15,8 @@ public class Workstation : Interactable {
     private WorkstationManager manager;
     private GameObject workplacePanel;
 
+    [SerializeField] private SFXPlayer sfxPlayer;
+
     private void Start() {
         if (!debug.GetDebug())
             skipMinigame = skipRequirement = false;
@@ -28,9 +30,8 @@ public class Workstation : Interactable {
     public override void Effect() {
         if (!playerControllerSO.GetPlayerController().GetItemHold()) {
             playerControllerSO.GetPlayerController().DisableInput();
-
+            sfxPlayer.InteractSound();
             manager.gameObject.SetActive(true);
-
             playerControllerSO.GetPlayerController().playerInput.UI.Enable();
             playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
         }

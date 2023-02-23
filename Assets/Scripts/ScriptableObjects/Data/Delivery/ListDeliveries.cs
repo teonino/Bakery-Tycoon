@@ -87,7 +87,7 @@ public class ListDeliveries : Data
 
         //Fetch all deliveries arriving today
         foreach (Delivery delivery in deliveries)
-            if (delivery.GetDay() == day.GetCurrentDay())
+            if (delivery.GetDay() == day.GetDayCount())
                 todayDeliveries.Add(delivery);
 
         //Add stock and Remove them from deliveries planned

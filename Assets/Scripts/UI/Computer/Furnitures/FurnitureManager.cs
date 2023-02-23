@@ -14,6 +14,7 @@ public class FurnitureManager : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private Money money;
     [SerializeField] private Controller controller;
+    [SerializeField] private GameObject assetChoicePanel;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
@@ -176,33 +177,40 @@ public class FurnitureManager : MonoBehaviour {
         else {
             //Set buttons in racks
             for (int i = 0; i < buttonLenght; i++) {
-                bool inFilter = false;
+                bool inStyleFilter = false;
                 FurnitureButton button = furnitureButtonList[i].GetComponent<FurnitureButton>();
 
                 //Check if button match with style filter
                 lenght = furnitureStyleFilter.Count;
                 for (int j = 0; j < lenght; j++) {
                     if (button.GetFurniture().GetStyle() == furnitureStyleFilter[j]) {
-                        inFilter = true;
+                        inStyleFilter = true;
                     }
                 }
+
+                //If no style filter, then true
+                if (lenght == 0)
+                    inStyleFilter = true;
 
                 //Check if button match with type filter
+                bool inTypeFilter = false;
                 lenght = furnitureTypeFilter.Count;
 
-                if (!inFilter) {
-                    for (int j = 0; j < lenght; j++) {
-                        if (button.GetFurniture().GetType() == furnitureTypeFilter[j]) {
-                            inFilter = true;
-                        }
+                for (int j = 0; j < lenght; j++) {
+                    if (button.GetFurniture().GetType() == furnitureTypeFilter[j]) {
+                        inTypeFilter = true;
                     }
                 }
 
+                //If no type filter, then true
+                if (lenght == 0)
+                    inTypeFilter = true;
+
                 //If button is in filter, set true
-                if (inFilter)
+                if (inStyleFilter && inTypeFilter)
                     activeButtons.Add(furnitureButtonList[i]);
 
-                furnitureButtonList[i].SetActive(inFilter);
+                furnitureButtonList[i].SetActive(inStyleFilter && inTypeFilter);
             }
 
 
@@ -232,6 +240,18 @@ public class FurnitureManager : MonoBehaviour {
         SetVerticalLayoutGroup();
     }
 
+    public void DisplayAssetChoice(FurnitureSO furniture) {
+        assetChoicePanel.SetActive(true);
+        AssetChoiceManager choiceManager = assetChoicePanel.GetComponent<AssetChoiceManager>();
+
+        choiceManager.SetFurnitureSO(furniture);
+        choiceManager.SetFurnitureManager(this);
+
+
+        playerController.playerInput.UI.Quit.performed -= Quit;
+        playerController.playerInput.UI.Quit.performed += choiceManager.Quit;
+    }
+
     public void AddOwnedFurniture(FurnitureSO furniture) {
         if (furniture.GetPrice() <= money.GetMoney()) {
             ownedFurnitures.AddFurniture(furniture);
@@ -239,7 +259,7 @@ public class FurnitureManager : MonoBehaviour {
         }
     }
 
-    private void Quit(InputAction.CallbackContext context) {
+    public void Quit(InputAction.CallbackContext context) {
         Quit();
     }
 

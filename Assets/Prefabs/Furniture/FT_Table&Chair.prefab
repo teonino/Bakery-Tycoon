@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 192930803050680582}
   - component: {fileID: 1588739624757953768}
   - component: {fileID: 5772694781323115940}
+  - component: {fileID: 8684970078467158686}
   m_Layer: 6
   m_Name: FT_Table&Chair
   m_TagString: Untagged
@@ -125,6 +126,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9610808, y: 0.67170954, z: 0.9598719}
   m_Center: {x: -0.000000029802322, y: 0.33518302, z: -0.000000014901161}
+--- !u!114 &8684970078467158686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192930803050680699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: d9ec5af2a2a70734397ff61cbe66bc4e, type: 2}
+  mandatoryList: {fileID: 11400000, guid: 3a7611e2fee66a54c80e7c45faecb267, type: 2}
 --- !u!1 &5329037084363213347
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +201,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9709106d2598fa745b06656f8ea2a934, type: 2}
+  - {fileID: 2100000, guid: ce37cd8f947cf9942938718e8550c1e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

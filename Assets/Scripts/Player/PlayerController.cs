@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject itemSocket;
     [SerializeField] private GameObject interractPanel;
 
+    [SerializeField] private GameObject recipesBook;
+    private bool bookDisplayed = false;
+
+
     [Header("UI Interaction")]
     [SerializeField] private GameObject interactionText;
     [SerializeField] private TextMeshProUGUI modulableInteractionText;
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour {
         playerInput = new PlayerInput();
         playerMovements = GetComponent<PlayerMovements>();
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
+        playerInput.Player.DisplayRecipesBook.Enable();
         EnableInput();
 
         localizedString = productAmountText.GetComponent<LocalizeStringEvent>().StringReference;
@@ -119,15 +124,20 @@ public class PlayerController : MonoBehaviour {
                 productAmountText.enabled = false;
             }
 
+
+            interactionText.SetActive(false);
             if (interactedItem.GetComponent<Workstation>()) {
                 //modulableInteractionText.text = "to prepare your product";
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
                 interactionText.SetActive(true);
             }
-            else if (interactedItem.GetComponent<CraftingStation>()) {
-                //modulableInteractionText.text = "to cook your products";
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
-                interactionText.SetActive(true);
+            else if (interactedItem.GetComponent<CraftingStation>() && itemHolded != null) {
+                if(itemHolded.name.Contains("Paste"))
+                {
+                    //modulableInteractionText.text = "to cook your products";
+                    modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
+                    interactionText.SetActive(true);
+                }
             }
             else if (interactedItem.GetComponent<Sink>()) {
                 //modulableInteractionText.text = "to wash the plates";
@@ -155,11 +165,17 @@ public class PlayerController : MonoBehaviour {
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Truck");
                 interactionText.SetActive(true);
             }
-
-            else {
-                modulableInteractionText.text = "to interact";
+            else if (interactedItem.GetComponent<Shelf>())
+            {
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
                 interactionText.SetActive(true);
             }
+
+            //else {
+            //    print("Other object detected");
+            //    modulableInteractionText.text = "to interact";
+            //    interactionText.SetActive(true);
+            //}
         }
         else if (interactedItem == null && interactionText.activeSelf == true) {
             interactionText.SetActive(false);
@@ -193,6 +209,21 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
+    private void DisplayBook(InputAction.CallbackContext context)
+    {
+        if (bookDisplayed)
+        {
+            recipesBook.SetActive(false);
+            bookDisplayed = false;
+        }
+        else if(!bookDisplayed)
+        {
+            recipesBook.SetActive(true);
+            bookDisplayed = true;
+        }
+    }
+
     private void OnPause(InputAction.CallbackContext context) {
         FindObjectOfType<PauseManager>(true).gameObject.SetActive(true);
         DisableInput();
@@ -226,10 +257,12 @@ public class PlayerController : MonoBehaviour {
     private void OnEnable() {
         playerInput.Player.Interact.performed += OnInterract;
         playerInput.Player.Pause.performed += OnPause;
+        playerInput.Player.DisplayRecipesBook.performed += DisplayBook;
     }
 
     private void OnDestroy() {
         playerInput.Player.Interact.performed -= OnInterract;
         playerInput.Player.Pause.performed -= OnPause;
+        playerInput.Player.DisplayRecipesBook.performed -= DisplayBook;
     }
 }

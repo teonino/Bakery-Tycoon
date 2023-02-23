@@ -12,6 +12,8 @@ public class Shelf : Interactable {
     [SerializeField] private AssetReference debugAsset;
     [SerializeField] private DebugState debugState;
     [SerializeField] private InterractQuest interractQuest;
+    [SerializeField] private SFXPlayer sfxPlayer;
+
 
     protected void Start() {
         if (!debugState.GetDebug())
@@ -46,7 +48,8 @@ public class Shelf : Interactable {
         item = go;
         go = null;
         item.transform.localPosition = itemPosition.transform.localPosition;
-        
+        sfxPlayer.InteractSound();
+
     }
 
     private void TakeItem() {
@@ -56,6 +59,7 @@ public class Shelf : Interactable {
         item = null;
         playerControllerSO.GetPlayerController().GetItemHold().transform.SetParent(arm); //the arm of the player becomes the parent
         playerControllerSO.GetPlayerController().GetItemHold().transform.localPosition = new Vector3(arm.localPosition.x + arm.localScale.x / 2, 0, 0);
+        sfxPlayer.InteractSound();
     }
 
     public GameObject GetItem() => item;

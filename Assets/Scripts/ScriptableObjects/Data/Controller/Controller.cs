@@ -51,5 +51,9 @@ public class Controller : ScriptableObject {
         }
     }
 
-    public GameObject GetEventSystemCurrentlySelected() => EventSystem.current.currentSelectedGameObject;
+    public GameObject GetEventSystemCurrentlySelected() {
+        if (EventSystem.current)
+            return EventSystem.current.currentSelectedGameObject;
+        return null;
+    }
 }

@@ -16,6 +16,7 @@ public class AICustomer : Interactable {
     [SerializeField] protected int bonusTime;
     [SerializeField] protected Statistics stats;
     [SerializeField] protected CustomerBonusSO customerBonus;
+    [SerializeField] protected Animator animator;
 
     [Header("AI Customer Variables")]
     [SerializeField] protected float waitingTime = 5f;
@@ -24,6 +25,7 @@ public class AICustomer : Interactable {
     [HideInInspector] public ProductSO requestedProduct;
 
     public AIState state = AIState.idle;
+    protected CustomerInteractable interactable;
     protected Money money;
     protected Reputation reputation;
     protected Day day;
@@ -38,11 +40,12 @@ public class AICustomer : Interactable {
     protected void Awake() {
         day = FindObjectOfType<DayTimeUI>().GetDay();
         money = FindObjectOfType<MoneyUI>().GetMoney();
-        spawner = FindObjectOfType<SpawnCustomer>();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
     }
 
-    public void InitCustomer() {
+    public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
+
+    public virtual void InitCustomer() {
 
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
@@ -98,8 +101,10 @@ public class AICustomer : Interactable {
     //Remove product panel + exit bakery
     protected virtual void Leave() {
         state = AIState.leaving;
-        if (agent)
+        if (agent) {
+            agent.speed = 2;
             agent.SetDestination(spawnPosition);
+        }
     }
 
     //Display the payement
@@ -117,7 +122,12 @@ public class AICustomer : Interactable {
         reputation.AddReputation(saleReputation);
     }
 
-    public void SetDestination(Vector3 position) => agent.SetDestination(position);
+    public void SetDestination(Vector3 position) {
+        agent.SetDestination(position);
+        agent.speed = 2;
+    }
+
+    public NavMeshAgent GetAgent() => agent;
 
     public override void Effect() { }
 }
