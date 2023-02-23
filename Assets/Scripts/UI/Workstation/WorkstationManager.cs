@@ -212,7 +212,7 @@ public class WorkstationManager : MonoBehaviour {
         {
             LetsCookPanel.SetActive(true);
         }
-        else
+        else if (!ingredientsSelected[0].inUse && !ingredientsSelected[1].inUse && !ingredientsSelected[2].inUse)
         {
             LetsCookPanel.SetActive(false);
         }
@@ -233,6 +233,7 @@ public class WorkstationManager : MonoBehaviour {
                 if (currentProduct.CheckRequirement()) {
                     ingredientPanel.SetActive(false);
                     playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
+                    LetsCookPanel.SetActive(false);
                     LaunchIngredientMinigame();
                 }
                 else
