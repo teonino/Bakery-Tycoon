@@ -88,7 +88,7 @@ public class CartUI : MonoBehaviour
         {
             if (cart.Count > 0)
             {
-                if (truckReference.isInDelivery)
+                if (!truckReference.isInDelivery)
                 {
                     //Check if the order can be bought
                     if (cartCost <= money.GetMoney())
