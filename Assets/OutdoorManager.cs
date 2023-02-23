@@ -33,7 +33,7 @@ public class OutdoorManager : MonoBehaviour
             Vehicule = carAndTruckModel[0];
 
             int randomColor = Random.Range(0, Car2Material.Count);
-            Vehicule.GetComponentInChildren<MeshRenderer>().material = Car1Material[randomColor];
+            Vehicule.GetComponent<MeshRenderer>().material = Car1Material[randomColor];
 
             int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
             destroyLastVehicule();
@@ -47,7 +47,7 @@ public class OutdoorManager : MonoBehaviour
             Vehicule = carAndTruckModel[1];
 
             int randomColor = Random.Range(0, Car2Material.Count);
-            Vehicule.GetComponentInChildren<MeshRenderer>().material = Car1Material[randomColor];
+            Vehicule.GetComponent<MeshRenderer>().material = Car2Material[randomColor];
 
             int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
             destroyLastVehicule();
@@ -68,8 +68,10 @@ public class OutdoorManager : MonoBehaviour
             print(randomSpawnPoint);
             destroyLastVehicule();
             Truckspawned.Add(Instantiate(Vehicule, spawnPoint[randomSpawnPoint].transform));
+            Truckspawned[Truckspawned.Count - 1].transform.position = spawnPoint[randomSpawnPoint].transform.position;
+            Truckspawned[Truckspawned.Count - 1].transform.rotation = spawnPoint[randomSpawnPoint].transform.rotation;
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         StartCoroutine(spawnVehicule());
     }
 
