@@ -110,6 +110,7 @@ catch (Exception e) {
 
         DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
         button.dialogueManager = this;
+        button.tutorial = tutorial;
 
         if (table.GetTable().GetEntry("Speech" + tutorialId + "." + 2) != null) {
             button.SetNextDialogue(1);
@@ -145,6 +146,7 @@ catch (Exception e) {
 
             DialogueButton button = playerAnswersTxt[i].GetComponent<DialogueButton>();
             button.dialogueManager = this;
+            button.tutorial = tutorial;
             StringTableEntry entry = table.GetTable().GetEntry(key);
             if (entry != null)
                 if (entry.GetLocalizedString().Contains('+'))
@@ -188,7 +190,7 @@ catch (Exception e) {
 
         playerAnswersTxt[0].gameObject.SetActive(true);
         playerAnswersTxt[0].enabled = false;
-        playerAnswersTxt[0].SetKey("Answer" + idDialogue + "." + 1);
+        playerAnswersTxt[0].SetKey("Continue");
         playerAnswersTxt[0].enabled = true;
 
         currentRegular?.AddFrienship(relation);
