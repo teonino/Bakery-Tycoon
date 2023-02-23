@@ -10,7 +10,6 @@ public class RecipeBookManager : MonoBehaviour {
     [SerializeField] private SwitchTabPanel switchTabPanel;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerController;
-    [SerializeField] private AssetReference ingredientDisplayAsset;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private List<GameObject> productDescriptions;
     [SerializeField] private InterractQuest interractQuest;
@@ -26,7 +25,7 @@ public class RecipeBookManager : MonoBehaviour {
         if (init)
             CheckButton();
         productUnlocked.action += DisplayProduct;
-        interractQuest.OnInterract();
+        interractQuest?.OnInterract();
     }
 
     private void Start() {
@@ -37,7 +36,7 @@ public class RecipeBookManager : MonoBehaviour {
     private void NextPage(InputAction.CallbackContext ctx) {
         if (ctx.performed && indexProduct < products.GetProductList().Count / 4) {
             indexProduct++;
-            switchTabPanel.GoOnNextTab();
+            switchTabPanel?.GoOnNextTab();
             Display();
         }
     }
@@ -45,7 +44,7 @@ public class RecipeBookManager : MonoBehaviour {
     private void PreviousPage(InputAction.CallbackContext ctx) {
         if (ctx.performed && indexProduct > 0) {
             indexProduct--;
-            switchTabPanel.GoOnPreviousTab();
+            switchTabPanel?.GoOnPreviousTab();
             Display();
         }
     }
