@@ -26,7 +26,6 @@ public class Day : Data {
     public void OnNextDayPhase() {
         dayTime++;
         DayTimeChange?.Invoke();
-        Debug.Log("c'est passé par la");
     }
     public void OnNewDay() {
         dayCount++;

@@ -44,11 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424b1bf94ddb0374f9a42cc5e7a07c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerAsset:
-    m_AssetGUID: 709ccf299c167e64f8207d58a794bdf4
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
   regularCustomerAsset:
     m_AssetGUID: 026aaf68e41a3ab47a078309a92941c9
     m_SubObjectName: 
@@ -57,14 +52,13 @@ MonoBehaviour:
   products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
   ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
-  customer: {fileID: 11400000, guid: 84330bb535852814f84521af98f88711, type: 2}
+  customer: {fileID: 11400000, guid: 42c9ca4a6024cf94795cb8e9ecc56bf3, type: 2}
   reputation: {fileID: 11400000, guid: 4bff35ce618f3f34eb389465ff98e553, type: 2}
   notifEvent: {fileID: 11400000, guid: cba526bdec3824049887de1b9f48f713, type: 2}
   notifType: {fileID: 11400000, guid: 7d5c328bcdbd763418926ff4dcafef8f, type: 2}
+  commandList: {fileID: 0}
   tutorial: {fileID: 11400000, guid: a2f389f5f47836d428a654a8ed6d23b8, type: 2}
-  listCustomerInteractable:
-  - {fileID: 0}
-  - {fileID: 0}
+  randomCustomerList: {fileID: 11400000, guid: cd5d36dab036d3f4281a177daea39906, type: 2}
   regularCustomersDayOne:
   - {fileID: 11400000, guid: d44229d6e47cf5c4b9c5bd46bab53f03, type: 2}
   - {fileID: 11400000, guid: d39087ee9f3733746b694d2b1a9fcc9c, type: 2}
@@ -80,6 +74,7 @@ MonoBehaviour:
   enableSpawn: 1
   enableSpawnRegularCustomer: 1
   nbCustomerMax: 9
+  firstPackCustomer: {fileID: 11400000, guid: 41e7488978f6fd6449b836ac2ce0d4d1, type: 2}
   spawnChanceRegularCustomer: 10
   triggerSpawnOnCompletion: []
   tutoProduct: []
