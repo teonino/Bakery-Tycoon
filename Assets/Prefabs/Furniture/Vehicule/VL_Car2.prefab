@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7357789124762526774}
   - component: {fileID: 4753806074533056764}
   - component: {fileID: 3465448109361384988}
+  - component: {fileID: 5172773507110748602}
   m_Layer: 0
   m_Name: VL_Car2
   m_TagString: Untagged
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b911161f854210b48bc5c44305e4bed1, type: 2}
+  - {fileID: 2100000, guid: b95eee5512935484582e7eae584157d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,3 +99,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carSpeed: 10
   _vehicleMesh: {fileID: 4753806074533056764}
+  _collideSize: {x: 1.66, y: 2.04}
+  _collideDistance: 2.76
+--- !u!65 &5172773507110748602
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6555012347735093545}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.2881777, y: 2.079024, z: 3.170639}
+  m_Center: {x: 0, y: 1.0616919, z: 0}
