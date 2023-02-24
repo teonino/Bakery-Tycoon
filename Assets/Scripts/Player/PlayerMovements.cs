@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovements : MonoBehaviour {
     [SerializeField] private float speed = 5;
-    [SerializeField] private AudioClip footstepClip;
-    [SerializeField] private AudioSource footstepSource;
 
     private Rigidbody rb;
     private Camera cam;
