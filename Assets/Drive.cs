@@ -5,46 +5,17 @@ using UnityEngine;
 public class Drive : MonoBehaviour
 {
     [SerializeField] private float carSpeed = 10f;
-    [SerializeField] private GameObject PathPointVertical;
-    [SerializeField] private GameObject PathPointHorizontal;
-    [SerializeField] private OutdoorManager vehiculeSpawner;
-    [SerializeField] private List<Transform> PathPointVerticalChildren = new List<Transform>();
-    [SerializeField] private List<Transform> PathPointHorizontalChildren = new List<Transform>();
+    [SerializeField] private MeshRenderer _vehicleMesh;
+
+    public MeshRenderer vehicleMesh => _vehicleMesh;
+
+    private List<Transform> _pathPoints = new List<Transform>();
+
     private bool canDrive;
-    private bool horizontalPathTaken;
-    private bool verticalPathTaken;
+    internal bool isCar;
+    internal int indexVehicule;
     private Vector3 velocity = Vector3.zero;
 
-    private void Awake()
-    {
-        vehiculeSpawner = gameObject.GetComponentInParent<OutdoorManager>();
-        PathPointVertical = vehiculeSpawner.HorizontalPathPointParent;
-        PathPointHorizontal = vehiculeSpawner.VerticalPathPointParent;
-
-        if (Vector3.Distance(gameObject.transform.position, vehiculeSpawner.spawnPoint[0].transform.position) < 1)
-        {
-            horizontalPathTaken = true;
-            verticalPathTaken = false;
-        }
-        else if (Vector3.Distance(gameObject.transform.position, vehiculeSpawner.spawnPoint[1].transform.position) < 0.1)
-        {
-            horizontalPathTaken = false;
-            verticalPathTaken = true;
-        }
-
-        for (int i = 0; i < PathPointVertical.transform.childCount; i++)
-        {
-            PathPointVerticalChildren.Add(PathPointVertical.transform.GetChild(i));
-
-        }
-        for (int j = 0; j < PathPointHorizontal.transform.childCount; j++)
-        {
-            PathPointHorizontalChildren.Add(PathPointHorizontal.transform.GetChild(j));
-        }
-        //DriveStart();
-        print("car initialized");
-        canDrive = true;
-    }
 
     private int index = 0;
 
@@ -52,25 +23,45 @@ public class Drive : MonoBehaviour
     {
         if (canDrive)
         {
-            if (Vector3.Distance(gameObject.transform.position, PathPointVerticalChildren[index].position) < 0.1f)
+            if (_pathPoints.Count > 0)
             {
-                index++;
-                //gameObject.transform.LookAt(PathPointVerticalChildren[index]);
-            }
-            else
-            {
-                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, PathPointVerticalChildren[index].rotation, 0.1f);
-                gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, PathPointVerticalChildren[index].transform.position, ref velocity, 1f, carSpeed);
-            }
-            if ( index == PathPointVerticalChildren.Count)
-            {
-                vehiculeSpawner.destroyLastVehicule();
+                if (index == _pathPoints.Count)
+                {
+                    Destroy(gameObject);
+                }
+                if (gameObject != null)
+                {
+                    try
+                    {
+                        if (Vector3.Distance(gameObject.transform.position, _pathPoints[index].position) < 0.1f)
+                        {
+                            index++;
+                            //gameObject.transform.LookAt(PathPointVerticalChildren[index]);
+                        }
+                        else
+                        {
+                            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, _pathPoints[index].rotation, 0.1f);
+                            gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, _pathPoints[index].transform.position, ref velocity, 1f, carSpeed);
+                        }
+                    }
+                    catch
+                    {
+                        Destroy(gameObject);
+                    }
+                }
             }
         }
-        //else if (horizontalPathTaken)
-        //{
-        //    gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, PathPointVerticalChildren[1].transform.position, ref velocity, 1, carSpeed);
-        //}
 
     }
+
+    public void SetPath(List<Transform> path)
+    {
+        _pathPoints = path;
+        if (_pathPoints.Count > 0)
+        {
+            this.transform.position = _pathPoints[0].transform.position;
+            canDrive = true;
+        }
+    }
+
 }
