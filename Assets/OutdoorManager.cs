@@ -6,15 +6,17 @@ using UnityEngine.InputSystem;
 public class OutdoorManager : MonoBehaviour
 {
     public PlayerControllerSO playercontroller;
-    [SerializeField] private List<GameObject> PathPoint;
-    [SerializeField] private List<Material> CarMaterial;
+    [SerializeField] private List<Material> Car1Material;
+    [SerializeField] private List<Material> Car2Material;
     [SerializeField] private List<Material> TruckMaterial;
     [SerializeField] private int carSpawnPercentage;
     [SerializeField] private List<GameObject> carAndTruckModel;
-    [SerializeField] private List<GameObject> spawnPoint;
+    [SerializeField] internal List<GameObject> spawnPoint;
     private GameObject Vehicule;
-    public List<GameObject> Truckspawned = new List<GameObject>();
-    public List<GameObject> Carspawned = new List<GameObject>();
+    private List<GameObject> Truckspawned = new List<GameObject>();
+    private List<GameObject> Carspawned = new List<GameObject>();
+    [SerializeField] internal GameObject HorizontalPathPointParent;
+    [SerializeField] internal GameObject VerticalPathPointParent;
 
     private void OnEnable()
     {
@@ -24,41 +26,52 @@ public class OutdoorManager : MonoBehaviour
 
     private IEnumerator spawnVehicule()
     {
-        
+        yield return new WaitForSeconds(3);
         int randomVehicule = Random.Range(0, 100);
-        if (randomVehicule <= carSpawnPercentage)
+        if (randomVehicule <= carSpawnPercentage / 2)
         {
             Vehicule = carAndTruckModel[0];
 
-            int randomColor = Random.Range(0, CarMaterial.Count);
-            Vehicule.GetComponentInChildren<MeshRenderer>().material = CarMaterial[randomColor];
+            int randomColor = Random.Range(0, Car2Material.Count);
+            Vehicule.GetComponent<MeshRenderer>().material = Car1Material[randomColor];
 
             int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
-            Carspawned.Add(Instantiate(Vehicule, spawnPoint[randomSpawnPoint].transform));
+            //destroyLastVehicule();
+            Carspawned.Add(Instantiate(Vehicule, spawnPoint[1].transform));
+            Carspawned[Carspawned.Count - 1].transform.position = spawnPoint[1].transform.position;
+            Carspawned[Carspawned.Count - 1].transform.rotation = spawnPoint[1].transform.rotation;
         }
-        else
+        else if (randomVehicule >= (carSpawnPercentage / 2) + 1 && randomVehicule < carSpawnPercentage + 1)
         {
+
             Vehicule = carAndTruckModel[1];
+
+            int randomColor = Random.Range(0, Car2Material.Count);
+            Vehicule.GetComponent<MeshRenderer>().material = Car2Material[randomColor];
+
+            int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
+            //destroyLastVehicule();
+            Carspawned.Add(Instantiate(Vehicule, spawnPoint[1].transform));
+            Carspawned[Carspawned.Count - 1].transform.position = spawnPoint[1].transform.position;
+            Carspawned[Carspawned.Count - 1].transform.rotation = spawnPoint[1].transform.rotation;
+        }
+        else if (randomVehicule > carSpawnPercentage)
+        {
+            Vehicule = carAndTruckModel[2];
 
             int randomColor = Random.Range(0, TruckMaterial.Count);
             Vehicule.GetComponentInChildren<MeshRenderer>().material = TruckMaterial[randomColor];
 
-            print("Vehicule: + " + Vehicule);
             int randomSpawnPoint = Random.Range(0, spawnPoint.Count);
-            print(randomSpawnPoint);
-            Truckspawned.Add(Instantiate(Vehicule, spawnPoint[randomSpawnPoint].transform));
+            //destroyLastVehicule();
+            Truckspawned.Add(Instantiate(Vehicule, spawnPoint[1].transform));
+            Truckspawned[Truckspawned.Count - 1].transform.position = spawnPoint[1].transform.position;
+            Truckspawned[Truckspawned.Count - 1].transform.rotation = spawnPoint[1].transform.rotation;
         }
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(deletelastveihucleCoroutine());
+        yield return new WaitForSeconds(90f);
         StartCoroutine(spawnVehicule());
-        destroyLastVehicule();
     }
 
-    IEnumerator deletelastveihucleCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
-        destroyLastVehicule();
-    }
 
     private void destroyAllSpawnedVehicule()
     {
@@ -74,12 +87,19 @@ public class OutdoorManager : MonoBehaviour
         }
     }
 
-    private void destroyLastVehicule()
+    public void destroyLastVehicule()
     {
-        //Destroy(Carspawned[Carspawned.Count-1]);
-        //Carspawned.Remove(Carspawned[Carspawned.Count-1]);
-        Destroy(Truckspawned[Truckspawned.Count-1]);
-        Truckspawned.Remove(Truckspawned[Truckspawned.Count-1]);
+        if(Truckspawned.Count > 0)
+        {
+            Destroy(Truckspawned[Truckspawned.Count - 1]);
+            Truckspawned.Remove(Truckspawned[Truckspawned.Count - 1]);
+        }
+        if(Carspawned.Count > 0)
+        {
+            Destroy(Carspawned[Carspawned.Count -1]);
+
+            Carspawned.Remove(Carspawned[Carspawned.Count - 1]);
+        }
     }
 
 }
