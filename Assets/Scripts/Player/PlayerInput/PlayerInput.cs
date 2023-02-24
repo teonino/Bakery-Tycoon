@@ -2152,6 +2152,74 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Dialogue"",
+            ""id"": ""eb8921a0-4a91-44a1-8751-2c058a058917"",
+            ""actions"": [
+                {
+                    ""name"": ""Dialogue1"",
+                    ""type"": ""Button"",
+                    ""id"": ""52830095-0bb1-4f2f-a3ed-749b48739f54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue2"",
+                    ""type"": ""Button"",
+                    ""id"": ""7bd8f85d-5d1e-461d-8ecf-66e939283b05"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue3"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5936b49-07bf-433e-92cf-2eb9096bb22c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c52b2368-0ad4-435f-851b-9cdf8c27287f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ead0b5e-e1cf-4c0b-a1c2-e6cc5b8ab3fa"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f6a3ca6-f29c-490f-ada8-5df84f667588"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2272,6 +2340,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Audio
         m_Audio = asset.FindActionMap("Audio", throwIfNotFound: true);
         m_Audio_MuteSource = m_Audio.FindAction("MuteSource", throwIfNotFound: true);
+        // Dialogue
+        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
+        m_Dialogue_Dialogue1 = m_Dialogue.FindAction("Dialogue1", throwIfNotFound: true);
+        m_Dialogue_Dialogue2 = m_Dialogue.FindAction("Dialogue2", throwIfNotFound: true);
+        m_Dialogue_Dialogue3 = m_Dialogue.FindAction("Dialogue3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3193,6 +3266,55 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public AudioActions @Audio => new AudioActions(this);
+
+    // Dialogue
+    private readonly InputActionMap m_Dialogue;
+    private IDialogueActions m_DialogueActionsCallbackInterface;
+    private readonly InputAction m_Dialogue_Dialogue1;
+    private readonly InputAction m_Dialogue_Dialogue2;
+    private readonly InputAction m_Dialogue_Dialogue3;
+    public struct DialogueActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DialogueActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Dialogue1 => m_Wrapper.m_Dialogue_Dialogue1;
+        public InputAction @Dialogue2 => m_Wrapper.m_Dialogue_Dialogue2;
+        public InputAction @Dialogue3 => m_Wrapper.m_Dialogue_Dialogue3;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterface != null)
+            {
+                @Dialogue1.started -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue1;
+                @Dialogue1.performed -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue1;
+                @Dialogue1.canceled -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue1;
+                @Dialogue2.started -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue2;
+                @Dialogue2.performed -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue2;
+                @Dialogue2.canceled -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue2;
+                @Dialogue3.started -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue3;
+                @Dialogue3.performed -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue3;
+                @Dialogue3.canceled -= m_Wrapper.m_DialogueActionsCallbackInterface.OnDialogue3;
+            }
+            m_Wrapper.m_DialogueActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Dialogue1.started += instance.OnDialogue1;
+                @Dialogue1.performed += instance.OnDialogue1;
+                @Dialogue1.canceled += instance.OnDialogue1;
+                @Dialogue2.started += instance.OnDialogue2;
+                @Dialogue2.performed += instance.OnDialogue2;
+                @Dialogue2.canceled += instance.OnDialogue2;
+                @Dialogue3.started += instance.OnDialogue3;
+                @Dialogue3.performed += instance.OnDialogue3;
+                @Dialogue3.canceled += instance.OnDialogue3;
+            }
+        }
+    }
+    public DialogueActions @Dialogue => new DialogueActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -3316,5 +3438,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IAudioActions
     {
         void OnMuteSource(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnDialogue1(InputAction.CallbackContext context);
+        void OnDialogue2(InputAction.CallbackContext context);
+        void OnDialogue3(InputAction.CallbackContext context);
     }
 }

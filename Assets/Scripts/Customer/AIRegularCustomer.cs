@@ -34,7 +34,7 @@ public class AIRegularCustomer : AICustomer {
 
         if (chair && state == AIState.idle) {
             Sit();
-            coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
         }
 
         //Go to the Chair

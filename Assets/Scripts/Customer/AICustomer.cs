@@ -19,7 +19,7 @@ public class AICustomer : Interactable {
     [SerializeField] protected Animator animator;
 
     [Header("AI Customer Variables")]
-    [SerializeField] protected float waitingTime = 5f;
+    [SerializeField] protected CustomerWaitingTime waitingTime;
     [SerializeField] protected int saleReputation;
 
     [HideInInspector] public ProductSO requestedProduct;
@@ -46,7 +46,6 @@ public class AICustomer : Interactable {
     public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
 
     public virtual void InitCustomer() {
-
         assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
@@ -90,10 +89,10 @@ public class AICustomer : Interactable {
 
     public void SetWaitingTime(int time) {
         tutorial = true;
-        waitingTime = time;
     }
 
     protected IEnumerator CustomerWaiting(float time, Action leavingFunction) {
+        spawner.LaunchCommandRecap(this);
         yield return new WaitForSeconds(time);
         leavingFunction.Invoke();
     }
@@ -105,6 +104,8 @@ public class AICustomer : Interactable {
             agent.speed = 2;
             agent.SetDestination(spawnPosition);
         }
+
+        spawner.RemoveCommandRecap(this);
     }
 
     //Display the payement
@@ -126,7 +127,13 @@ public class AICustomer : Interactable {
         agent.SetDestination(position);
         agent.speed = 2;
     }
+    public void HideCanvas() {
+        productCanvas.gameObject.SetActive(false);
+    }
 
+    public void DispalyCanvas() {
+        productCanvas.gameObject.SetActive(true);
+    }
     public NavMeshAgent GetAgent() => agent;
 
     public override void Effect() { }

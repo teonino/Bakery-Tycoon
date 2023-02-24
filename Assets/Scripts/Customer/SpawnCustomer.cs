@@ -13,6 +13,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private Reputation reputation;
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
+    [SerializeField] private CommandListManager commandList;
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private RandomCustomerList randomCustomerList;
     [SerializeField] private List<RegularSO> regularCustomersDayOne;
@@ -24,6 +25,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private bool enableSpawn;
     [SerializeField] private bool enableSpawnRegularCustomer;
     [SerializeField] private int nbCustomerMax;
+    [SerializeField] private CustomersSO firstPackCustomer;
     [Tooltip("1 chance out of X to spawn")]
     [SerializeField] private int spawnChanceRegularCustomer;
 
@@ -42,6 +44,7 @@ public class SpawnCustomer : MonoBehaviour {
     private List<ProductSO> availableProduct;
     private List<Table> tables;
     private float randomTime;
+    private float nbCurrentCustomerFirstPack = 0;
 
     void Start() {
         tables = new List<Table>(FindObjectsOfType<Table>());
@@ -52,7 +55,22 @@ public class SpawnCustomer : MonoBehaviour {
             quest.OnCompletedAction += SpawnTutorialCustomer;
 
         if (!tutorial.GetTutorial())
+            StartCoroutine(SpawnDelayFirstPack());
+    }
+
+    private IEnumerator SpawnDelayFirstPack() {
+        randomTime = Random.Range(firstPackCustomer.GetDelaySpawn().x, firstPackCustomer.GetDelaySpawn().y); 
+        yield return new WaitForSeconds(randomTime);
+        enableSpawnRegularCustomer = false;
+        InstantiateCustomer(); 
+        nbCurrentCustomerFirstPack++;
+
+        if (nbCurrentCustomerFirstPack == firstPackCustomer.GetNbRandomCustomer()) {
+            enableSpawnRegularCustomer = true;
             StartCoroutine(SpawnDelay());
+        }
+        else
+            StartCoroutine(SpawnDelayFirstPack());
     }
 
     private IEnumerator SpawnDelay() {
@@ -71,8 +89,8 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (enableSpawnRegularCustomer && nbCustomer < nbCustomerMax) {
-                if (Random.Range(0, spawnChanceRegularCustomer) == 0) {
+            if (nbCustomer < nbCustomerMax) {
+                if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0) {
                     if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                         SpawnCustomerAsset(true);
                 }
@@ -80,7 +98,7 @@ public class SpawnCustomer : MonoBehaviour {
                     SpawnCustomerAsset(false);
 
                 //if all Random customer has been spawned => spawn a regular
-                else if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
+                else if (enableSpawnRegularCustomer && nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                     SpawnCustomerAsset(true);
             }
         }
@@ -120,6 +138,7 @@ public class SpawnCustomer : MonoBehaviour {
         else {
             SpawnRandomCustomer(product);
         }
+
         notifEvent.Invoke(notifType);
     }
 
@@ -183,6 +202,14 @@ public class SpawnCustomer : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public void LaunchCommandRecap(AICustomer customer) {
+        commandList.AddCommand(customer);
+    }
+
+    public void RemoveCommandRecap(AICustomer customer) {
+        commandList.RemoveCommand(customer);
     }
 
     public bool CheckProducts() {

@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Tables;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
     [SerializeField] private LocalizedStringComponent npcSpeechTxt;
     [SerializeField] private TextMeshProUGUI npcNameTxt;
     [SerializeField] private List<LocalizedStringComponent> playerAnswersTxt;
+    [SerializeField] private List<DialogueButton> playerAnswersButtons;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private CharacterTables characterTables;
@@ -27,6 +30,10 @@ public class DialogueManager : MonoBehaviour {
     private void OnEnable() {
         if (playerControllerSO.GetPlayerController()) {
             playerControllerSO.GetPlayerController().DisableInput();
+            playerControllerSO.GetPlayerController().playerInput.Dialogue.Enable();
+            playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue1.performed += InvokeButton1;
+            playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue2.performed += InvokeButton2;
+            playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue3.performed += InvokeButton3;
             controller.RegisterCurrentSelectedButton();
             Time.timeScale = 0;
         }
@@ -45,9 +52,9 @@ public class DialogueManager : MonoBehaviour {
         currentRegular = regular;
         npcName = character;
         idDialogue = id;
-        if (!tutorial.GetTutorial()) 
+        if (!tutorial.GetTutorial())
             SetDialogue(id);
-        else 
+        else
             SetTutorialDialogue();
     }
 
@@ -97,11 +104,8 @@ catch (Exception e) {
         npcSpeechTxt.SetKey("Speech" + tutorialId + "." + 1);
         npcSpeechTxt.enabled = true;
 
-        for (int i = 0; i < playerAnswersTxt.Count; i++)
-            playerAnswersTxt[i].gameObject.SetActive(false);
-        
         string key = "Answer";
-        playerAnswersTxt[0].gameObject.SetActive(true);
+        playerAnswersTxt[0].transform.parent.gameObject.SetActive(true);
         playerAnswersTxt[0].enabled = false;
         playerAnswersTxt[0].SetTable(table);
         playerAnswersTxt[0].SetKey(key);
@@ -110,10 +114,12 @@ catch (Exception e) {
 
         DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
         button.dialogueManager = this;
+        button.SetTutorial(tutorial);
 
         if (table.GetTable().GetEntry("Speech" + tutorialId + "." + 2) != null) {
             button.SetNextDialogue(1);
-        } else {
+        }
+        else {
             button.SetNextDialogue(0);
         }
 
@@ -145,6 +151,7 @@ catch (Exception e) {
 
             DialogueButton button = playerAnswersTxt[i].GetComponent<DialogueButton>();
             button.dialogueManager = this;
+            button.SetTutorial(tutorial);
             StringTableEntry entry = table.GetTable().GetEntry(key);
             if (entry != null)
                 if (entry.GetLocalizedString().Contains('+'))
@@ -162,8 +169,7 @@ catch (Exception e) {
         }
     }
 
-
-    internal void SetTutorialAnswer(int id) {
+    public void SetTutorialAnswer(int id) {
         npcSpeechTxt.enabled = false;
         npcSpeechTxt.SetKey("Speech" + (tutorialId - 1) + "." + (id + 1));
         npcSpeechTxt.enabled = true;
@@ -211,7 +217,26 @@ catch (Exception e) {
         }
     }
 
+    private void InvokeButton1(InputAction.CallbackContext ctx) {
+        if (playerAnswersButtons[0].transform.parent.gameObject.activeSelf)
+            playerAnswersButtons[0].onClick?.Invoke();
+    }
+
+    private void InvokeButton2(InputAction.CallbackContext ctx) {
+        if (playerAnswersButtons[1].transform.parent.gameObject.activeSelf)
+            playerAnswersButtons[1].onClick?.Invoke();
+    }
+
+    private void InvokeButton3(InputAction.CallbackContext ctx) {
+        if (playerAnswersButtons[2].transform.parent.gameObject.activeSelf)
+            playerAnswersButtons[2].onClick?.Invoke();
+    }
+
     public void OnDisable() {
+        playerControllerSO.GetPlayerController().playerInput.Dialogue.Disable();
+        playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue1.performed -= InvokeButton1;
+        playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue2.performed -= InvokeButton2;
+        playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue3.performed -= InvokeButton3;
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();
 

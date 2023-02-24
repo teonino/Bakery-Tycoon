@@ -69,7 +69,7 @@ public class AIRandomCustomer : AICustomer
         if (Vector3.Distance(transform.position, agent.destination) < 0.5 && state == AIState.moving)
         {
             state = AIState.waiting;
-            coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
 
             if (!interacting) {
                 //animator.SetTrigger("Idle");
