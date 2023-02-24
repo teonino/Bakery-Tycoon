@@ -12,8 +12,7 @@ using UnityEngine.Localization.SmartFormat.Extensions;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
-public class CartUI : MonoBehaviour
-{
+public class CartUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
     [SerializeField] private LocalizeStringEvent totalCostString;
@@ -34,39 +33,31 @@ public class CartUI : MonoBehaviour
     private LocalizedString localizedString;
     private IntVariable localizedCartCost = null;
 
-    private void Awake()
-    {
+    private void Awake() {
         deliveries.SetDefaultExpressOrderTime();
 
         localizedString = totalCostString.StringReference;
-        if (!localizedString.TryGetValue("totalCost", out IVariable value))
-        {
+        if (!localizedString.TryGetValue("totalCost", out IVariable value)) {
             localizedCartCost = new IntVariable();
             localizedString.Add("totalCost", localizedCartCost);
         }
-        else
-        {
+        else {
             localizedCartCost = value as IntVariable;
         }
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         playerController.GetPlayerController().playerInput.Amafood.Order.performed += Order;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         playerController.GetPlayerController().playerInput.Amafood.Order.performed -= Order;
     }
 
-    public void InitCart()
-    {
+    public void InitCart() {
         string newText = "";
-        foreach (KeyValuePair<IngredientSO, int> stock in cart)
-        {
-            if (stock.Value > 0)
-            {
+        foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+            if (stock.Value > 0) {
                 newText += stock.Key.name + " x" + stock.Value + " : " + stock.Key.price * stock.Value + "\n";
                 cost += stock.Key.price * stock.Value;
             }
@@ -76,45 +67,35 @@ public class CartUI : MonoBehaviour
         //localizedCartCost.Value = cartCost;
     }
 
-    public void ClearText()
-    {
+    public void ClearText() {
         orderSumary.SetText("");
         totalCostText.SetText("Total: ");
     }
 
-    public virtual void Order(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed && cart != null)
-        {
-            if (cart.Count > 0)
-            {
-                if (!truckReference.isInDelivery)
-                {
-                    //Check if the order can be bought
-                    if (cartCost <= money.GetMoney())
-                    {
-                        delivery = new Delivery(day.GetDayCount());
-                        foreach (KeyValuePair<IngredientSO, int> stock in cart)
-                        {
-                            if (stock.Value > 0)
-                            {
-                                delivery.Add(stock.Key, stock.Value);
-                            }
+    public virtual void Order(InputAction.CallbackContext ctx) {
+        if (ctx.performed && cart != null) {
+            if (cart.Count > 0) {
+                //Check if the order can be bought
+                if (cartCost <= money.GetMoney()) {
+                    delivery = new Delivery(day.GetDayCount());
+                    foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                        if (stock.Value > 0) {
+                            delivery.Add(stock.Key, stock.Value);
                         }
-
-                        FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                        deliveries.Add(delivery);
-                        money.AddMoney(-cartCost);
-                        Clear();
                     }
+
+                    FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                    deliveries.Add(delivery);
+                    money.AddMoney(-cartCost);
+                    Clear();
+
                 }
             }
         }
     }
 
-    public void Clear()
-    {
+    public void Clear() {
         cartCost = 0;
         if (deliveryManager)
             deliveryManager.ResetCart(true);

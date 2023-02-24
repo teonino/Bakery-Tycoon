@@ -55,7 +55,10 @@ public class SpawnCustomer : MonoBehaviour {
             quest.OnCompletedAction += SpawnTutorialCustomer;
 
         if (!tutorial.GetTutorial())
-            StartCoroutine(SpawnDelayFirstPack());
+            if (firstPackCustomer)
+                StartCoroutine(SpawnDelayFirstPack());
+            else
+                StartCoroutine(SpawnDelay());
     }
 
     private IEnumerator SpawnDelayFirstPack() {

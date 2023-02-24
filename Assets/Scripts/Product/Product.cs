@@ -6,7 +6,7 @@ using UnityEngine;
 public class Product {
     public ProductSO productSO;
     public int quality;
-    public int amount;
+    private int amount;
 
     public void SetProduct(ProductSO product) {
         productSO = product;
@@ -31,4 +31,8 @@ public class Product {
         this.quality = 0;
         this.amount = 0;
     }
+
+    public void RemoveAmount() => amount--;
+    public int GetAmount() => amount;
+    public void SetAmount(int i) => amount = i;
 }
