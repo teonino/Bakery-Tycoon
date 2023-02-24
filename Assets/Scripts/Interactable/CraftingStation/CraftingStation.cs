@@ -46,7 +46,7 @@ public class CraftingStation : Interactable {
                 playerControllerSO.GetPlayerController().SetItemHold(go.Result);
                 ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
 
-                productItem.product.amount = itemInStation.amount;
+                productItem.product.SetAmount(itemInStation.GetAmount());
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = Vector3.zero;
 
@@ -57,22 +57,29 @@ public class CraftingStation : Interactable {
                 Addressables.ReleaseInstance(readyText);
             };
         }
-        //else if (day.GetDayTime() == DayTime.Evening) {
-        //    //Check cleanness
-        //    if (dirty > 20) {
-        //        //Launch Animation
-        //        playerControllerSO.GetPlayerController().DisableInput();
-        //        progressBarAsset.InstantiateAsync(transform).Completed += (go) => {
-        //            ProgressBar progressBarScript = go.Result.GetComponentInChildren<ProgressBar>();
+        else if (playerControllerSO.GetPlayerController().GetItemHold() && playerControllerSO.GetPlayerController().GetItemHold().tag == "Paste" && playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type && itemInStation != null && !cooking) {
+            itemInStation = new Product(playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product);
+            Addressables.ReleaseInstance(playerControllerSO.GetPlayerController().GetItemHold());
+            playerControllerSO.GetPlayerController().SetItemHold(null);           
+            itemInStation.productSO.asset.InstantiateAsync().Completed += (go) => {
+                Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
+                playerControllerSO.GetPlayerController().SetItemHold(go.Result);
+                ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
 
-        //            go.Result.transform.localPosition = Vector3.up * 2;
-        //            go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
-        //            progressBarScript.SetDuration(dirty / 10);
-        //            progressBarScript.CanBurn(false);
-        //            progressBarScript.onDestroy = Clean;
-        //        };
-        //    }
-        //}
+                productItem.product.SetAmount(itemInStation.GetAmount());
+                go.Result.transform.SetParent(arm);
+                go.Result.transform.localPosition = Vector3.zero;
+
+                createQuest?.CheckProduct(productItem.product.productSO);
+                CreateCerealQuest?.CheckProduct(productItem.product.productSO);
+
+                itemInStation = null;
+            };
+            Addressables.ReleaseInstance(readyText);
+            CookingTime(itemInStation);
+            sfxPlayer.InteractSound(); 
+
+        }
     }
 
     private void CookingTime(Product product) {
@@ -90,7 +97,7 @@ public class CraftingStation : Interactable {
             else
                 progressBarScript.SetDuration((int)product.productSO.cookingTime);
 
-            progressBarScript.onDestroy = FinishCooking;
+            progressBarScript.onDestroy += FinishCooking;
         };
 
         cooking = true;

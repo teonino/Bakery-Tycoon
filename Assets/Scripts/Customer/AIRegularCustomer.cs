@@ -54,7 +54,7 @@ public class AIRegularCustomer : AICustomer {
                     StopCoroutine(coroutine);
                 ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
                 if (!item) {
-                    if (productholder.product.amount > 1) {
+                    if (productholder.product.GetAmount() > 1) {
                         productholder.product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             item = go.Result;
                             TakeItem(productholder, table.gameObject);
@@ -65,7 +65,7 @@ public class AIRegularCustomer : AICustomer {
                             else
                                 StartCoroutine(CustomerWaiting(eatingTime, Leave));
                         };
-                        productholder.product.amount--;
+                        productholder.product.RemoveAmount();
                     }
                     else {
                         item = table.items[indexChair];

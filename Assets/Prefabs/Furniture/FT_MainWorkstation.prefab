@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5009015900436519619}
   - component: {fileID: 3947087024851010894}
   - component: {fileID: -4344177045502182029}
-  - component: {fileID: 7116759921759917377}
   m_Layer: 6
   m_Name: FT_MainWorkstation
   m_TagString: Untagged
@@ -55,6 +54,7 @@ MonoBehaviour:
   debug: {fileID: 11400000, guid: 2f9f5e589bb877e458b8a822edab4ffd, type: 2}
   skipRequirement: 1
   skipMinigame: 1
+  sfxPlayer: {fileID: 0}
 --- !u!33 &5009015900436519618
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -119,20 +119,6 @@ BoxCollider:
   m_Size: {x: 1.0007095, y: 0.64639485, z: 0.9974623}
   m_Center: {x: 0, y: 0.32680255, z: 0.0012688637}
 --- !u!114 &-4344177045502182029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5009015900436519622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  furniture: {fileID: 11400000, guid: beaff6a538ffe40428fd27b193ff7266, type: 2}
-  mandatoryList: {fileID: 11400000, guid: e10c55c155e19b145b2febe316a624de, type: 2}
---- !u!114 &7116759921759917377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

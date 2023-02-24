@@ -92,14 +92,14 @@ public class AIRandomCustomer : AICustomer
                 //Take item
                 if (!item)
                 {
-                    if (objectOnShelf.product.amount > 1)
+                    if (objectOnShelf.product.GetAmount() > 1)
                     {
                         objectOnShelf.product.productSO.asset.InstantiateAsync(transform).Completed += (go) =>
                         {
                             item = go.Result;
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
-                        objectOnShelf.product.amount--;
+                        objectOnShelf.product.RemoveAmount();
                     }
                     else
                     {

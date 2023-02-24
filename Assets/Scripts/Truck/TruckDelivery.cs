@@ -12,7 +12,6 @@ public class TruckDelivery : Interactable {
     [SerializeField] private NotificationType notifType;
     [SerializeField] private SFXPlayer sfxPlayer;
 
-    internal bool isInDelivery = false;
     private bool moving;
     private bool fetchingOrder = false;
     private Vector3 dest;
@@ -51,7 +50,6 @@ public class TruckDelivery : Interactable {
         moving = true;
         fetchingOrder = true;
         audioSource.Play();
-        isInDelivery = true;
     }
 
     //Trigger this when truck is close to arriving
@@ -70,7 +68,6 @@ public class TruckDelivery : Interactable {
             deliveries.DeliverOrder(delivery);
             sfxPlayer.InteractSound();
             delivery = null;
-            isInDelivery = false;
         }
     }
 }

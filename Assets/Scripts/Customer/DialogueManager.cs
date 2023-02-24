@@ -194,7 +194,7 @@ catch (Exception e) {
 
         playerAnswersTxt[0].gameObject.SetActive(true);
         playerAnswersTxt[0].enabled = false;
-        playerAnswersTxt[0].SetKey("Answer" + idDialogue + "." + 1);
+        playerAnswersTxt[0].SetKey("Answer");
         playerAnswersTxt[0].enabled = true;
 
         currentRegular?.AddFrienship(relation);
