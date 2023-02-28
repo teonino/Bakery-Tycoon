@@ -97,9 +97,10 @@ public class AIRandomCustomer : AICustomer
                         objectOnShelf.product.productSO.asset.InstantiateAsync(transform).Completed += (go) =>
                         {
                             item = go.Result;
+                            item.GetComponent<ProductHolder>().DisplayOneProduct();
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
-                        objectOnShelf.product.RemoveAmount();
+                        objectOnShelf.RemoveAmount();
                     }
                     else
                     {

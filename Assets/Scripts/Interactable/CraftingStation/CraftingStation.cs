@@ -37,6 +37,7 @@ public class CraftingStation : Interactable {
             itemInStation = new Product(playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product);
             Addressables.ReleaseInstance(playerControllerSO.GetPlayerController().GetItemHold());
             playerControllerSO.GetPlayerController().SetItemHold(null);
+
             CookingTime(itemInStation);
             sfxPlayer.InteractSound();
         }
@@ -58,27 +59,26 @@ public class CraftingStation : Interactable {
             };
         }
         else if (playerControllerSO.GetPlayerController().GetItemHold() && playerControllerSO.GetPlayerController().GetItemHold().tag == "Paste" && playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type && itemInStation != null && !cooking) {
-            itemInStation = new Product(playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product);
-            Addressables.ReleaseInstance(playerControllerSO.GetPlayerController().GetItemHold());
-            playerControllerSO.GetPlayerController().SetItemHold(null);           
             itemInStation.productSO.asset.InstantiateAsync().Completed += (go) => {
+                //New Product being cooked
+                Product oldItemInStation = itemInStation;
+                itemInStation = new Product(playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product);
+                Addressables.ReleaseInstance(playerControllerSO.GetPlayerController().GetItemHold()); 
+                CookingTime(itemInStation);
+                sfxPlayer.InteractSound();
+
+                //Old product being held by player
                 Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
                 playerControllerSO.GetPlayerController().SetItemHold(go.Result);
                 ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
-
-                productItem.product.SetAmount(itemInStation.GetAmount());
+                productItem.product.SetAmount(oldItemInStation.GetAmount());
                 go.Result.transform.SetParent(arm);
-                go.Result.transform.localPosition = Vector3.zero;
+                go.Result.transform.localPosition = Vector3.zero; 
+                Addressables.ReleaseInstance(readyText);
 
                 createQuest?.CheckProduct(productItem.product.productSO);
                 CreateCerealQuest?.CheckProduct(productItem.product.productSO);
-
-                itemInStation = null;
             };
-            Addressables.ReleaseInstance(readyText);
-            CookingTime(itemInStation);
-            sfxPlayer.InteractSound(); 
-
         }
     }
 
