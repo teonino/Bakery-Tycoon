@@ -185,7 +185,7 @@ public class WorkstationManager : MonoBehaviour {
         }
     }
 
-    public virtual void  IngredientSelected(IngredientSO ingredient) {
+    public virtual void IngredientSelected(IngredientSO ingredient) {
 
         //Check if ingredient already selected
         bool ingredientRemoved = false;
@@ -207,13 +207,10 @@ public class WorkstationManager : MonoBehaviour {
                 }
             }
         }
-        print("ingredient count: " + ingredientsSelected.Count);
-        if (ingredientsSelected[0].inUse || ingredientsSelected[1].inUse || ingredientsSelected[2].inUse)
-        {
+        if (ingredientsSelected[0].inUse || ingredientsSelected[1].inUse || ingredientsSelected[2].inUse) {
             LetsCookPanel.SetActive(true);
         }
-        else
-        {
+        else if (!ingredientsSelected[0].inUse && !ingredientsSelected[1].inUse && !ingredientsSelected[2].inUse) {
             LetsCookPanel.SetActive(false);
         }
     }
@@ -233,6 +230,7 @@ public class WorkstationManager : MonoBehaviour {
                 if (currentProduct.CheckRequirement()) {
                     ingredientPanel.SetActive(false);
                     playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
+                    LetsCookPanel.SetActive(false);
                     LaunchIngredientMinigame();
                 }
                 else
@@ -273,7 +271,7 @@ public class WorkstationManager : MonoBehaviour {
 
     public void LaunchIngredientMinigame() {
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
-            int indexMinigame;
+            int indexMinigame;     
 
             if (nbIngredientSelected > 3) {
                 indexMinigame = UnityEngine.Random.Range(0, 5);
@@ -339,8 +337,7 @@ public class WorkstationManager : MonoBehaviour {
         UpdateStocksButton();
     }
 
-    private void RemoveIngredientSelected(IngredientSelected ingredientSelected)
-    {
+    private void RemoveIngredientSelected(IngredientSelected ingredientSelected) {
         ingredientSelected.RemoveIngredient(); //Set to null 
         nbIngredientSelected--;
     }
@@ -396,7 +393,7 @@ public class WorkstationManager : MonoBehaviour {
         ingredientUnlock.action -= EnableIngredientButton;
 
         foreach (IngredientSelected ingredientSelected in ingredientsSelected)
-            if (ingredientSelected.GetIngredient())  
+            if (ingredientSelected.GetIngredient())
                 RemoveIngredientSelected(ingredientSelected);
     }
 

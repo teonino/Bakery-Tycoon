@@ -27,7 +27,7 @@ public class Table : Interactable {
     public override void Effect() {
         if (playerControllerSO.GetPlayerController().GetItemHold() && GetItem(true)) {
             PutDownItem(playerControllerSO.GetPlayerController().GetItemHold());
-            if (playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.amount <= 0)
+            if (playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.GetAmount() <= 0)
                 playerControllerSO.GetPlayerController().SetItemHold(null);
         }
         else if (!playerControllerSO.GetPlayerController().GetItemHold() && (GetItem(false) || CheckPlate()))
@@ -71,10 +71,10 @@ public class Table : Interactable {
         for (int i = 0; i < chairs.Count; i++) {
             if (chairs[i].customer && go && go.GetComponent<ProductHolder>() && !itemPutDown) {
                 if (chairs[i].customer.state != AIState.eating && go.GetComponent<ProductHolder>().product.productSO && chairs[i].customer.requestedProduct.name == go.GetComponent<ProductHolder>().product.GetName() && !items[i]) {
-                    if (go.GetComponent<ProductHolder>().product.amount > 1) {
+                    if (go.GetComponent<ProductHolder>().product.GetAmount() > 1) {
                         items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
                         items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().product.amount--;
+                        go.GetComponent<ProductHolder>().product.RemoveAmount();
                         itemPutDown = true;
                     }
                     else {
@@ -90,10 +90,10 @@ public class Table : Interactable {
         if (!itemPutDown) {
             for (int i = 0; i < items.Count; i++) {
                 if (!items[i] && go && go.tag != "paste") {
-                    if (go.GetComponent<ProductHolder>().product.amount > 1 ) {
+                    if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
                         items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
                         items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().product.amount--;
+                        go.GetComponent<ProductHolder>().product.RemoveAmount();
                     }
                     else { 
                         items[i] = go;

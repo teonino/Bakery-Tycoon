@@ -25,5 +25,6 @@ public class DialogueButton : Button {
     }
 
     public void SetNextDialogue(int id) => nextDialogue = id;
+    public void SetTutorial(Tutorial tutorial) => this.tutorial = tutorial;
     public void SetRelationReward(int value) => relationReward = value;
 }

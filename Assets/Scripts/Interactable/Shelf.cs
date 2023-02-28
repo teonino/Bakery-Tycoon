@@ -39,7 +39,7 @@ public class Shelf : Interactable {
             debugAsset.InstantiateAsync(transform).Completed += (go) => {
                 item = go.Result;
                 item.transform.position = itemPosition.transform.position;
-                item.GetComponent<ProductHolder>().product.amount = 3;
+                item.GetComponent<ProductHolder>().product.SetAmount(3);
             };
     }
 

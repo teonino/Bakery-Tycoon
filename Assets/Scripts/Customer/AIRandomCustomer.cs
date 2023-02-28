@@ -26,7 +26,7 @@ public class AIRandomCustomer : AICustomer
 
         day.DayTimeChange += LeaveOnEvening;
         state = AIState.moving;
-        animator.SetTrigger("Walk");
+        //animator.SetTrigger("Walk");
     }
 
     private new void TakeItem(ProductHolder product, GameObject displayGO)
@@ -69,15 +69,15 @@ public class AIRandomCustomer : AICustomer
         if (Vector3.Distance(transform.position, agent.destination) < 0.5 && state == AIState.moving)
         {
             state = AIState.waiting;
-            coroutine = StartCoroutine(CustomerWaiting(waitingTime, Leave));
+            coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
 
             if (!interacting) {
-                animator.SetTrigger("Idle");
+                //animator.SetTrigger("Idle");
             }
         }
 
         if (interacting && Vector3.Distance(transform.position, agent.destination) < 0.2 && !hasInteract) {
-            interacting.Interact(animator); // trigger animation according to item
+            //interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;
         }
 
@@ -92,14 +92,14 @@ public class AIRandomCustomer : AICustomer
                 //Take item
                 if (!item)
                 {
-                    if (objectOnShelf.product.amount > 1)
+                    if (objectOnShelf.product.GetAmount() > 1)
                     {
                         objectOnShelf.product.productSO.asset.InstantiateAsync(transform).Completed += (go) =>
                         {
                             item = go.Result;
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
-                        objectOnShelf.product.amount--;
+                        objectOnShelf.product.RemoveAmount();
                     }
                     else
                     {

@@ -43,7 +43,6 @@ public class TruckDelivery : Interactable {
         }
     }
 
-    //Trigger this when the player interacted with the truck to collect the delivery
     public void DeliveryDeparture() {
         gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
         gameObject.SetActive(true);

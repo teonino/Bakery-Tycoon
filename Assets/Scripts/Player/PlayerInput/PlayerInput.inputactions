@@ -1957,6 +1957,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SpawnTruck",
+                    "type": "Button",
+                    "id": "c1325ed1-580e-47c1-9078-60ec1d0e334c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1968,6 +1977,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52f2d5d5-6023-4513-bda5-430f3fc70f12",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpawnTruck",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2106,6 +2126,74 @@
                     "processors": "",
                     "groups": "",
                     "action": "MuteSource",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "eb8921a0-4a91-44a1-8751-2c058a058917",
+            "actions": [
+                {
+                    "name": "Dialogue1",
+                    "type": "Button",
+                    "id": "52830095-0bb1-4f2f-a3ed-749b48739f54",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dialogue2",
+                    "type": "Button",
+                    "id": "7bd8f85d-5d1e-461d-8ecf-66e939283b05",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dialogue3",
+                    "type": "Button",
+                    "id": "b5936b49-07bf-433e-92cf-2eb9096bb22c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c52b2368-0ad4-435f-851b-9cdf8c27287f",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dialogue1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ead0b5e-e1cf-4c0b-a1c2-e6cc5b8ab3fa",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dialogue2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f6a3ca6-f29c-490f-ada8-5df84f667588",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dialogue3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

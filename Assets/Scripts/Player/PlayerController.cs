@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour {
 
                     Product productInDisplayedText = interactedItem.GetComponent<Shelf>().GetItem().GetComponent<ProductHolder>().product;
 
-                    productDisplayedAmount.Value = productInDisplayedText.amount;
+                    productDisplayedAmount.Value = productInDisplayedText.GetAmount();
                     productDisplayedName.Value = productInDisplayedText.GetName();
                     productAmountText.enabled = true;
 
@@ -180,7 +180,6 @@ public class PlayerController : MonoBehaviour {
         else if (interactedItem == null && interactionText.activeSelf == true) {
             interactionText.SetActive(false);
         }
-
     }
 
     private void ClearOutline() {

@@ -54,6 +54,7 @@ MonoBehaviour:
   animator: {fileID: 979098589654878429}
   itemSocket: {fileID: 5864863275615439005}
   interractPanel: {fileID: 0}
+  recipesBook: {fileID: 0}
   interactionText: {fileID: 0}
   modulableInteractionText: {fileID: 0}
   productAmountText: {fileID: 0}
@@ -70,6 +71,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  footstepClip: {fileID: 8300000, guid: 169e5722e862c4047bdf55c3df168639, type: 3}
+  footstepSource: {fileID: 0}
 --- !u!136 &7896755136899623036
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -231,6 +234,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &417939818656551660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800352554527900477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b39b902235af8544b690a2884eecf0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepClip: {fileID: 8300000, guid: 169e5722e862c4047bdf55c3df168639, type: 3}
+  footstepSource: {fileID: 0}
 --- !u!1 &5864863275615439005 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6250481345889416945, guid: 7feddaee99a56ce41860b9d1fc68fa7a, type: 3}

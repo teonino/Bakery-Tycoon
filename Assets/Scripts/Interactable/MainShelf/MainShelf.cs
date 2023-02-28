@@ -29,7 +29,6 @@ public class MainShelf : Shelf {
         }
 
         if (!customer.inQueue) {
-            //ShuffleQueue();
             foreach (QueueBakery queuePosition in queueCustomerInteracting) {
                 if (!queuePosition.HasCustomer() && !customer.inQueue) {
                     queuePosition.SetCustomer(customer);
@@ -55,9 +54,10 @@ public class MainShelf : Shelf {
             queueCustomerInteracting[0].SetCustomer(null);
             queueCustomer[queueCustomer.Count - 1].GetCustomer().SetInteracting(null);
             queueCustomer[queueCustomer.Count - 1].GetCustomer().SetDestination(queueCustomer[queueCustomer.Count - 1].transform.position);
+            queueCustomer[queueCustomer.Count - 1].GetCustomer().DispalyCanvas();
 
 
-            queueCustomer[queueCustomer.Count - 1].GetCustomer().GetAnimator().SetBool("Talk 0", false);
+            //queueCustomer[queueCustomer.Count - 1].GetCustomer().GetAnimator().SetBool("Talk 0", false);
         }
 
         //set 2nd queueCustomerInteracting place first 
