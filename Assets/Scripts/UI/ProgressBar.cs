@@ -8,15 +8,14 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour {
 
-    [SerializeField] Slider readySlider;
-    [SerializeField] Image readyFill;
+    [SerializeField] Image filledImage;
     private float duration;
     public Action onDestroy;
     private float timeElapsed = 0;
 
     void Update() {
         timeElapsed += Time.deltaTime;
-        readySlider.value = Mathf.Lerp(0, 1, timeElapsed / duration);
+        filledImage.fillAmount = Mathf.Lerp(0, 1, timeElapsed / duration);
         if (timeElapsed > duration) {
             onDestroy?.Invoke();
             Addressables.ReleaseInstance(gameObject);

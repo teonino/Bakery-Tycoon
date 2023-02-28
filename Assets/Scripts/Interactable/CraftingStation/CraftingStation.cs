@@ -19,11 +19,13 @@ public class CraftingStation : Interactable {
 
     private bool cooking = false;
     private Product itemInStation;
-    private GameObject readyText;
+    private GameObject readyImage;
 
     [SerializeField] private AudioSource BurningSound;
     [SerializeField] private AudioSource TingSound;
     [SerializeField] private SFXPlayer sfxPlayer;
+
+    [SerializeField] private float transformPosition;
 
     private void Start() {
         if (!debugState.GetDebug())
@@ -54,7 +56,7 @@ public class CraftingStation : Interactable {
                 CreateCerealQuest?.CheckProduct(productItem.product.productSO);
 
                 itemInStation = null;
-                Addressables.ReleaseInstance(readyText);
+                Addressables.ReleaseInstance(readyImage);
             };
         }
         else if (playerControllerSO.GetPlayerController().GetItemHold() && playerControllerSO.GetPlayerController().GetItemHold().tag == "Paste" && playerControllerSO.GetPlayerController().GetItemHold().GetComponent<ProductHolder>().product.GetCraftingStation() == type && itemInStation != null && !cooking) {
@@ -75,7 +77,7 @@ public class CraftingStation : Interactable {
 
                 itemInStation = null;
             };
-            Addressables.ReleaseInstance(readyText);
+            Addressables.ReleaseInstance(readyImage);
             CookingTime(itemInStation);
             sfxPlayer.InteractSound(); 
 
@@ -87,7 +89,7 @@ public class CraftingStation : Interactable {
             TingSound.Stop();
             BurningSound.Play();
             GameObject progressBar = go.Result;
-            go.Result.transform.localPosition = Vector3.up * 2;
+            go.Result.transform.localPosition = Vector3.up * 2.3f;
             go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
 
             ProgressBar progressBarScript = progressBar.GetComponentInChildren<ProgressBar>();
@@ -103,9 +105,9 @@ public class CraftingStation : Interactable {
         cooking = true;
 
         readyAsset.InstantiateAsync().Completed += (go) => {
-            readyText = go.Result;
-            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-            readyText.SetActive(false);
+            readyImage = go.Result;
+            readyImage.transform.position = new Vector3(transform.position.x, transform.position.y + 2.3f, transform.position.z);
+            readyImage.SetActive(false);
         };
         //if (skipCookingTime)
         //    yield return new WaitForSeconds(0);
@@ -118,7 +120,7 @@ public class CraftingStation : Interactable {
         BurningSound.Stop();
         TingSound.Play();
         cooking = false;
-        readyText.SetActive(true);
+        readyImage.SetActive(true);
     }
 
     //public void Clean() {
