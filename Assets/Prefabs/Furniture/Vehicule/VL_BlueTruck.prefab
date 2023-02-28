@@ -222,7 +222,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f9969354aa351164b8e422910dab1cc0, type: 2}
+  - {fileID: 2100000, guid: 8de4e240c04e8c6449d45f9a58b38f26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -634,6 +634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7947844055588593348}
   - component: {fileID: 932999643696947150}
+  - component: {fileID: 8328507479044492769}
   m_Layer: 0
   m_Name: VL_BlueTruck
   m_TagString: Untagged
@@ -671,6 +672,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carSpeed: 10
   _vehicleMesh: {fileID: 8741622701610114124}
+  _collideSize: {x: 1.92, y: 1.95}
+  _collideDistance: 3.59
+--- !u!65 &8328507479044492769
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787782556110976739}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 2.5, z: 5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4743445094636064402
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,6 +67,7 @@ public class OutdoorManager : MonoBehaviour
             {
                 path.Add(HorizontalPathPointParent.transform.GetChild(i).transform);
             }
+            vehiculeBeingSpawned.LaneUsed = Drive.Lane.Horizontal;
         }
         else
         {
@@ -74,6 +75,7 @@ public class OutdoorManager : MonoBehaviour
             {
                 path.Add(VerticalPathPointParent.transform.GetChild(i).transform);
             }
+            vehiculeBeingSpawned.LaneUsed = Drive.Lane.Vertical;
         }
 
         vehiculeBeingSpawned.SetPath(path);
