@@ -16,7 +16,7 @@ public class ProductHolder : MonoBehaviour {
     public void RemoveAmount() {
         product.RemoveAmount();
         if (productModels != null)
-            productModels[product.GetAmount() - 1].gameObject.SetActive(false);
+            productModels[product.GetAmount()].gameObject.SetActive(false);
     }
 
     public void DisplayOneProduct() {
