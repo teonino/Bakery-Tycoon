@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,13 @@ public class ProductHolder : MonoBehaviour {
     public void RemoveAmount() {
         product.RemoveAmount();
         if (productModels != null)
-            productModels[product.GetAmount() - 1].gameObject.SetActive(false);
+            productModels[product.GetAmount()].gameObject.SetActive(false);
+    }
+
+    public void DisplayOneProduct() {
+        foreach (GameObject model in productModels) {
+            model.SetActive(false);
+        }
+        productModels[0].SetActive(true);
     }
 }

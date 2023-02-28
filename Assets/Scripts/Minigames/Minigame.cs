@@ -19,7 +19,7 @@ public abstract class Minigame : MonoBehaviour {
 
     // Start is called before the first frame update
     protected void Start() {
-        workplacePanel = transform.parent.gameObject.GetComponent<WorkstationManager>();
+        workplacePanel = FindObjectOfType<WorkstationManager>(true);
         playerController = FindObjectOfType<PlayerController>();
         controller = playerController.GetController();
         launchTime = Time.time;

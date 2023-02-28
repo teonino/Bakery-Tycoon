@@ -6,7 +6,7 @@ using UnityEngine;
 public class Product {
     public ProductSO productSO;
     public int quality;
-    private int amount;
+    [SerializeField] private int amount;
 
     public void SetProduct(ProductSO product) {
         productSO = product;
