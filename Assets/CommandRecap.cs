@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class CommandRecap : MonoBehaviour {
     private float time;
@@ -13,10 +12,19 @@ public class CommandRecap : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI timeRemainingText;
     [SerializeField] private TextMeshProUGUI orderText;
     [SerializeField] private Image waitingImage;
+    [SerializeField] private List<Sprite> backgroundSprite;
 
     public void StartCoroutineText() {
         time = waitingTimeSO.GetWaitingTime();
         timeMax = time;
+        if(customer.isRegular())
+        {
+            this.gameObject.GetComponent<Image>().sprite = backgroundSprite[0];
+        }
+        else
+        {
+            this.gameObject.GetComponent<Image>().sprite = backgroundSprite[1];
+        }
         StartCoroutine(SetText());
     }
     private IEnumerator SetText() {
