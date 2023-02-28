@@ -20,10 +20,6 @@ public class CommandListManager : MonoBehaviour {
             recap.StartCoroutineText();
             commands.Add(recap);
         };
-        if (customer.isRegular())
-            print("Regular");
-        else
-            print("Random");
     }
 
     public void RemoveCommand(AICustomer customer) {
@@ -33,7 +29,9 @@ public class CommandListManager : MonoBehaviour {
             if (commands[i].GetCustomer() == customer) 
                 recap = commands[i];
 
-        commands.Remove(recap);
-        Addressables.ReleaseInstance(recap.gameObject);
+        if (recap) {
+            commands.Remove(recap);
+            Addressables.ReleaseInstance(recap.gameObject);
+        }
     }
 }
