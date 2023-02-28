@@ -271,17 +271,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""DisplayRecipesBook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d84447c4-4c04-4855-915d-737936c6e0ff"",
-                    ""path"": ""<XInputController>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DisplayRecipesBook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1398,12 +1387,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Order"",
+                    ""name"": ""OrderAndClear"",
                     ""type"": ""Button"",
                     ""id"": ""d882eb63-93fb-4e05-bd5b-5b741ea49389"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold,Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -1414,7 +1403,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""ChangeList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1425,8 +1414,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Order"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""OrderAndClear"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1436,8 +1425,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Order"",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""OrderAndClear"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2298,7 +2287,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Amafood
         m_Amafood = asset.FindActionMap("Amafood", throwIfNotFound: true);
         m_Amafood_ChangeList = m_Amafood.FindAction("ChangeList", throwIfNotFound: true);
-        m_Amafood_Order = m_Amafood.FindAction("Order", throwIfNotFound: true);
+        m_Amafood_OrderAndClear = m_Amafood.FindAction("OrderAndClear", throwIfNotFound: true);
         // SpreadPaste
         m_SpreadPaste = asset.FindActionMap("SpreadPaste", throwIfNotFound: true);
         m_SpreadPaste_SpreadPasteAction = m_SpreadPaste.FindAction("SpreadPasteAction", throwIfNotFound: true);
@@ -2803,13 +2792,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Amafood;
     private IAmafoodActions m_AmafoodActionsCallbackInterface;
     private readonly InputAction m_Amafood_ChangeList;
-    private readonly InputAction m_Amafood_Order;
+    private readonly InputAction m_Amafood_OrderAndClear;
     public struct AmafoodActions
     {
         private @PlayerInput m_Wrapper;
         public AmafoodActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChangeList => m_Wrapper.m_Amafood_ChangeList;
-        public InputAction @Order => m_Wrapper.m_Amafood_Order;
+        public InputAction @OrderAndClear => m_Wrapper.m_Amafood_OrderAndClear;
         public InputActionMap Get() { return m_Wrapper.m_Amafood; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2822,9 +2811,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ChangeList.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
                 @ChangeList.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
                 @ChangeList.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnChangeList;
-                @Order.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
-                @Order.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
-                @Order.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrder;
+                @OrderAndClear.started -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrderAndClear;
+                @OrderAndClear.performed -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrderAndClear;
+                @OrderAndClear.canceled -= m_Wrapper.m_AmafoodActionsCallbackInterface.OnOrderAndClear;
             }
             m_Wrapper.m_AmafoodActionsCallbackInterface = instance;
             if (instance != null)
@@ -2832,9 +2821,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ChangeList.started += instance.OnChangeList;
                 @ChangeList.performed += instance.OnChangeList;
                 @ChangeList.canceled += instance.OnChangeList;
-                @Order.started += instance.OnOrder;
-                @Order.performed += instance.OnOrder;
-                @Order.canceled += instance.OnOrder;
+                @OrderAndClear.started += instance.OnOrderAndClear;
+                @OrderAndClear.performed += instance.OnOrderAndClear;
+                @OrderAndClear.canceled += instance.OnOrderAndClear;
             }
         }
     }
@@ -3385,7 +3374,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IAmafoodActions
     {
         void OnChangeList(InputAction.CallbackContext context);
-        void OnOrder(InputAction.CallbackContext context);
+        void OnOrderAndClear(InputAction.CallbackContext context);
     }
     public interface ISpreadPasteActions
     {
