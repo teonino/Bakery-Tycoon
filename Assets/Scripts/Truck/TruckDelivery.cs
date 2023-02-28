@@ -12,6 +12,9 @@ public class TruckDelivery : Interactable {
     [SerializeField] private NotificationType notifType;
     [SerializeField] private SFXPlayer sfxPlayer;
 
+    [SerializeField] private AudioSource SFXSource;
+    [SerializeField] private AudioClip SFXClip;
+
     private bool moving;
     private bool fetchingOrder = false;
     private Vector3 dest;
@@ -31,6 +34,7 @@ public class TruckDelivery : Interactable {
                     notifEvent.Invoke(notifType);
 
                 moving = false;
+                SFXSource.PlayOneShot(SFXClip);
                 audioSource.Stop();
             }
         }
@@ -41,6 +45,7 @@ public class TruckDelivery : Interactable {
         else {
             gameObject.layer = LayerMask.NameToLayer("Default");
         }
+
     }
 
     public void DeliveryDeparture() {
