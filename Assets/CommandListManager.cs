@@ -20,6 +20,10 @@ public class CommandListManager : MonoBehaviour {
             recap.StartCoroutineText();
             commands.Add(recap);
         };
+        if (customer.isRegular())
+            print("Regular");
+        else
+            print("Random");
     }
 
     public void RemoveCommand(AICustomer customer) {

@@ -67,6 +67,11 @@ public class AIRandomCustomer : AICustomer {
             }
         }
 
+        //If too far away from destination, retrigger movements
+        if (Vector3.Distance(transform.position, agent.destination) > 2 && state != AIState.moving) {
+            SetDestination(agent.destination);
+        }
+
         if (interacting && Vector3.Distance(transform.position, agent.destination) < 0.2 && !hasInteract) {
             //interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;
@@ -99,6 +104,11 @@ public class AIRandomCustomer : AICustomer {
             }
         }
         base.FixedUpdate();
+    }
+
+
+    public override bool isRegular() {
+        return false;
     }
 
     public Animator GetAnimator() => animator;
