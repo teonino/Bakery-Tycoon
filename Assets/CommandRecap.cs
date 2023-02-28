@@ -2,20 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CommandRecap : MonoBehaviour {
-    private int time;
+    private float time;
+    private float timeMax;
     private AICustomer customer;
     private CustomerWaitingTime waitingTimeSO;
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI timeRemainingText;
+    [SerializeField] private TextMeshProUGUI orderText;
+    [SerializeField] private Image waitingImage;
 
     public void StartCoroutineText() {
         time = waitingTimeSO.GetWaitingTime();
+        timeMax = time;
         StartCoroutine(SetText());
     }
     private IEnumerator SetText() {
-        text.text = customer.requestedProduct.name + " / " + GetTime();
-
+        timeRemainingText.text = GetTime();
+        orderText.text = customer.requestedProduct.name;
+        print("time max/actual : " + timeMax/time);
+        print(time);
+        waitingImage.fillAmount = time / timeMax;
 
         yield return new WaitForSeconds(1);
         time--;
@@ -26,16 +35,15 @@ public class CommandRecap : MonoBehaviour {
         string s = "";
 
         if (time / 60 > 0) {
-            s += time / 60 + "";
+            s += Mathf.Floor(time / 60) + "";
             if (time % 60 >= 10)
-                s += "." + time % 60 ;
+                s += ":" + time % 60 ;
             else
-                s += ".0" + time % 60;
+                s += ":0" + time % 60;
         }
         else 
             s += time % 60 + "";
-
-        return s + "s";
+        return s + " min";
 
     }
 
