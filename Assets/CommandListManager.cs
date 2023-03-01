@@ -29,7 +29,9 @@ public class CommandListManager : MonoBehaviour {
             if (commands[i].GetCustomer() == customer) 
                 recap = commands[i];
 
-        commands.Remove(recap);
-        Addressables.ReleaseInstance(recap.gameObject);
+        if (recap) {
+            commands.Remove(recap);
+            Addressables.ReleaseInstance(recap.gameObject);
+        }
     }
 }

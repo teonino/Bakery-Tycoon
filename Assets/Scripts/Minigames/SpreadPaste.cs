@@ -44,10 +44,10 @@ public class SpreadPaste : Minigame {
     protected void CheckInZone() {
         if (slider.value >= minValue && slider.value <= maxValue) {
             timeInZone += Time.deltaTime;
-            sliderFiller.color = Color.green;
+            sliderFiller.color = Color.white;
         }
         else
-            sliderFiller.color = Color.blue;
+            sliderFiller.color = new Color(192, 192, 192);
     }
 
     public override void EnableInputs() {

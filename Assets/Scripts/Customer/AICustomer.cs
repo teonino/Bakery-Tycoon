@@ -71,6 +71,9 @@ public class AICustomer : Interactable {
             DestroyCustomer();
     }
 
+
+    public virtual bool isRegular() { return false; }
+
     public void TakeItem(ProductHolder product, GameObject displayGo) {
         item.GetComponent<ProductHolder>().product.quality = product.product.quality;
 
