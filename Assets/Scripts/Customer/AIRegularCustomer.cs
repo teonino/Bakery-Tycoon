@@ -81,8 +81,12 @@ public class AIRegularCustomer : AICustomer {
             }
         }
     }
-    public void SetIndexChair(int value) => indexChair = value; 
+    public void SetIndexChair(int value) => indexChair = value;
 
+
+    public override bool isRegular() {
+        return true;
+    }
     private void Sit() {
         agent.SetDestination(chair.transform.position);
         state = AIState.moving;

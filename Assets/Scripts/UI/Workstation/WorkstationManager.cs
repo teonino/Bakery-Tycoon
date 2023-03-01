@@ -25,6 +25,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
     [SerializeField] private GameObject LetsCookPanel;
+    [SerializeField] private GameObject minigamePosition;
 
     protected List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -270,6 +271,7 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     public void LaunchIngredientMinigame() {
+        gameObject.SetActive(false);
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
             int indexMinigame;     
 
@@ -294,7 +296,7 @@ public class WorkstationManager : MonoBehaviour {
             while (!ingredientsSelected[indexMinigame].GetIngredient())
                 indexMinigame++;
 
-            ingredientsSelected[indexMinigame].GetIngredient().minigame.minigameAsset.InstantiateAsync(transform).Completed += (go) => {
+            ingredientsSelected[indexMinigame].GetIngredient().minigame.minigameAsset.InstantiateAsync(minigamePosition.transform).Completed += (go) => {
                 go.Result.name = " Panel " + currentMinigameCounter;
                 currentMinigame = go.Result.GetComponent<Minigame>();
             };
@@ -392,9 +394,9 @@ public class WorkstationManager : MonoBehaviour {
         deliveries.UpdateUI -= UpdateStocksButton;
         ingredientUnlock.action -= EnableIngredientButton;
 
-        foreach (IngredientSelected ingredientSelected in ingredientsSelected)
-            if (ingredientSelected.GetIngredient())
-                RemoveIngredientSelected(ingredientSelected);
+        //foreach (IngredientSelected ingredientSelected in ingredientsSelected)
+        //    if (ingredientSelected.GetIngredient())
+        //        RemoveIngredientSelected(ingredientSelected);
     }
 
     private void OnDestroy() {
