@@ -51,14 +51,14 @@ public class AIRandomCustomer : AICustomer {
     }
 
     new void FixedUpdate() {
-        if (Vector3.Distance(transform.position, agent.destination) < 0.5 && agent.speed != 0) {
+        if (agent.speed != 0 && Vector3.Distance(transform.position, agent.destination) < 0.5) {
             transform.rotation.SetLookRotation(agent.destination);
             agent.speed = 0;
         }
 
 
         //Go to the Queue
-        if (Vector3.Distance(transform.position, agent.destination) < 0.5 && state == AIState.moving) {
+        if (state == AIState.moving && Vector3.Distance(transform.position, agent.destination) < 0.5) {
             state = AIState.waiting;
             coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
 
@@ -68,17 +68,17 @@ public class AIRandomCustomer : AICustomer {
         }
 
         //If too far away from destination, retrigger movements
-        if (Vector3.Distance(transform.position, agent.destination) > 2 && state != AIState.moving) {
+        if (state != AIState.moving && Vector3.Distance(transform.position, agent.destination) > 2) {
             SetDestination(agent.destination);
         }
 
-        if (interacting && Vector3.Distance(transform.position, agent.destination) < 0.2 && !hasInteract) {
+        if (interacting && !hasInteract && Vector3.Distance(transform.position, agent.destination) < 0.2 ) {
             //interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;
         }
 
         //Buy item and leave
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(shelf.transform.position.x, shelf.transform.position.z)) < 2 && shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this)) {
+        if (shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this) && (transform.position - shelf.transform.position).magnitude < 4) {
             ProductHolder objectOnShelf = shelf.GetItem().GetComponent<ProductHolder>();
             if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste") {
                 if (coroutine != null)

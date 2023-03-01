@@ -92,7 +92,7 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (nbCustomer < nbCustomerMax) {
+            if (nbCustomer <= nbCustomerMax) {
                 if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0) {
                     if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                         SpawnCustomerAsset(true);
