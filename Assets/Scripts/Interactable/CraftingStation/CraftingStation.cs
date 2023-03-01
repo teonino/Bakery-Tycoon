@@ -87,7 +87,7 @@ public class CraftingStation : Interactable {
             TingSound.Stop();
             BurningSound.Play();
             GameObject progressBar = go.Result;
-            go.Result.transform.localPosition = Vector3.up * 2;
+            go.Result.transform.localPosition = Vector3.up * 2.3f;
             go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
 
             ProgressBar progressBarScript = progressBar.GetComponentInChildren<ProgressBar>();
@@ -104,7 +104,7 @@ public class CraftingStation : Interactable {
 
         readyAsset.InstantiateAsync().Completed += (go) => {
             readyText = go.Result;
-            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            readyText.transform.position = new Vector3(transform.position.x, transform.position.y + 2.3f, transform.position.z);
             readyText.SetActive(false);
         };
         //if (skipCookingTime)
