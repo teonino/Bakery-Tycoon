@@ -8,9 +8,18 @@ using UnityEngine.AddressableAssets;
 public class CommandListManager : MonoBehaviour {
 
     [SerializeField] private AssetReference commandRecap;
+    [SerializeField] private Day day;
     [SerializeField] private CustomerWaitingTime waitingTimeSO;
 
     private List<CommandRecap> commands = new List<CommandRecap>();
+
+    private void Start() {
+        day.DayTimeChange += DisableGameObject;
+    }
+
+    private void DisableGameObject() {
+        gameObject.SetActive(false);
+    }
 
     public void AddCommand(AICustomer customer) {
         commandRecap.InstantiateAsync(gameObject.transform).Completed += (go) => {

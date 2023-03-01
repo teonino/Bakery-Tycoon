@@ -27,11 +27,10 @@ public class CommandRecap : MonoBehaviour {
         }
         StartCoroutine(SetText());
     }
+
     private IEnumerator SetText() {
         timeRemainingText.text = GetTime();
         orderText.text = customer.requestedProduct.name;
-        print("time max/actual : " + timeMax/time);
-        print(time);
         waitingImage.fillAmount = time / timeMax;
 
         yield return new WaitForSeconds(1);

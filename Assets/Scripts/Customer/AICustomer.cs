@@ -95,7 +95,8 @@ public class AICustomer : Interactable {
     }
 
     protected IEnumerator CustomerWaiting(float time, Action leavingFunction) {
-        spawner.LaunchCommandRecap(this);
+        if (state != AIState.eating)
+            spawner.LaunchCommandRecap(this);
         yield return new WaitForSeconds(time);
         leavingFunction.Invoke();
     }

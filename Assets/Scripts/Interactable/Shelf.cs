@@ -48,6 +48,7 @@ public class Shelf : Interactable {
         item = go;
         go = null;
         item.transform.localPosition = itemPosition.transform.localPosition;
+        item.transform.localRotation = Quaternion.identity;
         sfxPlayer.InteractSound();
 
     }

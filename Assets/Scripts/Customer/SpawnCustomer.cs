@@ -137,12 +137,14 @@ public class SpawnCustomer : MonoBehaviour {
                     SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
                     nbCustomerRegularSpawned++;
                 };
+
+            notifEvent.Invoke(notifType);
         }
         else {
             SpawnRandomCustomer(product);
+            notifEvent.Invoke(notifType);
         }
 
-        notifEvent.Invoke(notifType);
     }
 
     private void SpawnTutorialCustomer() {

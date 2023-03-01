@@ -6,8 +6,9 @@ using UnityEngine;
 public class Table : Interactable {
     public List<Chair> chairs;
     public List<GameObject> itemPositions;
-
     public List<GameObject> items;
+
+    private int indexItem;
 
     private void Awake() {
         foreach (Chair chair in chairs) {
@@ -65,16 +66,20 @@ public class Table : Interactable {
         return returnValue;
     }
 
-
     private void PutDownItem(GameObject go) {
         bool itemPutDown = false;
         for (int i = 0; i < chairs.Count; i++) {
             if (chairs[i].customer && go && go.GetComponent<ProductHolder>() && !itemPutDown) {
                 if (chairs[i].customer.state != AIState.eating && go.GetComponent<ProductHolder>().product.productSO && chairs[i].customer.requestedProduct.name == go.GetComponent<ProductHolder>().product.GetName() && !items[i]) {
                     if (go.GetComponent<ProductHolder>().product.GetAmount() > 1) {
-                        items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().product.RemoveAmount();
+                        indexItem = i;
+
+                        go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                            items[indexItem] = go.Result;
+                            items[indexItem].transform.localPosition = itemPositions[indexItem].transform.localPosition;
+                            go.Result.GetComponent<ProductHolder>().DisplayOneGameObject();
+                        };
+
                         itemPutDown = true;
                     }
                     else {
@@ -93,7 +98,7 @@ public class Table : Interactable {
                     if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
                         items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
                         items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().product.RemoveAmount();
+                        go.GetComponent<ProductHolder>().DisplayOneGameObject();
                     }
                     else { 
                         items[i] = go;

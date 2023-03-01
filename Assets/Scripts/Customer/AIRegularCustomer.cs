@@ -60,6 +60,8 @@ public class AIRegularCustomer : AICustomer {
                             TakeItem(productholder, table.gameObject);
                             table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             state = AIState.eating;
+
+                            spawner.RemoveCommandRecap(this);
                             if (tutorial)
                                 Leave();
                             else
@@ -72,6 +74,8 @@ public class AIRegularCustomer : AICustomer {
                         TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
                         productholder.blocked = true;
                         state = AIState.eating;
+
+                        spawner.RemoveCommandRecap(this);
                         if (tutorial)
                             Leave();
                         else
