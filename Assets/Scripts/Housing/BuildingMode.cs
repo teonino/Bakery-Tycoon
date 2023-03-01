@@ -41,7 +41,7 @@ public class BuildingMode : Interactable {
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
-    private void OnEnable() {
+    private void Start() {
         currentRaycastlayer = pickUpLayer;
         playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed += Sell;
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
@@ -83,7 +83,7 @@ public class BuildingMode : Interactable {
     }
 
     public void Sell(CallbackContext ctx) {
-        if (ctx.performed && selectedGo) {
+        if (selectedGo) {
             if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
                 if (holder.CanRemoveSelectedItem()) {
                     money.AddMoney(holder.GetFurniturePrice());
@@ -102,7 +102,7 @@ public class BuildingMode : Interactable {
     }
 
     public void Quit(CallbackContext context) {
-        if (context.performed && !selectedGo) {
+        if (!selectedGo) {
             cursorObject?.SetActive(false);
             playerControllerSO.GetPlayerController().playerInput.Building.Disable();
             playerControllerSO.GetPlayerController().EnableInput();
@@ -131,7 +131,7 @@ public class BuildingMode : Interactable {
     }
 
     private void EnablePreview(CallbackContext ctx) {
-        if (ctx.performed) {
+        if (!selectedGo) {
             if (!previewCamera.activeSelf) {
                 EnableCursor(false);
                 buildingCamera.SetActive(false);
@@ -143,6 +143,8 @@ public class BuildingMode : Interactable {
                 previewCamera.SetActive(false);
             }
         }
+        else
+            print("Can't go in preview if an object is selected");
     }
 
     private void DisplayFurtniturePanel(CallbackContext context) {

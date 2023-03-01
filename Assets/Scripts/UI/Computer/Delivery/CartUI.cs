@@ -83,7 +83,10 @@ public class CartUI : MonoBehaviour {
     private IEnumerator FillHoldFeedback() {
         holdFeedbackGO.fillAmount += 0.05f;
         yield return new WaitForEndOfFrame();
-        coroutine = StartCoroutine(FillHoldFeedback());
+        if (holdFeedbackGO.fillAmount >= 1)
+            holdFeedbackGO.fillAmount = 0;
+        else
+            coroutine = StartCoroutine(FillHoldFeedback());
     }
 
     public virtual void Order(InputAction.CallbackContext ctx) {

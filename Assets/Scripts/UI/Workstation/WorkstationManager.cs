@@ -394,9 +394,9 @@ public class WorkstationManager : MonoBehaviour {
         deliveries.UpdateUI -= UpdateStocksButton;
         ingredientUnlock.action -= EnableIngredientButton;
 
-        //foreach (IngredientSelected ingredientSelected in ingredientsSelected)
-        //    if (ingredientSelected.GetIngredient())
-        //        RemoveIngredientSelected(ingredientSelected);
+        foreach (IngredientSelected ingredientSelected in ingredientsSelected)
+            if (ingredientSelected.GetIngredient())
+                RemoveIngredientSelected(ingredientSelected);
     }
 
     private void OnDestroy() {
