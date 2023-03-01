@@ -3,12 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.SmartFormat.Extensions;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
@@ -21,6 +18,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
     [SerializeField] private TruckDelivery truckReference;
+    [SerializeField] private Image holdFeedbackGO;
 
     protected Delivery delivery;
 
@@ -29,6 +27,7 @@ public class CartUI : MonoBehaviour {
     [HideInInspector] public float cartWeight;
     [HideInInspector] public int cartCost;
 
+    private Coroutine coroutine;
     private float cost = 0; //Display value of a ingredient, not used yet
     private LocalizedString localizedString;
     private IntVariable localizedCartCost = null;
@@ -47,11 +46,13 @@ public class CartUI : MonoBehaviour {
     }
 
     private void OnEnable() {
-        playerController.GetPlayerController().playerInput.Amafood.Order.performed += Order;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started += FeedbackHold;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed += Order;
     }
 
     private void OnDisable() {
-        playerController.GetPlayerController().playerInput.Amafood.Order.performed -= Order;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started -= FeedbackHold;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed -= Order;
     }
 
     public void InitCart() {
@@ -72,24 +73,46 @@ public class CartUI : MonoBehaviour {
         totalCostText.SetText("Total: ");
     }
 
+    public virtual void FeedbackHold(InputAction.CallbackContext ctx) {
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+
+        coroutine = StartCoroutine(FillHoldFeedback());
+    }
+
+    private IEnumerator FillHoldFeedback() {
+        holdFeedbackGO.fillAmount += 0.05f;
+        yield return new WaitForEndOfFrame();
+        coroutine = StartCoroutine(FillHoldFeedback());
+    }
+
     public virtual void Order(InputAction.CallbackContext ctx) {
-        if (ctx.performed && cart != null) {
-            if (cart.Count > 0) {
-                //Check if the order can be bought
-                if (cartCost <= money.GetMoney()) {
-                    delivery = new Delivery(day.GetDayCount());
-                    foreach (KeyValuePair<IngredientSO, int> stock in cart) {
-                        if (stock.Value > 0) {
-                            delivery.Add(stock.Key, stock.Value);
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+        holdFeedbackGO.fillAmount = 0;
+
+
+        if (ctx.interaction.ToString().Contains("Hold")) {
+            Clear();
+        }
+        else {
+            if (ctx.performed && cart != null) {
+                if (cart.Count > 0) {
+                    //Check if the order can be bought
+                    if (cartCost <= money.GetMoney()) {
+                        delivery = new Delivery(day.GetDayCount());
+                        foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                            if (stock.Value > 0) {
+                                delivery.Add(stock.Key, stock.Value);
+                            }
                         }
+
+                        FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                        deliveries.Add(delivery);
+                        money.AddMoney(-cartCost);
+                        Clear();
                     }
-
-                    FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                    deliveries.Add(delivery);
-                    money.AddMoney(-cartCost);
-                    Clear();
-
                 }
             }
         }

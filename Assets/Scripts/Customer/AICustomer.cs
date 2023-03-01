@@ -67,7 +67,7 @@ public class AICustomer : Interactable {
 
     protected void FixedUpdate() {
         //Exit the bakery
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(spawnPosition.x, spawnPosition.z)) < 2 && state == AIState.leaving)
+        if (state == AIState.leaving && (transform.position - spawnPosition).magnitude < 4)
             DestroyCustomer();
     }
 
