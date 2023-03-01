@@ -15,10 +15,14 @@ public class ProgressBar : MonoBehaviour {
 
     void Update() {
         timeElapsed += Time.deltaTime;
-        filledImage.fillAmount = Mathf.Lerp(0, 1, timeElapsed / duration);
-        if (timeElapsed > duration) {
-            onDestroy?.Invoke();
-            Addressables.ReleaseInstance(gameObject);
+        if (filledImage != null)
+        {
+            filledImage.fillAmount = Mathf.Lerp(0, 1, timeElapsed / duration);
+            if (timeElapsed > duration)
+            {
+                onDestroy?.Invoke();
+                Addressables.ReleaseInstance(gameObject);
+            }
         }
     }
 

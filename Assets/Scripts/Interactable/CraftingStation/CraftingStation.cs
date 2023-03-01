@@ -87,7 +87,7 @@ public class CraftingStation : Interactable {
             TingSound.Stop();
             BurningSound.Play();
             GameObject progressBar = go.Result;
-            go.Result.transform.localPosition = Vector3.up * 2;
+            go.Result.transform.localPosition = Vector3.up * 2.3f;
             go.Result.GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
 
             ProgressBar progressBarScript = progressBar.GetComponentInChildren<ProgressBar>();
