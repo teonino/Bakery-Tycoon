@@ -34,7 +34,9 @@ public class AIRegularCustomer : AICustomer {
 
         if (chair && state == AIState.idle) {
             Sit();
-            coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
+            if (waitingTime)
+                coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
+
         }
 
         //Go to the Chair
@@ -96,10 +98,9 @@ public class AIRegularCustomer : AICustomer {
         state = AIState.moving;
     }
     private void LeaveOnEvening() {
-        if (day.GetDayTime() == DayTime.Evening) {
-            Leave();
-            day.DayTimeChange -= LeaveOnEvening;
-        }
+        Leave();
+        day.DayTimeChange -= LeaveOnEvening;
+
     }
     protected override void Leave() {
         if (chair)

@@ -85,8 +85,11 @@ public class CartUI : MonoBehaviour {
     }
 
     private IEnumerator FillHoldFeedback() {
-        holdFeedbackGO.fillAmount += 0.025f;
-        yield return new WaitForEndOfFrame();
+        if(holdFeedbackGO.fillAmount == 0)
+            yield return new WaitForSeconds(0.1f);
+
+        holdFeedbackGO.fillAmount += 0.08f;
+        yield return new WaitForFixedUpdate();
         if (holdFeedbackGO.fillAmount >= 1)
             holdFeedbackGO.fillAmount = 0;
         else
