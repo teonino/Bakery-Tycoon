@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -30,10 +30,10 @@ public class DialogueManager : MonoBehaviour {
     private void OnEnable() {
         if (playerControllerSO.GetPlayerController()) {
             playerControllerSO.GetPlayerController().DisableInput();
-            playerControllerSO.GetPlayerController().playerInput.Dialogue.Enable();
             playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue1.performed += InvokeButton1;
             playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue2.performed += InvokeButton2;
             playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue3.performed += InvokeButton3;
+            playerControllerSO.GetPlayerController().playerInput.Dialogue.Enable();
             controller.RegisterCurrentSelectedButton();
             Time.timeScale = 0;
         }
@@ -233,10 +233,10 @@ catch (Exception e) {
     }
 
     public void OnDisable() {
-        playerControllerSO.GetPlayerController().playerInput.Dialogue.Disable();
         playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue1.performed -= InvokeButton1;
         playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue2.performed -= InvokeButton2;
         playerControllerSO.GetPlayerController().playerInput.Dialogue.Dialogue3.performed -= InvokeButton3;
+        playerControllerSO.GetPlayerController().playerInput.Dialogue.Disable();
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();
 

@@ -52,6 +52,7 @@ public class CartUI : MonoBehaviour {
     private void OnEnable() {
         playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started += FeedbackHold;
         playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed += Order;
+        errorMessageGO.SetActive(false);
     }
 
     private void OnDisable() {
