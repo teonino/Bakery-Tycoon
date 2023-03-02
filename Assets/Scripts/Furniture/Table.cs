@@ -41,6 +41,14 @@ public class Table : Interactable {
         }
     }
 
+    public override bool CanInterract() {
+        canInterract = (playerControllerSO.GetPlayerController().GetItemHold() && GetItem(true)) ||
+            (!playerControllerSO.GetPlayerController().GetItemHold() && (GetItem(false) || CheckPlate())) ||
+            (playerControllerSO.GetPlayerController().GetItemHold() && GetAllItem(false));
+
+        return canInterract;
+    }
+
     private bool CheckPlate() {
         foreach (GameObject item in items) {
             if (item && item.tag == "Plate")
@@ -92,23 +100,23 @@ public class Table : Interactable {
                 }
             }
         }
-        if (!itemPutDown) {
-            for (int i = 0; i < items.Count; i++) {
-                if (!items[i] && go && go.tag != "paste") {
-                    if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
-                        items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().DisplayOneGameObject();
-                    }
-                    else { 
-                        items[i] = go;
-                        go.transform.SetParent(transform);
-                        go = null;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                    }
-                }
-            }
-        }
+        //if (!itemPutDown) {
+        //    for (int i = 0; i < items.Count; i++) {
+        //        if (!items[i] && go && go.tag != "paste") {
+        //            if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
+        //                items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
+        //                items[i].transform.localPosition = itemPositions[i].transform.localPosition;
+        //                go.GetComponent<ProductHolder>().DisplayOneGameObject();
+        //            }
+        //            else { 
+        //                items[i] = go;
+        //                go.transform.SetParent(transform);
+        //                go = null;
+        //                items[i].transform.localPosition = itemPositions[i].transform.localPosition;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
 

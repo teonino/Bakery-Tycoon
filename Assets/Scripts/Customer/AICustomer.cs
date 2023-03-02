@@ -141,6 +141,8 @@ public class AICustomer : Interactable {
     public NavMeshAgent GetAgent() => agent;
 
     public override void Effect() { }
+
+    public override bool CanInterract() { return canInterract; }
 }
 
 
