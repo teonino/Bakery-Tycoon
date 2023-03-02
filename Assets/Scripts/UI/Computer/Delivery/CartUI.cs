@@ -19,6 +19,7 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private PlayerControllerSO playerController;
     [SerializeField] private TruckDelivery truckReference;
     [SerializeField] private Image holdFeedbackGO;
+    [SerializeField] private GameObject errorMessageGO;
 
     protected Delivery delivery;
 
@@ -31,9 +32,11 @@ public class CartUI : MonoBehaviour {
     private float cost = 0; //Display value of a ingredient, not used yet
     private LocalizedString localizedString;
     private IntVariable localizedCartCost = null;
+    private LocalizedStringComponent errorMessageText;
 
     private void Awake() {
         deliveries.SetDefaultExpressOrderTime();
+        errorMessageText = errorMessageGO.GetComponentInChildren<LocalizedStringComponent>();
 
         localizedString = totalCostString.StringReference;
         if (!localizedString.TryGetValue("totalCost", out IVariable value)) {
@@ -43,6 +46,7 @@ public class CartUI : MonoBehaviour {
         else {
             localizedCartCost = value as IntVariable;
         }
+
     }
 
     private void OnEnable() {
@@ -118,12 +122,21 @@ public class CartUI : MonoBehaviour {
                             Clear();
                         }
                         else
-                            print("Truck not available at the moment");
+                            StartCoroutine(DisplayErrorMessage("TruckNotAvailable"));
                     }
                     else
-                        print("Not enought money");
+                        StartCoroutine(DisplayErrorMessage("NotEnoughtMoney"));
                 }
             }
+        }
+    }
+
+    private IEnumerator DisplayErrorMessage(string key) {
+        if (!errorMessageGO.activeSelf) {
+            errorMessageGO.SetActive(true);
+            errorMessageText.SetKey(key);
+            yield return new WaitForSeconds(2);
+            errorMessageGO.SetActive(false);
         }
     }
 
