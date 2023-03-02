@@ -45,17 +45,20 @@ public class TruckDelivery : Interactable {
         else {
             gameObject.layer = LayerMask.NameToLayer("Default");
         }
-
     }
 
     public void DeliveryDeparture() {
-        gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
-        gameObject.SetActive(true);
-        dest = pathPoint2.transform.position;
-        moving = true;
-        fetchingOrder = true;
-        audioSource.Play();
+        if (!moving && delivery == null) {
+            gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
+            gameObject.SetActive(true);
+            dest = pathPoint2.transform.position;
+            moving = true;
+            fetchingOrder = true;
+            audioSource.Play();
+        }
     }
+
+    public bool CanAddDelivery() => !moving && delivery == null;
 
     //Trigger this when truck is close to arriving
     public void DeliveryArriving() {
@@ -74,5 +77,10 @@ public class TruckDelivery : Interactable {
             sfxPlayer.InteractSound();
             delivery = null;
         }
+    }
+
+    public override bool CanInterract() {
+        canInterract = delivery != null && !moving;
+        return canInterract;
     }
 }

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7754168796298020132}
   - component: {fileID: 7853992442133784531}
   - component: {fileID: 311520423843426727}
+  - component: {fileID: 1006185488094187019}
+  - component: {fileID: 1281972547565732618}
   m_Layer: 0
   m_Name: FT_RU_A_DoorFrame
   m_TagString: Untagged
@@ -83,3 +85,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1006185488094187019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7109835509761603050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad4e466f1a701145a3ad1cb9dbb020e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControllerSO: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
+  day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  door1: {fileID: 0}
+  door2: {fileID: 0}
+  finishDayQuest: {fileID: 0}
+--- !u!65 &1281972547565732618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7109835509761603050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.33266124, y: 2.0000005, z: 0.9999997}
+  m_Center: {x: -0.04910536, y: 0.9999998, z: 0.49999997}
