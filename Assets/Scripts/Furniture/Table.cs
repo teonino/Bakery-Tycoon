@@ -88,6 +88,7 @@ public class Table : Interactable {
                             go.Result.GetComponent<ProductHolder>().DisplayOneGameObject();
                         };
 
+                        go.GetComponent<ProductHolder>().RemoveAmount();
                         itemPutDown = true;
                     }
                     else {

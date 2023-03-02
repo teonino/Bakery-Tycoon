@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class OrderSumaryManager : MonoBehaviour {
+    [SerializeField] private GameObject OrderSumaryGO;
     [SerializeField] private float timeDisplay;
     [SerializeField] private AssetReference notificationAsset;
     [SerializeField] private ListDeliveries listDeliveries;
@@ -28,7 +29,7 @@ public class OrderSumaryManager : MonoBehaviour {
 
     private void DisplayNotification() {
         if (index < lenght)
-            notificationAsset.InstantiateAsync(transform).Completed += (go) => {
+            notificationAsset.InstantiateAsync(OrderSumaryGO.transform).Completed += (go) => {
                 OrderSumaryNotification notif = go.Result.GetComponent<OrderSumaryNotification>();
                 StockIngredient stock = delivery.GetIngredients()[index];
 
@@ -40,5 +41,9 @@ public class OrderSumaryManager : MonoBehaviour {
 
                 index++;
             };
+    }
+
+    private void OnDestroy() {
+        listDeliveries.DisplayOrderSumary -= InitOrderSumary;
     }
 }
