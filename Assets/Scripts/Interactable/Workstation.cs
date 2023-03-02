@@ -32,22 +32,8 @@ public class Workstation : Interactable {
             playerControllerSO.GetPlayerController().DisableInput();
             sfxPlayer.InteractSound();
             manager.gameObject.SetActive(true);
-            playerControllerSO.GetPlayerController().playerInput.UI.Enable();
-            playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
         }
 
-    }
-
-    //Function when player quit the workstation by themself
-    public void Quit(InputAction.CallbackContext context) {
-        if (context.performed) {
-            manager.ResetManager();
-            playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
-            playerControllerSO.GetPlayerController().playerInput.UI.Disable();
-            playerControllerSO.GetPlayerController().EnableInput();
-            workplacePanel.gameObject.SetActive(false);
-            //manager.
-        }
     }
 
     //Give the item to the player once its done

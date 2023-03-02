@@ -38,7 +38,7 @@ public class WorkstationManager : MonoBehaviour {
     private int maxButtonInRack;
     private RectTransform scollRectTransform;
     private int nbIngredientSelected = 0;
-    private TextMeshProUGUI noRecipeText;
+    private LocalizedStringComponent noRecipeText;
     private int firstIndexMinigame = -1;
     private int secondIndexMinigame = -1;
     private bool ingredientPanelEnabled = true;
@@ -54,7 +54,7 @@ public class WorkstationManager : MonoBehaviour {
         lenght = ingredients.GetIngredientLenght();
         workplace = FindObjectOfType<Workstation>();
         scollRectTransform = scroll.GetComponent<RectTransform>();
-        noRecipeText = noRecipeTextGO.GetComponentInChildren<TextMeshProUGUI>();
+        noRecipeText = noRecipeTextGO.GetComponentInChildren<LocalizedStringComponent>();
     }
 
     private void OnEnable() {
@@ -237,10 +237,10 @@ public class WorkstationManager : MonoBehaviour {
                     LaunchIngredientMinigame();
                 }
                 else
-                    StartCoroutine(DisplayErrorText("Crafting Station Missing"));
+                    StartCoroutine(DisplayErrorText("CraftstationMissing"));
             }
             else
-                StartCoroutine(DisplayErrorText("This Recipe Doesn't Exist"));
+                StartCoroutine(DisplayErrorText("RecipeNotExistText"));
         }
     }
 
@@ -267,7 +267,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private IEnumerator DisplayErrorText(string msg) {
         if (!noRecipeTextGO.activeSelf) {
-            noRecipeText.text = msg;
+            noRecipeText.SetKey(msg);
             noRecipeTextGO.SetActive(true);
             yield return new WaitForSeconds(1);
             noRecipeTextGO.SetActive(false);
