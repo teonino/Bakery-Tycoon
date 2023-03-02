@@ -39,10 +39,9 @@ public class AIRandomCustomer : AICustomer {
     }
 
     private void LeaveOnEvening() {
-        if (day.GetDayTime() == DayTime.Evening) {
             Leave();
             day.DayTimeChange -= LeaveOnEvening;
-        }
+        
     }
 
     protected override void Leave() {
