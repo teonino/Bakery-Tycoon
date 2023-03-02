@@ -5,7 +5,7 @@ using UnityEngine;
 public class TruckDelivery : Interactable {
     [SerializeField] private GameObject pathPoint1;
     [SerializeField] private GameObject pathPoint2;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource engineSound;
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private TruckDeliveryTime time;
     [SerializeField] private NotificationEvent notifEvent;
@@ -35,8 +35,13 @@ public class TruckDelivery : Interactable {
 
                 moving = false;
                 SFXSource.PlayOneShot(SFXClip);
-                audioSource.Stop();
+                engineSound.Stop();
             }
+        }
+
+        if (engineSound.isPlaying == false)
+        {
+            engineSound.Play();
         }
 
         if (delivery != null && moving == false) {
@@ -54,7 +59,7 @@ public class TruckDelivery : Interactable {
             dest = pathPoint2.transform.position;
             moving = true;
             fetchingOrder = true;
-            audioSource.Play();
+            engineSound.Play();
         }
     }
 
@@ -68,7 +73,7 @@ public class TruckDelivery : Interactable {
         moving = true;
         fetchingOrder = false;
         dest = pathPoint1.transform.position;
-        audioSource.Play();
+        engineSound.Play();
     }
 
     public override void Effect() {

@@ -22,13 +22,15 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_R_B_TRANSPARENT_Wall
   m_Shader: {fileID: -6465566751694194690, guid: 5b5697a8dc60c1e45b71cbe0b739c6a0, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -159,7 +161,7 @@ Material:
     - _DetailsNormalStrenght: 0
     - _DetailsScale: 1
     - _DetailsScale_1: 0
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EmissionStrenght: 0
     - _EmissiveIntensity: 0.5
     - _EmissivePower: 1
@@ -184,8 +186,8 @@ Material:
     - _RougnessRatio: 0
     - _SmoothMapTiling: 0
     - _Smoothness: 0.867
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _UV: 1
     - _UseAO: 1
     - _UseAO1: 0
@@ -199,10 +201,10 @@ Material:
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
-    - _ZWriteControl: 0
+    - _ZWriteControl: 1
     m_Colors:
     - _CutoutPosition: {r: 0.5, g: 0.25, b: 0, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissiveColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissiveTiling: {r: 0, g: 0, b: 0, a: 0}
     - _GeneralTiling: {r: 1, g: 1, b: 0, a: 0}
