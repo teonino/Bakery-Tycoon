@@ -21,4 +21,8 @@ public class Computer : Interactable {
         sfxPlayer.InteractSound();
         secondInterractQuest?.OnInterract();
     }
+
+    public override bool CanInterract() {
+        return true;
+    }
 }

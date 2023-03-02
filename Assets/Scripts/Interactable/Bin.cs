@@ -10,4 +10,9 @@ public class Bin : Interactable {
             playerControllerSO.GetPlayerController().SetItemHold(null);
         }
     }
+
+    public override bool CanInterract() {
+        canInterract = playerControllerSO.GetPlayerController().GetItemHold() && playerControllerSO.GetPlayerController().GetItemHold().tag != "Plate";
+        return canInterract;
+    }
 }

@@ -43,11 +43,19 @@ public class Shelf : Interactable {
             };
     }
 
+    public override bool CanInterract() {
+        canInterract = (playerControllerSO.GetPlayerController().GetItemHold() && !item) ||
+            (!playerControllerSO.GetPlayerController().GetItemHold() && item) ||
+            (playerControllerSO.GetPlayerController().GetItemHold() && item);
+        return canInterract;
+    }
+
     private void PutDownItem(GameObject go) {
         go.transform.SetParent(transform);
         item = go;
         go = null;
         item.transform.localPosition = itemPosition.transform.localPosition;
+        item.transform.localRotation = Quaternion.identity;
         sfxPlayer.InteractSound();
 
     }
