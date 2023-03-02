@@ -187,13 +187,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void DisplayBook(InputAction.CallbackContext context) {
-        if (bookDisplayed) {
-            recipesBook.SetActive(false);
-            bookDisplayed = false;
-        }
-        else if (!bookDisplayed) {
-            recipesBook.SetActive(true);
-            bookDisplayed = true;
+        if (context.performed) {
+            if (bookDisplayed) {
+                recipesBook.SetActive(false);
+                bookDisplayed = false;
+            }
+            else if (!bookDisplayed) {
+                recipesBook.SetActive(true);
+                bookDisplayed = true;
+            }
         }
     }
 
