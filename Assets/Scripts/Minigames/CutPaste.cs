@@ -35,7 +35,7 @@ public class CutPaste : Minigame {
     }
 
     void SetRandomValidZonePosition() {
-        minValue = Random.Range(0, 0.8f);
+        minValue = Random.Range(0, 0.7f);
         maxValue = minValue + sizeZone;
         validZone.GetComponent<RectTransform>().anchorMin = new Vector2(minValue, 0);
         validZone.GetComponent<RectTransform>().anchorMax = new Vector2(maxValue, 1);
