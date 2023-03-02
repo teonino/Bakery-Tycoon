@@ -39,11 +39,6 @@ public class TruckDelivery : Interactable {
             }
         }
 
-        if (engineSound.isPlaying == false)
-        {
-            engineSound.Play();
-        }
-
         if (delivery != null && moving == false) {
             gameObject.layer = LayerMask.NameToLayer("Outline");
         }
