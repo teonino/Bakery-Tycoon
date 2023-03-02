@@ -103,19 +103,25 @@ public class CartUI : MonoBehaviour {
                 if (cart.Count > 0) {
                     //Check if the order can be bought
                     if (cartCost <= money.GetMoney()) {
-                        delivery = new Delivery(day.GetDayCount());
-                        foreach (KeyValuePair<IngredientSO, int> stock in cart) {
-                            if (stock.Value > 0) {
-                                delivery.Add(stock.Key, stock.Value);
+                        if (truckReference.CanAddDelivery()) {
+                            delivery = new Delivery(day.GetDayCount());
+                            foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                                if (stock.Value > 0) {
+                                    delivery.Add(stock.Key, stock.Value);
+                                }
                             }
+
+                            FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                            deliveries.Add(delivery);
+                            money.AddMoney(-cartCost);
+                            Clear();
                         }
-
-                        FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                        deliveries.Add(delivery);
-                        money.AddMoney(-cartCost);
-                        Clear();
+                        else
+                            print("Truck not available at the moment");
                     }
+                    else
+                        print("Not enought money");
                 }
             }
         }
