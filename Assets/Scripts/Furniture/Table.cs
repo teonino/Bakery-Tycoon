@@ -92,23 +92,23 @@ public class Table : Interactable {
                 }
             }
         }
-        if (!itemPutDown) {
-            for (int i = 0; i < items.Count; i++) {
-                if (!items[i] && go && go.tag != "paste") {
-                    if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
-                        items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().DisplayOneGameObject();
-                    }
-                    else { 
-                        items[i] = go;
-                        go.transform.SetParent(transform);
-                        go = null;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                    }
-                }
-            }
-        }
+        //if (!itemPutDown) {
+        //    for (int i = 0; i < items.Count; i++) {
+        //        if (!items[i] && go && go.tag != "paste") {
+        //            if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
+        //                items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
+        //                items[i].transform.localPosition = itemPositions[i].transform.localPosition;
+        //                go.GetComponent<ProductHolder>().DisplayOneGameObject();
+        //            }
+        //            else { 
+        //                items[i] = go;
+        //                go.transform.SetParent(transform);
+        //                go = null;
+        //                items[i].transform.localPosition = itemPositions[i].transform.localPosition;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
 
