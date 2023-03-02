@@ -33,7 +33,11 @@ public class Workstation : Interactable {
             sfxPlayer.InteractSound();
             manager.gameObject.SetActive(true);
         }
+    }
 
+    public override bool CanInterract() {
+        canInterract = !playerControllerSO.GetPlayerController().GetItemHold();
+        return canInterract;
     }
 
     //Give the item to the player once its done

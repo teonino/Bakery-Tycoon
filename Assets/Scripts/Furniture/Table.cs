@@ -41,6 +41,14 @@ public class Table : Interactable {
         }
     }
 
+    public override bool CanInterract() {
+        canInterract = (playerControllerSO.GetPlayerController().GetItemHold() && GetItem(true)) ||
+            (!playerControllerSO.GetPlayerController().GetItemHold() && (GetItem(false) || CheckPlate())) ||
+            (playerControllerSO.GetPlayerController().GetItemHold() && GetAllItem(false));
+
+        return canInterract;
+    }
+
     private bool CheckPlate() {
         foreach (GameObject item in items) {
             if (item && item.tag == "Plate")

@@ -75,4 +75,9 @@ public class TruckDelivery : Interactable {
             delivery = null;
         }
     }
+
+    public override bool CanInterract() {
+        canInterract = delivery != null && !moving;
+        return canInterract;
+    }
 }

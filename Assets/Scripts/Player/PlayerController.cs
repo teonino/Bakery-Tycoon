@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour {
         RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
         if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable)) {
+                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable) && interactable.CanInterract()) {
                     if (interactedItem) {
                         ClearOutline();
                     }

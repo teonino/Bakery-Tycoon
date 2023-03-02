@@ -81,6 +81,10 @@ public class BuildingMode : Interactable {
             interractQuest?.OnInterract();
         }
     }
+    public override bool CanInterract() {
+        canInterract = day.GetDayTime() != DayTime.Day;
+        return canInterract;
+    }
 
     public void Sell(CallbackContext ctx) {
         if (selectedGo) {
