@@ -56,9 +56,14 @@ public class SpawnCustomer : MonoBehaviour {
 
         if (!tutorial.GetTutorial())
             if (firstPackCustomer)
-                StartCoroutine(SpawnDelayFirstPack());
+                StartCoroutine(WaitBeforeSpawn());
             else
                 StartCoroutine(SpawnDelay());
+    }
+
+    private IEnumerator WaitBeforeSpawn() {
+        yield return new WaitForSeconds(5);
+        StartCoroutine(SpawnDelayFirstPack());
     }
 
     private IEnumerator SpawnDelayFirstPack() {
