@@ -7,10 +7,12 @@ public class ComputerManager : MonoBehaviour {
     [SerializeField] private Controller controller;
     [SerializeField] private List<GameObject> tabs;
     [SerializeField] private TabsManagement tabsManagement;
+    [SerializeField] private MoneyUI moneyRef;
 
     private void Awake()
     {
         tabsManagement.canChangeTab = true;
+        moneyRef.updateMoney();
     }
 
     private void Update() {

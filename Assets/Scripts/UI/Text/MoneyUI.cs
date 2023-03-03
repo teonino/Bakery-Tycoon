@@ -20,7 +20,13 @@ public class MoneyUI : MonoBehaviour {
 
     public Money GetMoney() => money;
 
-    private void UpdateUI(int money) {
+    public void UpdateUI(int money) {
         GetComponent<TextMeshProUGUI>().text = money.ToString();
     }
+
+    public void updateMoney()
+    {
+        money.OnMoneyChanged += UpdateUI;
+    }
+
 }
