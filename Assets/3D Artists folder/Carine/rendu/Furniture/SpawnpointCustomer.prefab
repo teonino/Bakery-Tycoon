@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1720134146612757227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1720134146612757226}
+  - component: {fileID: 1720134146612757225}
+  m_Layer: 0
+  m_Name: SpawnpointCustomer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1720134146612757226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720134146612757227}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1720134146612757225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720134146612757227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424b1bf94ddb0374f9a42cc5e7a07c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regularCustomerAsset:
+    m_AssetGUID: 026aaf68e41a3ab47a078309a92941c9
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  products: {fileID: 11400000, guid: 971c0b1f37b3a5e49939bf0d11746bfa, type: 2}
+  ingredients: {fileID: 11400000, guid: 70570b9cde6a798429211b64b0ba01d3, type: 2}
+  day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
+  customer: {fileID: 11400000, guid: 42c9ca4a6024cf94795cb8e9ecc56bf3, type: 2}
+  reputation: {fileID: 11400000, guid: 4bff35ce618f3f34eb389465ff98e553, type: 2}
+  notifEvent: {fileID: 11400000, guid: cba526bdec3824049887de1b9f48f713, type: 2}
+  notifType: {fileID: 11400000, guid: 7d5c328bcdbd763418926ff4dcafef8f, type: 2}
+  commandList: {fileID: 0}
+  tutorial: {fileID: 11400000, guid: a2f389f5f47836d428a654a8ed6d23b8, type: 2}
+  randomCustomerList: {fileID: 11400000, guid: cd5d36dab036d3f4281a177daea39906, type: 2}
+  regularCustomersDayOne:
+  - {fileID: 11400000, guid: d44229d6e47cf5c4b9c5bd46bab53f03, type: 2}
+  - {fileID: 11400000, guid: d39087ee9f3733746b694d2b1a9fcc9c, type: 2}
+  regularCustomersDayTwo:
+  - {fileID: 11400000, guid: 537976ea75b431941a7a44effd8051e2, type: 2}
+  - {fileID: 11400000, guid: 792ffff8a4358994e8751daebe1d9abb, type: 2}
+  regularCustomersDayThree:
+  - {fileID: 11400000, guid: 4f31a76db36c6044c8a240ebc0103ddc, type: 2}
+  - {fileID: 11400000, guid: aa4c48098d798db4a851fbfe2838e4da, type: 2}
+  regularCustomersDayFour:
+  - {fileID: 11400000, guid: b028a9619a71c0d4785df782b40b5792, type: 2}
+  - {fileID: 11400000, guid: a3c31c33fa9cfd842aedd916f880a647, type: 2}
+  enableSpawn: 1
+  enableSpawnRegularCustomer: 1
+  nbCustomerMax: 6
+  firstPackCustomer: {fileID: 11400000, guid: 41e7488978f6fd6449b836ac2ce0d4d1, type: 2}
+  spawnChanceRegularCustomer: 10
+  triggerSpawnOnCompletion: []
+  tutoProduct: []
