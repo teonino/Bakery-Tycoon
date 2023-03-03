@@ -65,7 +65,7 @@ MonoBehaviour:
   bonusTime: 0
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
-  animator: {fileID: 0}
+  animator: {fileID: 1755015845641002933}
   waitingTime: {fileID: 11400000, guid: e410baaf272abf54cb97463e11c57b7f, type: 2}
   saleReputation: 1
   requestedProduct: {fileID: 0}
@@ -119,10 +119,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2527051
-  m_Height: 1.3394701
+  m_Radius: 0.16747785
+  m_Height: 1.0732147
   m_Direction: 1
-  m_Center: {x: -0.002593577, y: 0.67249846, z: 0}
+  m_Center: {x: -0.007265568, y: 0.536208, z: 0.0071032345}
 --- !u!33 &3453630879934346746
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -608,6 +608,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 9dd6b4c1fa3e97044bcdaf3210677c88, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 873c3951063c7e04e80d4b00e6207437, type: 2}
     - target: {fileID: 6018468426916219281, guid: 9dd6b4c1fa3e97044bcdaf3210677c88, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -674,6 +678,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: cc9a3041dc835eb46984f7f60492a7d4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dd6b4c1fa3e97044bcdaf3210677c88, type: 3}
+--- !u!95 &1755015845641002933 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 9dd6b4c1fa3e97044bcdaf3210677c88, type: 3}
+  m_PrefabInstance: {fileID: 5274142002019934756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5673195536994321871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9dd6b4c1fa3e97044bcdaf3210677c88, type: 3}
