@@ -67,9 +67,12 @@ public class AICustomer : Interactable {
 
     protected void FixedUpdate() {
         //Exit the bakery
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(spawnPosition.x, spawnPosition.z)) < 2 && state == AIState.leaving)
+        if (state == AIState.leaving && (transform.position - spawnPosition).magnitude < 4)
             DestroyCustomer();
     }
+
+
+    public virtual bool isRegular() { return false; }
 
     public void TakeItem(ProductHolder product, GameObject displayGo) {
         item.GetComponent<ProductHolder>().product.quality = product.product.quality;
@@ -92,7 +95,8 @@ public class AICustomer : Interactable {
     }
 
     protected IEnumerator CustomerWaiting(float time, Action leavingFunction) {
-        spawner.LaunchCommandRecap(this);
+        if (state != AIState.eating)
+            spawner.LaunchCommandRecap(this);
         yield return new WaitForSeconds(time);
         leavingFunction.Invoke();
     }
@@ -137,6 +141,8 @@ public class AICustomer : Interactable {
     public NavMeshAgent GetAgent() => agent;
 
     public override void Effect() { }
+
+    public override bool CanInterract() { return canInterract; }
 }
 
 

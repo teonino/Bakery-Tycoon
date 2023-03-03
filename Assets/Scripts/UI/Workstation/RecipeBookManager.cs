@@ -34,19 +34,27 @@ public class RecipeBookManager : MonoBehaviour {
     }
 
     private void NextPage(InputAction.CallbackContext ctx) {
-        if (ctx.performed && indexProduct < products.GetProductList().Count / 4) {
+        if (ctx.performed && indexProduct < products.GetProductList().Count / 4)
+        {
+            print("aled nextpage");
             indexProduct++;
             switchTabPanel?.GoOnNextTab();
             Display();
         }
+        else
+            print("if nextpage failed");
     }
 
     private void PreviousPage(InputAction.CallbackContext ctx) {
         if (ctx.performed && indexProduct > 0) {
+            print("aled Backpage");
             indexProduct--;
             switchTabPanel?.GoOnPreviousTab();
             Display();
         }
+        else
+            print("if previous failed");
+
     }
 
     private void Display() {

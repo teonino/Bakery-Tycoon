@@ -85,25 +85,26 @@ public class PlayerController : MonoBehaviour {
         RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
         if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable) && interactable.gameObject != interactedItem) {
+                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable) && interactable.CanInterract()) {
                     if (interactedItem) {
                         ClearOutline();
                     }
 
-
                     if (!hitInfo[i].collider.GetComponent<AICustomer>()) {
                         interactedItem = interactable.gameObject;
                         interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
+                        interactableFound = true;
                     }
                 }
             }
+            interactableFound = false;
             Debug.DrawRay(transform.position + Vector3.up / 2, transform.forward, Color.red);
         }
         else {
             ClearOutline();
         }
 
-        if (interactedItem != null /*&& interactionText.activeSelf == false*/) {
+        if (interactedItem != null) {
             if (interactedItem.GetComponent<Shelf>()) {
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
                 interactionText.SetActive(true);
@@ -116,66 +117,42 @@ public class PlayerController : MonoBehaviour {
                     productAmountText.enabled = true;
 
                 }
-                else {
+                else
                     productAmountText.enabled = false;
-                }
             }
-            else {
+            else
                 productAmountText.enabled = false;
-            }
-
 
             interactionText.SetActive(false);
             if (interactedItem.GetComponent<Workstation>()) {
-                //modulableInteractionText.text = "to prepare your product";
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Workstation");
-                interactionText.SetActive(true);
             }
             else if (interactedItem.GetComponent<CraftingStation>() && itemHolded != null) {
-                if(itemHolded.name.Contains("Paste"))
-                {
-                    //modulableInteractionText.text = "to cook your products";
+                if (itemHolded.name.Contains("Paste"))
                     modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_CookingStation");
-                    interactionText.SetActive(true);
-                }
             }
-            else if (interactedItem.GetComponent<Sink>()) {
-                //modulableInteractionText.text = "to wash the plates";
+            else if (interactedItem.GetComponent<Sink>())
                 modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Sink");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Computer>()) {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Computer");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<BuildingMode>()) {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Custom");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Table>()) {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Table");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<EntranceDoor>()) {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<TruckDelivery>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Truck");
-                interactionText.SetActive(true);
-            }
-            else if (interactedItem.GetComponent<Shelf>())
-            {
-                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
-                interactionText.SetActive(true);
-            }
 
-            //else {
-            //    print("Other object detected");
-            //    modulableInteractionText.text = "to interact";
-            //    interactionText.SetActive(true);
-            //}
+            else if (interactedItem.GetComponent<Computer>())
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Computer");
+
+            else if (interactedItem.GetComponent<BuildingMode>())
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Custom");
+
+            else if (interactedItem.GetComponent<Table>())
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Table");
+
+            else if (interactedItem.GetComponent<EntranceDoor>())
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Doors");
+
+            else if (interactedItem.GetComponent<TruckDelivery>())
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Truck");
+
+            else if (interactedItem.GetComponent<Shelf>())
+                modulableInteractionText.GetComponent<LocalizedStringComponent>().SetKey("PlayerInteract_Shelf");
+
+            interactionText.SetActive(true);
         }
         else if (interactedItem == null && interactionText.activeSelf == true) {
             interactionText.SetActive(false);
@@ -209,17 +186,16 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void DisplayBook(InputAction.CallbackContext context)
-    {
-        if (bookDisplayed)
-        {
-            recipesBook.SetActive(false);
-            bookDisplayed = false;
-        }
-        else if(!bookDisplayed)
-        {
-            recipesBook.SetActive(true);
-            bookDisplayed = true;
+    private void DisplayBook(InputAction.CallbackContext context) {
+        if (context.performed) {
+            if (bookDisplayed) {
+                recipesBook.SetActive(false);
+                bookDisplayed = false;
+            }
+            else if (!bookDisplayed) {
+                recipesBook.SetActive(true);
+                bookDisplayed = true;
+            }
         }
     }
 

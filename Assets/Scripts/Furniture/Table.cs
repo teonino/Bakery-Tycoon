@@ -6,8 +6,9 @@ using UnityEngine;
 public class Table : Interactable {
     public List<Chair> chairs;
     public List<GameObject> itemPositions;
-
     public List<GameObject> items;
+
+    private int indexItem;
 
     private void Awake() {
         foreach (Chair chair in chairs) {
@@ -40,6 +41,14 @@ public class Table : Interactable {
         }
     }
 
+    public override bool CanInterract() {
+        canInterract = (playerControllerSO.GetPlayerController().GetItemHold() && GetItem(true)) ||
+            (!playerControllerSO.GetPlayerController().GetItemHold() && (GetItem(false) || CheckPlate())) ||
+            (playerControllerSO.GetPlayerController().GetItemHold() && GetAllItem(false));
+
+        return canInterract;
+    }
+
     private bool CheckPlate() {
         foreach (GameObject item in items) {
             if (item && item.tag == "Plate")
@@ -65,16 +74,21 @@ public class Table : Interactable {
         return returnValue;
     }
 
-
     private void PutDownItem(GameObject go) {
         bool itemPutDown = false;
         for (int i = 0; i < chairs.Count; i++) {
             if (chairs[i].customer && go && go.GetComponent<ProductHolder>() && !itemPutDown) {
                 if (chairs[i].customer.state != AIState.eating && go.GetComponent<ProductHolder>().product.productSO && chairs[i].customer.requestedProduct.name == go.GetComponent<ProductHolder>().product.GetName() && !items[i]) {
                     if (go.GetComponent<ProductHolder>().product.GetAmount() > 1) {
-                        items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().product.RemoveAmount();
+                        indexItem = i;
+
+                        go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                            items[indexItem] = go.Result;
+                            items[indexItem].transform.localPosition = itemPositions[indexItem].transform.localPosition;
+                            go.Result.GetComponent<ProductHolder>().DisplayOneGameObject();
+                        };
+
+                        go.GetComponent<ProductHolder>().RemoveAmount();
                         itemPutDown = true;
                     }
                     else {
@@ -87,23 +101,23 @@ public class Table : Interactable {
                 }
             }
         }
-        if (!itemPutDown) {
-            for (int i = 0; i < items.Count; i++) {
-                if (!items[i] && go && go.tag != "paste") {
-                    if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
-                        items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                        go.GetComponent<ProductHolder>().product.RemoveAmount();
-                    }
-                    else { 
-                        items[i] = go;
-                        go.transform.SetParent(transform);
-                        go = null;
-                        items[i].transform.localPosition = itemPositions[i].transform.localPosition;
-                    }
-                }
-            }
-        }
+        //if (!itemPutDown) {
+        //    for (int i = 0; i < items.Count; i++) {
+        //        if (!items[i] && go && go.tag != "paste") {
+        //            if (go.GetComponent<ProductHolder>().product.GetAmount() > 1 ) {
+        //                items[i] = go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Result;
+        //                items[i].transform.localPosition = itemPositions[i].transform.localPosition;
+        //                go.GetComponent<ProductHolder>().DisplayOneGameObject();
+        //            }
+        //            else { 
+        //                items[i] = go;
+        //                go.transform.SetParent(transform);
+        //                go = null;
+        //                items[i].transform.localPosition = itemPositions[i].transform.localPosition;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
 

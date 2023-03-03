@@ -249,17 +249,6 @@
                     "action": "DisplayRecipesBook",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d84447c4-4c04-4855-915d-737936c6e0ff",
-                    "path": "<XInputController>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DisplayRecipesBook",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -1376,12 +1365,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Order",
+                    "name": "OrderAndClear",
                     "type": "Button",
                     "id": "d882eb63-93fb-4e05-bd5b-5b741ea49389",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Tap",
                     "initialStateCheck": false
                 }
             ],
@@ -1392,7 +1381,7 @@
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "ChangeList",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1403,8 +1392,8 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Order",
+                    "groups": "Gamepad",
+                    "action": "OrderAndClear",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1414,8 +1403,8 @@
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Order",
+                    "groups": "KeyboardMouse",
+                    "action": "OrderAndClear",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

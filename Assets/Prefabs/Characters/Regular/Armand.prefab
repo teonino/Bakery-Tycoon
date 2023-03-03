@@ -65,7 +65,7 @@ MonoBehaviour:
   bonusTime: 0
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
-  animator: {fileID: 0}
+  animator: {fileID: 5382835914372292664}
   waitingTime: {fileID: 11400000, guid: e410baaf272abf54cb97463e11c57b7f, type: 2}
   saleReputation: 1
   requestedProduct: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  conversationRemaining: 2
+  conversationRemaining: 1
   eatingTime: 90
   onTalk: {fileID: 11400000, guid: 168abca42a6ffc24c9cec9453749b861, type: 2}
   regularSO: {fileID: 11400000, guid: d44229d6e47cf5c4b9c5bd46bab53f03, type: 2}
@@ -602,6 +602,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 3f16b1dacfcc6ce4794247fcba209287, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0b49b65a12ef3e648a92f586898d0e3b, type: 2}
     - target: {fileID: 5916207024563519559, guid: 3f16b1dacfcc6ce4794247fcba209287, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -699,5 +703,10 @@ PrefabInstance:
 --- !u!4 &2041116249506576962 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3f16b1dacfcc6ce4794247fcba209287, type: 3}
+  m_PrefabInstance: {fileID: 2006697881454550441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5382835914372292664 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 3f16b1dacfcc6ce4794247fcba209287, type: 3}
   m_PrefabInstance: {fileID: 2006697881454550441}
   m_PrefabAsset: {fileID: 0}

@@ -52,7 +52,6 @@ public class ListDeliveries : Data {
             yield return new WaitForSeconds(timeDeliveryValue - truckDeliveryTime.GetTime());
             yield return new WaitForSeconds(truckDeliveryTime.GetTime());
         }
-        //DeliverOrder(delivery);
     }
 
     public Delivery GetDeliveries() {

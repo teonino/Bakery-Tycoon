@@ -3,12 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.SmartFormat.Extensions;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
@@ -21,6 +18,8 @@ public class CartUI : MonoBehaviour {
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
     [SerializeField] private TruckDelivery truckReference;
+    [SerializeField] private Image holdFeedbackGO;
+    [SerializeField] private GameObject errorMessageGO;
 
     protected Delivery delivery;
 
@@ -29,12 +28,15 @@ public class CartUI : MonoBehaviour {
     [HideInInspector] public float cartWeight;
     [HideInInspector] public int cartCost;
 
+    private Coroutine coroutine;
     private float cost = 0; //Display value of a ingredient, not used yet
     private LocalizedString localizedString;
     private IntVariable localizedCartCost = null;
+    private LocalizedStringComponent errorMessageText;
 
     private void Awake() {
         deliveries.SetDefaultExpressOrderTime();
+        errorMessageText = errorMessageGO.GetComponentInChildren<LocalizedStringComponent>();
 
         localizedString = totalCostString.StringReference;
         if (!localizedString.TryGetValue("totalCost", out IVariable value)) {
@@ -44,14 +46,18 @@ public class CartUI : MonoBehaviour {
         else {
             localizedCartCost = value as IntVariable;
         }
+
     }
 
     private void OnEnable() {
-        playerController.GetPlayerController().playerInput.Amafood.Order.performed += Order;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started += FeedbackHold;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed += Order;
+        errorMessageGO.SetActive(false);
     }
 
     private void OnDisable() {
-        playerController.GetPlayerController().playerInput.Amafood.Order.performed -= Order;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started -= FeedbackHold;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed -= Order;
     }
 
     public void InitCart() {
@@ -72,26 +78,69 @@ public class CartUI : MonoBehaviour {
         totalCostText.SetText("Total: ");
     }
 
+    public virtual void FeedbackHold(InputAction.CallbackContext ctx) {
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+
+        coroutine = StartCoroutine(FillHoldFeedback());
+    }
+
+    private IEnumerator FillHoldFeedback() {
+        if(holdFeedbackGO.fillAmount == 0)
+            yield return new WaitForSeconds(0.1f);
+
+        holdFeedbackGO.fillAmount += 0.08f;
+        yield return new WaitForFixedUpdate();
+        if (holdFeedbackGO.fillAmount >= 1)
+            holdFeedbackGO.fillAmount = 0;
+        else
+            coroutine = StartCoroutine(FillHoldFeedback());
+    }
+
     public virtual void Order(InputAction.CallbackContext ctx) {
-        if (ctx.performed && cart != null) {
-            if (cart.Count > 0) {
-                //Check if the order can be bought
-                if (cartCost <= money.GetMoney()) {
-                    delivery = new Delivery(day.GetDayCount());
-                    foreach (KeyValuePair<IngredientSO, int> stock in cart) {
-                        if (stock.Value > 0) {
-                            delivery.Add(stock.Key, stock.Value);
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+        holdFeedbackGO.fillAmount = 0;
+
+
+        if (ctx.interaction.ToString().Contains("Hold")) {
+            Clear();
+        }
+        else {
+            if (ctx.performed && cart != null) {
+                if (cart.Count > 0) {
+                    //Check if the order can be bought
+                    if (cartCost <= money.GetMoney()) {
+                        if (truckReference.CanAddDelivery()) {
+                            delivery = new Delivery(day.GetDayCount());
+                            foreach (KeyValuePair<IngredientSO, int> stock in cart) {
+                                if (stock.Value > 0) {
+                                    delivery.Add(stock.Key, stock.Value);
+                                }
+                            }
+
+                            FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
+
+                            deliveries.Add(delivery);
+                            money.AddMoney(-cartCost);
+                            Clear();
                         }
+                        else
+                            StartCoroutine(DisplayErrorMessage("TruckNotAvailable"));
                     }
-
-                    FindObjectOfType<Computer>().StartCoroutine(deliveries.ExpressDelivery(delivery));
-
-                    deliveries.Add(delivery);
-                    money.AddMoney(-cartCost);
-                    Clear();
-
+                    else
+                        StartCoroutine(DisplayErrorMessage("NotEnoughtMoney"));
                 }
             }
+        }
+    }
+
+    private IEnumerator DisplayErrorMessage(string key) {
+        if (!errorMessageGO.activeSelf) {
+            errorMessageGO.SetActive(true);
+            errorMessageText.SetKey(key);
+            yield return new WaitForSeconds(2);
+            errorMessageGO.SetActive(false);
         }
     }
 

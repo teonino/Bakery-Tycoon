@@ -273,11 +273,14 @@ MonoBehaviour:
   playerControllerSO: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
   pathPoint1: {fileID: 0}
   pathPoint2: {fileID: 0}
-  audioSource: {fileID: 7149654632919193518}
+  engineSound: {fileID: 7149654632919193518}
   deliveries: {fileID: 11400000, guid: 8bbd279cb8297d640a6c554ec4bdf9d1, type: 2}
   time: {fileID: 11400000, guid: d11bf0a66c9d8ca49960efdd41e37acd, type: 2}
   notifEvent: {fileID: 11400000, guid: cba526bdec3824049887de1b9f48f713, type: 2}
   notifType: {fileID: 11400000, guid: e46487b23111554439cb35ef4af83131, type: 2}
+  sfxPlayer: {fileID: 0}
+  SFXSource: {fileID: 0}
+  SFXClip: {fileID: 0}
 --- !u!33 &229661867
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -804,7 +807,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 116fc1e83658dfe4a8eb9a73c062bb69, type: 2}
+  - {fileID: 2100000, guid: cb2c60f583995c5489f11b7568ac27f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -951,7 +954,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7942454390383374503, guid: b16b13deecc9ab7409fb02c77576f9da, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 259598d55d977c54fa4691a1a386db33, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fc1d300d0c7a509459bfe1c129a87658, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

@@ -5,12 +5,15 @@ using UnityEngine;
 public class TruckDelivery : Interactable {
     [SerializeField] private GameObject pathPoint1;
     [SerializeField] private GameObject pathPoint2;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource engineSound;
     [SerializeField] private ListDeliveries deliveries;
     [SerializeField] private TruckDeliveryTime time;
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] private SFXPlayer sfxPlayer;
+
+    [SerializeField] private AudioSource SFXSource;
+    [SerializeField] private AudioClip SFXClip;
 
     private bool moving;
     private bool fetchingOrder = false;
@@ -31,7 +34,8 @@ public class TruckDelivery : Interactable {
                     notifEvent.Invoke(notifType);
 
                 moving = false;
-                audioSource.Stop();
+                SFXSource.PlayOneShot(SFXClip);
+                engineSound.Stop();
             }
         }
 
@@ -44,13 +48,17 @@ public class TruckDelivery : Interactable {
     }
 
     public void DeliveryDeparture() {
-        gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
-        gameObject.SetActive(true);
-        dest = pathPoint2.transform.position;
-        moving = true;
-        fetchingOrder = true;
-        audioSource.Play();
+        if (!moving && delivery == null) {
+            gameObject.transform.position = new Vector3(pathPoint1.transform.position.x, pathPoint1.transform.position.y, pathPoint1.transform.position.z);
+            gameObject.SetActive(true);
+            dest = pathPoint2.transform.position;
+            moving = true;
+            fetchingOrder = true;
+            engineSound.Play();
+        }
     }
+
+    public bool CanAddDelivery() => !moving && delivery == null;
 
     //Trigger this when truck is close to arriving
     public void DeliveryArriving() {
@@ -60,7 +68,7 @@ public class TruckDelivery : Interactable {
         moving = true;
         fetchingOrder = false;
         dest = pathPoint1.transform.position;
-        audioSource.Play();
+        engineSound.Play();
     }
 
     public override void Effect() {
@@ -69,5 +77,10 @@ public class TruckDelivery : Interactable {
             sfxPlayer.InteractSound();
             delivery = null;
         }
+    }
+
+    public override bool CanInterract() {
+        canInterract = delivery != null && !moving;
+        return canInterract;
     }
 }

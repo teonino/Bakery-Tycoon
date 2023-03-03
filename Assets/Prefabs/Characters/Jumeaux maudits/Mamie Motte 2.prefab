@@ -65,7 +65,7 @@ MonoBehaviour:
   bonusTime: 0
   stats: {fileID: 11400000, guid: 04b6526985d051640a944ca38fee8955, type: 2}
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
-  animator: {fileID: 0}
+  animator: {fileID: 8507806582438235186}
   waitingTime: {fileID: 11400000, guid: e410baaf272abf54cb97463e11c57b7f, type: 2}
   saleReputation: 1
   requestedProduct: {fileID: 0}
@@ -80,7 +80,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7567894470482538742}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.25
+  m_Radius: 0.3
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -620,6 +620,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ad0fb3b1dffc00e46bb70f834c3a00b8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2d5ad7d9309bc05418a2669841e095dd, type: 2}
     - target: {fileID: 6142197831819424902, guid: ad0fb3b1dffc00e46bb70f834c3a00b8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -669,5 +673,10 @@ PrefabInstance:
 --- !u!4 &2373926788621129288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ad0fb3b1dffc00e46bb70f834c3a00b8, type: 3}
+  m_PrefabInstance: {fileID: 2844965082423013795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8507806582438235186 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ad0fb3b1dffc00e46bb70f834c3a00b8, type: 3}
   m_PrefabInstance: {fileID: 2844965082423013795}
   m_PrefabAsset: {fileID: 0}

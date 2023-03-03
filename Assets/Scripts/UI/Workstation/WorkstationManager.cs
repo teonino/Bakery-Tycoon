@@ -12,7 +12,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private GameObject ingredientPanel;
-    [SerializeField] private GameObject recipePanel;
+    //[SerializeField] private GameObject recipePanel;
     [SerializeField] private GameObject ingredientSelectedParent;
     [SerializeField] private GameObject scroll;
     [SerializeField] private GameObject noRecipeTextGO;
@@ -25,6 +25,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
     [SerializeField] private GameObject LetsCookPanel;
+    [SerializeField] private GameObject minigamePosition;
 
     protected List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -37,7 +38,7 @@ public class WorkstationManager : MonoBehaviour {
     private int maxButtonInRack;
     private RectTransform scollRectTransform;
     private int nbIngredientSelected = 0;
-    private TextMeshProUGUI noRecipeText;
+    private LocalizedStringComponent noRecipeText;
     private int firstIndexMinigame = -1;
     private int secondIndexMinigame = -1;
     private bool ingredientPanelEnabled = true;
@@ -53,27 +54,31 @@ public class WorkstationManager : MonoBehaviour {
         lenght = ingredients.GetIngredientLenght();
         workplace = FindObjectOfType<Workstation>();
         scollRectTransform = scroll.GetComponent<RectTransform>();
-        noRecipeText = noRecipeTextGO.GetComponentInChildren<TextMeshProUGUI>();
+        noRecipeText = noRecipeTextGO.GetComponentInChildren<LocalizedStringComponent>();
     }
 
     private void OnEnable() {
         List<StockIngredient> stocks = ingredients.GetIngredientList();
+        noRecipeTextGO.SetActive(false);
+        LetsCookPanel.SetActive(false);
 
         if (ingredientButtonList.Count > 0)
             if (controller.IsGamepad())
                 StartCoroutine(waitForGamepad());
 
         ingredientPanel.SetActive(true);
-        recipePanel.SetActive(false);
+        //recipePanel.SetActive(false);
 
         deliveries.UpdateUI += UpdateStocksButton;
         ingredientUnlock.action += EnableIngredientButton;
 
         CheckButton();
 
-        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
+        playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
+        //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
+        playerControllerSO.GetPlayerController().playerInput.UI.Enable();
         playerControllerSO.GetPlayerController().playerInput.Workstation.Enable();
     }
 
@@ -116,7 +121,7 @@ public class WorkstationManager : MonoBehaviour {
         foreach (Transform t in ingredientSelectedParent.transform)
             ingredientsSelected.Add(t.gameObject.GetComponent<IngredientSelected>());
 
-        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
+        //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
     }
 
@@ -234,10 +239,10 @@ public class WorkstationManager : MonoBehaviour {
                     LaunchIngredientMinigame();
                 }
                 else
-                    StartCoroutine(DisplayErrorText("Crafting Station Missing"));
+                    StartCoroutine(DisplayErrorText("CraftstationMissing"));
             }
             else
-                StartCoroutine(DisplayErrorText("This Recipe Doesn't Exist"));
+                StartCoroutine(DisplayErrorText("RecipeNotExistText"));
         }
     }
 
@@ -263,15 +268,18 @@ public class WorkstationManager : MonoBehaviour {
     }
 
     private IEnumerator DisplayErrorText(string msg) {
-        noRecipeText.text = msg;
-        noRecipeTextGO.SetActive(true);
-        yield return new WaitForSeconds(1);
-        noRecipeTextGO.SetActive(false);
+        if (!noRecipeTextGO.activeSelf) {
+            noRecipeText.SetKey(msg);
+            noRecipeTextGO.SetActive(true);
+            yield return new WaitForSeconds(1);
+            noRecipeTextGO.SetActive(false);
+        }
     }
 
     public void LaunchIngredientMinigame() {
+        gameObject.SetActive(false);
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
-            int indexMinigame;     
+            int indexMinigame;
 
             if (nbIngredientSelected > 3) {
                 indexMinigame = UnityEngine.Random.Range(0, 5);
@@ -294,7 +302,7 @@ public class WorkstationManager : MonoBehaviour {
             while (!ingredientsSelected[indexMinigame].GetIngredient())
                 indexMinigame++;
 
-            ingredientsSelected[indexMinigame].GetIngredient().minigame.minigameAsset.InstantiateAsync(transform).Completed += (go) => {
+            ingredientsSelected[indexMinigame].GetIngredient().minigame.minigameAsset.InstantiateAsync(minigamePosition.transform).Completed += (go) => {
                 go.Result.name = " Panel " + currentMinigameCounter;
                 currentMinigame = go.Result.GetComponent<Minigame>();
             };
@@ -358,24 +366,24 @@ public class WorkstationManager : MonoBehaviour {
         LaunchIngredientMinigame();
     }
 
-    public void DisplayRecipes(InputAction.CallbackContext ctx) {
-        if (ctx.performed) {
-            ingredientPanel.SetActive(false);
-            recipePanel.SetActive(true);
-            ingredientPanelEnabled = false;
+    //public void DisplayRecipes(InputAction.CallbackContext ctx) {
+    //    if (ctx.performed) {
+    //        ingredientPanel.SetActive(false);
+    //        //recipePanel.SetActive(true);
+    //        ingredientPanelEnabled = false;
 
-            playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
-            playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
-            playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayIngredients;
-        }
-    }
+    //        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
+    //        playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
+    //        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayIngredients;
+    //    }
+    //}
 
     public void DisplayIngredients(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
             ingredientPanel.SetActive(true);
-            recipePanel.SetActive(false);
+            //recipePanel.SetActive(false);
 
-            playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
+            //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
             playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
             playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         }
@@ -389,12 +397,25 @@ public class WorkstationManager : MonoBehaviour {
     private void OnDisable() {
         controller?.SetEventSystemToStartButton(null);
         playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
+        playerControllerSO.GetPlayerController().playerInput.UI.Disable();
+        playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
         deliveries.UpdateUI -= UpdateStocksButton;
         ingredientUnlock.action -= EnableIngredientButton;
+    }
 
+    private void RemoveAllSelectedIngredients() {
         foreach (IngredientSelected ingredientSelected in ingredientsSelected)
             if (ingredientSelected.GetIngredient())
                 RemoveIngredientSelected(ingredientSelected);
+    }
+
+    public void Quit(InputAction.CallbackContext context) {
+        ResetManager();
+        playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
+        playerControllerSO.GetPlayerController().playerInput.UI.Disable();
+        playerControllerSO.GetPlayerController().EnableInput();
+        gameObject.SetActive(false);
+        RemoveAllSelectedIngredients();
     }
 
     private void OnDestroy() {
@@ -413,7 +434,7 @@ public class WorkstationManager : MonoBehaviour {
 
         rackList.Clear();
 
-        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
+        //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
     }

@@ -56,9 +56,14 @@ public class SpawnCustomer : MonoBehaviour {
 
         if (!tutorial.GetTutorial())
             if (firstPackCustomer)
-                StartCoroutine(SpawnDelayFirstPack());
+                StartCoroutine(WaitBeforeSpawn());
             else
                 StartCoroutine(SpawnDelay());
+    }
+
+    private IEnumerator WaitBeforeSpawn() {
+        yield return new WaitForSeconds(5);
+        StartCoroutine(SpawnDelayFirstPack());
     }
 
     private IEnumerator SpawnDelayFirstPack() {
@@ -92,7 +97,7 @@ public class SpawnCustomer : MonoBehaviour {
         //Spawn a customer
         if (enableSpawn && nbCustomer < nbCustomerMax && day.GetDayTime() == DayTime.Day && CheckProducts()) {
             nbCustomer++;
-            if (nbCustomer < nbCustomerMax) {
+            if (nbCustomer <= nbCustomerMax) {
                 if (enableSpawnRegularCustomer && Random.Range(0, spawnChanceRegularCustomer) == 0) {
                     if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                         SpawnCustomerAsset(true);
@@ -137,12 +142,14 @@ public class SpawnCustomer : MonoBehaviour {
                     SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
                     nbCustomerRegularSpawned++;
                 };
+
+            notifEvent.Invoke(notifType);
         }
         else {
             SpawnRandomCustomer(product);
+            notifEvent.Invoke(notifType);
         }
 
-        notifEvent.Invoke(notifType);
     }
 
     private void SpawnTutorialCustomer() {

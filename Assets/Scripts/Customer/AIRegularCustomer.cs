@@ -34,7 +34,9 @@ public class AIRegularCustomer : AICustomer {
 
         if (chair && state == AIState.idle) {
             Sit();
-            coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
+            if (waitingTime)
+                coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
+
         }
 
         //Go to the Chair
@@ -60,6 +62,8 @@ public class AIRegularCustomer : AICustomer {
                             TakeItem(productholder, table.gameObject);
                             table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             state = AIState.eating;
+
+                            spawner.RemoveCommandRecap(this);
                             if (tutorial)
                                 Leave();
                             else
@@ -72,6 +76,8 @@ public class AIRegularCustomer : AICustomer {
                         TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
                         productholder.blocked = true;
                         state = AIState.eating;
+
+                        spawner.RemoveCommandRecap(this);
                         if (tutorial)
                             Leave();
                         else
@@ -81,17 +87,20 @@ public class AIRegularCustomer : AICustomer {
             }
         }
     }
-    public void SetIndexChair(int value) => indexChair = value; 
+    public void SetIndexChair(int value) => indexChair = value;
 
+
+    public override bool isRegular() {
+        return true;
+    }
     private void Sit() {
         agent.SetDestination(chair.transform.position);
         state = AIState.moving;
     }
     private void LeaveOnEvening() {
-        if (day.GetDayTime() == DayTime.Evening) {
-            Leave();
-            day.DayTimeChange -= LeaveOnEvening;
-        }
+        Leave();
+        day.DayTimeChange -= LeaveOnEvening;
+
     }
     protected override void Leave() {
         if (chair)
