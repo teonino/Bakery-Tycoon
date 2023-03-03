@@ -59,6 +59,7 @@ public class WorkstationManager : MonoBehaviour {
 
     private void OnEnable() {
         List<StockIngredient> stocks = ingredients.GetIngredientList();
+        noRecipeTextGO.SetActive(false);
 
         if (ingredientButtonList.Count > 0)
             if (controller.IsGamepad())
