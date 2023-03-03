@@ -60,7 +60,7 @@ public class BuildingMode : Interactable {
     }
 
     public override void Effect() {
-        if (day.GetDayTime() != DayTime.Day) {
+        if (day.GetDayTime() == DayTime.Day || day.GetDayTime() == DayTime.Evening) {
             playerControllerSO.GetPlayerController().DisableInput();
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
             sfxPlayer.InteractSound();
