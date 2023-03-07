@@ -89,7 +89,7 @@ public class CartUI : MonoBehaviour {
         if(holdFeedbackGO.fillAmount == 0)
             yield return new WaitForSeconds(0.1f);
 
-        holdFeedbackGO.fillAmount += 0.08f;
+        holdFeedbackGO.fillAmount += 0.03f;
         yield return new WaitForFixedUpdate();
         if (holdFeedbackGO.fillAmount >= 1)
             holdFeedbackGO.fillAmount = 0;
