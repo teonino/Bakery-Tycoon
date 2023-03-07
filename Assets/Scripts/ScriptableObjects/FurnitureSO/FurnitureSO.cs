@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(fileName = "Furniture", menuName = "Furniture", order = 3)]
 public class FurnitureSO : ScriptableObject {
-    [SerializeField] private new string name;
+    [SerializeField] private string furnitureName;
     [SerializeField] private int price;
     [SerializeField] private FurnitureStyle style;
     [SerializeField] private FurnitureType type;
@@ -14,7 +14,7 @@ public class FurnitureSO : ScriptableObject {
     [SerializeField] private Texture imageA;
     [SerializeField] private Texture imageB;
 
-    public string GetName() => name;
+    public string GetName() => furnitureName;
     public int GetPrice() => price;
     public FurnitureStyle GetStyle() => style;
     public new FurnitureType GetType() => type;

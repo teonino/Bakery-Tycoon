@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class SaveManager : MonoBehaviour {
-    public List<FurnitureSO> furnitures;
+    [SerializeField] private ListFurniture furnitures;
     private Transform level;
     private string filepath = "Assets\\Save\\Savefile.json";
 
@@ -43,17 +43,18 @@ public class SaveManager : MonoBehaviour {
         CustomizableData data;
 
         foreach (Transform dataTransform in parent) {
-            data = SetCustomizableData(dataTransform);
-            w.WriteLine(JsonUtility.ToJson(data));
+            if (dataTransform.tag != "Outdoor") {
+                data = SetCustomizableData(dataTransform);
+                w.WriteLine(JsonUtility.ToJson(data));
 
+                if (parentNotLastChild && dataTransform != level.GetChild(level.childCount - 1))
+                    w.WriteLine(",");
+                else if (dataTransform.childCount > 0)
+                    w.WriteLine(",");
 
-            if (parentNotLastChild && dataTransform != level.GetChild(level.childCount - 1))
-                w.WriteLine(",");
-            else if (dataTransform.childCount > 0)
-                w.WriteLine(",");
-
-            if (!GetGameObject(data.objectName) && dataTransform.childCount > 0)
-                FetchGameObjects(w, dataTransform, dataTransform != level.GetChild(level.childCount - 1));
+                if (!IsGameObject(data.objectName) && dataTransform.childCount > 0)
+                    FetchGameObjects(w, dataTransform, dataTransform != level.GetChild(level.childCount - 1));
+            }
         }
     }
 
@@ -145,9 +146,19 @@ public class SaveManager : MonoBehaviour {
 
     public GameObject GetGameObject(string name) {
         GameObject returnObject = null;
-        foreach (FurnitureSO furniture in furnitures) {
+        foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
             if (furniture.name == name) {
-                //returnObject = furniture.GetAssets();
+                //returnObject = furniture.GetAssetA();
+            }
+        }
+        return returnObject;
+    }
+
+    public bool IsGameObject(string name) {
+        bool returnObject = false;
+        foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
+            if (furniture.name.Contains(name)) {
+                returnObject = true;
             }
         }
         return returnObject;
