@@ -15,18 +15,12 @@ public class AssetChoiceManager : MonoBehaviour {
     private FurnitureManager furnitureManager;
     private FurnitureSO furnitureSO;
     private void OnEnable() {
-
-    }
-
-    private void OnDisable() {
-
+        controller.SetEventSystemToStartButton(buttonA.gameObject);
     }
 
     void Start() {
         buttonA.GetComponent<Button>().onClick.AddListener(BuyFurnitureA);
         buttonB.GetComponent<Button>().onClick.AddListener(BuyFurnitureB);
-
-        controller.SetEventSystemToStartButton(buttonA.gameObject);
     }
 
     private void BuyFurnitureA() {

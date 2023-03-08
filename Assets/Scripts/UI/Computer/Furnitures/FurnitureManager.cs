@@ -35,6 +35,13 @@ public class FurnitureManager : MonoBehaviour {
             playerController.DisableInput();
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
+
+            if (controller.IsGamepad() && furnitureButtonList.Count > 0)
+                controller.SetEventSystemToStartButton(furnitureButtonList[0]);
+            else
+                controller.SetEventSystemToStartButton(null);
+
+            scrollRectTransform.position = new Vector3(scrollRectTransform.position.x, 0, scrollRectTransform.position.z);
         }
     }
 

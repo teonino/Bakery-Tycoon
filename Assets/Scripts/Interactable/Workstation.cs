@@ -14,8 +14,11 @@ public class Workstation : Interactable {
 
     private WorkstationManager manager;
     private GameObject workplacePanel;
+    private SFXPlayer sfxPlayer;
 
-    [SerializeField] private SFXPlayer sfxPlayer;
+    private void Awake() {
+        sfxPlayer = FindObjectOfType<SFXPlayer>(); ;
+    }
 
     private void Start() {
         if (!debug.GetDebug())
@@ -30,7 +33,7 @@ public class Workstation : Interactable {
     public override void Effect() {
         if (!playerControllerSO.GetPlayerController().GetItemHold()) {
             playerControllerSO.GetPlayerController().DisableInput();
-            sfxPlayer.InteractSound();
+            sfxPlayer?.InteractSound();
             manager.gameObject.SetActive(true);
         }
     }

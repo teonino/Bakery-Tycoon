@@ -264,7 +264,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f20c6b3d-93c2-410c-8608-4aee64118af6"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1961,15 +1961,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""5bc959d0-6276-4017-9445-5532c434ff99"",
             ""actions"": [
                 {
-                    ""name"": ""SwitchCamera"",
-                    ""type"": ""Button"",
-                    ""id"": ""be473f9a-9d30-4dc0-9b6e-f36d6c5c9239"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SpawnTruck"",
                     ""type"": ""Button"",
                     ""id"": ""c1325ed1-580e-47c1-9078-60ec1d0e334c"",
@@ -1980,17 +1971,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""ae501db4-181b-4cc5-857c-3fbe068c86a7"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchCamera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""52f2d5d5-6023-4513-bda5-430f3fc70f12"",
@@ -2318,7 +2298,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_PoorLiquid_PoorLiquidAction = m_PoorLiquid.FindAction("PoorLiquidAction", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
-        m_Debug_SwitchCamera = m_Debug.FindAction("SwitchCamera", throwIfNotFound: true);
         m_Debug_SpawnTruck = m_Debug.FindAction("SpawnTruck", throwIfNotFound: true);
         // Workstation
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
@@ -3128,13 +3107,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Debug
     private readonly InputActionMap m_Debug;
     private IDebugActions m_DebugActionsCallbackInterface;
-    private readonly InputAction m_Debug_SwitchCamera;
     private readonly InputAction m_Debug_SpawnTruck;
     public struct DebugActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SwitchCamera => m_Wrapper.m_Debug_SwitchCamera;
         public InputAction @SpawnTruck => m_Wrapper.m_Debug_SpawnTruck;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
@@ -3145,9 +3122,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_DebugActionsCallbackInterface != null)
             {
-                @SwitchCamera.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-                @SwitchCamera.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-                @SwitchCamera.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
                 @SpawnTruck.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
                 @SpawnTruck.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
                 @SpawnTruck.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
@@ -3155,9 +3129,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             m_Wrapper.m_DebugActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @SwitchCamera.started += instance.OnSwitchCamera;
-                @SwitchCamera.performed += instance.OnSwitchCamera;
-                @SwitchCamera.canceled += instance.OnSwitchCamera;
                 @SpawnTruck.started += instance.OnSpawnTruck;
                 @SpawnTruck.performed += instance.OnSpawnTruck;
                 @SpawnTruck.canceled += instance.OnSpawnTruck;
@@ -3414,7 +3385,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IDebugActions
     {
-        void OnSwitchCamera(InputAction.CallbackContext context);
         void OnSpawnTruck(InputAction.CallbackContext context);
     }
     public interface IWorkstationActions
