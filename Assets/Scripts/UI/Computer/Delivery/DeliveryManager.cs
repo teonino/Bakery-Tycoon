@@ -162,24 +162,24 @@ public class DeliveryManager : MonoBehaviour {
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < rackList.Count) {
 
-                    Navigation navButton = buttonList[i].GetComponentInChildren<Button>().navigation;
+                    if (i / maxButtonInRack == 0) {
+                        Navigation navButton = buttonList[i].GetComponentInChildren<Button>().navigation;
+                        navButton.mode = Navigation.Mode.Explicit;
 
-                    navButton.mode = Navigation.Mode.Explicit;
+                        if (i < maxButtonInRack)
+                            navButton.selectOnUp = null;
+                        else
+                            navButton.selectOnUp = buttonList[i - maxButtonInRack].GetComponentInChildren<Button>();
 
-                    if (i < maxButtonInRack)
-                        navButton.selectOnUp = null;
-                    else
-                        navButton.selectOnUp = buttonList[i - maxButtonInRack].GetComponentInChildren<Button>();
+                        if (i + maxButtonInRack < lenght)
+                            navButton.selectOnDown = buttonList[i + maxButtonInRack].GetComponentInChildren<Button>();
+                        if (i + 1 < lenght)
+                            navButton.selectOnRight = buttonList[i + 1].GetComponentInChildren<Button>();
+                        if (i - 1 >= 0)
+                            navButton.selectOnLeft = buttonList[i - 1].GetComponentInChildren<Button>();
 
-                    if (i + maxButtonInRack < lenght)
-                        navButton.selectOnDown = buttonList[i + maxButtonInRack].GetComponentInChildren<Button>();
-                    if (i + 1 < lenght)
-                        navButton.selectOnRight = buttonList[i + 1].GetComponentInChildren<Button>();
-                    if (i - 1 >= 0)
-                        navButton.selectOnLeft = buttonList[i - 1].GetComponentInChildren<Button>();
-
-
-                    buttonList[i].GetComponentInChildren<Button>().navigation = navButton;
+                        buttonList[i].GetComponentInChildren<Button>().navigation = navButton;
+                    }
                     buttonList[i].transform.SetParent(rackList[i / maxButtonInRack].transform);
                     buttonList[i].transform.localScale = Vector3.one;
                 }
