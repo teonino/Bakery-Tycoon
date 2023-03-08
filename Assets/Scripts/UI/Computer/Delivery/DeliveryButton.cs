@@ -70,7 +70,7 @@ public class DeliveryButton : MonoBehaviour {
     public void SetIngredient(IngredientSO ingredient) {
         this.ingredient = ingredient;
 
-        nameText.SetText(ingredient.name + " | " + ingredient.price + " /U");
+        nameText.SetText(ingredient.name);
         priceText.SetText(ingredient.price.ToString());
 
         productImage.texture = ingredient.image;
