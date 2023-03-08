@@ -124,6 +124,7 @@ public class CartUI : MonoBehaviour {
                             deliveries.Add(delivery);
                             money.AddMoney(-cartCost);
                             Clear();
+                            deliveryManager.LaunchQuitFunction();
                         }
                         else
                             StartCoroutine(DisplayErrorMessage("TruckNotAvailable"));

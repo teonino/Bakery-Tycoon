@@ -358,6 +358,11 @@ public class DeliveryManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayProductList;
     }
 
+    public void LaunchQuitFunction()
+    {
+        Quit();
+    }
+
     public void Quit(InputAction.CallbackContext context) {
         Quit();
     }

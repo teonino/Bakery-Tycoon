@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class DeliveryButton : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI priceText;
     //[SerializeField] private AssetReference ammountPanelAsset;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private RawImage productImage;
@@ -70,6 +71,7 @@ public class DeliveryButton : MonoBehaviour {
         this.ingredient = ingredient;
 
         nameText.SetText(ingredient.name + " | " + ingredient.price + " /U");
+        priceText.SetText(ingredient.price.ToString());
 
         productImage.texture = ingredient.image;
     }
