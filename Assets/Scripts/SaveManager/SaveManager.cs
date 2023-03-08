@@ -12,6 +12,10 @@ public class SaveManager : MonoBehaviour {
 
     public CustomizableData JSonFileReader { get; private set; }
 
+    private void Awake() {
+        GenerateWorld();
+    }
+
     private void Start() {
         mainRoom = GameObject.FindGameObjectWithTag("Level")?.transform;
     }
@@ -20,7 +24,7 @@ public class SaveManager : MonoBehaviour {
         if (File.Exists(filepath))
             Load(filepath);
         else
-            print("oui");
+            print("No Save File found");
     }
 
     public void Save() {

@@ -25,6 +25,7 @@ public class BuildingMode : Interactable {
 
     [SerializeField] private SFXPlayer sfxPlayer;
     private FurnitureManager furnitureManager;
+    private GameObject level;
     private GameObject mainCamera;
     private GameObject buildingCamera;
     private GameObject previewCamera;
@@ -51,6 +52,7 @@ public class BuildingMode : Interactable {
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed += DisplayFurtniturePanel;
 
         furnitureManager = FindObjectOfType<FurnitureManager>(true);
+        level = GameObject.FindGameObjectWithTag("Level");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
         previewCamera = GameObject.FindGameObjectWithTag("PreviewCamera");
@@ -192,6 +194,7 @@ public class BuildingMode : Interactable {
         Destroy(selectedGo.GetComponent<Rigidbody>());
         currentRaycastlayer = pickUpLayer;
         selectedGo.layer = initialGoLayer;
+        selectedGo.transform.parent = level.transform;
         selectedGoIsFloor = selectedGoIsWall = false;
         selectedGoIsBought = false;
         ChangeColliderSize(false);
