@@ -107,53 +107,7 @@ public class SaveManager : MonoBehaviour {
             string json = File.ReadAllText(jsonfile);
             CustomizableDataList dataList = JsonUtility.FromJson<CustomizableDataList>(json);
 
-            int currentChildCount = 0;
-            int focusedChildCount = 0;
-            GameObject gameObjectParent = null;
-
             LoadObjects(dataList, level.transform);
-
-            //NEED TO DO RECURSIVE FUNCTION
-            //foreach (CustomizableData data in dataList.Level) {
-            //    GameObject obj = null, instantiateObj;
-
-            //    if (data.objectName == "Empty") {
-            //        focusedChildCount = data.childCount;
-            //        currentChildCount = 0;
-            //        gameObjectParent = obj;
-            //    }
-            //    else {
-            //        obj = GetAssetReference(data);
-            //        currentChildCount++;
-            //    }
-
-            //    if (currentChildCount <= focusedChildCount && gameObjectParent != obj) {
-            //        if (obj)
-            //            instantiateObj = Instantiate(obj, gameObjectParent.transform);
-            //        else {
-            //            instantiateObj = new GameObject();
-            //            instantiateObj.transform.parent = gameObjectParent.transform;
-            //        }
-
-            //        instantiateObj.name = data.objectName;
-            //        instantiateObj.transform.position = data.position;
-            //        instantiateObj.transform.rotation = data.rotation;
-            //        instantiateObj.transform.localScale = data.scale;
-            //    }
-
-            //    else {
-            //        if (obj)
-            //            instantiateObj = Instantiate(obj);
-            //        else
-            //            instantiateObj = new GameObject();
-            //        instantiateObj.transform.parent = level.transform;
-            //        instantiateObj.name = data.objectName;
-            //        instantiateObj.transform.position = data.position;
-            //        instantiateObj.transform.rotation = data.rotation;
-            //        instantiateObj.transform.localScale = data.scale;
-            //        gameObjectParent = instantiateObj;
-            //    }
-            //}
         }
     }
 
