@@ -23,6 +23,7 @@ public class AICustomer : Interactable {
     [SerializeField] protected int saleReputation;
 
     [HideInInspector] public ProductSO requestedProduct;
+    private GameObject cashRegister;
 
     public AIState state = AIState.idle;
     protected CustomerInteractable interactable;
@@ -41,6 +42,7 @@ public class AICustomer : Interactable {
         day = FindObjectOfType<DayTimeUI>().GetDay();
         money = FindObjectOfType<MoneyUI>().GetMoney();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
+        cashRegister =  GameObject.FindGameObjectWithTag("CashRegister");
     }
 
     public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
@@ -122,7 +124,7 @@ public class AICustomer : Interactable {
             go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(totalPrice, 0);
             requestedProduct = null;
         };
-
+        cashRegister.GetComponent<Animation>().Play();
         money.AddMoney(totalPrice);
         reputation.AddReputation(saleReputation);
     }
