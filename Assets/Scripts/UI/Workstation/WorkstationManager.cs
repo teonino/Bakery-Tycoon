@@ -12,7 +12,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private GameObject ingredientPanel;
-    [SerializeField] private GameObject recipePanel;
+    //[SerializeField] private GameObject recipePanel;
     [SerializeField] private GameObject ingredientSelectedParent;
     [SerializeField] private GameObject scroll;
     [SerializeField] private GameObject noRecipeTextGO;
@@ -59,13 +59,15 @@ public class WorkstationManager : MonoBehaviour {
 
     private void OnEnable() {
         List<StockIngredient> stocks = ingredients.GetIngredientList();
+        noRecipeTextGO.SetActive(false);
+        LetsCookPanel.SetActive(false);
 
         if (ingredientButtonList.Count > 0)
             if (controller.IsGamepad())
                 StartCoroutine(waitForGamepad());
 
         ingredientPanel.SetActive(true);
-        recipePanel.SetActive(false);
+        //recipePanel.SetActive(false);
 
         deliveries.UpdateUI += UpdateStocksButton;
         ingredientUnlock.action += EnableIngredientButton;
@@ -73,7 +75,7 @@ public class WorkstationManager : MonoBehaviour {
         CheckButton();
 
         playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
-        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
+        //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
         playerControllerSO.GetPlayerController().playerInput.UI.Enable();
@@ -119,7 +121,7 @@ public class WorkstationManager : MonoBehaviour {
         foreach (Transform t in ingredientSelectedParent.transform)
             ingredientsSelected.Add(t.gameObject.GetComponent<IngredientSelected>());
 
-        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
+        //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
     }
 
@@ -364,24 +366,24 @@ public class WorkstationManager : MonoBehaviour {
         LaunchIngredientMinigame();
     }
 
-    public void DisplayRecipes(InputAction.CallbackContext ctx) {
-        if (ctx.performed) {
-            ingredientPanel.SetActive(false);
-            recipePanel.SetActive(true);
-            ingredientPanelEnabled = false;
+    //public void DisplayRecipes(InputAction.CallbackContext ctx) {
+    //    if (ctx.performed) {
+    //        ingredientPanel.SetActive(false);
+    //        //recipePanel.SetActive(true);
+    //        ingredientPanelEnabled = false;
 
-            playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
-            playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
-            playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayIngredients;
-        }
-    }
+    //        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
+    //        playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
+    //        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayIngredients;
+    //    }
+    //}
 
     public void DisplayIngredients(InputAction.CallbackContext ctx) {
         if (ctx.performed) {
             ingredientPanel.SetActive(true);
-            recipePanel.SetActive(false);
+            //recipePanel.SetActive(false);
 
-            playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
+            //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed += DisplayRecipes;
             playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
             playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         }
@@ -432,7 +434,7 @@ public class WorkstationManager : MonoBehaviour {
 
         rackList.Clear();
 
-        playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
+        //playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayRecipes;
         playerControllerSO.GetPlayerController().playerInput.Workstation.ChangeTab.performed -= DisplayIngredients;
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed -= Cook;
     }
