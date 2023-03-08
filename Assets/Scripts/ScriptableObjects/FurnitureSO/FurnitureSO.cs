@@ -20,8 +20,7 @@ public class FurnitureSO : ScriptableObject {
     public new FurnitureType GetType() => type;
     public AssetReference GetAssetA() => assetA;
     public AssetReference GetAssetB() => assetB;
-
-    public bool hasTwoAsset() => assetA.RuntimeKeyIsValid() && assetB.RuntimeKeyIsValid();
+    public bool hasTwoAsset() => assetA.RuntimeKeyIsValid() && assetB.RuntimeKeyIsValid() && assetA != assetB;
     public Texture GetTextureA() => imageA;
     public Texture GetTextureB() => imageB;
 }
