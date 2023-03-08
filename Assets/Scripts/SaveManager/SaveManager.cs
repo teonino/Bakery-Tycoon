@@ -76,11 +76,11 @@ public class SaveManager : MonoBehaviour {
         }
 
         if (data.objectName != "Empty") {
-            if (data.objectName.Contains("_A")) {
+            if (data.objectName.EndsWith("_A")) {
                 data.objectName = Regex.Replace(t.name, @"_A", string.Empty);
                 data.typeA = true;
             }
-            else {
+            else if(data.objectName.EndsWith("_B")) {
                 data.objectName = Regex.Replace(t.name, @"_B", string.Empty);
                 data.typeA = false;
             }
@@ -168,7 +168,7 @@ public class SaveManager : MonoBehaviour {
                         instantiateObj.transform.position = data.position;
                         instantiateObj.transform.rotation = data.rotation;
                         instantiateObj.transform.localScale = data.scale; 
-                        print($"Init {data.objectName} DONE");
+                        //print($"Init {data.objectName} DONE");
                     };
                 } else {
                     print($"Error, {data.objectName} not found");

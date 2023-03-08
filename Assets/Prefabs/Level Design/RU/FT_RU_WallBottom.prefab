@@ -13,12 +13,13 @@ GameObject:
   - component: {fileID: 954905568089491445}
   - component: {fileID: 8252739117728059631}
   - component: {fileID: 5675666848870275625}
-  m_Layer: 0
+  - component: {fileID: 5974474339622724437}
+  m_Layer: 11
   m_Name: FT_RU_WallBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2092957022228823194
 Transform:
@@ -115,3 +116,17 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.5, y: 0.36600003, z: 0.045}
   m_TimeToStationary: 0.5
+--- !u!114 &5974474339622724437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603419998203405856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: 19db1e835990093469123c798e960d78, type: 2}
+  mandatoryList: {fileID: 0}
