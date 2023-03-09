@@ -140,7 +140,7 @@ public class CartUI : MonoBehaviour {
         if (!errorMessageGO.activeSelf) {
             errorMessageGO.SetActive(true);
             errorMessageText.SetKey(key);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             errorMessageGO.SetActive(false);
         }
     }
