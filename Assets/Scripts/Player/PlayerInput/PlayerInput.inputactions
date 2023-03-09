@@ -1967,7 +1967,7 @@
             "id": "8b7a84a5-4ca1-44c1-9d44-bdae276bc584",
             "actions": [
                 {
-                    "name": "ChangeTab",
+                    "name": "DisplayRecipe",
                     "type": "Button",
                     "id": "7290e45c-33b1-420d-a426-09054b675998",
                     "expectedControlType": "Button",
@@ -1983,24 +1983,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "NextPage",
-                    "type": "Button",
-                    "id": "04803631-23d8-4888-b723-a94afdd779e7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PreviousPage",
-                    "type": "Button",
-                    "id": "c28417d2-5208-4264-bfcc-b6cc26627d5f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -2011,7 +1993,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ChangeTab",
+                    "action": "DisplayRecipe",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2034,28 +2016,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cook",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "db0c3868-c61f-484c-83b8-cc752be8102f",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "NextPage",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8edfd2c0-26dd-4399-a83b-bc75bfd7f002",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "PreviousPage",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2163,6 +2123,54 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dialogue3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "RecipeBook",
+            "id": "39c87900-0e03-40bc-bc2e-088d653c46d0",
+            "actions": [
+                {
+                    "name": "PreviousPage",
+                    "type": "Button",
+                    "id": "ef7f6ada-ccab-4f77-b4ab-f98293f9f6b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextPage",
+                    "type": "Button",
+                    "id": "87ced78b-c17d-40b4-bc1b-e7d40b86de4b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "61a76c94-19cd-4955-9ee9-654b9c08debb",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "NextPage",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b48e794-5414-48ab-9023-65c1d6bf2d2f",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PreviousPage",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
