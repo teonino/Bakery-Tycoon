@@ -81,11 +81,9 @@ public class SaveManager : MonoBehaviour {
 
         if (data.objectName != "Empty") {
             if (data.objectName.EndsWith("_A")) {
-                data.objectName = Regex.Replace(t.name, @"_A", string.Empty);
                 data.typeA = true;
             }
             else if(data.objectName.EndsWith("_B")) {
-                data.objectName = Regex.Replace(t.name, @"_B", string.Empty);
                 data.typeA = false;
             }
         }
@@ -119,7 +117,7 @@ public class SaveManager : MonoBehaviour {
             if (data.objectName != "Empty") {
                 asset = GetAssetReference(data);
                 print($"Init {data.objectName} ...");
-                if (asset.RuntimeKeyIsValid()) {
+                if (asset != null && asset.RuntimeKeyIsValid()) {
                     asset.InstantiateAsync(parent).Completed += (go) => {
                         instantiateObj = go.Result;
                         instantiateObj.name = data.objectName;
@@ -138,7 +136,7 @@ public class SaveManager : MonoBehaviour {
     public AssetReference GetAssetReference(CustomizableData data) {
         AssetReference returnObject = null;
         foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
-            if (furniture.name == data.objectName) {
+            if (data.objectName.Contains(furniture.name)) {
                 if (data.typeA)
                     returnObject = furniture.GetAssetA();
                 else

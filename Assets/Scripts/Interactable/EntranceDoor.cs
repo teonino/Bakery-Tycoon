@@ -45,3 +45,4 @@ public class EntranceDoor : Interactable {
         SceneManager.LoadScene("FirstBakery_New");
     }
 }
+ 
