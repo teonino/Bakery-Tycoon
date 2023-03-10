@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 
 public class SaveManager : MonoBehaviour {
     [SerializeField] private ListFurniture furnitures;
+    [SerializeField] private GameObject defaultMainRoom;
     private Transform mainRoom;
     private string filepath = "Assets\\Save\\Savefile.json";
 
@@ -23,8 +24,10 @@ public class SaveManager : MonoBehaviour {
     public void GenerateWorld() {
         if (File.Exists(filepath))
             Load(filepath);
-        else
-            print("No Save File found");
+        else {
+            defaultMainRoom.SetActive(true);
+            Save();
+        }
     }
 
     public void Save() {
@@ -87,6 +90,14 @@ public class SaveManager : MonoBehaviour {
                 data.typeA = false;
             }
         }
+
+        if (t.GetComponent<Shelf>()) {
+            if (t.GetComponent<Shelf>().GetProduct() != null) {
+                data.hasProduct = true;
+                data.product = t.GetComponent<Shelf>().GetProduct();
+            }
+        }
+
         return data;
     }
 
@@ -123,8 +134,10 @@ public class SaveManager : MonoBehaviour {
                         instantiateObj.name = data.objectName;
                         instantiateObj.transform.position = data.position;
                         instantiateObj.transform.rotation = data.rotation;
-                        instantiateObj.transform.localScale = data.scale; 
-                        //print($"Init {data.objectName} DONE");
+                        instantiateObj.transform.localScale = data.scale;
+
+                        if (data.hasProduct)
+                            instantiateObj.GetComponent<Shelf>().SpawnAsset(data.product.productSO);
                     };
                 } else {
                     print($"Error, {data.objectName} not found");
@@ -135,6 +148,7 @@ public class SaveManager : MonoBehaviour {
 
     public AssetReference GetAssetReference(CustomizableData data) {
         AssetReference returnObject = null;
+
         foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
             if (data.objectName.Contains(furniture.name)) {
                 if (data.typeA)
