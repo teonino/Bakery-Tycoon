@@ -10,6 +10,10 @@ public class EntranceDoor : Interactable {
     [SerializeField] private InterractQuest finishDayQuest;
     private bool isClosing = false;
 
+    protected override void Start() {
+        day = FindObjectOfType<DayTimeUI>().GetDay();
+    }
+
     public override void Effect() {
         if (day.GetDayTime() == DayTime.Evening) {
             GameObject[] gos = GameObject.FindGameObjectsWithTag("Door");

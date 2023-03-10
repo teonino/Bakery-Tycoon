@@ -25,7 +25,9 @@ public class CraftingStation : Interactable {
     [SerializeField] private AudioSource TingSound;
     [SerializeField] private SFXPlayer sfxPlayer;
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
         if (!debugState.GetDebug())
             skipCookingTime = false;
     }

@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public PlayerControllerSO GetPlayerControllerSO() => playerControllerSO;
+
     // Update is called once per frame
     private void FixedUpdate() {
         //Player Movement

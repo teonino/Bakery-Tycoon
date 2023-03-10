@@ -15,7 +15,9 @@ public class Shelf : Interactable {
     [SerializeField] private SFXPlayer sfxPlayer;
 
 
-    protected void Start() {
+    protected override void Start() {
+        base.Start();
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
         if (!debugState.GetDebug())
             spawnAsset = false;
     }
@@ -41,6 +43,14 @@ public class Shelf : Interactable {
                 item.transform.position = itemPosition.transform.position;
                 item.GetComponent<ProductHolder>().product.SetAmount(3);
             };
+    }
+
+    public void SpawnAsset(ProductSO product) {
+        product.asset.InstantiateAsync(transform).Completed += (go) => {
+            item = go.Result;
+            item.transform.position = itemPosition.transform.position;
+            item.GetComponent<ProductHolder>().product.SetAmount(3);
+        };
     }
 
     public override bool CanInterract() {
@@ -71,5 +81,10 @@ public class Shelf : Interactable {
     }
 
     public GameObject GetItem() => item;
+    public Product GetProduct() {
+        if (item && item.GetComponent<ProductHolder>())
+            return item?.GetComponent<ProductHolder>().product;
+        return null;
+    }
     public GameObject RemoveItem() => item = null;
 }
