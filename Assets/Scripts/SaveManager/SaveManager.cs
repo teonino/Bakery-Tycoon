@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 
 public class SaveManager : MonoBehaviour {
     [SerializeField] private ListFurniture furnitures;
+    [SerializeField] private GameObject defaultMainRoom;
     private Transform mainRoom;
     private string filepath = "Assets\\Save\\Savefile.json";
 
@@ -23,8 +24,10 @@ public class SaveManager : MonoBehaviour {
     public void GenerateWorld() {
         if (File.Exists(filepath))
             Load(filepath);
-        else
-            print("No Save File found");
+        else {
+            defaultMainRoom.SetActive(true);
+            Save();
+        }
     }
 
     public void Save() {
@@ -135,6 +138,7 @@ public class SaveManager : MonoBehaviour {
 
     public AssetReference GetAssetReference(CustomizableData data) {
         AssetReference returnObject = null;
+
         foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
             if (data.objectName.Contains(furniture.name)) {
                 if (data.typeA)
