@@ -42,7 +42,7 @@ public class BuildingMode : Interactable {
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
-    private void Start() {
+    protected override void Start() {
         currentRaycastlayer = pickUpLayer;
         playerControllerSO.GetPlayerController().playerInput.Building.Sell.performed += Sell;
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;

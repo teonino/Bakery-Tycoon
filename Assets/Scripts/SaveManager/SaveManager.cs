@@ -90,6 +90,14 @@ public class SaveManager : MonoBehaviour {
                 data.typeA = false;
             }
         }
+
+        if (t.GetComponent<Shelf>()) {
+            if (t.GetComponent<Shelf>().GetProduct() != null) {
+                data.hasProduct = true;
+                data.product = t.GetComponent<Shelf>().GetProduct();
+            }
+        }
+
         return data;
     }
 
@@ -126,8 +134,10 @@ public class SaveManager : MonoBehaviour {
                         instantiateObj.name = data.objectName;
                         instantiateObj.transform.position = data.position;
                         instantiateObj.transform.rotation = data.rotation;
-                        instantiateObj.transform.localScale = data.scale; 
-                        //print($"Init {data.objectName} DONE");
+                        instantiateObj.transform.localScale = data.scale;
+
+                        if (data.hasProduct)
+                            instantiateObj.GetComponent<Shelf>().SpawnAsset(data.product.productSO);
                     };
                 } else {
                     print($"Error, {data.objectName} not found");

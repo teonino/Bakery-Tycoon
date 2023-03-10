@@ -10,6 +10,7 @@ using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
 public class CartUI : MonoBehaviour {
+    [SerializeField] private float holdFeebackValue = 0.07f;
     [SerializeField] private TextMeshProUGUI orderSumary;
     [SerializeField] private TextMeshProUGUI totalCostText;
     [SerializeField] private LocalizeStringEvent totalCostString;
@@ -52,12 +53,14 @@ public class CartUI : MonoBehaviour {
     private void OnEnable() {
         playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started += FeedbackHold;
         playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed += Order;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.canceled += StopFeedback;
         errorMessageGO.SetActive(false);
     }
 
     private void OnDisable() {
         playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.started -= FeedbackHold;
         playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.performed -= Order;
+        playerController.GetPlayerController().playerInput.Amafood.OrderAndClear.canceled -= StopFeedback;
     }
 
     public void InitCart() {
@@ -82,19 +85,26 @@ public class CartUI : MonoBehaviour {
         if (coroutine != null)
             StopCoroutine(coroutine);
 
-        coroutine = StartCoroutine(FillHoldFeedback());
+        coroutine = StartCoroutine(FillHoldFeedback(ctx));
     }
 
-    private IEnumerator FillHoldFeedback() {
-        if(holdFeedbackGO.fillAmount == 0)
-            yield return new WaitForSeconds(0.1f);
+    private IEnumerator FillHoldFeedback(InputAction.CallbackContext ctx) {
+        if (!ctx.canceled) {
+            if (holdFeedbackGO.fillAmount == 0)
+                yield return new WaitForSeconds(0.1f);
 
-        holdFeedbackGO.fillAmount += 0.03f;
-        yield return new WaitForFixedUpdate();
-        if (holdFeedbackGO.fillAmount >= 1)
-            holdFeedbackGO.fillAmount = 0;
-        else
-            coroutine = StartCoroutine(FillHoldFeedback());
+            holdFeedbackGO.fillAmount += holdFeebackValue;
+            yield return new WaitForFixedUpdate();
+            if (holdFeedbackGO.fillAmount >= 1)
+                holdFeedbackGO.fillAmount = 0;
+            else
+                coroutine = StartCoroutine(FillHoldFeedback(ctx));
+        }
+    }
+
+    private void StopFeedback(InputAction.CallbackContext ctx) {
+        StopCoroutine(coroutine);
+        holdFeedbackGO.fillAmount = 0;
     }
 
     public virtual void Order(InputAction.CallbackContext ctx) {
