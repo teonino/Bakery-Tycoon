@@ -20,7 +20,8 @@ public class Workstation : Interactable {
         sfxPlayer = FindObjectOfType<SFXPlayer>(); ;
     }
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         if (!debug.GetDebug())
             skipMinigame = skipRequirement = false;
 

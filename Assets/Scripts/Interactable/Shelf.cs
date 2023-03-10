@@ -15,7 +15,8 @@ public class Shelf : Interactable {
     [SerializeField] private SFXPlayer sfxPlayer;
 
 
-    protected void Start() {
+    protected override void Start() {
+        base.Start();
         if (!debugState.GetDebug())
             spawnAsset = false;
     }
