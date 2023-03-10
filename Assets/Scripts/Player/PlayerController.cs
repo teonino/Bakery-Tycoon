@@ -83,20 +83,25 @@ public class PlayerController : MonoBehaviour {
             animator.SetBool("isWalking", false);
 
 
-
+        bool interactablefound = false;
         RaycastHit[] hitInfo = Physics.RaycastAll(transform.position + Vector3.up / 2, transform.forward, interactionDistance);
         if (hitInfo.Length > 0 && hitInfo[0].collider.tag != "Wall") {
             for (int i = 0; i < hitInfo.Length && !interactableFound; i++) {
-                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable) && interactable.CanInterract()) {
-                    if (interactedItem) {
-                        ClearOutline();
-                    }
+                if (hitInfo[i].collider.TryGetComponent(out Interactable interactable) && !interactablefound) {
+                    interactablefound = true;
+                    if (interactable.CanInterract()) {
+                        if (interactedItem) {
+                            ClearOutline();
+                        }
 
-                    if (!hitInfo[i].collider.GetComponent<AICustomer>()) {
-                        interactedItem = interactable.gameObject;
-                        interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
-                        interactableFound = true;
+                        if (!hitInfo[i].collider.GetComponent<AICustomer>()) {
+                            interactedItem = interactable.gameObject;
+                            interactedItem.gameObject.layer = LayerMask.NameToLayer("Outline");
+                            interactableFound = true;
+                        }
                     }
+                    else
+                        ClearOutline();
                 }
             }
             interactableFound = false;
