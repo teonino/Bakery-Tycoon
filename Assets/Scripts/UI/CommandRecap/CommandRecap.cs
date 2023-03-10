@@ -17,12 +17,10 @@ public class CommandRecap : MonoBehaviour {
     public void StartCoroutineText() {
         time = waitingTimeSO.GetWaitingTime();
         timeMax = time;
-        if(customer.isRegular())
-        {
+        if (customer.isRegular()) {
             this.gameObject.GetComponent<Image>().sprite = backgroundSprite[0];
         }
-        else
-        {
+        else {
             this.gameObject.GetComponent<Image>().sprite = backgroundSprite[1];
         }
         StartCoroutine(SetText());
@@ -44,11 +42,11 @@ public class CommandRecap : MonoBehaviour {
         if (time / 60 > 0) {
             s += Mathf.Floor(time / 60) + "";
             if (time % 60 >= 10)
-                s += ":" + time % 60 ;
+                s += ":" + time % 60;
             else
                 s += ":0" + time % 60;
         }
-        else 
+        else
             s += time % 60 + "";
         return s + " min";
 
