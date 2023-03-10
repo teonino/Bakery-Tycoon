@@ -148,8 +148,8 @@ public class CartUI : MonoBehaviour {
 
     private IEnumerator DisplayErrorMessage(string key) {
         if (!errorMessageGO.activeSelf) {
-            errorMessageGO.SetActive(true);
             errorMessageText.SetKey(key);
+            errorMessageGO.SetActive(true);
             yield return new WaitForSeconds(1);
             errorMessageGO.SetActive(false);
         }
