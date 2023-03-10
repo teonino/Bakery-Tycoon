@@ -1940,6 +1940,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ReleaseLiquid"",
+                    ""type"": ""Button"",
+                    ""id"": ""88a0bb2b-36c4-4a91-814d-14cc2d22df57"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1951,6 +1960,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""PoorLiquidAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c395370c-0c3a-47c7-a955-2d967cd1c306"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReleaseLiquid"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2304,6 +2324,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // PoorLiquid
         m_PoorLiquid = asset.FindActionMap("PoorLiquid", throwIfNotFound: true);
         m_PoorLiquid_PoorLiquidAction = m_PoorLiquid.FindAction("PoorLiquidAction", throwIfNotFound: true);
+        m_PoorLiquid_ReleaseLiquid = m_PoorLiquid.FindAction("ReleaseLiquid", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SpawnTruck = m_Debug.FindAction("SpawnTruck", throwIfNotFound: true);
@@ -3085,11 +3106,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PoorLiquid;
     private IPoorLiquidActions m_PoorLiquidActionsCallbackInterface;
     private readonly InputAction m_PoorLiquid_PoorLiquidAction;
+    private readonly InputAction m_PoorLiquid_ReleaseLiquid;
     public struct PoorLiquidActions
     {
         private @PlayerInput m_Wrapper;
         public PoorLiquidActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @PoorLiquidAction => m_Wrapper.m_PoorLiquid_PoorLiquidAction;
+        public InputAction @ReleaseLiquid => m_Wrapper.m_PoorLiquid_ReleaseLiquid;
         public InputActionMap Get() { return m_Wrapper.m_PoorLiquid; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3102,6 +3125,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @PoorLiquidAction.started -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
                 @PoorLiquidAction.performed -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
                 @PoorLiquidAction.canceled -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
+                @ReleaseLiquid.started -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnReleaseLiquid;
+                @ReleaseLiquid.performed -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnReleaseLiquid;
+                @ReleaseLiquid.canceled -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnReleaseLiquid;
             }
             m_Wrapper.m_PoorLiquidActionsCallbackInterface = instance;
             if (instance != null)
@@ -3109,6 +3135,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @PoorLiquidAction.started += instance.OnPoorLiquidAction;
                 @PoorLiquidAction.performed += instance.OnPoorLiquidAction;
                 @PoorLiquidAction.canceled += instance.OnPoorLiquidAction;
+                @ReleaseLiquid.started += instance.OnReleaseLiquid;
+                @ReleaseLiquid.performed += instance.OnReleaseLiquid;
+                @ReleaseLiquid.canceled += instance.OnReleaseLiquid;
             }
         }
     }
@@ -3417,6 +3446,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IPoorLiquidActions
     {
         void OnPoorLiquidAction(InputAction.CallbackContext context);
+        void OnReleaseLiquid(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {
