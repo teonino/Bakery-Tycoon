@@ -16,14 +16,18 @@ public class RecipeBookManager : MonoBehaviour {
 
     private int indexProduct = 0;
     private bool init = false;
-    private void Awake() {
-        playerController.GetPlayerController().playerInput.Workstation.NextPage.performed += NextPage;
-        playerController.GetPlayerController().playerInput.Workstation.PreviousPage.performed += PreviousPage;
+    private void Awake()
+    {
+        playerController.GetPlayerController().playerInput.RecipeBook.NextPage.performed += NextPage;
+        playerController.GetPlayerController().playerInput.RecipeBook.PreviousPage.performed += PreviousPage;
     }
 
     private void OnEnable() {
         if (init)
             CheckButton();
+
+        Time.timeScale = 0f;
+        playerController.GetPlayerController().playerInput.RecipeBook.Enable();
         productUnlocked.action += DisplayProduct;
         interractQuest?.OnInterract();
     }
@@ -83,7 +87,10 @@ public class RecipeBookManager : MonoBehaviour {
         }
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
         productUnlocked.action -= DisplayProduct;
+        playerController.GetPlayerController().playerInput.RecipeBook.Disable();
     }
 }

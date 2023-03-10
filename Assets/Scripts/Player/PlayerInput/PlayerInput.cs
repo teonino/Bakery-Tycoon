@@ -1989,7 +1989,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""8b7a84a5-4ca1-44c1-9d44-bdae276bc584"",
             ""actions"": [
                 {
-                    ""name"": ""ChangeTab"",
+                    ""name"": ""DisplayRecipe"",
                     ""type"": ""Button"",
                     ""id"": ""7290e45c-33b1-420d-a426-09054b675998"",
                     ""expectedControlType"": ""Button"",
@@ -2005,24 +2005,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""NextPage"",
-                    ""type"": ""Button"",
-                    ""id"": ""04803631-23d8-4888-b723-a94afdd779e7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PreviousPage"",
-                    ""type"": ""Button"",
-                    ""id"": ""c28417d2-5208-4264-bfcc-b6cc26627d5f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2033,7 +2015,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ChangeTab"",
+                    ""action"": ""DisplayRecipe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -2056,28 +2038,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""db0c3868-c61f-484c-83b8-cc752be8102f"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""NextPage"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8edfd2c0-26dd-4399-a83b-bc75bfd7f002"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""PreviousPage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2185,6 +2145,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dialogue3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""RecipeBook"",
+            ""id"": ""39c87900-0e03-40bc-bc2e-088d653c46d0"",
+            ""actions"": [
+                {
+                    ""name"": ""PreviousPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef7f6ada-ccab-4f77-b4ab-f98293f9f6b0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""87ced78b-c17d-40b4-bc1b-e7d40b86de4b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""61a76c94-19cd-4955-9ee9-654b9c08debb"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b48e794-5414-48ab-9023-65c1d6bf2d2f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousPage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2301,10 +2309,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Debug_SpawnTruck = m_Debug.FindAction("SpawnTruck", throwIfNotFound: true);
         // Workstation
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
-        m_Workstation_ChangeTab = m_Workstation.FindAction("ChangeTab", throwIfNotFound: true);
+        m_Workstation_DisplayRecipe = m_Workstation.FindAction("DisplayRecipe", throwIfNotFound: true);
         m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
-        m_Workstation_NextPage = m_Workstation.FindAction("NextPage", throwIfNotFound: true);
-        m_Workstation_PreviousPage = m_Workstation.FindAction("PreviousPage", throwIfNotFound: true);
         // Audio
         m_Audio = asset.FindActionMap("Audio", throwIfNotFound: true);
         m_Audio_MuteSource = m_Audio.FindAction("MuteSource", throwIfNotFound: true);
@@ -2313,6 +2319,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Dialogue_Dialogue1 = m_Dialogue.FindAction("Dialogue1", throwIfNotFound: true);
         m_Dialogue_Dialogue2 = m_Dialogue.FindAction("Dialogue2", throwIfNotFound: true);
         m_Dialogue_Dialogue3 = m_Dialogue.FindAction("Dialogue3", throwIfNotFound: true);
+        // RecipeBook
+        m_RecipeBook = asset.FindActionMap("RecipeBook", throwIfNotFound: true);
+        m_RecipeBook_PreviousPage = m_RecipeBook.FindAction("PreviousPage", throwIfNotFound: true);
+        m_RecipeBook_NextPage = m_RecipeBook.FindAction("NextPage", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3140,18 +3150,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Workstation
     private readonly InputActionMap m_Workstation;
     private IWorkstationActions m_WorkstationActionsCallbackInterface;
-    private readonly InputAction m_Workstation_ChangeTab;
+    private readonly InputAction m_Workstation_DisplayRecipe;
     private readonly InputAction m_Workstation_Cook;
-    private readonly InputAction m_Workstation_NextPage;
-    private readonly InputAction m_Workstation_PreviousPage;
     public struct WorkstationActions
     {
         private @PlayerInput m_Wrapper;
         public WorkstationActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ChangeTab => m_Wrapper.m_Workstation_ChangeTab;
+        public InputAction @DisplayRecipe => m_Wrapper.m_Workstation_DisplayRecipe;
         public InputAction @Cook => m_Wrapper.m_Workstation_Cook;
-        public InputAction @NextPage => m_Wrapper.m_Workstation_NextPage;
-        public InputAction @PreviousPage => m_Wrapper.m_Workstation_PreviousPage;
         public InputActionMap Get() { return m_Wrapper.m_Workstation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3161,34 +3167,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_WorkstationActionsCallbackInterface != null)
             {
-                @ChangeTab.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
-                @ChangeTab.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
-                @ChangeTab.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
+                @DisplayRecipe.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnDisplayRecipe;
+                @DisplayRecipe.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnDisplayRecipe;
+                @DisplayRecipe.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnDisplayRecipe;
                 @Cook.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
-                @NextPage.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
-                @NextPage.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
-                @NextPage.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
-                @PreviousPage.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
-                @PreviousPage.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
-                @PreviousPage.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
             }
             m_Wrapper.m_WorkstationActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @ChangeTab.started += instance.OnChangeTab;
-                @ChangeTab.performed += instance.OnChangeTab;
-                @ChangeTab.canceled += instance.OnChangeTab;
+                @DisplayRecipe.started += instance.OnDisplayRecipe;
+                @DisplayRecipe.performed += instance.OnDisplayRecipe;
+                @DisplayRecipe.canceled += instance.OnDisplayRecipe;
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
-                @NextPage.started += instance.OnNextPage;
-                @NextPage.performed += instance.OnNextPage;
-                @NextPage.canceled += instance.OnNextPage;
-                @PreviousPage.started += instance.OnPreviousPage;
-                @PreviousPage.performed += instance.OnPreviousPage;
-                @PreviousPage.canceled += instance.OnPreviousPage;
             }
         }
     }
@@ -3275,6 +3269,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public DialogueActions @Dialogue => new DialogueActions(this);
+
+    // RecipeBook
+    private readonly InputActionMap m_RecipeBook;
+    private IRecipeBookActions m_RecipeBookActionsCallbackInterface;
+    private readonly InputAction m_RecipeBook_PreviousPage;
+    private readonly InputAction m_RecipeBook_NextPage;
+    public struct RecipeBookActions
+    {
+        private @PlayerInput m_Wrapper;
+        public RecipeBookActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PreviousPage => m_Wrapper.m_RecipeBook_PreviousPage;
+        public InputAction @NextPage => m_Wrapper.m_RecipeBook_NextPage;
+        public InputActionMap Get() { return m_Wrapper.m_RecipeBook; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(RecipeBookActions set) { return set.Get(); }
+        public void SetCallbacks(IRecipeBookActions instance)
+        {
+            if (m_Wrapper.m_RecipeBookActionsCallbackInterface != null)
+            {
+                @PreviousPage.started -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnPreviousPage;
+                @PreviousPage.performed -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnPreviousPage;
+                @PreviousPage.canceled -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnPreviousPage;
+                @NextPage.started -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnNextPage;
+                @NextPage.performed -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnNextPage;
+                @NextPage.canceled -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnNextPage;
+            }
+            m_Wrapper.m_RecipeBookActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PreviousPage.started += instance.OnPreviousPage;
+                @PreviousPage.performed += instance.OnPreviousPage;
+                @PreviousPage.canceled += instance.OnPreviousPage;
+                @NextPage.started += instance.OnNextPage;
+                @NextPage.performed += instance.OnNextPage;
+                @NextPage.canceled += instance.OnNextPage;
+            }
+        }
+    }
+    public RecipeBookActions @RecipeBook => new RecipeBookActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -3389,10 +3424,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IWorkstationActions
     {
-        void OnChangeTab(InputAction.CallbackContext context);
+        void OnDisplayRecipe(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
-        void OnNextPage(InputAction.CallbackContext context);
-        void OnPreviousPage(InputAction.CallbackContext context);
     }
     public interface IAudioActions
     {
@@ -3403,5 +3436,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnDialogue1(InputAction.CallbackContext context);
         void OnDialogue2(InputAction.CallbackContext context);
         void OnDialogue3(InputAction.CallbackContext context);
+    }
+    public interface IRecipeBookActions
+    {
+        void OnPreviousPage(InputAction.CallbackContext context);
+        void OnNextPage(InputAction.CallbackContext context);
     }
 }
