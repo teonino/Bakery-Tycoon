@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 158654002349443221}
   - component: {fileID: 3386458161441756885}
   - component: {fileID: -3952233641869510913}
+  - component: {fileID: 8720232525166250097}
   m_Layer: 5
   m_Name: UI_NPC_Payment
   m_TagString: Untagged
@@ -86,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &158654002349443221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +133,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookCamera: 1
+--- !u!95 &8720232525166250097
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157689423396409425}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e2dfa99c76bc58c4e920a1f380667980, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2588955456532332383
 GameObject:
   m_ObjectHideFlags: 0
