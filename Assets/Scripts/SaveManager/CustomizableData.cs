@@ -11,6 +11,8 @@ public class CustomizableData
     public int childCount;
     public string objectName;
     public bool typeA;
+    public bool hasProduct;
+    public Product product = null;
 
     public override string ToString() {
         return objectName;

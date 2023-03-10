@@ -23,6 +23,8 @@ public class PaymentCanvasManager : MonoBehaviour {
     }
 
     private IEnumerator Lifespan() {
+        yield return new WaitForEndOfFrame();
+        basePriceText.gameObject.SetActive(true);
         yield return new WaitForSeconds(timeDisplaying);
         Destroy(gameObject);
     }

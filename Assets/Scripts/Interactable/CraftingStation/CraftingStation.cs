@@ -27,6 +27,7 @@ public class CraftingStation : Interactable {
 
     protected override void Start() {
         base.Start();
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
         if (!debugState.GetDebug())
             skipCookingTime = false;
     }
