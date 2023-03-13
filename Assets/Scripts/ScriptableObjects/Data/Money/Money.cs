@@ -11,6 +11,7 @@ public class Money : Data
 
     public Action<int> OnMoneyChanged;
 
+
     public override void ResetValues() {
         money = 100;
     }
