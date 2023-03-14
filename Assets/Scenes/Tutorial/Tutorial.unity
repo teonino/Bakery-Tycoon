@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17558858, g: 0.21971147, b: 0.30203608, a: 1}
+  m_IndirectSpecularColor: {r: 0.1755884, g: 0.21971095, b: 0.3020354, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6102,6 +6102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2110416605, guid: e98dc8e8c722c0f44a1c25e9c7a68a49, type: 3}
+    - {fileID: 6599275471140418591, guid: e98dc8e8c722c0f44a1c25e9c7a68a49, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e98dc8e8c722c0f44a1c25e9c7a68a49, type: 3}
 --- !u!4 &662319446 stripped
 Transform:
@@ -11383,6 +11384,7 @@ MonoBehaviour:
   productUnlocked: {fileID: 11400000, guid: 59d1f15e89a2cdb4e9c55ac82360eb17, type: 2}
   ingredientUnlock: {fileID: 11400000, guid: 1907c422024316f4abb26c4dcc20b137, type: 2}
   LetsCookPanel: {fileID: 0}
+  minigamePosition: {fileID: 0}
   rackList: []
   skipRequirement: 0
   skipMinigame: 0
@@ -17143,6 +17145,22 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 92362996319514591, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92362996319514591, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92362996319514591, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92362996319514591, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 189515655147122069, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -4.700012
@@ -17485,7 +17503,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6228154067222458959, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6228154067222458959, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -17494,6 +17512,22 @@ PrefabInstance:
     - target: {fileID: 6228154067222458959, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398244423214383949, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398244423214383949, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398244423214383949, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398244423214383949, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6499965204694418821, guid: 54e350930fadfbe4695c46046b3fbea5, type: 3}
       propertyPath: m_AspectRatio
@@ -21948,6 +21982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc5c7a2e776358429257860edd537b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdFeebackValue: 0.07
   orderSumary: {fileID: 1132669346}
   totalCostText: {fileID: 268445204}
   totalCostString: {fileID: 1695905500}
@@ -21956,6 +21991,8 @@ MonoBehaviour:
   day: {fileID: 11400000, guid: f16839b493654b34aa1b13659c4284b7, type: 2}
   playerController: {fileID: 11400000, guid: e2fe10f5cd264fc4984d9df56a1cb736, type: 2}
   truckReference: {fileID: 0}
+  holdFeedbackGO: {fileID: 0}
+  errorMessageGO: {fileID: 0}
   deliveryManager: {fileID: 0}
   cartWeight: 0
   cartCost: 0
