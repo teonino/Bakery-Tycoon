@@ -14,11 +14,19 @@ public class MainSceneBlackScreen : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(Fade());    
+    }
+
+    private IEnumerator Fade()
+    {
         blackScreenAnimator.SetTrigger("Fade");
+        yield return new WaitForSeconds(0.585f);
+        blackScreen.transform.SetAsFirstSibling();
     }
 
     public void ReverseFade()
     {
+        blackScreen.transform.SetAsLastSibling();
         blackScreenAnimator.SetTrigger("FadeReverse");
     }
 
