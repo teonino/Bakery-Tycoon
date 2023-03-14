@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public class WorkstationManager : MonoBehaviour {
-    [SerializeField] private int nbIngredientMax = 3;
+    [SerializeField] private int nbIngredientMax = 5;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference rackAsset;
@@ -212,10 +212,10 @@ public class WorkstationManager : MonoBehaviour {
                 }
             }
         }
-        if (ingredientsSelected[0].inUse || ingredientsSelected[1].inUse || ingredientsSelected[2].inUse) {
+        if (ingredientsSelected[0].inUse || ingredientsSelected[1].inUse || ingredientsSelected[2].inUse || ingredientsSelected[3].inUse || ingredientsSelected[4].inUse) {
             LetsCookPanel.SetActive(true);
         }
-        else if (!ingredientsSelected[0].inUse && !ingredientsSelected[1].inUse && !ingredientsSelected[2].inUse) {
+        else if (!ingredientsSelected[0].inUse && !ingredientsSelected[1].inUse && !ingredientsSelected[2].inUse && !ingredientsSelected[3].inUse && !ingredientsSelected[4].inUse) {
             LetsCookPanel.SetActive(false);
         }
     }
