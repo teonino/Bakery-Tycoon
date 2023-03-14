@@ -281,24 +281,25 @@ public class WorkstationManager : MonoBehaviour {
         if (!skipMinigame && currentMinigameCounter < nbIngredientSelected) {
             int indexMinigame;
 
-            if (nbIngredientSelected > 3) {
-                indexMinigame = UnityEngine.Random.Range(0, 5);
+            //if (nbIngredientSelected > 3) {
+            //    indexMinigame = UnityEngine.Random.Range(0, 4);
 
-                if (currentMinigameCounter > 0) {
-                    while (indexMinigame == firstIndexMinigame || indexMinigame == secondIndexMinigame)
-                        indexMinigame = UnityEngine.Random.Range(0, 5);
-                    if (currentMinigameCounter == 1) {
-                        secondIndexMinigame = indexMinigame;
-                    }
-                }
-                else {
-                    firstIndexMinigame = indexMinigame;
-                }
-            }
+            //    if (currentMinigameCounter > 0) {
+            //        while (indexMinigame == firstIndexMinigame || indexMinigame == secondIndexMinigame)
+            //            indexMinigame = UnityEngine.Random.Range(0, 5);
+            //        if (currentMinigameCounter == 1) {
+            //            secondIndexMinigame = indexMinigame;
+            //        }
+            //    }
+            //    else {
+            //        firstIndexMinigame = indexMinigame;
+            //    }
+            //}
 
-            else {
-                indexMinigame = currentMinigameCounter;
-            }
+            //else 
+
+            indexMinigame = currentMinigameCounter;
+
             while (!ingredientsSelected[indexMinigame].GetIngredient())
                 indexMinigame++;
 
@@ -366,10 +367,8 @@ public class WorkstationManager : MonoBehaviour {
         LaunchIngredientMinigame();
     }
 
-    public void DisplayRecipes(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
+    public void DisplayRecipes(InputAction.CallbackContext ctx) {
+        if (ctx.performed) {
             ingredientPanel.SetActive(false);
             recipePanel.SetActive(true);
             ingredientPanelEnabled = false;
