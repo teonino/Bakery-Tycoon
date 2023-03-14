@@ -8,9 +8,11 @@ public class EntranceDoor : Interactable {
     [SerializeField] private GameObject door1;
     [SerializeField] private GameObject door2;
     [SerializeField] private InterractQuest finishDayQuest;
+    [SerializeField] private MainSceneBlackScreen mainSceneBlackScreen;
     private bool isClosing = false;
 
     protected override void Start() {
+        mainSceneBlackScreen = FindObjectOfType<MainSceneBlackScreen>();
         day = FindObjectOfType<DayTimeUI>().GetDay();
     }
 
@@ -44,9 +46,16 @@ public class EntranceDoor : Interactable {
 
     private IEnumerator ClosingDoors() {
         isClosing = true;
+        StartCoroutine(FadeBlackScreen());
         yield return new WaitForSeconds(2f);
         day.OnNewDay();
         SceneManager.LoadScene("FirstBakery_New");
+    }
+
+    private IEnumerator FadeBlackScreen()
+    {
+        yield return new WaitForSeconds(1.5f);
+        mainSceneBlackScreen.ReverseFade();
     }
 }
  
