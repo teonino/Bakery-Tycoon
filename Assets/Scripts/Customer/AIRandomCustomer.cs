@@ -46,6 +46,7 @@ public class AIRandomCustomer : AICustomer {
 
     protected override void Leave() {
         base.Leave();
+        animator.SetTrigger("Walk");
         shelf.RemoveCustomerInQueue(this);
     }
 
