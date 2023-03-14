@@ -23,8 +23,11 @@ public class OrderQuest : Quest {
         nbIngredientMatched = 0;
     }
 
-    public void CheckIngredient(IngredientSO ingredient) {
-        if (isActive && ingredient == this.ingredient)
+    public bool CheckIngredient(IngredientSO ingredient) {
+        if (isActive && ingredient == this.ingredient) {
             OnCompleted();
+            return true;
+        }
+        return false;
     }
 }

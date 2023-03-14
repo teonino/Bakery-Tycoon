@@ -31,7 +31,7 @@ public class DeliveryManager : MonoBehaviour {
     private RectTransform ingredientScrollRectTransform;
     private RectTransform productScrollRectTransform;
     private PlayerController playerController;
-    private List<GameObject> ingredientButtonList;
+    protected List<GameObject> ingredientButtonList;
     private List<GameObject> productButtonList;
     private List<GameObject> ingredientRackList;
     private List<GameObject> productRackList;
@@ -234,7 +234,7 @@ public class DeliveryManager : MonoBehaviour {
             StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if (controller.IsGamepad()) {
             RectTransform scroll;
             if (ingredientScroll.activeInHierarchy)

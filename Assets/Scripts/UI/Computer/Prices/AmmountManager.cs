@@ -27,23 +27,31 @@ public class AmmountManager : MonoBehaviour {
     private bool canUp;
     private bool canDown;
     private int timesToTest;
-    
-
 
     [HideInInspector] public DeliveryButton deliveryButton;
     [HideInInspector] public DeliveryManager deliveryManager;
 
     private ProductSO ProductSO;
     private IngredientSO Ingredient;
-    internal int originalAmmount = 0;
+    private DialogueManager dialogueManager;
+    private TutoAmafood tutoAmafood;
+    public int originalAmmount = 0;
 
-    private void Confirm(InputAction.CallbackContext ctx) {
+    private void Start() {
+        dialogueManager = FindObjectOfType<DialogueManager>(true);
+        tutoAmafood = FindObjectOfType<TutoAmafood>();
+
+        if (tutoAmafood)
+            dialogueManager.OnDisableDialoguePanel += tutoAmafood.SetButtonForGamepadTutorial;
+    }
+
+    public void Confirm(InputAction.CallbackContext ctx) {
         StartCoroutine(WaitForGamepad());
         deliveryButton.nbIngredient = ammountToBuy;
         originalAmmount = ammountToBuy;
     }
 
-    private void Cancel(InputAction.CallbackContext ctx) {
+    public void Cancel(InputAction.CallbackContext ctx) {
         if (originalAmmount < ammountToBuy) {
             while(ammountToBuy != originalAmmount) {
                 SetIngredientsInCart(false);
@@ -138,26 +146,6 @@ public class AmmountManager : MonoBehaviour {
             StartCoroutine(IncrementAmmountToBuy());
         }
     }
-
-    //private void Update()
-    //{
-    //    if (canUp && ammountToBuy < maxAmmountToBuy)
-    //    {
-    //        StartCoroutine(IncrementAmmountToBuy());
-    //        if(!upCoroutineFinished)
-    //        {
-    //            StartCoroutine(waitingtoGoFast(0));
-    //        }
-    //    }
-    //    else if (canDown && ammountToBuy > 0)
-    //    {
-    //        StartCoroutine(DecrementAmmountToBuy());
-    //        if (!downCoroutineFinished)
-    //        {
-    //            StartCoroutine(waitingtoGoFast(1));
-    //        }
-    //    }
-    //}
 
     private IEnumerator IncrementAmmountToBuy()
     {

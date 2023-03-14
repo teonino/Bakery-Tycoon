@@ -15,6 +15,12 @@ public class TutoWorkstationPanel : WorkstationManager {
         tutorial?.Invoke();
     }
 
+    protected override void Update() {
+        base.Update();
+        if (gameObject.activeSelf && playerControllerSO.GetPlayerInputState())
+            playerControllerSO?.GetPlayerController().DisableInput();
+    }
+
     public override void IngredientSelected(IngredientSO ingredient) {
         if (addIngredientQuest.OnInterract())
             tutorial.UnlockAddIngredient();

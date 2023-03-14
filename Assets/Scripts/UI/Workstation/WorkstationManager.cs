@@ -7,7 +7,6 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
 public class WorkstationManager : MonoBehaviour {
-    [SerializeField] private int nbIngredientMax = 3;
     [SerializeField] private ScrollSpeedSO scrollSpeed;
     [SerializeField] private AssetReference ingredientButtonAsset;
     [SerializeField] private AssetReference rackAsset;
@@ -20,7 +19,7 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private ListProduct allProducts;
     [SerializeField] private ListIngredient ingredients;
     [SerializeField] private ListDeliveries deliveries;
-    [SerializeField] private PlayerControllerSO playerControllerSO;
+    [SerializeField] protected PlayerControllerSO playerControllerSO;
     [SerializeField] private Controller controller;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
@@ -39,8 +38,6 @@ public class WorkstationManager : MonoBehaviour {
     private RectTransform scollRectTransform;
     private int nbIngredientSelected = 0;
     private LocalizedStringComponent noRecipeText;
-    private int firstIndexMinigame = -1;
-    private int secondIndexMinigame = -1;
     private bool ingredientPanelEnabled = true;
 
     [HideInInspector] public bool skipRequirement = false;
@@ -170,7 +167,7 @@ public class WorkstationManager : MonoBehaviour {
             go.GetComponent<WorkstationIngredientButton>().UpdateStock();
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if (controller.IsGamepad() && scroll.activeInHierarchy) {
             scollRectTransform.position -= new Vector3(0, playerControllerSO.GetPlayerController().playerInput.UI.ScrollWheel.ReadValue<Vector2>().y * scrollSpeed.GetScrollSpeed(), 0);
         }
@@ -356,7 +353,6 @@ public class WorkstationManager : MonoBehaviour {
             currentMinigame.DisableInputs();
             Addressables.ReleaseInstance(currentMinigame.gameObject);
         }
-        firstIndexMinigame = secondIndexMinigame = -1;
         currentMinigameCounter = 0;
         currentProduct = null;
     }
