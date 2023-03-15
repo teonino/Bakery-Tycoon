@@ -19,6 +19,7 @@ public class BuildingMode : Interactable {
     [SerializeField] private LayerMask putDownLayerFloor;
     [SerializeField] private LayerMask putDownLayerWall;
     [SerializeField] private float snapValue;
+    [SerializeField] private ParticleSystem vfx;
 
     [Header("Gamepad Parameters")]
     [SerializeField] private int cursorSpeed = 1;
@@ -58,6 +59,7 @@ public class BuildingMode : Interactable {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
         previewCamera = GameObject.FindGameObjectWithTag("PreviewCamera");
+        vfx.Stop();
 
         buildingCamera.SetActive(false);
         previewCamera.SetActive(false);
@@ -69,6 +71,7 @@ public class BuildingMode : Interactable {
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
             sfxPlayer.InteractSound();
             CreateCursor();
+            vfx.Play();
 
 
 

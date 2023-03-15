@@ -17,7 +17,7 @@ public class Workstation : Interactable {
     private SFXPlayer sfxPlayer;
 
     private void Awake() {
-        sfxPlayer = FindObjectOfType<SFXPlayer>(); ;
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
     }
 
     protected override void Start() {
