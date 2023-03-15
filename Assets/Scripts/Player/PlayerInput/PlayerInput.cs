@@ -1962,15 +1962,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ReleaseLiquid"",
-                    ""type"": ""Button"",
-                    ""id"": ""88a0bb2b-36c4-4a91-814d-14cc2d22df57"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1982,17 +1973,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""PoorLiquidAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c395370c-0c3a-47c7-a955-2d967cd1c306"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ReleaseLiquid"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2047,6 +2027,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Clear"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf71413d-1bec-4006-88b8-339342fb73ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2091,6 +2080,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42e149ef-c4cd-421b-bd73-b15dac34b617"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clear"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2357,7 +2357,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // PoorLiquid
         m_PoorLiquid = asset.FindActionMap("PoorLiquid", throwIfNotFound: true);
         m_PoorLiquid_PoorLiquidAction = m_PoorLiquid.FindAction("PoorLiquidAction", throwIfNotFound: true);
-        m_PoorLiquid_ReleaseLiquid = m_PoorLiquid.FindAction("ReleaseLiquid", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SpawnTruck = m_Debug.FindAction("SpawnTruck", throwIfNotFound: true);
@@ -2365,6 +2364,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
         m_Workstation_DisplayRecipe = m_Workstation.FindAction("DisplayRecipe", throwIfNotFound: true);
         m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
+        m_Workstation_Clear = m_Workstation.FindAction("Clear", throwIfNotFound: true);
         // Audio
         m_Audio = asset.FindActionMap("Audio", throwIfNotFound: true);
         m_Audio_MuteSource = m_Audio.FindAction("MuteSource", throwIfNotFound: true);
@@ -3139,13 +3139,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PoorLiquid;
     private IPoorLiquidActions m_PoorLiquidActionsCallbackInterface;
     private readonly InputAction m_PoorLiquid_PoorLiquidAction;
-    private readonly InputAction m_PoorLiquid_ReleaseLiquid;
     public struct PoorLiquidActions
     {
         private @PlayerInput m_Wrapper;
         public PoorLiquidActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @PoorLiquidAction => m_Wrapper.m_PoorLiquid_PoorLiquidAction;
-        public InputAction @ReleaseLiquid => m_Wrapper.m_PoorLiquid_ReleaseLiquid;
         public InputActionMap Get() { return m_Wrapper.m_PoorLiquid; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3158,9 +3156,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @PoorLiquidAction.started -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
                 @PoorLiquidAction.performed -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
                 @PoorLiquidAction.canceled -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnPoorLiquidAction;
-                @ReleaseLiquid.started -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnReleaseLiquid;
-                @ReleaseLiquid.performed -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnReleaseLiquid;
-                @ReleaseLiquid.canceled -= m_Wrapper.m_PoorLiquidActionsCallbackInterface.OnReleaseLiquid;
             }
             m_Wrapper.m_PoorLiquidActionsCallbackInterface = instance;
             if (instance != null)
@@ -3168,9 +3163,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @PoorLiquidAction.started += instance.OnPoorLiquidAction;
                 @PoorLiquidAction.performed += instance.OnPoorLiquidAction;
                 @PoorLiquidAction.canceled += instance.OnPoorLiquidAction;
-                @ReleaseLiquid.started += instance.OnReleaseLiquid;
-                @ReleaseLiquid.performed += instance.OnReleaseLiquid;
-                @ReleaseLiquid.canceled += instance.OnReleaseLiquid;
             }
         }
     }
@@ -3214,12 +3206,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IWorkstationActions m_WorkstationActionsCallbackInterface;
     private readonly InputAction m_Workstation_DisplayRecipe;
     private readonly InputAction m_Workstation_Cook;
+    private readonly InputAction m_Workstation_Clear;
     public struct WorkstationActions
     {
         private @PlayerInput m_Wrapper;
         public WorkstationActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DisplayRecipe => m_Wrapper.m_Workstation_DisplayRecipe;
         public InputAction @Cook => m_Wrapper.m_Workstation_Cook;
+        public InputAction @Clear => m_Wrapper.m_Workstation_Clear;
         public InputActionMap Get() { return m_Wrapper.m_Workstation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3235,6 +3229,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cook.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
+                @Clear.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
+                @Clear.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
+                @Clear.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
             }
             m_Wrapper.m_WorkstationActionsCallbackInterface = instance;
             if (instance != null)
@@ -3245,6 +3242,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
+                @Clear.started += instance.OnClear;
+                @Clear.performed += instance.OnClear;
+                @Clear.canceled += instance.OnClear;
             }
         }
     }
@@ -3479,7 +3479,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IPoorLiquidActions
     {
         void OnPoorLiquidAction(InputAction.CallbackContext context);
-        void OnReleaseLiquid(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {
@@ -3489,6 +3488,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnDisplayRecipe(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
+        void OnClear(InputAction.CallbackContext context);
     }
     public interface IAudioActions
     {

@@ -8,7 +8,6 @@ public class PauseManager : MonoBehaviour {
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
-    [SerializeField] private MainSceneBlackScreen mainSceneBlackScreen;
 
     private void OnEnable() {
         Time.timeScale = 0f;
@@ -37,13 +36,6 @@ public class PauseManager : MonoBehaviour {
     public void MainMenu() {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed -= ResumeInput;
         Time.timeScale = 1f;
-        StartCoroutine(LoadMainMenu());
-    }
-
-    private IEnumerator LoadMainMenu()
-    {
-        mainSceneBlackScreen.ReverseFade();
-        yield return new WaitForSeconds(0.583f);
         SceneManager.LoadScene("MainMenu");
     }
 }
