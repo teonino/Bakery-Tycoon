@@ -8,7 +8,28 @@ public class TutoWorkstationPanel : WorkstationManager {
     [SerializeField] private CreateQuest cookQuest;
     [SerializeField] private InterractQuest createPasteQuest;
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private DialogueManager dialogueManager;
     private bool canCook = true;
+    private bool firstTimeOpenning = true;
+    private bool firstTimeAdding = true;
+    private bool firstTimeCreate = true;
+
+    protected override void OnEnable() {
+        base.OnEnable();
+
+        if (firstTimeOpenning && dialogueManager.gameObject.activeSelf) {
+            playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
+            playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
+            dialogueManager.OnDisableDialoguePanel += EnableQuit;
+            firstTimeOpenning = false;
+        }
+    }
+
+    private void EnableQuit() {
+        dialogueManager.OnDisableDialoguePanel -= EnableQuit;
+        playerControllerSO.GetPlayerController().playerInput.Workstation.Enable();
+        playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed += Quit;
+    }
 
     protected override void SetupButton() {
         base.SetupButton();
@@ -22,8 +43,16 @@ public class TutoWorkstationPanel : WorkstationManager {
     }
 
     public override void IngredientSelected(IngredientSO ingredient) {
-        if (addIngredientQuest.OnInterract())
+        if (addIngredientQuest.OnInterract()) {
             tutorial.UnlockAddIngredient();
+
+            if (firstTimeAdding) {
+                playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
+                playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
+                dialogueManager.OnDisableDialoguePanel += EnableQuit;
+                firstTimeAdding = false;
+            }
+        }
 
         if (tutorial.CanAddIngredient())
             base.IngredientSelected(ingredient);
@@ -35,12 +64,21 @@ public class TutoWorkstationPanel : WorkstationManager {
             canCook = true;
         }
 
-        if(canCook)
+        if (canCook)
             base.Cook(ctx);
     }
 
     protected override void CreateProduct() {
         createPasteQuest?.OnInterract();
+
         base.CreateProduct();
+
+        playerControllerSO.GetPlayerController().DisableInput();
+        dialogueManager.OnDisableDialoguePanel += EnablePlayer;
+    }
+
+    private void EnablePlayer() {
+        dialogueManager.OnDisableDialoguePanel -= EnablePlayer;
+        playerControllerSO.GetPlayerController().EnableInput();
     }
 }

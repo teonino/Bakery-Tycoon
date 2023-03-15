@@ -12,11 +12,12 @@ public class OrderQuest : Quest {
     private int nbIngredientMatched = 0;
 
     public void CheckOrder(Delivery delivery) {
-        foreach (StockIngredient expectedIngredient in ingredients)
-            foreach (StockIngredient ingredient in delivery.GetIngredients())
-                if (expectedIngredient.ingredient == ingredient.ingredient)
-                    nbIngredientMatched++;
-
+        if (delivery != null) {
+            foreach (StockIngredient expectedIngredient in ingredients)
+                foreach (StockIngredient ingredient in delivery.GetIngredients())
+                    if (expectedIngredient.ingredient == ingredient.ingredient)
+                        nbIngredientMatched++;
+        }
         if (isActive && nbIngredientMatched == ingredients.Count)
             OnCompleted();
 

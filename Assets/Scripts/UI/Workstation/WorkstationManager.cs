@@ -54,7 +54,7 @@ public class WorkstationManager : MonoBehaviour {
         noRecipeText = noRecipeTextGO.GetComponentInChildren<LocalizedStringComponent>();
     }
 
-    private void OnEnable() {
+    protected virtual void OnEnable() {
         List<StockIngredient> stocks = ingredients.GetIngredientList();
         noRecipeTextGO.SetActive(false);
         LetsCookPanel.SetActive(false);

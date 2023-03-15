@@ -44,6 +44,26 @@ public class AmmountManager : MonoBehaviour {
         if (tutoAmafood)
             dialogueManager.OnDisableDialoguePanel += tutoAmafood.SetButtonForGamepadTutorial;
     }
+    private void OnEnable() {
+        deliveryManager = FindObjectOfType<DeliveryManager>();
+        ammountToBuy = deliveryButton.nbIngredient;
+        textAmmount.text = ammountToBuy.ToString();
+
+
+        controller.RegisterCurrentSelectedButton();
+        controller.SetEventSystemToStartButton(null);
+
+        playerController.GetPlayerController().playerInput.UI.Disable();
+        playerController.GetPlayerController().playerInput.Amafood.Disable();
+        playerController.GetPlayerController().playerInput.Ammount.Enable();
+        playerController.GetPlayerController().playerInput.Ammount.AddIngredient.performed += PlusButtonIsClicked;
+        playerController.GetPlayerController().playerInput.Ammount.AddIngredient.canceled += ReleaseButton;
+        playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed += MinusButtonIsClicked;
+        playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.canceled += ReleaseButton;
+        playerController.GetPlayerController().playerInput.Ammount.Confirm.performed += Confirm;
+        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
+        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
+    }
 
     public void Confirm(InputAction.CallbackContext ctx) {
         StartCoroutine(WaitForGamepad());
@@ -69,27 +89,6 @@ public class AmmountManager : MonoBehaviour {
 
     public void SetTexture(Texture texture) {
         imageProduct.texture = texture;
-    }
-
-    private void OnEnable() {
-        deliveryManager = FindObjectOfType<DeliveryManager>();
-        ammountToBuy = deliveryButton.nbIngredient;
-        textAmmount.text = ammountToBuy.ToString();
-
-
-        controller.RegisterCurrentSelectedButton();
-        controller.SetEventSystemToStartButton(null);
-
-        playerController.GetPlayerController().playerInput.UI.Disable();
-        playerController.GetPlayerController().playerInput.Amafood.Disable();
-        playerController.GetPlayerController().playerInput.Ammount.Enable();
-        playerController.GetPlayerController().playerInput.Ammount.AddIngredient.performed += PlusButtonIsClicked;
-        playerController.GetPlayerController().playerInput.Ammount.AddIngredient.canceled += ReleaseButton;
-        playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.performed += MinusButtonIsClicked;
-        playerController.GetPlayerController().playerInput.Ammount.RemoveIngredient.canceled += ReleaseButton;
-        playerController.GetPlayerController().playerInput.Ammount.Confirm.performed += Confirm;
-        playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Cancel;
-        //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
     }
 
     private void OnDisable() {

@@ -74,7 +74,7 @@ public class DeliveryManager : MonoBehaviour {
         ResizeScroll(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
     }
 
-    private void OnEnable() {
+    protected virtual void OnEnable() {
         if (gameObject.activeSelf) {
             //Manage Inputs
             playerController.DisableInput();
