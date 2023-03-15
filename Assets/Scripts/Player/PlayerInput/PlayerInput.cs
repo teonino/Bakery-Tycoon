@@ -2005,6 +2005,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Clear"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf71413d-1bec-4006-88b8-339342fb73ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2038,6 +2047,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42e149ef-c4cd-421b-bd73-b15dac34b617"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clear"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2311,6 +2331,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
         m_Workstation_DisplayRecipe = m_Workstation.FindAction("DisplayRecipe", throwIfNotFound: true);
         m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
+        m_Workstation_Clear = m_Workstation.FindAction("Clear", throwIfNotFound: true);
         // Audio
         m_Audio = asset.FindActionMap("Audio", throwIfNotFound: true);
         m_Audio_MuteSource = m_Audio.FindAction("MuteSource", throwIfNotFound: true);
@@ -3152,12 +3173,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IWorkstationActions m_WorkstationActionsCallbackInterface;
     private readonly InputAction m_Workstation_DisplayRecipe;
     private readonly InputAction m_Workstation_Cook;
+    private readonly InputAction m_Workstation_Clear;
     public struct WorkstationActions
     {
         private @PlayerInput m_Wrapper;
         public WorkstationActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DisplayRecipe => m_Wrapper.m_Workstation_DisplayRecipe;
         public InputAction @Cook => m_Wrapper.m_Workstation_Cook;
+        public InputAction @Clear => m_Wrapper.m_Workstation_Clear;
         public InputActionMap Get() { return m_Wrapper.m_Workstation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3173,6 +3196,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cook.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
+                @Clear.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
+                @Clear.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
+                @Clear.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
             }
             m_Wrapper.m_WorkstationActionsCallbackInterface = instance;
             if (instance != null)
@@ -3183,6 +3209,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
+                @Clear.started += instance.OnClear;
+                @Clear.performed += instance.OnClear;
+                @Clear.canceled += instance.OnClear;
             }
         }
     }
@@ -3426,6 +3455,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnDisplayRecipe(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
+        void OnClear(InputAction.CallbackContext context);
     }
     public interface IAudioActions
     {

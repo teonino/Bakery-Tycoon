@@ -41,6 +41,8 @@ public class BuildingMode : Interactable {
     private float originalHeight;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
+    [SerializeField] private List<GameObject> uiInGame;
+    [SerializeField] private GameObject uiCustomisation;
 
     protected override void Start() {
         currentRaycastlayer = pickUpLayer;
@@ -67,6 +69,9 @@ public class BuildingMode : Interactable {
             playerControllerSO.GetPlayerController().playerInput.Building.Enable();
             sfxPlayer.InteractSound();
             CreateCursor();
+
+
+
             //if (controller.IsGamepad())
             //    if (!cursorObject)
             //        cursor.InstantiateAsync(GameObject.FindGameObjectWithTag("MainCanvas").transform).Completed += (go) => {
@@ -81,6 +86,12 @@ public class BuildingMode : Interactable {
             furnitureManager.SetBuildingMode(this);
 
             interractQuest?.OnInterract();
+
+            for (int i = 0; i < uiInGame.Count; i++)
+            {
+                uiInGame[i].SetActive(false);
+            }
+            uiCustomisation.SetActive(true);
         }
     }
     public override bool CanInterract() {
@@ -115,6 +126,11 @@ public class BuildingMode : Interactable {
             mainCamera.SetActive(true);
             buildingCamera.SetActive(false);
             inBuildingMode = false;
+            for (int i = 0; i < uiInGame.Count; i++)
+            {
+                uiInGame[i].SetActive(true);
+            }
+            uiCustomisation.SetActive(false);
         }
     }
 
