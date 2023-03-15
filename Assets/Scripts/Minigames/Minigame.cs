@@ -53,6 +53,11 @@ public abstract class Minigame : MonoBehaviour {
         }
     }
 
+    protected virtual void Update() {
+        if (gameObject.activeSelf && playerController.GetPlayerInputEnabled())
+            playerController.DisableInput();
+    }
+
     protected string GetControl(InputAction action, int index = 0) {
         string inputName = InputControlPath.ToHumanReadableString(action.bindings[action.GetBindingIndexForControl(action.controls[index])].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
