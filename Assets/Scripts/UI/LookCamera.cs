@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LookCamera : MonoBehaviour {
     [SerializeField] private bool lookCamera = true;
-    private GameObject camera;
+    private GameObject cameraObject;
 
     private void Awake()
     {
@@ -13,8 +13,8 @@ public class LookCamera : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (lookCamera && camera)
-            transform.LookAt(camera.transform);
+        if (lookCamera && cameraObject)
+            transform.LookAt(cameraObject.transform);
     }
 
     public void ChangeCamera()
@@ -25,6 +25,6 @@ public class LookCamera : MonoBehaviour {
     private IEnumerator wait()
     {
         yield return new WaitForEndOfFrame();
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
     }
 }

@@ -24,5 +24,5 @@ public class Tutorial : ScriptableObject {
     public void SetTutorial(bool value) => tutorial = value;
     public bool GetTutorial() => tutorial;
 
-    public void Invoke() => action?.Invoke();
+    public void Invoke() => action?.Invoke(); 
 }

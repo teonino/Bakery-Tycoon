@@ -12,19 +12,23 @@ public class OrderQuest : Quest {
     private int nbIngredientMatched = 0;
 
     public void CheckOrder(Delivery delivery) {
-        foreach (StockIngredient expectedIngredient in ingredients)
-            foreach (StockIngredient ingredient in delivery.GetIngredients())
-                if (expectedIngredient.ingredient == ingredient.ingredient)
-                    nbIngredientMatched++;
-
+        if (delivery != null) {
+            foreach (StockIngredient expectedIngredient in ingredients)
+                foreach (StockIngredient ingredient in delivery.GetIngredients())
+                    if (expectedIngredient.ingredient == ingredient.ingredient)
+                        nbIngredientMatched++;
+        }
         if (isActive && nbIngredientMatched == ingredients.Count)
             OnCompleted();
 
         nbIngredientMatched = 0;
     }
 
-    public void CheckIngredient(IngredientSO ingredient) {
-        if (isActive && ingredient == this.ingredient)
+    public bool CheckIngredient(IngredientSO ingredient) {
+        if (isActive && ingredient == this.ingredient) {
             OnCompleted();
+            return true;
+        }
+        return false;
     }
 }
