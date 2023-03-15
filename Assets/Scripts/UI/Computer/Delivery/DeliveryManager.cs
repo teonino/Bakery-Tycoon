@@ -279,7 +279,11 @@ public class DeliveryManager : MonoBehaviour {
     public virtual void DisplayProductList(InputAction.CallbackContext context) {
         ingredientsList.SetActive(false);
         productList.SetActive(true);
-        controller.SetEventSystemToStartButton(productButtonList[0].GetComponentInChildren<Button>().gameObject);
+
+        int i = 0;
+        while (!productButtonList[0].GetComponent<DeliveryButton>().product.unlocked)
+            i++;
+        controller.SetEventSystemToStartButton(productButtonList[i].GetComponentInChildren<Button>().gameObject);
 
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayProductList;
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayIngredientList;
@@ -358,8 +362,7 @@ public class DeliveryManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayProductList;
     }
 
-    public void LaunchQuitFunction()
-    {
+    public void LaunchQuitFunction() {
         Quit();
     }
 
