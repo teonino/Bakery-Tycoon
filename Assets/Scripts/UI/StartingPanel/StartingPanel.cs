@@ -23,7 +23,6 @@ public class StartingPanel : MonoBehaviour {
 
         Time.timeScale = 0;
         dayTxt.text = $"Day {day.GetDayCount()}";
-        customerTxt.text = $"{customer.GetNbRandomCustomer() + customer.GetNbRegularCustomer()} Customers expected";
 
         questTxt.text = "";
         foreach (Quest quest in quests.GetDailyQuests()) {
