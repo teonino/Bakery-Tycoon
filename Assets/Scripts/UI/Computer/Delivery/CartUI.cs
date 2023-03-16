@@ -91,9 +91,11 @@ public class CartUI : MonoBehaviour {
     private IEnumerator FillHoldFeedback(InputAction.CallbackContext ctx) {
         if (!ctx.canceled) {
             if (holdFeedbackGO.fillAmount == 0)
+            {
                 yield return new WaitForSeconds(0.1f);
-
-            holdFeedbackGO.fillAmount += holdFeebackValue;
+                holdFeedbackGO.fillAmount += 0.1f;
+            }
+            holdFeedbackGO.fillAmount += Time.fixedDeltaTime * 3/4;
             yield return new WaitForFixedUpdate();
             if (holdFeedbackGO.fillAmount >= 1)
                 holdFeedbackGO.fillAmount = 0;
@@ -120,7 +122,7 @@ public class CartUI : MonoBehaviour {
             if (ctx.performed && cart != null) {
                 if (cart.Count > 0) {
                     //Check if the order can be bought
-                    if (cartCost <= money.GetMoney()) {
+                    if (cartCost != 0 && cartCost <= money.GetMoney()) {
                         if (truckReference.CanAddDelivery()) {
                             delivery = new Delivery(day.GetDayCount());
                             foreach (KeyValuePair<IngredientSO, int> stock in cart) {

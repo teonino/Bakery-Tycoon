@@ -10,10 +10,13 @@ public class TutoCartUI : CartUI
     [SerializeField] private OrderQuest orderProductQuest;
 
     public override void Order(InputAction.CallbackContext ctx) {
+        IInputInteraction interaction = ctx.interaction;
         base.Order(ctx);
 
-        if (orderBreadIngredient.CheckDeliveryType())
-            tutorial.UnlockWorkstation();
-        orderProductQuest?.CheckOrder(delivery);
+        if (interaction.ToString().Contains("Tap")) {
+            if (orderBreadIngredient.CheckDeliveryType())
+                tutorial.UnlockWorkstation();
+            orderProductQuest?.CheckOrder(delivery);
+        }
     }
 }

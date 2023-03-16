@@ -7,16 +7,25 @@ public class TutoWorkstation : Workstation {
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private InterractQuest interractQuest;
     [SerializeField] private InterractQuest secondInterractQuest;
+    [SerializeField] private DialogueManager dialogueManager;
+
+    private bool firstTime = true;
     public override void Effect() {
         if (tutorial.CanInterractWorkstation()) {
-            base.Effect();
             interractQuest?.OnInterract();
             secondInterractQuest?.OnInterract();
+            base.Effect();
         }
     }
 
     public override void CloseWorkplace(GameObject go) {
         base.CloseWorkplace(go);
+
+        if(firstTime && dialogueManager.gameObject.activeSelf) {
+            playerControllerSO.GetPlayerController().DisableInput();
+            firstTime = false;
+        }
+
         tutorial.Invoke();
     }
 }

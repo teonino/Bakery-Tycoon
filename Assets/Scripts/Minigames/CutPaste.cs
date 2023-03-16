@@ -27,7 +27,8 @@ public class CutPaste : Minigame {
     }
 
     // Update is called once per frame
-    void Update() {
+    protected override void Update() {
+        base.Update();
         if (slider.value == slider.maxValue || slider.value == slider.minValue)  
             sliderValueChange *= -1;
 

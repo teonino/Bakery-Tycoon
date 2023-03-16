@@ -29,6 +29,18 @@ public class FurnitureManager : MonoBehaviour {
     private List<FurnitureStyle> furnitureStyleFilter;
     private BuildingMode buildingMode;
 
+    // Start is called before the first frame update
+    void Awake() {
+        furnitureButtonList = new List<GameObject>();
+        furnitureRackList = new List<GameObject>();
+
+        furnitureTypeFilter = new List<FurnitureType>();
+        furnitureStyleFilter = new List<FurnitureStyle>();
+
+        lenght = furnitures.GetFurnitureCount();
+        playerController = playerControllerSO.GetPlayerController();
+    }
+
     private void OnEnable() {
         if (gameObject.activeSelf) {
             //Manage Inputs
@@ -42,19 +54,10 @@ public class FurnitureManager : MonoBehaviour {
                 controller.SetEventSystemToStartButton(null);
 
             scrollRectTransform.position = new Vector3(scrollRectTransform.position.x, 0, scrollRectTransform.position.z);
+
+            furnitureTypeFilter.Clear();
+            furnitureStyleFilter.Clear();
         }
-    }
-
-    // Start is called before the first frame update
-    void Awake() {
-        furnitureButtonList = new List<GameObject>();
-        furnitureRackList = new List<GameObject>();
-
-        furnitureTypeFilter = new List<FurnitureType>();
-        furnitureStyleFilter = new List<FurnitureStyle>();
-
-        lenght = furnitures.GetFurnitureCount();
-        playerController = playerControllerSO.GetPlayerController();
     }
 
     public void SetBuildingMode(BuildingMode building) => buildingMode = building;
@@ -76,7 +79,7 @@ public class FurnitureManager : MonoBehaviour {
     }
     private void SetupRacks() {
         if (furnitureButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(buttonPanel.GetComponent<RectTransform>().rect.width / furnitureButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            maxButtonInRack = (int)Math.Floor(buttonPanel.GetComponent<RectTransform>().rect.width / furnitureButtonList[0].GetComponent<RectTransform>().sizeDelta.x) ;
             for (int i = 0; i < furnitureButtonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
                     furnitureRackAsset.InstantiateAsync(buttonPanel.transform).Completed += (go) => {
@@ -90,7 +93,6 @@ public class FurnitureManager : MonoBehaviour {
     }
     private void SetupButton() {
         if (furnitureRackList.Count * maxButtonInRack >= furnitureButtonList.Count) {
-            SetVerticalLayoutGroup();
 
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < furnitureRackList.Count) {
@@ -98,6 +100,7 @@ public class FurnitureManager : MonoBehaviour {
                     furnitureButtonList[i].transform.localScale = Vector3.one;
                 }
             }
+            SetVerticalLayoutGroup();
 
             if (controller.IsGamepad())
                 controller.SetEventSystemToStartButton(furnitureButtonList[0]);
@@ -113,7 +116,7 @@ public class FurnitureManager : MonoBehaviour {
             if (furnitureRackList[i].activeSelf)
                 nbRack++;
 
-        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].GetComponent<RectTransform>().rect.height * nbRack);
+        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].transform.GetChild(0).GetComponent<RectTransform>().rect.height * (nbRack + 1));
         buttonPanel.GetComponent<RectTransform>().localPosition = new Vector3(buttonPanel.GetComponent<RectTransform>().localPosition.x, 0, 0);
     }
 
@@ -145,8 +148,8 @@ public class FurnitureManager : MonoBehaviour {
         switch (filter) {
             case 1: type = FurnitureType.Utility; break;
             case 2: type = FurnitureType.Table; break;
-            case 3: type = FurnitureType.Chair; break;
-            case 4: type = FurnitureType.Shelf; break;
+            case 3: type = FurnitureType.Frame; break;
+            case 4: type = FurnitureType.Entrance; break;
             case 5: type = FurnitureType.Decoration; break;
             case 6: type = FurnitureType.Floor; break;
             case 7: type = FurnitureType.Wall; break;

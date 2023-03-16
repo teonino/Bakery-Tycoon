@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 311520423843426727}
   - component: {fileID: 1006185488094187019}
   - component: {fileID: 1281972547565732618}
+  - component: {fileID: 1499940997424057906}
   m_Layer: 14
   m_Name: EntranceDoor_A
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7109835509761603050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,3 +116,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.33266124, y: 2.0000005, z: 0.9999997}
   m_Center: {x: -0.04910536, y: 0.9999998, z: 0.49999997}
+--- !u!114 &1499940997424057906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7109835509761603050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: e9fd330795399dd4da786cb459723fb1, type: 2}
+  mandatoryList: {fileID: 0}
