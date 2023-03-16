@@ -5,5 +5,7 @@ public enum FurnitureType {
     Shelf, 
     Decoration,
     Floor, 
-    Wall
+    Wall,
+    Entrance,
+    Frame
 }

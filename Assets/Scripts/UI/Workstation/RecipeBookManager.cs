@@ -9,7 +9,7 @@ public class RecipeBookManager : MonoBehaviour {
     [SerializeField] private ListProduct products;
     [SerializeField] private SwitchTabPanel switchTabPanel;
     [SerializeField] private Controller controller;
-    [SerializeField] private PlayerControllerSO playerController;
+    [SerializeField] protected PlayerControllerSO playerController;
     [SerializeField] private ProductUnlockedSO productUnlocked;
     [SerializeField] private List<GameObject> productDescriptions;
     [SerializeField] private InterractQuest interractQuest;
@@ -22,7 +22,7 @@ public class RecipeBookManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.RecipeBook.PreviousPage.performed += PreviousPage;
     }
 
-    private void OnEnable() {
+    protected virtual void OnEnable() {
         if (init)
             CheckButton();
 

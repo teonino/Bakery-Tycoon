@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        tutorial.action += SetDefaultButton;
+        tutorial.action -= SetDefaultButton;
     }
 
     private void SetupDialogue() {
