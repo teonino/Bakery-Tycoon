@@ -36,6 +36,8 @@ public class CreateQuest : Quest {
         }
     }
 
+    public int GetCurrentAmount() => currentAmount;
+
     public void Completed() {
         OnCompleted();
     }
