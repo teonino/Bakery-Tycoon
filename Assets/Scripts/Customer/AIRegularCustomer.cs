@@ -62,8 +62,6 @@ public class AIRegularCustomer : AICustomer {
                             TakeItem(productholder, table.gameObject);
                             table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             state = AIState.eating;
-                            //outline
-                            gameObject.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Outline");
 
                             spawner.RemoveCommandRecap(this);
                             if (tutorial)
@@ -120,8 +118,6 @@ public class AIRegularCustomer : AICustomer {
         }
 
         base.Leave();
-        gameObject.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Customer");
-
     }
 
     public override void Effect() {

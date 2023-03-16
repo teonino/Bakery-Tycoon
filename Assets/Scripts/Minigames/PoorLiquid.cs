@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PoorLiquid : Minigame {
@@ -33,25 +32,30 @@ public class PoorLiquid : Minigame {
             slider.value += Time.deltaTime;
         slider.value -= Time.deltaTime / 3;
 
-        if(slider.value >= 1) {
+        if (CheckInZone()) {
+            End();
+        }
+
+        if(slider.value == 1) {
             print("Overflowing");
         }
     }
 
-    protected void CheckInZone(InputAction.CallbackContext ctx) {
+    protected bool CheckInZone() {
         if (slider.value >= minValue && slider.value <= maxValue) {
-            End();
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
     public override void EnableInputs() {
-        playerController.playerInput.PoorLiquid.ReleaseLiquid.canceled += CheckInZone;
         playerController.playerInput.PoorLiquid.Enable();
     }
 
     public override void DisableInputs() {
         playerController.playerInput.PoorLiquid.Disable();
-        playerController.playerInput.PoorLiquid.ReleaseLiquid.canceled -= CheckInZone;
     }
 }
 

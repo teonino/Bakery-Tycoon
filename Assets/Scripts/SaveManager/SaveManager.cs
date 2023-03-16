@@ -11,15 +11,10 @@ public class SaveManager : MonoBehaviour {
     private Transform mainRoom;
     private string filepath = "Assets\\Save\\Savefile.json";
 
-    //Blackscreen
-    [SerializeField] private GameObject blackscreenObject;
-    private Animator blackscreenAnimator;
-
     public CustomizableData JSonFileReader { get; private set; }
 
     private void Awake() {
         GenerateWorld();
-        blackscreenAnimator = blackscreenObject.GetComponent<Animator>();
     }
 
     private void Start() {
