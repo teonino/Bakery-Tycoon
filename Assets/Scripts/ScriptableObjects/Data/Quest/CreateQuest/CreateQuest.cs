@@ -9,7 +9,6 @@ public class CreateQuest : Quest {
     [SerializeField] private ProductSO product;
     [SerializeField] private int amount;
 
-    private int currentAmount = 0;
 
     public void Init(ProductSO product, int amount) {
         this.product = product;

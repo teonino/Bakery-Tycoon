@@ -2,24 +2,28 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class AIRandomCustomer : AICustomer {
+public class AIRandomCustomer : AICustomer
+{
     protected MainShelf shelf;
     [HideInInspector] public bool inQueue = false;
 
     private QueueBakery interacting;
     private bool hasInteract = false;
     private bool hasTakenItem = false;
+    private bool waitAnimation = true;
     public QueueBakery GetInteracting() => interacting;
     public void SetInteracting(QueueBakery interacting) => this.interacting = interacting;
 
-    private new void Awake() {
+    private new void Awake()
+    {
         base.Awake();
         shelf = FindObjectOfType<MainShelf>();
         //Check Queue positions
         shelf.GetAvailableQueuePosition(this);
     }
 
-    public override void InitCustomer() {
+    public override void InitCustomer()
+    {
         base.InitCustomer();
 
         day.DayTimeChange += LeaveOnEvening;
@@ -27,74 +31,101 @@ public class AIRandomCustomer : AICustomer {
         animator.SetTrigger("Walk");
     }
 
-    private new void TakeItem(ProductHolder product, GameObject displayGO) {
+    private new void TakeItem(ProductHolder product, GameObject displayGO)
+    {
         item.transform.localPosition = Vector3.up * 1.25f;
         base.TakeItem(product, displayGO);
         Leave();
     }
 
-    protected IEnumerator CustomerWaiting(float time) {
-        yield return new WaitForSeconds(time);
+    protected IEnumerator CustomerWaiting(float time)
+    {
+        animator.SetTrigger("Happy");
+        yield return new WaitForSeconds(3.4f);
         Leave();
     }
 
-    private void LeaveOnEvening() {
-            Leave();
-            day.DayTimeChange -= LeaveOnEvening;
-        
+    private void LeaveOnEvening()
+    {
+        Leave();
+        day.DayTimeChange -= LeaveOnEvening;
     }
 
-    protected override void Leave() {
-        base.Leave();
-        animator.SetTrigger("Walk");
-        shelf.RemoveCustomerInQueue(this);
+    protected override void Leave()
+    {
+        if (waitAnimation)
+            StartCoroutine(waitEndOfAnimation());
+        else
+        {
+            base.Leave();
+            shelf.RemoveCustomerInQueue(this);
+        }
     }
 
-    new void FixedUpdate() {
-        if (agent.speed != 0 && Vector3.Distance(transform.position, agent.destination) < 0.5) {
+    private IEnumerator waitEndOfAnimation()
+    {
+        yield return new WaitForSeconds(1);
+        waitAnimation = false;
+        Leave();
+    }
+
+    new void FixedUpdate()
+    {
+        if (agent.speed != 0 && Vector3.Distance(transform.position, agent.destination) < 0.5)
+        {
             transform.rotation.SetLookRotation(agent.destination);
             agent.speed = 0;
         }
 
 
         //Go to the Queue
-        if (state == AIState.moving && Vector3.Distance(transform.position, agent.destination) < 0.5) {
+        if (state == AIState.moving && Vector3.Distance(transform.position, agent.destination) < 0.5)
+        {
             state = AIState.waiting;
             coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
 
-            if (!interacting) {
+            if (!interacting)
+            {
                 animator.SetTrigger("Idle");
             }
         }
 
         //If too far away from destination, retrigger movements
-        if (state != AIState.moving && Vector3.Distance(transform.position, agent.destination) > 2) {
+        if (state != AIState.moving && Vector3.Distance(transform.position, agent.destination) > 2)
+        {
             SetDestination(agent.destination);
         }
 
-        if (interacting && !hasInteract && Vector3.Distance(transform.position, agent.destination) < 0.2 ) {
+        if (interacting && !hasInteract && Vector3.Distance(transform.position, agent.destination) < 0.2)
+        {
             interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;
         }
 
         //Buy item and leave
-        if (shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this) && (transform.position - shelf.transform.position).magnitude < 4) {
+        if (shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this) && (transform.position - shelf.transform.position).magnitude < 4)
+        {
             ProductHolder objectOnShelf = shelf.GetItem().GetComponent<ProductHolder>();
-            if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste") {
+            if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste")
+            {
                 if (coroutine != null)
                     StopCoroutine(coroutine);
                 //Take item
-                if (!item && !hasTakenItem) {
+                if (!item && !hasTakenItem)
+                {
                     hasTakenItem = true;
-                    if (objectOnShelf.product.GetAmount() > 1) {
-                        objectOnShelf.product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                    if (objectOnShelf.product.GetAmount() > 1)
+                    {
+                        objectOnShelf.product.productSO.asset.InstantiateAsync(transform).Completed += (go) =>
+                        {
                             item = go.Result;
                             item.GetComponent<ProductHolder>().DisplayOneProduct();
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
                         objectOnShelf.RemoveAmount();
                     }
-                    else {
+                    else
+                    {
                         item = shelf.GetItem();
                         item.transform.SetParent(transform);
                         TakeItem(objectOnShelf, shelf.gameObject);
@@ -107,13 +138,15 @@ public class AIRandomCustomer : AICustomer {
     }
 
 
-    public override bool isRegular() {
+    public override bool isRegular()
+    {
         return false;
     }
 
     public Animator GetAnimator() => animator;
 
-    public override void Effect() {
+    public override void Effect()
+    {
         reputation.RemoveReputation(5);
         Leave();
     }

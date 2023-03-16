@@ -122,7 +122,6 @@ public class AICustomer : Interactable {
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(totalPrice, 0);
-            
             //requestedProduct = null;
         };
         cashRegister.GetComponent<Animation>().Play();

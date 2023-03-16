@@ -8,6 +8,9 @@ public class PauseManager : MonoBehaviour {
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
+    [SerializeField] private DeliveryManager deliveryManager; //AmafoodScript
+    [SerializeField] private RecipeBookManager recipeBookManager;
+    [SerializeField] private WorkstationManager workstationManager;
 
     private void OnEnable() {
         Time.timeScale = 0f;
@@ -20,6 +23,9 @@ public class PauseManager : MonoBehaviour {
 
     private void Awake() {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed += ResumeInput;
+        deliveryManager.LaunchQuitFunction();
+        recipeBookManager.gameObject.transform.parent.gameObject.SetActive(false);
+        workstationManager.LaunchQuit();
     }
 
     private void ResumeInput(InputAction.CallbackContext context) {
