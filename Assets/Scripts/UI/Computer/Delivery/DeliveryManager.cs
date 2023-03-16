@@ -81,6 +81,7 @@ public class DeliveryManager : MonoBehaviour
                 item.SetActive(true);
             }
         }
+        
 
         SetupButtonsWithRacks(ingredientButtonList, ingredientRackList);
         ResizeScroll(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
