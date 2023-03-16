@@ -1940,6 +1940,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ReleaseLiquid",
+                    "type": "Button",
+                    "id": "88a0bb2b-36c4-4a91-814d-14cc2d22df57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1951,6 +1960,39 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "PoorLiquidAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd55889c-2198-44de-a399-df5c7a3c0e94",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "PoorLiquidAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c395370c-0c3a-47c7-a955-2d967cd1c306",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ReleaseLiquid",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4fb96cf-7565-4834-9409-27a076c68cd8",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ReleaseLiquid",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2005,15 +2047,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Clear",
-                    "type": "Button",
-                    "id": "cf71413d-1bec-4006-88b8-339342fb73ae",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -2058,17 +2091,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cook",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "42e149ef-c4cd-421b-bd73-b15dac34b617",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Clear",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
