@@ -406,7 +406,26 @@ public class WorkstationManager : MonoBehaviour {
                 RemoveIngredientSelected(ingredientSelected);
     }
 
+    public void LaunchQuit()
+    {
+        Quit();
+    }
 
+    public void Quit(InputAction.CallbackContext context)
+    {
+        Quit();
+    }
+
+    private void Quit()
+    {
+        ResetManager();
+        playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
+        playerControllerSO.GetPlayerController().playerInput.UI.Disable();
+        playerControllerSO.GetPlayerController().EnableInput();
+        gameObject.SetActive(false);
+        recipePanel.SetActive(false);
+        RemoveAllSelectedIngredients();
+    }
 
     private void OnDestroy() {
         foreach (GameObject go in ingredientButtonList)

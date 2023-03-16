@@ -25,6 +25,7 @@ public class PauseManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed += ResumeInput;
         deliveryManager.LaunchQuitFunction();
         recipeBookManager.gameObject.transform.parent.gameObject.SetActive(false);
+        workstationManager.LaunchQuit();
     }
 
     private void ResumeInput(InputAction.CallbackContext context) {
