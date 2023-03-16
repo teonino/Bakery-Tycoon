@@ -79,7 +79,7 @@ public class FurnitureManager : MonoBehaviour {
     }
     private void SetupRacks() {
         if (furnitureButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(buttonPanel.GetComponent<RectTransform>().rect.width / furnitureButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            maxButtonInRack = (int)Math.Floor(buttonPanel.GetComponent<RectTransform>().rect.width / furnitureButtonList[0].GetComponent<RectTransform>().sizeDelta.x) ;
             for (int i = 0; i < furnitureButtonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
                     furnitureRackAsset.InstantiateAsync(buttonPanel.transform).Completed += (go) => {
@@ -93,7 +93,6 @@ public class FurnitureManager : MonoBehaviour {
     }
     private void SetupButton() {
         if (furnitureRackList.Count * maxButtonInRack >= furnitureButtonList.Count) {
-            SetVerticalLayoutGroup();
 
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < furnitureRackList.Count) {
@@ -101,6 +100,7 @@ public class FurnitureManager : MonoBehaviour {
                     furnitureButtonList[i].transform.localScale = Vector3.one;
                 }
             }
+            SetVerticalLayoutGroup();
 
             if (controller.IsGamepad())
                 controller.SetEventSystemToStartButton(furnitureButtonList[0]);
@@ -116,7 +116,7 @@ public class FurnitureManager : MonoBehaviour {
             if (furnitureRackList[i].activeSelf)
                 nbRack++;
 
-        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].GetComponent<RectTransform>().rect.height * nbRack);
+        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].transform.GetChild(0).GetComponent<RectTransform>().rect.height * (nbRack + 1));
         buttonPanel.GetComponent<RectTransform>().localPosition = new Vector3(buttonPanel.GetComponent<RectTransform>().localPosition.x, 0, 0);
     }
 
