@@ -272,7 +272,7 @@ public class DeliveryManager : MonoBehaviour {
         productList.SetActive(false);
 
         int i = 0;
-        while (!ingredientButtonList[i].GetComponent<DeliveryButton>().product.unlocked)
+        while (!ingredientButtonList[i].GetComponent<DeliveryButton>().ingredient.unlocked)
             i++;
 
         controller.SetEventSystemToStartButton(ingredientButtonList[i].GetComponentInChildren<Button>().gameObject);
