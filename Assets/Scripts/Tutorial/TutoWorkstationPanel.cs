@@ -10,18 +10,18 @@ public class TutoWorkstationPanel : WorkstationManager {
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private DialogueManager dialogueManager;
     private bool canCook = true;
-    private bool firstTimeOpenning = true;
+    private int timeOpenning = 0;
     private bool firstTimeAdding = true;
     private bool firstTimeCreate = true;
 
     protected override void OnEnable() {
         base.OnEnable();
 
-        if (firstTimeOpenning && dialogueManager.gameObject.activeSelf) {
+        if (timeOpenning < 2 && dialogueManager.gameObject.activeSelf) {
             playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
             playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
             dialogueManager.OnDisableDialoguePanel += EnableQuit;
-            firstTimeOpenning = false;
+            timeOpenning++;
         }
     }
 

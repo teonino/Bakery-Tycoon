@@ -29,6 +29,18 @@ public class FurnitureManager : MonoBehaviour {
     private List<FurnitureStyle> furnitureStyleFilter;
     private BuildingMode buildingMode;
 
+    // Start is called before the first frame update
+    void Awake() {
+        furnitureButtonList = new List<GameObject>();
+        furnitureRackList = new List<GameObject>();
+
+        furnitureTypeFilter = new List<FurnitureType>();
+        furnitureStyleFilter = new List<FurnitureStyle>();
+
+        lenght = furnitures.GetFurnitureCount();
+        playerController = playerControllerSO.GetPlayerController();
+    }
+
     private void OnEnable() {
         if (gameObject.activeSelf) {
             //Manage Inputs
@@ -42,19 +54,10 @@ public class FurnitureManager : MonoBehaviour {
                 controller.SetEventSystemToStartButton(null);
 
             scrollRectTransform.position = new Vector3(scrollRectTransform.position.x, 0, scrollRectTransform.position.z);
+
+            furnitureTypeFilter.Clear();
+            furnitureStyleFilter.Clear();
         }
-    }
-
-    // Start is called before the first frame update
-    void Awake() {
-        furnitureButtonList = new List<GameObject>();
-        furnitureRackList = new List<GameObject>();
-
-        furnitureTypeFilter = new List<FurnitureType>();
-        furnitureStyleFilter = new List<FurnitureStyle>();
-
-        lenght = furnitures.GetFurnitureCount();
-        playerController = playerControllerSO.GetPlayerController();
     }
 
     public void SetBuildingMode(BuildingMode building) => buildingMode = building;
@@ -145,8 +148,8 @@ public class FurnitureManager : MonoBehaviour {
         switch (filter) {
             case 1: type = FurnitureType.Utility; break;
             case 2: type = FurnitureType.Table; break;
-            case 3: type = FurnitureType.Chair; break;
-            case 4: type = FurnitureType.Shelf; break;
+            case 3: type = FurnitureType.Frame; break;
+            case 4: type = FurnitureType.Entrance; break;
             case 5: type = FurnitureType.Decoration; break;
             case 6: type = FurnitureType.Floor; break;
             case 7: type = FurnitureType.Wall; break;

@@ -9,6 +9,7 @@ public class TutoAmafood : DeliveryManager {
     [SerializeField] private InterractQuest productAmafoodInterract;
     [SerializeField] private DialogueManager dialogueManager;
 
+    private bool firstTimeProductList = true;
     private int nbtime = 0;
 
     protected override void Start() {
