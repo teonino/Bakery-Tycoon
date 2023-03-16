@@ -406,7 +406,18 @@ public class WorkstationManager : MonoBehaviour {
                 RemoveIngredientSelected(ingredientSelected);
     }
 
-    public void Quit(InputAction.CallbackContext context) {
+    public void LaunchQuit()
+    {
+        Quit();
+    }
+
+    public void Quit(InputAction.CallbackContext context)
+    {
+        Quit();
+    }
+
+    private void Quit()
+    {
         ResetManager();
         playerControllerSO.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
         playerControllerSO.GetPlayerController().playerInput.UI.Disable();
