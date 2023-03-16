@@ -14,6 +14,7 @@ public class SpawnCustomer : MonoBehaviour {
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] private CommandListManager commandList;
+    [SerializeField] private CommandListManager workstationCommandList2;
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private RandomCustomerList randomCustomerList;
     [SerializeField] private List<RegularSO> regularCustomersDayOne;
@@ -216,10 +217,12 @@ public class SpawnCustomer : MonoBehaviour {
 
     public void LaunchCommandRecap(AICustomer customer) {
         commandList.AddCommand(customer);
+        workstationCommandList2.AddCommand(customer);
     }
 
     public void RemoveCommandRecap(AICustomer customer) {
         commandList.RemoveCommand(customer);
+        workstationCommandList2.RemoveCommand(customer);
     }
 
     public bool CheckProducts() {
