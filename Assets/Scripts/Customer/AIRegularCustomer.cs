@@ -23,6 +23,8 @@ public class AIRegularCustomer : AICustomer {
     private DialogueManager dialoguePanel;
     private int indexChair;
 
+    public Action addConversation;
+
     private int layerUsed;
     private int layerOutline;
 
