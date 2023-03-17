@@ -46,6 +46,7 @@ public class SpawnCustomer : MonoBehaviour {
     private List<Table> tables;
     private float randomTime;
     private float nbCurrentCustomerFirstPack = 0;
+    private int nbConverstaions;
 
     void Start() {
         tables = new List<Table>(FindObjectsOfType<Table>());
@@ -136,6 +137,7 @@ public class SpawnCustomer : MonoBehaviour {
                     go.Result.name = "RegularCustomer " + nbCustomerSpawned;
                     SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
                     nbCustomerRegularSpawned++;
+                    
                 };
             else
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
@@ -145,6 +147,7 @@ public class SpawnCustomer : MonoBehaviour {
                 };
 
             notifEvent.Invoke(notifType);
+            
         }
         else {
             SpawnRandomCustomer(product);
@@ -196,11 +199,23 @@ public class SpawnCustomer : MonoBehaviour {
         else
             customer.requestedProduct = GetRandomProduct();
 
+        customer.addConversation += AddConversation;
+
         customer.SetSpawner(this);
         customer.InitCustomer();
         doableProduct.Clear();
         availableProduct.Clear();
     }
+
+    private void AddConversation()
+    {
+        nbConverstaions++;
+        if(nbConverstaions % 3 == 0)
+        {
+            ingredients.UnlockIngredient();
+        }
+    }
+
     private bool CheckChairs() {
         for (int i = 0; i < tables.Count && !currentChair; i++) {
             indexChair = tables[i].GetChairAvailable();

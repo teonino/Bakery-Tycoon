@@ -15,7 +15,7 @@ public class ListIngredient : Data {
     public override void ResetValues() {
         for (int i = 0; i < listIngredient.Count; i++) {
             listIngredient[i].amount = 0;
-            listIngredient[i].ingredient.unlocked = true;
+            listIngredient[i].ingredient.unlocked = false;
             if (tutorial.GetTutorial()) {
                 for (int j = 0; j < tutoListIngredient.Count; j++) {
                     if (listIngredient[i].ingredient == tutoListIngredient[j].ingredient)
@@ -27,6 +27,19 @@ public class ListIngredient : Data {
                     if (listIngredient[i].ingredient == defaultListIngredient[j].ingredient)
                         listIngredient[i].ingredient.unlocked = true;
                 }
+            }
+        }
+    }
+
+    public void UnlockIngredient()
+    {
+        bool smthUnlock = false;
+        for (int i = 0; i < listIngredient.Count && !smthUnlock; i++)
+        {
+            if (!listIngredient[i].ingredient.unlocked)
+            {
+                listIngredient[i].ingredient.unlocked = true;
+                smthUnlock = true;
             }
         }
     }

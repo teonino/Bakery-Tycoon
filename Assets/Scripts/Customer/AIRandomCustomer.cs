@@ -22,6 +22,7 @@ public class AIRandomCustomer : AICustomer
         shelf = FindObjectOfType<MainShelf>();
         //Check Queue positions
         shelf.GetAvailableQueuePosition(this);
+        vfx.Stop();
     }
 
     public override void InitCustomer()
@@ -37,6 +38,7 @@ public class AIRandomCustomer : AICustomer
     {
         item.transform.localPosition = Vector3.up * 1.25f;
         base.TakeItem(product, displayGO);
+        hasProdcut = true;
         Leave();
     }
 
@@ -65,8 +67,16 @@ public class AIRandomCustomer : AICustomer
 
     private IEnumerator waitEndOfAnimation()
     {
-        animator.SetTrigger("Happy");
-        yield return new WaitForSeconds(3.4f);
+        if (!requestedProduct)
+        {
+            animator.SetTrigger("Happy");
+            yield return new WaitForSeconds(3.4f);
+        }
+        else
+        {
+            animator.SetTrigger("Sad");
+            yield return new WaitForSeconds(3.4f);
+        }
         waitAnimation = false;
         Leave();
     }
