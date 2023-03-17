@@ -65,7 +65,8 @@ public class AIRandomCustomer : AICustomer
 
     private IEnumerator waitEndOfAnimation()
     {
-        yield return new WaitForSeconds(1);
+        animator.SetTrigger("Happy");
+        yield return new WaitForSeconds(3.4f);
         waitAnimation = false;
         Leave();
     }

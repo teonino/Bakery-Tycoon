@@ -7,7 +7,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class AICustomer : Interactable {
+public class AICustomer : Interactable
+{
     [Header("AI Customer References")]
     [SerializeField] protected AssetReference assetProductCanvas;
     [SerializeField] protected AssetReference assetPaymentCanvas;
@@ -38,17 +39,20 @@ public class AICustomer : Interactable {
     protected bool tutorial;
     protected Coroutine coroutine;
 
-    protected void Awake() {
+    protected void Awake()
+    {
         day = FindObjectOfType<DayTimeUI>().GetDay();
         money = FindObjectOfType<MoneyUI>().GetMoney();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
-        cashRegister =  GameObject.FindGameObjectWithTag("CashRegister");
+        cashRegister = GameObject.FindGameObjectWithTag("CashRegister");
     }
 
     public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
 
-    public virtual void InitCustomer() {
-        assetProductCanvas.InstantiateAsync(transform).Completed += (go) => {
+    public virtual void InitCustomer()
+    {
+        assetProductCanvas.InstantiateAsync(transform).Completed += (go) =>
+        {
             productCanvas = go.Result;
             productCanvas.transform.SetParent(transform);
             productCanvas.transform.position = transform.position + Vector3.up * 2;
@@ -62,12 +66,14 @@ public class AICustomer : Interactable {
         spawnPosition = transform.position;
     }
 
-    private IEnumerator LaunchBonusTime() {
+    private IEnumerator LaunchBonusTime()
+    {
         yield return new WaitForSeconds(bonusTime);
         bonus = false;
     }
 
-    protected void FixedUpdate() {
+    protected void FixedUpdate()
+    {
         //Exit the bakery
         if (state == AIState.leaving && (transform.position - spawnPosition).magnitude < 4)
             DestroyCustomer();
@@ -76,7 +82,8 @@ public class AICustomer : Interactable {
 
     public virtual bool isRegular() { return false; }
 
-    public void TakeItem(ProductHolder product, GameObject displayGo) {
+    public void TakeItem(ProductHolder product, GameObject displayGo)
+    {
         item.GetComponent<ProductHolder>().product.quality = product.product.quality;
 
         stats.AddProductSold(item.GetComponent<ProductHolder>().product.productSO);
@@ -85,18 +92,21 @@ public class AICustomer : Interactable {
         DisplayPayment(displayGo);
     }
 
-    protected void DestroyCustomer() {
+    protected void DestroyCustomer()
+    {
         if (item)
             Addressables.ReleaseInstance(item);
         spawner.RemoveCustomer();
         Addressables.ReleaseInstance(gameObject);
     }
 
-    public void SetWaitingTime(int time) {
+    public void SetWaitingTime(int time)
+    {
         tutorial = true;
     }
 
-    protected IEnumerator CustomerWaiting(float time, Action leavingFunction) {
+    protected IEnumerator CustomerWaiting(float time, Action leavingFunction)
+    {
         if (state != AIState.eating)
             spawner.LaunchCommandRecap(this);
         yield return new WaitForSeconds(time);
@@ -104,9 +114,13 @@ public class AICustomer : Interactable {
     }
 
     //Remove product panel + exit bakery
-    protected virtual void Leave() {
+    protected virtual void Leave()
+    {
         state = AIState.leaving;
-        if (agent) {
+        if (animator)
+            animator.SetTrigger("Walk");
+        if (agent)
+        {
             agent.speed = 2;
             agent.SetDestination(spawnPosition);
         }
@@ -115,11 +129,13 @@ public class AICustomer : Interactable {
     }
 
     //Display the payement
-    public void DisplayPayment(GameObject displayGO) {
+    public void DisplayPayment(GameObject displayGO)
+    {
         int basePrice = item.GetComponent<ProductHolder>().product.productSO.price;
         int totalPrice = (int)Mathf.Ceil(basePrice + basePrice * customerBonus.GetMoneyMultiplier());
 
-        assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
+        assetPaymentCanvas.InstantiateAsync().Completed += (go) =>
+        {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(totalPrice, 0);
             //requestedProduct = null;
@@ -129,15 +145,18 @@ public class AICustomer : Interactable {
         reputation.AddReputation(saleReputation);
     }
 
-    public void SetDestination(Vector3 position) {
+    public void SetDestination(Vector3 position)
+    {
         agent.SetDestination(position);
         agent.speed = 2;
     }
-    public void HideCanvas() {
+    public void HideCanvas()
+    {
         productCanvas.gameObject.SetActive(false);
     }
 
-    public void DispalyCanvas() {
+    public void DispalyCanvas()
+    {
         productCanvas.gameObject.SetActive(true);
     }
     public NavMeshAgent GetAgent() => agent;
