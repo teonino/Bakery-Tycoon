@@ -23,6 +23,8 @@ public class AIRegularCustomer : AICustomer {
     private DialogueManager dialoguePanel;
     private int indexChair;
 
+    public Action addConversation;
+
     public new void InitCustomer() {
         base.InitCustomer();
         day.DayTimeChange += LeaveOnEvening;
@@ -39,7 +41,6 @@ public class AIRegularCustomer : AICustomer {
             Sit();
             if (waitingTime)
                 coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
-
         }
 
         //Go to the Chair
@@ -47,6 +48,7 @@ public class AIRegularCustomer : AICustomer {
             if (chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving) {
                 state = AIState.sitting;
                 animator.SetTrigger("Sit");
+                transform.LookAt(table.transform);
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
         }
@@ -129,6 +131,7 @@ public class AIRegularCustomer : AICustomer {
 
     public override void Effect() {
         if (conversationRemaining > 0 && state == AIState.eating) {
+            addConversation?.Invoke();
             onTalk?.OnInterract();
             dialoguePanel.gameObject.SetActive(true);
             dialoguePanel.GetDialogues(regularSO.GetFriendship(), regularSO.GetName(), regularSO);
