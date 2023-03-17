@@ -6,6 +6,7 @@ public class TalkInteractions : MonoBehaviour
 {
     public AIRandomCustomer customer;
 
+
     public void randomTalking() {
         int rng = Random.Range(0, 3);
 

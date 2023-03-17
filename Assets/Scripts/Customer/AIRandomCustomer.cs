@@ -100,7 +100,7 @@ public class AIRandomCustomer : AICustomer
 
         if (interacting && !hasInteract && Vector3.Distance(transform.position, agent.destination) < 0.2)
         {
-            interacting.Interact(animator); // trigger animation according to item
+            //interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;
         }
 

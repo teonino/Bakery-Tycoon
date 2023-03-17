@@ -256,8 +256,6 @@ public class DeliveryManager : MonoBehaviour
             }
         }
 
-        int lenghtList = activeButtons.Count;
-
         for (int i = 0; i < activeButtons.Count; i++)
         {
             Navigation navButton = activeButtons[i].GetComponentInChildren<Button>().navigation;
@@ -268,9 +266,9 @@ public class DeliveryManager : MonoBehaviour
             else
                 navButton.selectOnUp = activeButtons[i - maxButtonInRack].GetComponentInChildren<Button>();
 
-            if (i + maxButtonInRack < lenghtList)
+            if (i + maxButtonInRack < lenght)
                 navButton.selectOnDown = activeButtons[i + maxButtonInRack].GetComponentInChildren<Button>();
-            if (i + 1 < lenghtList)
+            if (i + 1 < lenght)
                 navButton.selectOnRight = activeButtons[i + 1].GetComponentInChildren<Button>();
             if (i - 1 >= 0)
                 navButton.selectOnLeft = activeButtons[i - 1].GetComponentInChildren<Button>();

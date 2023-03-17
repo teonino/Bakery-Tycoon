@@ -46,7 +46,6 @@ public class AIRegularCustomer : AICustomer {
         try {
             if (chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving) {
                 state = AIState.sitting;
-                animator.SetTrigger("Sit");
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
         }
@@ -66,7 +65,6 @@ public class AIRegularCustomer : AICustomer {
                             TakeItem(productholder, table.gameObject);
                             table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             state = AIState.eating;
-                            animator.SetTrigger("Served");
 
                             spawner.RemoveCommandRecap(this);
                             if (tutorial)
@@ -121,8 +119,6 @@ public class AIRegularCustomer : AICustomer {
         else {
             reputation.RemoveReputation(3);
         }
-
-        animator.SetTrigger("EndSit");
 
         base.Leave();
     }
