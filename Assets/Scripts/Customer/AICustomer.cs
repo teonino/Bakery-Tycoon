@@ -38,6 +38,7 @@ public class AICustomer : Interactable
     protected Vector3 spawnPosition;
     protected bool tutorial;
     protected Coroutine coroutine;
+    protected bool hasProdcut = false;
 
     protected void Awake()
     {

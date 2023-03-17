@@ -1975,6 +1975,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""PoorLiquidAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02025e13-9718-4bae-a72b-1a6d8e8e1e13"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PoorLiquidAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
