@@ -7,6 +7,8 @@ public class AIRandomCustomer : AICustomer
     protected MainShelf shelf;
     [HideInInspector] public bool inQueue = false;
 
+    [SerializeField] private ParticleSystem vfx;
+
     private QueueBakery interacting;
     private bool hasInteract = false;
     private bool hasTakenItem = false;
@@ -40,8 +42,7 @@ public class AIRandomCustomer : AICustomer
 
     protected IEnumerator CustomerWaiting(float time)
     {
-        animator.SetTrigger("Happy");
-        yield return new WaitForSeconds(3.4f);
+        yield return new WaitForSeconds(time);
         Leave();
     }
 
@@ -64,7 +65,8 @@ public class AIRandomCustomer : AICustomer
 
     private IEnumerator waitEndOfAnimation()
     {
-        yield return new WaitForSeconds(1);
+        animator.SetTrigger("Happy");
+        yield return new WaitForSeconds(3.4f);
         waitAnimation = false;
         Leave();
     }
@@ -120,6 +122,7 @@ public class AIRandomCustomer : AICustomer
                         {
                             item = go.Result;
                             item.GetComponent<ProductHolder>().DisplayOneProduct();
+                            //vfx.Play();
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
                         objectOnShelf.RemoveAmount();
