@@ -8,7 +8,7 @@ using UnityEngine.AddressableAssets;
 public class SaveManager : MonoBehaviour {
     [SerializeField] private ListFurniture furnitures;
     [SerializeField] private GameObject defaultMainRoom;
-    private Transform mainRoom;
+    private Transform mainRoom;; 
     private string filepath = "Assets\\Save\\Savefile.json";
 
     public CustomizableData JSonFileReader { get; private set; }
