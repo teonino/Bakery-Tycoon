@@ -22,6 +22,7 @@ public class AIRandomCustomer : AICustomer
         shelf = FindObjectOfType<MainShelf>();
         //Check Queue positions
         shelf.GetAvailableQueuePosition(this);
+        vfx.Stop();
     }
 
     public override void InitCustomer()
