@@ -122,7 +122,7 @@ public class AIRandomCustomer : AICustomer
                         {
                             item = go.Result;
                             item.GetComponent<ProductHolder>().DisplayOneProduct();
-                            //vfx.Play();
+                            vfx.Play();
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
                         objectOnShelf.RemoveAmount();
