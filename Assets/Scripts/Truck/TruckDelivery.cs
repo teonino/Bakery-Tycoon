@@ -11,6 +11,7 @@ public class TruckDelivery : Interactable {
     [SerializeField] private NotificationEvent notifEvent;
     [SerializeField] private NotificationType notifType;
     [SerializeField] private SFXPlayer sfxPlayer;
+    [SerializeField] private ParticleSystem vfx;
 
     [SerializeField] private AudioSource SFXSource;
     [SerializeField] private AudioClip SFXClip;
@@ -20,6 +21,11 @@ public class TruckDelivery : Interactable {
     private Vector3 dest;
     private Vector3 velocity = Vector3.zero;
     private Delivery delivery;
+
+    private void Awake()
+    {
+        vfx.Stop();
+    }
 
     private void FixedUpdate() {
         if (moving)
@@ -34,6 +40,7 @@ public class TruckDelivery : Interactable {
                     notifEvent.Invoke(notifType);
 
                 moving = false;
+                vfx.Stop();
                 SFXSource.PlayOneShot(SFXClip);
                 engineSound.Stop();
             }
@@ -54,6 +61,7 @@ public class TruckDelivery : Interactable {
             dest = pathPoint2.transform.position;
             moving = true;
             fetchingOrder = true;
+            vfx.Play();
             engineSound.Play();
         }
     }

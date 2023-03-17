@@ -7,6 +7,8 @@ public class AIRandomCustomer : AICustomer
     protected MainShelf shelf;
     [HideInInspector] public bool inQueue = false;
 
+    [SerializeField] private ParticleSystem vfx;
+
     private QueueBakery interacting;
     private bool hasInteract = false;
     private bool hasTakenItem = false;
@@ -119,6 +121,7 @@ public class AIRandomCustomer : AICustomer
                         {
                             item = go.Result;
                             item.GetComponent<ProductHolder>().DisplayOneProduct();
+                            vfx.Play();
                             TakeItem(objectOnShelf, shelf.gameObject);
                         };
                         objectOnShelf.RemoveAmount();
