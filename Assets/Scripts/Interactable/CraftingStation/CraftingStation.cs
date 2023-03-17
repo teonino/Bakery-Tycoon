@@ -13,6 +13,7 @@ public class CraftingStation : Interactable {
     [SerializeField] private CraftingStationType type;
     [SerializeField] private CreateQuest createQuest;
     [SerializeField] private CreateQuest CreateCerealQuest;
+    [SerializeField] private ParticleSystem vfx;
 
     [Header("Debug parameters")]
     [SerializeField] private bool skipCookingTime = false;
@@ -27,6 +28,7 @@ public class CraftingStation : Interactable {
 
     protected override void Start() {
         base.Start();
+        vfx.Stop();
         sfxPlayer = FindObjectOfType<SFXPlayer>();
         if (!debugState.GetDebug())
             skipCookingTime = false;
@@ -41,6 +43,7 @@ public class CraftingStation : Interactable {
             playerControllerSO.GetPlayerController().SetItemHold(null);
 
             CookingTime(itemInStation);
+            vfx.Play();
             sfxPlayer.InteractSound();
         }
         else if (itemInStation != null && !playerControllerSO.GetPlayerController().GetItemHold() && !cooking) {
@@ -52,6 +55,7 @@ public class CraftingStation : Interactable {
                 productItem.product.SetAmount(itemInStation.GetAmount());
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = Vector3.zero;
+                vfx.Stop();
 
                 createQuest?.CheckProduct(productItem.product.productSO);
                 CreateCerealQuest?.CheckProduct(productItem.product.productSO);

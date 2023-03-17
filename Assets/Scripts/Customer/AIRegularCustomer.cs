@@ -17,6 +17,9 @@ public class AIRegularCustomer : AICustomer {
     [HideInInspector] public Chair chair;
     [HideInInspector] public Table table;
 
+    [SerializeField] ParticleSystem sitDownEffect;
+    [SerializeField] ParticleSystem flowerEffect;
+
     private DialogueManager dialoguePanel;
     private int indexChair;
 

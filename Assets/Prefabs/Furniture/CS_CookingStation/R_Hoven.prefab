@@ -291,6 +291,7 @@ Transform:
   m_Children:
   - {fileID: 258196342430982745}
   - {fileID: 8736194002691837289}
+  - {fileID: 5689449546314988417}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -322,6 +323,7 @@ MonoBehaviour:
   type: 0
   createQuest: {fileID: 11400000, guid: 93a24d7ec215c624583b06f601b4ebf1, type: 2}
   CreateCerealQuest: {fileID: 0}
+  vfx: {fileID: 5689449546314988418}
   skipCookingTime: 0
   BurningSound: {fileID: 1193478428801971592}
   TingSound: {fileID: 3973855901554381033}
@@ -403,3 +405,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   furniture: {fileID: 11400000, guid: b497635f443ed2c43a230bcfe6d63481, type: 2}
   mandatoryList: {fileID: 11400000, guid: dc147ee54cd4fa8468d0a5931f0128cc, type: 2}
+--- !u!1001 &9038813591872129732
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8762402543640223041}
+    m_Modifications:
+    - target: {fileID: 3712282369679283479, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.861
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712282369720217944, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+      propertyPath: m_Name
+      value: 22-Smoke_Oven
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+--- !u!4 &5689449546314988417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3712282369720217925, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+  m_PrefabInstance: {fileID: 9038813591872129732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5689449546314988418 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3712282369720217926, guid: dc8a012ab23b0254face14b9a4afdabb, type: 3}
+  m_PrefabInstance: {fileID: 9038813591872129732}
+  m_PrefabAsset: {fileID: 0}
