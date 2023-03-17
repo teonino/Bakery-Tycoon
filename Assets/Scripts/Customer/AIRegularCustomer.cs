@@ -23,10 +23,15 @@ public class AIRegularCustomer : AICustomer {
     private DialogueManager dialoguePanel;
     private int indexChair;
 
+    private int layerUsed;
+    private int layerOutline;
+
     private void Awake()
     {
         sitDownEffect.Stop();
         flowerEffect.Stop();
+
+        layerOutline = LayerMask.NameToLayer("Outline");
     }
 
     public new void InitCustomer() {
@@ -126,6 +131,7 @@ public class AIRegularCustomer : AICustomer {
     }
     private void LeaveOnEvening() {
         Leave();
+        gameObject.layer = layerUsed;
         day.DayTimeChange -= LeaveOnEvening;
 
     }
@@ -137,14 +143,18 @@ public class AIRegularCustomer : AICustomer {
             plateAsset.InstantiateAsync(table.itemPositions[indexChair].transform).Completed += (go) => {
                 go.Result.transform.localPosition = Vector3.zero;
                 table.items[indexChair] = go.Result;
+                layerUsed = gameObject.layer;
+                gameObject.layer = layerOutline;
             };
             Addressables.ReleaseInstance(table.items[indexChair]);
         }
         else {
             reputation.RemoveReputation(3);
+            gameObject.layer = layerUsed;
         }
 
         base.Leave();
+        gameObject.layer = layerUsed;
     }
 
     public override void Effect() {
