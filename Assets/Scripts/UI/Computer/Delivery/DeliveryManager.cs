@@ -256,7 +256,8 @@ public class DeliveryManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < activeButtons.Count; i++)
+        int activeLenght = activeButtons.Count;
+        for (int i = 0; i < activeLenght; i++)
         {
             Navigation navButton = activeButtons[i].GetComponentInChildren<Button>().navigation;
             navButton.mode = Navigation.Mode.Explicit;
@@ -266,9 +267,9 @@ public class DeliveryManager : MonoBehaviour
             else
                 navButton.selectOnUp = activeButtons[i - maxButtonInRack].GetComponentInChildren<Button>();
 
-            if (i + maxButtonInRack < lenght)
+            if (i + maxButtonInRack < activeLenght)
                 navButton.selectOnDown = activeButtons[i + maxButtonInRack].GetComponentInChildren<Button>();
-            if (i + 1 < lenght)
+            if (i + 1 < activeLenght)
                 navButton.selectOnRight = activeButtons[i + 1].GetComponentInChildren<Button>();
             if (i - 1 >= 0)
                 navButton.selectOnLeft = activeButtons[i - 1].GetComponentInChildren<Button>();
@@ -328,10 +329,17 @@ public class DeliveryManager : MonoBehaviour
 
     protected virtual void SetButtonForGamepad()
     {
-        if (ingredientsList.activeInHierarchy)
+        int i = 0;
+        if (ingredientsList.activeInHierarchy) {
+            while (!ingredientButtonList[i].activeSelf)
+                i++;
             StartCoroutine(waitForGamepad(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject));
-        else
+        }
+        else {
+            while(!ingredientButtonList[i].activeSelf)
+                i++;
             StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
+        }
     }
 
     protected virtual void Update()
