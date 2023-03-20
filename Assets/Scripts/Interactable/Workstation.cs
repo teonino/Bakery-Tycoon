@@ -16,7 +16,10 @@ public class Workstation : Interactable {
     private GameObject workplacePanel;
     private SFXPlayer sfxPlayer;
 
+    [SerializeField] private ParticleSystem vfx;
+
     private void Awake() {
+        vfx.Stop();
         sfxPlayer = FindObjectOfType<SFXPlayer>();
     }
 
@@ -54,4 +57,13 @@ public class Workstation : Interactable {
         playerControllerSO.GetPlayerController().EnableInput();
         workplacePanel.gameObject.SetActive(false);
     }
+
+    public void startMinigames(bool activate)
+    {
+        if (activate)
+            vfx.Play();
+        else
+            vfx.Stop();
+    }
+
 }

@@ -55,7 +55,6 @@ public class CraftingStation : Interactable {
                 productItem.product.SetAmount(itemInStation.GetAmount());
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = Vector3.zero;
-                vfx.Stop();
 
                 createQuest?.CheckProduct(productItem.product.productSO);
                 CreateCerealQuest?.CheckProduct(productItem.product.productSO);
@@ -133,6 +132,8 @@ public class CraftingStation : Interactable {
         TingSound.Play();
         cooking = false;
         readyText.SetActive(true);
+        vfx.Stop();
+
     }
 
     //public void Clean() {

@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI modulableInteractionText;
     [SerializeField] private TextMeshProUGUI productAmountText;
 
+
     private PlayerMovements playerMovements;
     private CinemachineFreeLook cinemachine;
     private LocalizedStringComponent localizedStringComponent;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour {
     private LocalizedString localizedString;
     private IntVariable productDisplayedAmount = null;
     private StringVariable productDisplayedName = null;
+
     //[SerializeField] private LocalizeStringEvent ProductDisplayedString;
 
     [HideInInspector] public PlayerInput playerInput { get; private set; }
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour {
         else {
             productDisplayedName = valueString as StringVariable;
         }
+
     }
 
     public PlayerControllerSO GetPlayerControllerSO() => playerControllerSO;
@@ -247,4 +250,5 @@ public class PlayerController : MonoBehaviour {
         playerInput.Player.Pause.performed -= OnPause;
         playerInput.Player.DisplayRecipesBook.performed -= DisplayBook;
     }
+
 }
