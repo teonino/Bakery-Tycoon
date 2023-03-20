@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QueueBakery : QueueShelf
 {
-    [SerializeField] private string animationKey;
+    [SerializeField] protected string animationKey;
 
     protected bool customerHere = false;
     public virtual void Interact(Animator animator) {
