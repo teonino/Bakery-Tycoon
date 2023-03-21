@@ -15,23 +15,25 @@ public class PauseManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Time.timeScale = 0f;
-        playerControllerSO.GetPlayerController().playerInput.Pause.Enable();
         if (controller.IsGamepad())
             controller.SetEventSystemToStartButton(resumeButton);
         else
             controller.SetEventSystemToStartButton(null);
+
+        if (deliveryManager.gameObject.activeInHierarchy)
+            deliveryManager.LaunchQuitFunction();
+        if (recipeBookManager.gameObject.activeSelf)
+            recipeBookManager.gameObject.SetActive(false);
+        if (workstationManager.gameObject.activeSelf)
+            workstationManager.LaunchQuit();
+
+        playerControllerSO.GetPlayerController().playerInput.Pause.Enable();
+        Time.timeScale = 0f;
     }
 
     private void Awake()
     {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed += ResumeInput;
-        if (deliveryManager.gameObject.activeInHierarchy)
-            deliveryManager.LaunchQuitFunction();
-        if (recipeBookManager.gameObject.activeSelf)
-            recipeBookManager.gameObject.transform.parent.gameObject.SetActive(false);
-        if (workstationManager.gameObject.activeSelf)
-            workstationManager.LaunchQuit();
     }
 
     private void ResumeInput(InputAction.CallbackContext context)
