@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CreateQuest", menuName = "Quest/CreateQuest")]
-public class CreateQuest : Quest {
+public class CreateQuest : Quest
+{
     [Header("Create Quest Parameters")]
     [SerializeField] private ProductSO product;
     [SerializeField] private int amount;
 
 
-    public void Init(ProductSO product, int amount) {
+    public void Init(ProductSO product, int amount)
+    {
         this.product = product;
         this.amount = amount;
         this.title = $"Create {amount} {product.name}";
@@ -23,19 +25,27 @@ public class CreateQuest : Quest {
 
     public ProductSO GetProduct() => product;
 
-    public void CheckProduct(ProductSO product) {
-        if (isActive) {
-            if (string.Equals(this.product.name,product.name)) {
+    public override int GetCurrentAmount() => currentAmount;
+    public override int GetObjective() => amount;
+
+    public void CheckProduct(ProductSO product)
+    {
+        if (isActive)
+        {
+            if (string.Equals(this.product.name, product.name))
+            {
                 currentAmount++;
             }
 
-            if (currentAmount >= amount) {
+            if (currentAmount >= amount)
+            {
                 OnCompleted();
             }
         }
     }
 
-    public void Completed() {
+    public void Completed()
+    {
         OnCompleted();
     }
 }

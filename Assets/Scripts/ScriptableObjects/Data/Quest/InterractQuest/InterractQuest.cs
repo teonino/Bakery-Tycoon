@@ -17,6 +17,15 @@ public class InterractQuest : Quest {
         rewardAmount = 5;
     }
 
+    public override int GetCurrentAmount()
+    {
+        if (isActive)
+            return 0;
+        else
+            return 1;
+    }
+    public override int GetObjective() => 1;
+
     public bool OnInterract() {
         if (isActive) {
             if (spawnCustomer)
