@@ -25,6 +25,7 @@ public abstract class Quest : ScriptableObject {
     [SerializeField] private List<ProductSO> productsToUnlock;
 
     protected int currentAmount = 0;
+    protected int objectiveAmount = 1;
 
     public Action OnCompletedAction;
     public Action<ProductSO> SpawnCustomer;
@@ -34,6 +35,7 @@ public abstract class Quest : ScriptableObject {
     public void UpdateUI(TextMeshProUGUI text) => text.text = title;
     public string GetTitle() => title;
     public virtual int GetCurrentAmount() => currentAmount;
+    public virtual int GetObjective() => objectiveAmount;
     public bool IsActive() => isActive;
 
     protected void OnCompleted() {

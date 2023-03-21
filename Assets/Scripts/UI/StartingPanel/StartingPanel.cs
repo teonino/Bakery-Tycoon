@@ -26,8 +26,8 @@ public class StartingPanel : MonoBehaviour
         {
             questTxtAsset.InstantiateAsync(vLayout.transform).Completed += (go) =>
             {
-                go.Result.GetComponent<TextMeshProUGUI>().text = $"{quest.GetTitle()} \n";
-                go.Result.GetComponent<TextMeshProUGUI>().text = $"{quest.GetCurrentAmount()} \n";
+                go.Result.GetComponent<QuestContainer>().GetTitle().text= $"{quest.GetTitle()} \n";
+                go.Result.GetComponent<QuestContainer>().GetNumber().text = $"{quest.GetCurrentAmount()} / {quest.GetObjective()}\n";
             };
         }
     }
