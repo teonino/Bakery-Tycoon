@@ -6,8 +6,7 @@ public class LookCamera : MonoBehaviour {
     [SerializeField] private bool lookCamera = true;
     private GameObject cameraObject;
 
-    private void Awake()
-    {
+    private void Awake() {
         ChangeCamera();
     }
 
@@ -17,13 +16,11 @@ public class LookCamera : MonoBehaviour {
             transform.LookAt(cameraObject.transform);
     }
 
-    public void ChangeCamera()
-    {
+    public void ChangeCamera() {
         StartCoroutine(wait());
     }
 
-    private IEnumerator wait()
-    {
+    private IEnumerator wait() {
         yield return new WaitForEndOfFrame();
         cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
     }

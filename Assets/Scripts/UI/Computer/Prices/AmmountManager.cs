@@ -73,11 +73,12 @@ public class AmmountManager : MonoBehaviour {
 
     public void Cancel(InputAction.CallbackContext ctx) {
         if (originalAmmount < ammountToBuy) {
-            while(ammountToBuy != originalAmmount) {
+            while (ammountToBuy != originalAmmount) {
                 SetIngredientsInCart(false);
                 ammountToBuy--;
             }
-        } else {
+        }
+        else {
             while (ammountToBuy != originalAmmount) {
                 SetIngredientsInCart(true);
                 ammountToBuy++;
@@ -106,10 +107,8 @@ public class AmmountManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.UI.Enable();
     }
 
-    private void ReleaseButton(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled)
-        {
+    private void ReleaseButton(InputAction.CallbackContext ctx) {
+        if (ctx.canceled) {
             canDown = false;
             canUp = false;
             timesToTest = 0;
@@ -146,12 +145,9 @@ public class AmmountManager : MonoBehaviour {
         }
     }
 
-    private IEnumerator IncrementAmmountToBuy()
-    {
-        if (canUp && ammountToBuy < maxAmmountToBuy)
-        {
-            if (timesToTest < 3)
-            {
+    private IEnumerator IncrementAmmountToBuy() {
+        if (canUp && ammountToBuy < maxAmmountToBuy) {
+            if (timesToTest < 3) {
                 upArrowAnimator.SetTrigger("MoveUp");
                 popSource.PlayOneShot(popClip);
                 timesToTest += 1;
@@ -161,47 +157,40 @@ public class AmmountManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.5f);
                 StartCoroutine(IncrementAmmountToBuy());
             }
-            else if (timesToTest >= 3)
-            {
+            else if (timesToTest >= 3) {
                 StartCoroutine(IncrementFastAmmountToBuy());
                 timesToTest = 0;
             }
             yield return null;
-        } 
+        }
     }
 
-    private IEnumerator IncrementFastAmmountToBuy()
-    {
-        if (canUp && ammountToBuy < maxAmmountToBuy)
-        {
+    private IEnumerator IncrementFastAmmountToBuy() {
+        if (canUp && ammountToBuy < maxAmmountToBuy) {
             yield return new WaitForSeconds(0.1f);
             upArrowAnimator.SetTrigger("MoveUp");
             popSource.PlayOneShot(popClip);
             ammountToBuy += 1;
-            textAmmount.text = ammountToBuy.ToString(); 
+            textAmmount.text = ammountToBuy.ToString();
             SetIngredientsInCart(true);
             StartCoroutine(IncrementFastAmmountToBuy());
         }
         yield return null;
     }
 
-    private IEnumerator DecrementAmmountToBuy()
-    {
-        if (canDown && ammountToBuy > 0)
-        {
-            if (timesToTest < 3)
-            {
+    private IEnumerator DecrementAmmountToBuy() {
+        if (canDown && ammountToBuy > 0) {
+            if (timesToTest < 3) {
                 downArrowAnimator.SetTrigger("MoveDown");
                 popSource.PlayOneShot(popClip);
                 timesToTest += 1;
                 ammountToBuy -= 1;
-                textAmmount.text = ammountToBuy.ToString(); 
+                textAmmount.text = ammountToBuy.ToString();
                 SetIngredientsInCart(false);
                 yield return new WaitForSeconds(0.3f);
                 StartCoroutine(DecrementAmmountToBuy());
             }
-            else if (timesToTest >= 3)
-            {
+            else if (timesToTest >= 3) {
                 StartCoroutine(DecrementFastAmmountToBuy());
                 timesToTest = 0;
             }
@@ -209,10 +198,8 @@ public class AmmountManager : MonoBehaviour {
         }
     }
 
-    private IEnumerator DecrementFastAmmountToBuy()
-    {
-        if (canDown && ammountToBuy > 0)
-        {
+    private IEnumerator DecrementFastAmmountToBuy() {
+        if (canDown && ammountToBuy > 0) {
             yield return new WaitForSeconds(0.1f);
             downArrowAnimator.SetTrigger("MoveDown");
             popSource.PlayOneShot(popClip);
