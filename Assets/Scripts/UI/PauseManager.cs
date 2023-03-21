@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PauseManager : MonoBehaviour {
+public class PauseManager : MonoBehaviour
+{
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
@@ -12,7 +13,8 @@ public class PauseManager : MonoBehaviour {
     [SerializeField] private RecipeBookManager recipeBookManager;
     [SerializeField] private WorkstationManager workstationManager;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         Time.timeScale = 0f;
         playerControllerSO.GetPlayerController().playerInput.Pause.Enable();
         if (controller.IsGamepad())
@@ -21,25 +23,32 @@ public class PauseManager : MonoBehaviour {
             controller.SetEventSystemToStartButton(null);
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed += ResumeInput;
-        deliveryManager.LaunchQuitFunction();
-        recipeBookManager.gameObject.transform.parent.gameObject.SetActive(false);
-        workstationManager.LaunchQuit();
+        if (deliveryManager.gameObject.activeInHierarchy)
+            deliveryManager.LaunchQuitFunction();
+        if (recipeBookManager.gameObject.activeSelf)
+            recipeBookManager.gameObject.transform.parent.gameObject.SetActive(false);
+        if (workstationManager.gameObject.activeSelf)
+            workstationManager.LaunchQuit();
     }
 
-    private void ResumeInput(InputAction.CallbackContext context) {
+    private void ResumeInput(InputAction.CallbackContext context)
+    {
         if (context.performed) Resume();
     }
 
-    public void Resume() {
+    public void Resume()
+    {
         gameObject.SetActive(false);
         Time.timeScale = 1f;
         playerControllerSO.GetPlayerController().playerInput.Pause.Disable();
         playerControllerSO.GetPlayerController().EnableInput();
     }
 
-    public void MainMenu() {
+    public void MainMenu()
+    {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed -= ResumeInput;
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
