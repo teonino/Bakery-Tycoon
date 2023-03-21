@@ -115,7 +115,7 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     public void SpawnCustomerAsset(bool regular, ProductSO product = null) {
-        if (regular && CheckChairs()) {
+        if (regular && CheckChairs() && nbCustomerRegularSpawned < customer.GetNbRegularCustomer()) {
             AssetReference customerAsset = null;
             switch (day.GetDayCount() % 4) {
                 case 0:
