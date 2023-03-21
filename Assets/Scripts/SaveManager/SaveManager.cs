@@ -150,7 +150,7 @@ public class SaveManager : MonoBehaviour {
         AssetReference returnObject = null;
 
         foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
-            if (data.objectName.Contains(furniture.name)) {
+            if (data.objectName.Contains(furniture.name) && returnObject == null) {
                 if (data.typeA)
                     returnObject = furniture.GetAssetA();
                 else
@@ -163,7 +163,7 @@ public class SaveManager : MonoBehaviour {
     public bool IsPrefab(string name) {
         bool returnObject = false;
         foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
-            if (name.Contains(furniture.name)) {
+            if (name.Contains(furniture.name) && !returnObject) {
                 returnObject = true;
             }
         }

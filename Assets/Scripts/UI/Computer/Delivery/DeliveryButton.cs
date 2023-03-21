@@ -72,7 +72,6 @@ public class DeliveryButton : MonoBehaviour {
 
         nameText.SetText(ingredient.name);
         priceText.SetText(ingredient.price.ToString());
-
         productImage.texture = ingredient.image;
     }
 
@@ -90,7 +89,8 @@ public class DeliveryButton : MonoBehaviour {
         foreach (IngredientsForProduct ingredient in product.ingredients)
             totalPrice += ingredient.ingredient.price;
 
-        nameText.text = product.name + " | " + totalPrice + " /U";
+        nameText.text = product.name;
+        priceText.text = totalPrice.ToString();
         productImage.texture = product.image;
     }
 }

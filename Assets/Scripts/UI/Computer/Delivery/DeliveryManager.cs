@@ -7,8 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class DeliveryManager : MonoBehaviour
-{
+public class DeliveryManager : MonoBehaviour {
     [SerializeField] private AssetReference buttonAsset;
     [SerializeField] private AssetReference rackAsset;
     [SerializeField] private CartUI cartPanel;
@@ -45,8 +44,7 @@ public class DeliveryManager : MonoBehaviour
 
     public Dictionary<IngredientSO, int> cart;
 
-    void Awake()
-    {
+    void Awake() {
         ingredientScrollRectTransform = ingredientScroll.GetComponent<RectTransform>();
         productScrollRectTransform = productScroll.GetComponent<RectTransform>();
 
@@ -58,12 +56,9 @@ public class DeliveryManager : MonoBehaviour
         playerController = playerControllerSO.GetPlayerController();
     }
 
-    private void EnableProductButton(ProductSO product)
-    {
-        foreach (GameObject item in productButtonList)
-        {
-            if (item.GetComponent<DeliveryButton>().product == product)
-            {
+    private void EnableProductButton(ProductSO product) {
+        foreach (GameObject item in productButtonList) {
+            if (item.GetComponent<DeliveryButton>().product == product) {
                 item.SetActive(true);
             }
         }
@@ -72,12 +67,9 @@ public class DeliveryManager : MonoBehaviour
         ResizeScroll(productRackList, productButtonList, productScroll, productScrollRectTransform);
     }
 
-    private void EnableIngredientButton(IngredientSO ingredient)
-    {
-        foreach (GameObject item in ingredientButtonList)
-        {
-            if (item.GetComponent<DeliveryButton>().ingredient == ingredient)
-            {
+    private void EnableIngredientButton(IngredientSO ingredient) {
+        foreach (GameObject item in ingredientButtonList) {
+            if (item.GetComponent<DeliveryButton>().ingredient == ingredient) {
                 item.SetActive(true);
             }
         }
@@ -86,10 +78,8 @@ public class DeliveryManager : MonoBehaviour
         ResizeScroll(ingredientRackList, ingredientButtonList, ingredientScroll, ingredientScrollRectTransform);
     }
 
-    protected virtual void OnEnable()
-    {
-        if (gameObject.activeSelf)
-        {
+    protected virtual void OnEnable() {
+        if (gameObject.activeSelf) {
             //Manage Inputs
             playerController.DisableInput();
             playerController.playerInput.UI.Enable();
@@ -106,14 +96,16 @@ public class DeliveryManager : MonoBehaviour
             productScroll.SetActive(true);
         }
 
-        if (ingredientButtonList.Count > 0)
-        {
+        if (ingredientButtonList.Count > 0) {
             SetButtonForGamepad();
+            SetupButtonsWithRacks(ingredientButtonList, ingredientRackList);
         }
+
+        if (productButtonList.Count > 0)
+            SetupButtonsWithRacks(productButtonList, productRackList);
     }
 
-    private void CheckButton()
-    {
+    private void CheckButton() {
         foreach (GameObject item in productButtonList)
             if (item.GetComponent<DeliveryButton>().product.unlocked)
                 item.SetActive(true);
@@ -123,16 +115,15 @@ public class DeliveryManager : MonoBehaviour
                 item.SetActive(true);
 
         UpdateStockButtons();
+
     }
 
-    protected virtual IEnumerator waitForGamepad(GameObject obj)
-    {
+    protected virtual IEnumerator waitForGamepad(GameObject obj) {
         yield return new WaitForEndOfFrame();
         controller.SetEventSystemToStartButton(obj);
     }
 
-    protected virtual void Start()
-    {
+    protected virtual void Start() {
         lenght = ingredients.GetIngredientLenght();
 
         //Init Cart
@@ -140,10 +131,8 @@ public class DeliveryManager : MonoBehaviour
             InitCart();
 
         //Instantiate buttons
-        for (int i = 0; i < lenght; i++)
-        {
-            buttonAsset.InstantiateAsync().Completed += (go) =>
-            {
+        for (int i = 0; i < lenght; i++) {
+            buttonAsset.InstantiateAsync().Completed += (go) => {
                 DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
                 button.deliveryManager = this;
                 button.tabs = tabsManagement;
@@ -159,20 +148,15 @@ public class DeliveryManager : MonoBehaviour
             };
         }
 
-        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayIngredientList;
+        playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayProductList;
     }
 
-    void SetupRacks(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect)
-    {
-        if (buttonList.Count > 0 && nbButton == lenght)
-        {
+    void SetupRacks(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
+        if (buttonList.Count > 0 && nbButton == lenght) {
             maxButtonInRack = (int)Math.Floor(scroll.GetComponent<RectTransform>().rect.width / buttonList[0].GetComponent<RectTransform>().sizeDelta.x) - 1;
-            for (int i = 0; i < buttonList.Count; i++)
-            {
-                if (i % maxButtonInRack == 0)
-                {
-                    rackAsset.InstantiateAsync(scroll.transform).Completed += (go) =>
-                    {
+            for (int i = 0; i < buttonList.Count; i++) {
+                if (i % maxButtonInRack == 0) {
+                    rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
                         rackList.Add(go.Result);
                         SetupButtons(rackList, buttonList, scroll, scrollRect);
                     };
@@ -181,15 +165,11 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
-    void SetupButtons(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect)
-    {
-        if (rackList.Count * maxButtonInRack >= buttonList.Count)
-        {
+    void SetupButtons(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
+        if (rackList.Count * maxButtonInRack >= buttonList.Count) {
             ResizeScroll(rackList, buttonList, scroll, scrollRect);
-            for (int i = 0; i < lenght; i++)
-            {
-                if (i / maxButtonInRack < rackList.Count)
-                {
+            for (int i = 0; i < lenght; i++) {
+                if (i / maxButtonInRack < rackList.Count) {
 
                     //if (i / maxButtonInRack == 0)
                     //{
@@ -218,70 +198,42 @@ public class DeliveryManager : MonoBehaviour
 
             if (productButtonList.Count == 0)
                 SetupProductButton();
-            else
-            {
+            else {
                 SetupIngredientForProductButton();
             }
         }
     }
 
-    private void ResizeScroll(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect)
-    {
+    private void ResizeScroll(List<GameObject> rackList, List<GameObject> buttonList, GameObject scroll, RectTransform scrollRect) {
         scrollRect.sizeDelta = new Vector2(
             scroll.GetComponent<RectTransform>().rect.width,
             buttonList[0].GetComponent<RectTransform>().rect.height * (rackList.Count + 1));
     }
 
-    private void SetupButtonsWithRacks(List<GameObject> buttonList, List<GameObject> rackList)
-    {
+    private void SetupButtonsWithRacks(List<GameObject> buttonList, List<GameObject> rackList) {
 
         int rackLenght = rackList.Count;
         List<GameObject> activeButtons = new List<GameObject>();
 
-        foreach (GameObject button in buttonList)
-        {
-            DeliveryButton dbutton = button.GetComponent<DeliveryButton>();
-            if (dbutton.ingredient && dbutton.ingredient.unlocked)
+        foreach (GameObject button in buttonList) {
+            DeliveryButton deliveryButton = button.GetComponent<DeliveryButton>();
+            if (deliveryButton.ingredient && deliveryButton.ingredient.unlocked)
                 activeButtons.Add(button);
-            else if (dbutton.product && dbutton.product.unlocked)
+            else if (deliveryButton.product && deliveryButton.product.unlocked)
                 activeButtons.Add(button);
         }
 
         //Setup buttons in racks
-        for (int i = 0; i < rackLenght; i++)
-        {
-            for (int j = 0; (j < maxButtonInRack) && ((j + i * maxButtonInRack) < activeButtons.Count); j++)
-            {
+        for (int i = 0; i < rackLenght; i++) {
+            for (int j = 0; (j < maxButtonInRack) && ((j + i * maxButtonInRack) < activeButtons.Count); j++) {
                 activeButtons[j + i * maxButtonInRack].transform.SetParent(rackList[i].transform);
             }
-        }
-
-        int activeLenght = activeButtons.Count;
-        for (int i = 0; i < activeLenght; i++)
-        {
-            Navigation navButton = activeButtons[i].GetComponentInChildren<Button>().navigation;
-            navButton.mode = Navigation.Mode.Explicit;
-
-            if (i < maxButtonInRack)
-                navButton.selectOnUp = null;
-            else
-                navButton.selectOnUp = activeButtons[i - maxButtonInRack].GetComponentInChildren<Button>();
-
-            if (i + maxButtonInRack < activeLenght)
-                navButton.selectOnDown = activeButtons[i + maxButtonInRack].GetComponentInChildren<Button>();
-            if (i + 1 < activeLenght)
-                navButton.selectOnRight = activeButtons[i + 1].GetComponentInChildren<Button>();
-            if (i - 1 >= 0)
-                navButton.selectOnLeft = activeButtons[i - 1].GetComponentInChildren<Button>();
-
-            activeButtons[i].GetComponentInChildren<Button>().navigation = navButton;
         }
 
         activeButtons.Clear();
 
         //Disable racks with no child active
-        for (int i = 0; i < rackLenght; i++)
-        {
+        for (int i = 0; i < rackLenght; i++) {
             bool hasOneChildActif = false;
             int childCount = rackList[i].transform.childCount;
             for (int j = 0; j < childCount; j++)
@@ -295,15 +247,12 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
-    private void SetupProductButton()
-    {
+    private void SetupProductButton() {
         nbButton = 0;
         lenght = products.GetProductLenght();
 
-        for (int i = 0; i < lenght; i++)
-        {
-            buttonAsset.InstantiateAsync().Completed += (go) =>
-            {
+        for (int i = 0; i < lenght; i++) {
+            buttonAsset.InstantiateAsync().Completed += (go) => {
                 DeliveryButton button = go.Result.GetComponent<DeliveryButton>();
                 button.deliveryManager = this;
                 button.tabs = tabsManagement;
@@ -319,33 +268,29 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
-    protected void SetupIngredientForProductButton()
-    {
+    protected void SetupIngredientForProductButton() {
         foreach (GameObject go in productButtonList)
             go.GetComponent<DeliveryButton>().SetIngredientButton(ingredientButtonList);
         buttonSetuped = true;
         SetButtonForGamepad();
     }
 
-    protected virtual void SetButtonForGamepad()
-    {
+    protected virtual void SetButtonForGamepad() {
         int i = 0;
         if (ingredientsList.activeInHierarchy) {
             while (!ingredientButtonList[i].activeSelf)
                 i++;
-            StartCoroutine(waitForGamepad(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject));
+            StartCoroutine(waitForGamepad(ingredientButtonList[i].GetComponentInChildren<Button>().gameObject));
         }
         else {
-            while(!ingredientButtonList[i].activeSelf)
+            while (!productButtonList[i].activeSelf)
                 i++;
-            StartCoroutine(waitForGamepad(productButtonList[0].GetComponentInChildren<Button>().gameObject));
+            StartCoroutine(waitForGamepad(productButtonList[i].GetComponentInChildren<Button>().gameObject));
         }
     }
 
-    protected virtual void Update()
-    {
-        if (controller.IsGamepad())
-        {
+    protected virtual void Update() {
+        if (controller.IsGamepad()) {
             RectTransform scroll;
             if (ingredientScroll.activeInHierarchy)
                 scroll = ingredientScrollRectTransform;
@@ -356,10 +301,8 @@ public class DeliveryManager : MonoBehaviour
             if (scrollValue != 0)
                 scroll.position -= new Vector3(0, scrollValue * scrollSpeed.GetScrollSpeed(), 0);
 
-            if (controller.GetEventSystemCurrentlySelected() == null)
-            {
-                if (buttonSetuped && !amountPanel.activeSelf)
-                {
+            if (controller.GetEventSystemCurrentlySelected() == null) {
+                if (buttonSetuped && !amountPanel.activeSelf) {
                     if (ingredientsList.activeInHierarchy)
                         controller.SetEventSystemToStartButton(ingredientButtonList[0].GetComponentInChildren<Button>().gameObject);
                     else
@@ -369,8 +312,7 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
-    public virtual void SetIngredient(IngredientSO ingredient, bool add)
-    {
+    public virtual void SetIngredient(IngredientSO ingredient, bool add) {
         if (add)
             cart[ingredient]++;
         else
@@ -380,8 +322,7 @@ public class DeliveryManager : MonoBehaviour
         DisplayCart();
     }
 
-    public void DisplayIngredientList(InputAction.CallbackContext context)
-    {
+    public void DisplayIngredientList(InputAction.CallbackContext context) {
         ingredientsList.SetActive(true);
         productList.SetActive(false);
 
@@ -394,8 +335,7 @@ public class DeliveryManager : MonoBehaviour
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayProductList;
     }
 
-    public virtual void DisplayProductList(InputAction.CallbackContext context)
-    {
+    public virtual void DisplayProductList(InputAction.CallbackContext context) {
         ingredientsList.SetActive(false);
         productList.SetActive(true);
 
@@ -408,27 +348,22 @@ public class DeliveryManager : MonoBehaviour
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed += DisplayIngredientList;
     }
 
-    private void CalculateCartCostAndWeight()
-    {
+    private void CalculateCartCostAndWeight() {
         cartCost = 0;
         cartWeight = 0;
-        foreach (KeyValuePair<IngredientSO, int> ingredient in cart)
-        {
+        foreach (KeyValuePair<IngredientSO, int> ingredient in cart) {
             cartCost += ingredient.Key.price * ingredient.Value;
         }
     }
 
-    private void InitCart()
-    {
+    private void InitCart() {
         cart = new Dictionary<IngredientSO, int>();
-        foreach (StockIngredient stockIngredient in ingredients.GetIngredientList())
-        {
+        foreach (StockIngredient stockIngredient in ingredients.GetIngredientList()) {
             cart.Add(stockIngredient.ingredient, 0);
         }
     }
 
-    public void DisplayCart()
-    {
+    public void DisplayCart() {
         CartUI currentCart = cartPanel;
         currentCart.cart = cart;
         currentCart.cartWeight = cartWeight;
@@ -437,8 +372,7 @@ public class DeliveryManager : MonoBehaviour
         currentCart.InitCart();
     }
 
-    public void ResetCart(bool ordered)
-    {
+    public void ResetCart(bool ordered) {
         cart.Clear();
         cartPanel.ClearText();
         InitCart();
@@ -455,8 +389,7 @@ public class DeliveryManager : MonoBehaviour
             Quit();
     }
 
-    public void Reset(bool resetCart)
-    {
+    public void Reset(bool resetCart) {
         nbButton = 0;
 
         foreach (GameObject go in ingredientButtonList)
@@ -471,54 +404,45 @@ public class DeliveryManager : MonoBehaviour
             ResetCart(false);
     }
 
-    public void UpdateStockButtons()
-    {
+    public void UpdateStockButtons() {
         for (int i = 0; i < ingredientButtonList.Count; i++)
             ingredientButtonList[i].GetComponent<DeliveryButton>().UpdateStock();
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         playerControllerSO.GetPlayerController().playerInput.Amafood.Disable();
         deliveries.UpdateUI -= UpdateStockButtons;
         productUnlocked.action -= EnableProductButton;
         ingredientUnlocked.action -= EnableIngredientButton;
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayIngredientList;
         playerControllerSO.GetPlayerController().playerInput.Amafood.ChangeList.performed -= DisplayProductList;
     }
 
-    public void LaunchQuitFunction()
-    {
+    public void LaunchQuitFunction() {
         Quit();
     }
 
-    public void Quit(InputAction.CallbackContext context)
-    {
+    public void Quit(InputAction.CallbackContext context) {
         Quit();
     }
 
-    private void Quit()
-    {
-        if (cartCost > 0 && !popupReminder.activeSelf)
-        {
+    private void Quit() {
+        if (cartCost > 0 && !popupReminder.activeSelf) {
             popupReminder.SetActive(true);
             ingredientScroll.SetActive(false);
             productScroll.SetActive(false);
             tabsManagement.canChangeTab = false;
         }
-        else
-        {
+        else {
             playerController.playerInput.UI.Quit.performed -= Quit;
             playerController.playerInput.UI.Disable();
             ResetCart(false);
             playerController.EnableInput();
             computerPanel.SetActive(false);
-            if (popupReminder.activeSelf)
-            {
+            if (popupReminder.activeSelf) {
                 popupReminder.SetActive(false);
                 tabsManagement.canChangeTab = true;
             }
