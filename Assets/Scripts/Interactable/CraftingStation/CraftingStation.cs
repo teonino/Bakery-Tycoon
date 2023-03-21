@@ -28,7 +28,7 @@ public class CraftingStation : Interactable {
 
     protected override void Start() {
         base.Start();
-        vfx.Stop();
+        vfx?.Stop();
         sfxPlayer = FindObjectOfType<SFXPlayer>();
         if (!debugState.GetDebug())
             skipCookingTime = false;
@@ -43,7 +43,7 @@ public class CraftingStation : Interactable {
             playerControllerSO.GetPlayerController().SetItemHold(null);
 
             CookingTime(itemInStation);
-            vfx.Play();
+            vfx?.Play();
             sfxPlayer.InteractSound();
         }
         else if (itemInStation != null && !playerControllerSO.GetPlayerController().GetItemHold() && !cooking) {
@@ -132,7 +132,7 @@ public class CraftingStation : Interactable {
         TingSound.Play();
         cooking = false;
         readyText.SetActive(true);
-        vfx.Stop();
+        vfx?.Stop();
 
     }
 

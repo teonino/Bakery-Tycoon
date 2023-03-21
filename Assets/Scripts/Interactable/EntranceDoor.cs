@@ -37,8 +37,8 @@ public class EntranceDoor : Interactable {
 
     private void FixedUpdate() {
         if (isClosing) {
-            door1.transform.rotation = Quaternion.Lerp(door1.transform.rotation, Quaternion.Euler(0, -180, 0), 0.1f);
-            door2.transform.rotation = Quaternion.Lerp(door2.transform.rotation, Quaternion.Euler(0, 0, 0), 0.1f);
+            door1.transform.rotation = Quaternion.Lerp(door1.transform.rotation, Quaternion.Euler(0, 0, 0), 0.1f);
+            door2.transform.rotation = Quaternion.Lerp(door2.transform.rotation, Quaternion.Euler(0, 180, 0), 0.1f);
         }
     }
 
