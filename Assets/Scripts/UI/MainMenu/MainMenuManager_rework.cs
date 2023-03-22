@@ -18,8 +18,16 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private GameObject InputText;
     private Animator inputTextAnimator;
 
+    [SerializeField] private GameObject logo;
+    private Animator logoAnimator;
+
+    [SerializeField] private GameObject buttonPanel;
+    private Animator buttonPanelAnimator;
+
     private void OnEnable()
     {
+        playerInput = new PlayerInput();
+        playerInput.UI.Enable();
         playerInput.UI.AnyKeyPressed.performed += LaunchAnyKeyPressed;
     }
 
@@ -27,6 +35,8 @@ public class MainMenuManager_rework : MonoBehaviour
     {
         blackscreenAnimator = Blackscreen.GetComponent<Animator>();
         inputTextAnimator = InputText.GetComponent<Animator>();
+        logoAnimator = logo.GetComponent<Animator>();
+        buttonPanelAnimator = buttonPanel.GetComponent<Animator>();
         blackscreenAnimator.SetTrigger("Fade");
         StartCoroutine(SetAtLastSiblingBlackscreen());
     }
@@ -35,7 +45,14 @@ public class MainMenuManager_rework : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         Blackscreen.transform.SetAsFirstSibling();
+        startLogoAnim();
+        yield return new WaitForSeconds(0.8f);
         startTextAnim();
+    }
+
+    public void startLogoAnim()
+    {
+        logoAnimator.SetTrigger("FadeToUnfade");
     }
 
     public void startTextAnim()
@@ -45,13 +62,22 @@ public class MainMenuManager_rework : MonoBehaviour
 
     private void LaunchAnyKeyPressed(InputAction.CallbackContext context)
     {
+        print("any key pressed");
         StartCoroutine(AnyKeyPressed());
     }
 
     private IEnumerator AnyKeyPressed()
     {
         inputTextAnimator.SetTrigger("Fade");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0.5f);
+        logoAnimator.SetTrigger("transitionToCornerUpLeft");
+        yield return new WaitForSeconds(1);
+        buttonPanelAnimator.SetTrigger("OutsideToInside");
+    }
+    private void OnDisable()
+    {
+        playerInput.UI.AnyKeyPressed.performed -= LaunchAnyKeyPressed;
+        playerInput.UI.Disable();
     }
 
 }
