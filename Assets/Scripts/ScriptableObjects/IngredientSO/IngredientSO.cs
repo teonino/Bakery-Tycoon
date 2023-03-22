@@ -19,7 +19,6 @@ public class IngredientSO : ScriptableObject {
 
     public void SetName() {
         StringTableEntry entry = table.GetTable().GetEntry(keyName);
-        Debug.Log("ingredient : " + keyName);
         name = entry.GetLocalizedString();
     }
 }
