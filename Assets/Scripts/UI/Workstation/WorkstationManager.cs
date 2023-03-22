@@ -25,7 +25,6 @@ public class WorkstationManager : MonoBehaviour {
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
     [SerializeField] private GameObject LetsCookPanel;
     [SerializeField] private GameObject minigamePosition;
-    [SerializeField] private Workstation workstationRef;
 
     protected List<IngredientSelected> ingredientsSelected;
     private List<GameObject> ingredientButtonList;
@@ -235,7 +234,7 @@ public class WorkstationManager : MonoBehaviour {
                     playerControllerSO.GetPlayerController().playerInput.Workstation.Disable();
                     LetsCookPanel.SetActive(false);
                     LaunchIngredientMinigame();
-                    workstationRef.startMinigames(true);
+                    workplace.startMinigames(true);
                 }
                 else
                     StartCoroutine(DisplayErrorText("CraftstationMissing"));
@@ -363,7 +362,7 @@ public class WorkstationManager : MonoBehaviour {
         currentMinigame = null;
         currentMinigameCounter++;
         LaunchIngredientMinigame();
-        workstationRef.startMinigames(false);
+        workplace.startMinigames(false);
     }
 
     public void DisplayRecipes(InputAction.CallbackContext ctx) {

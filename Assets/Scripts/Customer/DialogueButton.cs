@@ -21,7 +21,7 @@ public class DialogueButton : Button {
             else
                 dialogueManager.SetAnswer(nextDialogue, relationReward);
         else
-            dialogueManager.gameObject.SetActive(false);
+            dialogueManager?.gameObject.SetActive(false);
     }
 
     public void SetNextDialogue(int id) => nextDialogue = id;

@@ -24,9 +24,14 @@ public class MoneyUI : MonoBehaviour {
         GetComponent<TextMeshProUGUI>().text = money.ToString();
     }
 
-    public void updateMoney()
+    public void subMoney()
     {
         money.OnMoneyChanged += UpdateUI;
+    }
+
+    public void unsubMoney()
+    {
+        money.OnMoneyChanged -= UpdateUI;
     }
 
 }
