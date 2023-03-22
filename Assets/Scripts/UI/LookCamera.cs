@@ -12,8 +12,11 @@ public class LookCamera : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (lookCamera && cameraObject)
-            transform.LookAt(cameraObject.transform);
+        if (lookCamera)
+            if (cameraObject)
+                transform.LookAt(cameraObject.transform);
+            else
+                cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     public void ChangeCamera() {

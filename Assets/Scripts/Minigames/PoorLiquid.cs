@@ -32,7 +32,7 @@ public class PoorLiquid : Minigame {
             slider.value += Time.deltaTime;
         slider.value -= Time.deltaTime / 3;
 
-        if (CheckInZone()) {
+        if (CheckInZone() && playerController.playerInput.PoorLiquid.PoorLiquidAction.ReadValue<float>() <= 0) {
             End();
         }
 
