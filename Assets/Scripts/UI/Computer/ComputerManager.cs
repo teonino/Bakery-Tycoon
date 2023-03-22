@@ -29,7 +29,6 @@ public class ComputerManager : MonoBehaviour {
 
     private void OnDestroy()
     {
-
         moneyRef.unsubMoney();
     }
 }

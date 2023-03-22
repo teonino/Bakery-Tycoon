@@ -381,15 +381,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EnablePreview"",
-                    ""type"": ""Button"",
-                    ""id"": ""dc6397c9-46cb-4c83-8d55-017004fb26de"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -411,6 +402,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fd66a57-28e1-45bd-a808-8ce89e0f2b00"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -528,7 +530,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a1cda452-ca2c-41fe-9003-e3d60a7ebcdb"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -544,28 +546,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""Sell"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8c820a11-c504-424a-86b5-ec579444dfc4"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""EnablePreview"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e7153df7-0b5e-436a-9b44-87212b4e4568"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""EnablePreview"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2311,7 +2291,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Building_Rotate = m_Building.FindAction("Rotate", throwIfNotFound: true);
         m_Building_DisplayFurnitureStore = m_Building.FindAction("DisplayFurnitureStore", throwIfNotFound: true);
         m_Building_Sell = m_Building.FindAction("Sell", throwIfNotFound: true);
-        m_Building_EnablePreview = m_Building.FindAction("EnablePreview", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
@@ -2551,7 +2530,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Building_Rotate;
     private readonly InputAction m_Building_DisplayFurnitureStore;
     private readonly InputAction m_Building_Sell;
-    private readonly InputAction m_Building_EnablePreview;
     public struct BuildingActions
     {
         private @PlayerInput m_Wrapper;
@@ -2562,7 +2540,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Rotate => m_Wrapper.m_Building_Rotate;
         public InputAction @DisplayFurnitureStore => m_Wrapper.m_Building_DisplayFurnitureStore;
         public InputAction @Sell => m_Wrapper.m_Building_Sell;
-        public InputAction @EnablePreview => m_Wrapper.m_Building_EnablePreview;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2590,9 +2567,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sell.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
                 @Sell.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
                 @Sell.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
-                @EnablePreview.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnEnablePreview;
-                @EnablePreview.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnEnablePreview;
-                @EnablePreview.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnEnablePreview;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -2615,9 +2589,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sell.started += instance.OnSell;
                 @Sell.performed += instance.OnSell;
                 @Sell.canceled += instance.OnSell;
-                @EnablePreview.started += instance.OnEnablePreview;
-                @EnablePreview.performed += instance.OnEnablePreview;
-                @EnablePreview.canceled += instance.OnEnablePreview;
             }
         }
     }
@@ -3421,7 +3392,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRotate(InputAction.CallbackContext context);
         void OnDisplayFurnitureStore(InputAction.CallbackContext context);
         void OnSell(InputAction.CallbackContext context);
-        void OnEnablePreview(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

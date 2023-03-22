@@ -29,7 +29,6 @@ public class BuildingMode : Interactable {
     private GameObject level;
     private GameObject mainCamera;
     private GameObject buildingCamera;
-    private GameObject previewCamera;
     private LayerMask currentRaycastlayer;
     private LayerMask initialGoLayer;
     private GameObject cursorObject;
@@ -51,18 +50,15 @@ public class BuildingMode : Interactable {
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed += Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed += RotateGameObject;
-        playerControllerSO.GetPlayerController().playerInput.Building.EnablePreview.performed += EnablePreview;
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed += DisplayFurtniturePanel;
 
         furnitureManager = FindObjectOfType<FurnitureManager>(true);
         level = GameObject.FindGameObjectWithTag("Level");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
-        previewCamera = GameObject.FindGameObjectWithTag("PreviewCamera");
         vfx.Stop();
 
         buildingCamera.SetActive(false);
-        previewCamera.SetActive(false);
     }
 
     public override void Effect() {
@@ -103,6 +99,10 @@ public class BuildingMode : Interactable {
     }
 
     public void Sell(CallbackContext ctx) {
+        Sell();
+    }
+
+    private void Sell() {
         if (selectedGo) {
             if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
                 if (holder.CanRemoveSelectedItem()) {
@@ -111,6 +111,11 @@ public class BuildingMode : Interactable {
                     Destroy(holder.gameObject);
                     currentRaycastlayer = pickUpLayer;
                     selectedGo = null;
+
+                    if (disabledGo) {
+                        disabledGo.SetActive(true);
+                        disabledGo = null;
+                    }
                 }
                 else
                     print("Furniture mandatory, you can't sell this unless you have another one");
@@ -153,23 +158,6 @@ public class BuildingMode : Interactable {
             cursorObject.SetActive(active);
         else
             cursorObject.SetActive(false);
-    }
-
-    private void EnablePreview(CallbackContext ctx) {
-        if (!selectedGo) {
-            if (!previewCamera.activeSelf) {
-                EnableCursor(false);
-                buildingCamera.SetActive(false);
-                previewCamera.SetActive(true);
-            }
-            else {
-                EnableCursor(true);
-                buildingCamera.SetActive(true);
-                previewCamera.SetActive(false);
-            }
-        }
-        else
-            print("Can't go in preview if an object is selected");
     }
 
     private void DisplayFurtniturePanel(CallbackContext context) {
@@ -225,8 +213,10 @@ public class BuildingMode : Interactable {
             if (disabledGo)
                 disabledGo.SetActive(true);
 
-            if (selectedGoIsBought)
+            if (selectedGoIsBought) {
+                Sell();
                 Addressables.ReleaseInstance(selectedGo);
+            }
             else {
                 selectedGo.transform.position = originalPosition;
                 selectedGo.transform.rotation = originalRotation;
@@ -382,7 +372,6 @@ public class BuildingMode : Interactable {
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed -= Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed -= Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed -= RotateGameObject;
-        playerControllerSO.GetPlayerController().playerInput.Building.EnablePreview.performed -= EnablePreview;
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed -= DisplayFurtniturePanel;
     }
 }

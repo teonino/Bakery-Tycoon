@@ -359,15 +359,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "EnablePreview",
-                    "type": "Button",
-                    "id": "dc6397c9-46cb-4c83-8d55-017004fb26de",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -389,6 +380,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fd66a57-28e1-45bd-a808-8ce89e0f2b00",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Quit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -506,7 +508,7 @@
                 {
                     "name": "",
                     "id": "a1cda452-ca2c-41fe-9003-e3d60a7ebcdb",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -522,28 +524,6 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Sell",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8c820a11-c504-424a-86b5-ec579444dfc4",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "EnablePreview",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e7153df7-0b5e-436a-9b44-87212b4e4568",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "EnablePreview",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
