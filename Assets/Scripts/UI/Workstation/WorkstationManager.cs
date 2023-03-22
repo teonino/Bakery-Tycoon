@@ -298,6 +298,7 @@ public class WorkstationManager : MonoBehaviour {
 
             indexMinigame = currentMinigameCounter;
 
+
             while (!ingredientsSelected[indexMinigame].GetIngredient())
                 indexMinigame++;
 
