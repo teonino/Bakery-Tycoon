@@ -16,6 +16,7 @@ public class FurnitureButton : MonoBehaviour {
 
     private void Awake() {
         button = GetComponent<Button>();
+        money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
     // Start is called before the first frame update
@@ -42,8 +43,9 @@ public class FurnitureButton : MonoBehaviour {
     private void BuyFurniture() {
         if (money.GetMoney() > furnitureSO.GetPrice())
             furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
+                money.AddMoney(-furnitureSO.GetPrice());
                 furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
-                furnitureManager.Quit();
+                furnitureManager.Quit()
             };
     }
 
