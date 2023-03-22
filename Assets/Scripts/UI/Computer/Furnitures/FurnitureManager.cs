@@ -28,6 +28,7 @@ public class FurnitureManager : MonoBehaviour {
     private List<FurnitureType> furnitureTypeFilter;
     private List<FurnitureStyle> furnitureStyleFilter;
     private BuildingMode buildingMode;
+    private GameObject lastButton;
 
     // Start is called before the first frame update
     void Awake() {
@@ -48,15 +49,27 @@ public class FurnitureManager : MonoBehaviour {
             playerController.playerInput.UI.Enable();
             playerController.playerInput.UI.Quit.performed += Quit;
 
-            if (controller.IsGamepad() && furnitureButtonList.Count > 0)
-                controller.SetEventSystemToStartButton(furnitureButtonList[0]);
-            else
-                controller.SetEventSystemToStartButton(null);
+            SetButtonForGamepad();
 
             scrollRectTransform.position = new Vector3(scrollRectTransform.position.x, 0, scrollRectTransform.position.z);
 
             furnitureTypeFilter.Clear();
             furnitureStyleFilter.Clear();
+        }
+    }
+
+    public void SetButtonForGamepad() {
+        if (lastButton)
+            controller.SetEventSystemToStartButton(lastButton);
+        else {
+            if (controller.IsGamepad() && furnitureButtonList.Count > 0) {
+                int i = 0;
+                while (!furnitureButtonList[i].activeSelf)
+                    i++;
+                controller.SetEventSystemToStartButton(furnitureButtonList[i]);
+            }
+            else
+                controller.SetEventSystemToStartButton(null);
         }
     }
 
@@ -250,14 +263,13 @@ public class FurnitureManager : MonoBehaviour {
         SetVerticalLayoutGroup();
     }
 
-    public void DisplayAssetChoice(FurnitureSO furniture) {
+    public void DisplayAssetChoice(FurnitureSO furniture, GameObject button) {
         assetChoicePanel.SetActive(true);
         AssetChoiceManager choiceManager = assetChoicePanel.GetComponent<AssetChoiceManager>();
 
         choiceManager.SetFurnitureSO(furniture);
         choiceManager.SetFurnitureManager(this);
-
-
+        lastButton = button;
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Quit.performed += choiceManager.Quit;
     }
@@ -276,6 +288,7 @@ public class FurnitureManager : MonoBehaviour {
     public void Quit() {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
+        lastButton = null;
         buildingMode.Effect();
         gameObject.SetActive(false);
     }
