@@ -28,18 +28,17 @@ public class AIRegularCustomer : AICustomer {
     private int layerUsed;
     private int layerOutline;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         sitDownEffect.Stop();
         flowerEffect.Stop();
-
         layerOutline = LayerMask.NameToLayer("Outline");
     }
 
     public new void InitCustomer() {
         base.InitCustomer();
         day.DayTimeChange += LeaveOnEvening;
-
         if (!tutorial)
             onTalk = FindObjectOfType<QuestHolder>()?.GetInterractQuest();
         dialoguePanel = FindObjectOfType<DialogueManager>(true);
@@ -61,6 +60,8 @@ public class AIRegularCustomer : AICustomer {
             {
                 if (chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving)
                 {
+                    sitDownEffect.Play();
+                    productCanvas.SetActive(true);
                     state = AIState.sitting;
                     GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 }
@@ -129,7 +130,6 @@ public class AIRegularCustomer : AICustomer {
     private void Sit() {
         agent.SetDestination(chair.transform.position);
         state = AIState.moving;
-        sitDownEffect.Play();
     }
     private void LeaveOnEvening() {
         Leave();

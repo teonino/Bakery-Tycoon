@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private CharacterTables characterTables;
     [SerializeField] private LocalizedStringTable tutorialDialogueTable;
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private List<GameObject> buttonImage;
 
     private string npcName;
     private int idDialogue;
@@ -64,8 +65,24 @@ public class DialogueManager : MonoBehaviour {
     private void Update() {
         if (updateEnable) {
             GameObject go = controller.GetEventSystemCurrentlySelected();
-           if (!(go == playerAnswersButtons[0].gameObject || go == playerAnswersButtons[1].gameObject || go == playerAnswersButtons[2].gameObject)) {
+            if (!(go == playerAnswersButtons[0].gameObject || go == playerAnswersButtons[1].gameObject || go == playerAnswersButtons[2].gameObject)) {
                 controller.SetEventSystemToStartButton(playerAnswersButtons[0].gameObject);
+            }
+
+            if (go == playerAnswersButtons[0].gameObject && !buttonImage[0].activeSelf) {
+                buttonImage[0].SetActive(true);
+                buttonImage[1].SetActive(false);
+                buttonImage[2].SetActive(false);
+            }
+            else if (go == playerAnswersButtons[1].gameObject && !buttonImage[1].activeSelf) {
+                buttonImage[0].SetActive(false);
+                buttonImage[1].SetActive(true); 
+                buttonImage[2].SetActive(false);
+            }
+            else if (go == playerAnswersButtons[2].gameObject && !buttonImage[2].activeSelf) {
+                buttonImage[0].SetActive(false);
+                buttonImage[1].SetActive(false);
+                buttonImage[2].SetActive(true); 
             }
         }
     }

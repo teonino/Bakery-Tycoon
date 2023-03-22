@@ -40,7 +40,7 @@ public class AICustomer : Interactable
     protected Coroutine coroutine;
     protected bool hasProdcut = false;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         day = FindObjectOfType<DayTimeUI>().GetDay();
         money = FindObjectOfType<MoneyUI>().GetMoney();
@@ -61,7 +61,7 @@ public class AICustomer : Interactable
                 productCanvas.GetComponentInChildren<RawImage>().texture = requestedProduct.image;
             else
                 Debug.LogError("RequestedProductNull");
-
+            productCanvas.SetActive(false);
             StartCoroutine(LaunchBonusTime());
         };
         spawnPosition = transform.position;

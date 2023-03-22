@@ -13,9 +13,12 @@ public class AssetChoiceManager : MonoBehaviour {
     [SerializeField] private RawImage imageB;
 
     private FurnitureManager furnitureManager;
+    private Money money;
     private FurnitureSO furnitureSO;
+
     private void OnEnable() {
         controller.SetEventSystemToStartButton(buttonA.gameObject);
+        money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
     void Start() {
@@ -25,6 +28,7 @@ public class AssetChoiceManager : MonoBehaviour {
 
     private void BuyFurnitureA() {
         furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
+            money.AddMoney(-furnitureSO.GetPrice());
             furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
             gameObject.SetActive(false);
             furnitureManager.Quit();
@@ -32,6 +36,7 @@ public class AssetChoiceManager : MonoBehaviour {
     }
     private void BuyFurnitureB() {
         furnitureSO.GetAssetB().InstantiateAsync().Completed += (go) => {
+            money.AddMoney(-furnitureSO.GetPrice());
             furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
             gameObject.SetActive(false);
             furnitureManager.Quit();

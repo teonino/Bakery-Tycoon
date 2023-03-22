@@ -13,6 +13,7 @@ public class AIRandomCustomer : AICustomer
     private bool hasInteract = false;
     private bool hasTakenItem = false;
     private bool waitAnimation = true;
+    public bool inMainQueue = false;
     public QueueBakery GetInteracting() => interacting;
     public void SetInteracting(QueueBakery interacting) => this.interacting = interacting;
 
@@ -21,7 +22,8 @@ public class AIRandomCustomer : AICustomer
         base.Awake();
         shelf = FindObjectOfType<MainShelf>();
         //Check Queue positions
-        shelf.GetAvailableQueuePosition(this);
+
+        shelf.SetDestinationToPos(this);
         vfx.Stop();
     }
 
@@ -67,7 +69,7 @@ public class AIRandomCustomer : AICustomer
 
     private IEnumerator waitEndOfAnimation()
     {
-        if (!requestedProduct)
+        if (!hasProdcut)
         {
             animator.SetTrigger("Happy");
             yield return new WaitForSeconds(3.4f);
@@ -91,11 +93,11 @@ public class AIRandomCustomer : AICustomer
 
 
         //Go to the Queue
-        if (state == AIState.moving && Vector3.Distance(transform.position, agent.destination) < 0.5)
+        if (inMainQueue && state == AIState.moving && Vector3.Distance(transform.position, agent.destination) < 0.5)
         {
             state = AIState.waiting;
             coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
-
+            productCanvas.SetActive(true);
             if (!interacting)
             {
                 animator.SetTrigger("Idle");
@@ -108,7 +110,7 @@ public class AIRandomCustomer : AICustomer
             SetDestination(agent.destination);
         }
 
-        if (interacting && !hasInteract && Vector3.Distance(transform.position, agent.destination) < 0.5)
+        if (interacting && !hasInteract && Vector3.Distance(transform.position, agent.destination) < 0.25)
         {
             interacting.Interact(animator); // trigger animation according to item
             hasInteract = true;

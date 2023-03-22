@@ -10,6 +10,7 @@ public class FurnitureButton : MonoBehaviour {
     [SerializeField] private RawImage image;
 
     private FurnitureManager furnitureManager;
+    private Money money;
     private FurnitureSO furnitureSO;
     private Button button;
 
@@ -34,14 +35,16 @@ public class FurnitureButton : MonoBehaviour {
     }
 
     private void DisplayAssetChoiceWindow() {
-        furnitureManager.DisplayAssetChoice(furnitureSO);
+        if (money.GetMoney() > furnitureSO.GetPrice())
+            furnitureManager.DisplayAssetChoice(furnitureSO);
     }
 
     private void BuyFurniture() {
-        furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
-            furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
-            furnitureManager.Quit();
-        };
+        if (money.GetMoney() > furnitureSO.GetPrice())
+            furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
+                furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
+                furnitureManager.Quit();
+            };
     }
 
     public void SetFurnitureManager(FurnitureManager value) => furnitureManager = value;
