@@ -24,6 +24,8 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private GameObject buttonPanel;
     private Animator buttonPanelAnimator;
 
+    private bool canPressInput;
+
     private void OnEnable()
     {
         playerInput = new PlayerInput();
@@ -46,7 +48,7 @@ public class MainMenuManager_rework : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         Blackscreen.transform.SetAsFirstSibling();
         startLogoAnim();
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.7f);
         startTextAnim();
     }
 
