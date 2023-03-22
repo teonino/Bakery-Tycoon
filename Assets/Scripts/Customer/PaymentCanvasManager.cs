@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 public class PaymentCanvasManager : MonoBehaviour {
-    public int timeDisplaying = 10;
+    public int timeDisplaying = 30;
 
     [SerializeField] private GameObject basePricePanel;
     [SerializeField] private GameObject bonusPricePanel;
