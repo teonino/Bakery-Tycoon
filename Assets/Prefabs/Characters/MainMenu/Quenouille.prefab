@@ -50,7 +50,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.23
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -156,8 +156,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalSpawn: {fileID: 0}
   PathPoint: {fileID: 0}
-  agent: {fileID: 0}
-  waitingTime: 80
+  agent: {fileID: 237948538212420830}
+  animator: {fileID: 1093415478378175168}
+  waitingTime: 10
 --- !u!1001 &1562859436975826489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -411,6 +412,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4216158e390789747b327d81a91c0006, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ff9c6211077ea5458a6b72040c3baf2, type: 3}
+--- !u!95 &1093415478378175168 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 0ff9c6211077ea5458a6b72040c3baf2, type: 3}
+  m_PrefabInstance: {fileID: 6793119546390980433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6470752652905463994 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0ff9c6211077ea5458a6b72040c3baf2, type: 3}
