@@ -24,7 +24,12 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private GameObject buttonPanel;
     private Animator buttonPanelAnimator;
 
-    private bool canPressInput;
+
+    [SerializeField] private GameObject CustomerSpawn;
+    private bool canPressInput = false;
+    private MainMenuCharacter currentCustomer;
+
+    [SerializeField] private List<MainMenuCharacter> mainMenuCharacters = new List<MainMenuCharacter>();
 
     private void OnEnable()
     {
@@ -41,6 +46,7 @@ public class MainMenuManager_rework : MonoBehaviour
         buttonPanelAnimator = buttonPanel.GetComponent<Animator>();
         blackscreenAnimator.SetTrigger("Fade");
         StartCoroutine(SetAtLastSiblingBlackscreen());
+        StartCoroutine(spawnCustomer());
     }
 
     public IEnumerator SetAtLastSiblingBlackscreen()
@@ -50,6 +56,7 @@ public class MainMenuManager_rework : MonoBehaviour
         startLogoAnim();
         yield return new WaitForSeconds(0.7f);
         startTextAnim();
+        canPressInput = true;
     }
 
     public void startLogoAnim()
@@ -80,6 +87,21 @@ public class MainMenuManager_rework : MonoBehaviour
     {
         playerInput.UI.AnyKeyPressed.performed -= LaunchAnyKeyPressed;
         playerInput.UI.Disable();
+    }
+
+    private IEnumerator spawnCustomer()
+    {
+        if (currentCustomer == null)
+        {
+            int rdm = Random.Range(0, mainMenuCharacters.Count);
+            currentCustomer = mainMenuCharacters[rdm];
+            Animator currentCustomerAnimator = currentCustomer.GetComponent<Animator>();
+            Instantiate(currentCustomer, CustomerSpawn.transform);
+            yield return new WaitForSeconds(0.5f);
+
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 
 }
