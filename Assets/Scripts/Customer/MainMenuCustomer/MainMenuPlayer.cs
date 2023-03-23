@@ -28,29 +28,39 @@ public class MainMenuPlayer : MonoBehaviour
         switch(rdn)
         {
             case 0:
+                yield return new WaitForSeconds(3);
+                animator.SetBool("isWalking", true);
                 agent.SetDestination(Pathpoints[0].transform.position);
                 StartCoroutine(Wait());
                 break;
             case 1:
+                yield return new WaitForSeconds(3);
+                animator.SetBool("isWalking", true);
                 agent.SetDestination(Pathpoints[1].transform.position);
                 StartCoroutine(Wait());
                 break;
             case 2:
+                yield return new WaitForSeconds(3);
+                animator.SetBool("isWalking", true);
                 agent.SetDestination(Pathpoints[2].transform.position);
                 StartCoroutine(Wait());
                 break;
             case 3:
+                yield return new WaitForSeconds(3);
+                animator.SetBool("isWalking", true);
                 agent.SetDestination(Pathpoints[3].transform.position);
                 StartCoroutine(Wait());
                 break;
         }
-
-        yield return new WaitForSeconds(waitingTime);
+        yield return null;
     }
 
     private IEnumerator Wait()
     {
+        yield return new WaitForSeconds(2);
+        animator.SetBool("isWalking", false);
         yield return new WaitForSeconds(waitingTime);
+        animator.SetBool("isWalking", true);
         agent.SetDestination(OriginalSpawn.transform.position);
     }
 
