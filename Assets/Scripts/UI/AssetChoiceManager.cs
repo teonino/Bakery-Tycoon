@@ -52,6 +52,7 @@ public class AssetChoiceManager : MonoBehaviour {
 
     public void Quit(InputAction.CallbackContext ctx) {
         gameObject.SetActive(false);
+        furnitureManager.SetButtonForGamepad();
         playerController.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
         playerController.GetPlayerController().playerInput.UI.Quit.performed += furnitureManager.Quit;
     }

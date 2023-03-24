@@ -18,6 +18,7 @@ public class BuildingMode : Interactable {
     [SerializeField] private LayerMask pickUpLayer;
     [SerializeField] private LayerMask putDownLayerFloor;
     [SerializeField] private LayerMask putDownLayerWall;
+    [SerializeField] private LayerMask putDownLayerFrame;
     [SerializeField] private float snapValue;
     [SerializeField] private ParticleSystem vfx;
 
@@ -29,7 +30,6 @@ public class BuildingMode : Interactable {
     private GameObject level;
     private GameObject mainCamera;
     private GameObject buildingCamera;
-    private GameObject previewCamera;
     private LayerMask currentRaycastlayer;
     private LayerMask initialGoLayer;
     private GameObject cursorObject;
@@ -38,6 +38,7 @@ public class BuildingMode : Interactable {
     private bool inBuildingMode = false;
     private bool selectedGoIsFloor = false;
     private bool selectedGoIsWall = false;
+    private bool selectedGoIsFrame = false;
     private bool selectedGoIsBought = false;
     private float originalHeight;
     private Vector3 originalPosition;
@@ -51,18 +52,15 @@ public class BuildingMode : Interactable {
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed += Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed += Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed += RotateGameObject;
-        playerControllerSO.GetPlayerController().playerInput.Building.EnablePreview.performed += EnablePreview;
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed += DisplayFurtniturePanel;
 
         furnitureManager = FindObjectOfType<FurnitureManager>(true);
         level = GameObject.FindGameObjectWithTag("Level");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         buildingCamera = GameObject.FindGameObjectWithTag("BuildCamera");
-        previewCamera = GameObject.FindGameObjectWithTag("PreviewCamera");
         vfx.Stop();
 
         buildingCamera.SetActive(false);
-        previewCamera.SetActive(false);
     }
 
     public override void Effect() {
@@ -90,8 +88,7 @@ public class BuildingMode : Interactable {
 
             interractQuest?.OnInterract();
 
-            for (int i = 0; i < uiInGame.Count; i++)
-            {
+            for (int i = 0; i < uiInGame.Count; i++) {
                 uiInGame[i].SetActive(false);
             }
             uiCustomisation.SetActive(true);
@@ -103,6 +100,10 @@ public class BuildingMode : Interactable {
     }
 
     public void Sell(CallbackContext ctx) {
+        Sell();
+    }
+
+    private void Sell() {
         if (selectedGo) {
             if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
                 if (holder.CanRemoveSelectedItem()) {
@@ -111,6 +112,11 @@ public class BuildingMode : Interactable {
                     Destroy(holder.gameObject);
                     currentRaycastlayer = pickUpLayer;
                     selectedGo = null;
+
+                    if (disabledGo) {
+                        disabledGo.SetActive(true);
+                        disabledGo = null;
+                    }
                 }
                 else
                     print("Furniture mandatory, you can't sell this unless you have another one");
@@ -129,8 +135,7 @@ public class BuildingMode : Interactable {
             mainCamera.SetActive(true);
             buildingCamera.SetActive(false);
             inBuildingMode = false;
-            for (int i = 0; i < uiInGame.Count; i++)
-            {
+            for (int i = 0; i < uiInGame.Count; i++) {
                 uiInGame[i].SetActive(true);
             }
             uiCustomisation.SetActive(false);
@@ -153,23 +158,6 @@ public class BuildingMode : Interactable {
             cursorObject.SetActive(active);
         else
             cursorObject.SetActive(false);
-    }
-
-    private void EnablePreview(CallbackContext ctx) {
-        if (!selectedGo) {
-            if (!previewCamera.activeSelf) {
-                EnableCursor(false);
-                buildingCamera.SetActive(false);
-                previewCamera.SetActive(true);
-            }
-            else {
-                EnableCursor(true);
-                buildingCamera.SetActive(true);
-                previewCamera.SetActive(false);
-            }
-        }
-        else
-            print("Can't go in preview if an object is selected");
     }
 
     private void DisplayFurtniturePanel(CallbackContext context) {
@@ -214,7 +202,7 @@ public class BuildingMode : Interactable {
         currentRaycastlayer = pickUpLayer;
         selectedGo.layer = initialGoLayer;
         selectedGo.transform.parent = level.transform;
-        selectedGoIsFloor = selectedGoIsWall = false;
+        selectedGoIsFloor = selectedGoIsWall = selectedGoIsFrame = false;
         selectedGoIsBought = false;
         ChangeColliderSize(false);
         selectedGo = null;
@@ -225,8 +213,10 @@ public class BuildingMode : Interactable {
             if (disabledGo)
                 disabledGo.SetActive(true);
 
-            if (selectedGoIsBought)
+            if (selectedGoIsBought) {
+                Sell();
                 Addressables.ReleaseInstance(selectedGo);
+            }
             else {
                 selectedGo.transform.position = originalPosition;
                 selectedGo.transform.rotation = originalRotation;
@@ -245,6 +235,8 @@ public class BuildingMode : Interactable {
         else if (type == FurnitureType.Floor) {
             selectedGoIsFloor = true;
         }
+        else if (type == FurnitureType.Frame)
+            selectedGoIsFrame = true;
         else {
             selectedGo.AddComponent<CheckCollisionManager>();
             selectedGo.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -256,8 +248,11 @@ public class BuildingMode : Interactable {
 
         if (selectedGo.layer == LayerMask.NameToLayer("CustomizableWall") || (selectedGo.layer == LayerMask.NameToLayer("Walls") && type == FurnitureType.Wall))
             currentRaycastlayer = putDownLayerWall;
+        else if (selectedGo.layer == LayerMask.NameToLayer("Frame"))
+            currentRaycastlayer = putDownLayerFrame;
         else
             currentRaycastlayer = putDownLayerFloor;
+
         initialGoLayer = selectedGo.layer;
         selectedGo.layer = 3;
         originalHeight = selectedGo.transform.position.y;
@@ -283,22 +278,13 @@ public class BuildingMode : Interactable {
 
     private void FixedUpdate() {
         if (inBuildingMode) {
-            if (selectedGoIsWall) {
+            if (selectedGoIsWall || selectedGoIsFrame || selectedGoIsFloor) {
                 if (controller.IsGamepad() && cursorObject) {
                     cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
-                    ReplaceWall(cursorObject.transform.position);
+                    Replace(cursorObject.transform.position);
                 }
                 else {
-                    ReplaceWall(Mouse.current.position.ReadValue());
-                }
-            }
-            else if (selectedGoIsFloor) {
-                if (controller.IsGamepad() && cursorObject) {
-                    cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
-                    ReplaceFloor(cursorObject.transform.position);
-                }
-                else {
-                    ReplaceFloor(Mouse.current.position.ReadValue());
+                    Replace(Mouse.current.position.ReadValue());
                 }
             }
             else {
@@ -324,8 +310,7 @@ public class BuildingMode : Interactable {
         }
     }
 
-
-    private void ReplaceFloor(Vector3 pos) {
+    private void Replace(Vector3 pos) {
         if (selectedGo) {
             RaycastHit hit;
             Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
@@ -335,21 +320,9 @@ public class BuildingMode : Interactable {
                 disabledGo = hit.collider.gameObject;
                 disabledGo.SetActive(false);
                 selectedGo.transform.position = hit.collider.transform.position;
-            }
-        }
-    }
 
-    private void ReplaceWall(Vector3 pos) {
-        if (selectedGo) {
-            RaycastHit hit;
-            Ray ray = buildingCamera.GetComponent<Camera>().ScreenPointToRay(pos);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, currentRaycastlayer)) {
-                if (disabledGo)
-                    disabledGo.SetActive(true);
-                disabledGo = hit.collider.gameObject;
-                disabledGo.SetActive(false);
-                selectedGo.transform.position = hit.collider.transform.position;
-                selectedGo.transform.rotation = hit.collider.transform.rotation;
+                if (selectedGoIsWall || selectedGoIsFrame)
+                    selectedGo.transform.rotation = hit.collider.transform.rotation;
             }
         }
     }
@@ -382,7 +355,6 @@ public class BuildingMode : Interactable {
         playerControllerSO.GetPlayerController().playerInput.Building.Quit.performed -= Quit;
         playerControllerSO.GetPlayerController().playerInput.Building.Select.performed -= Select;
         playerControllerSO.GetPlayerController().playerInput.Building.Rotate.performed -= RotateGameObject;
-        playerControllerSO.GetPlayerController().playerInput.Building.EnablePreview.performed -= EnablePreview;
         playerControllerSO.GetPlayerController().playerInput.Building.DisplayFurnitureStore.performed -= DisplayFurtniturePanel;
     }
 }

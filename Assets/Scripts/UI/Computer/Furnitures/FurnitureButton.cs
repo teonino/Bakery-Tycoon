@@ -37,7 +37,7 @@ public class FurnitureButton : MonoBehaviour {
 
     private void DisplayAssetChoiceWindow() {
         if (money.GetMoney() > furnitureSO.GetPrice())
-            furnitureManager.DisplayAssetChoice(furnitureSO);
+            furnitureManager.DisplayAssetChoice(furnitureSO, gameObject);
     }
 
     private void BuyFurniture() {

@@ -21,6 +21,7 @@ public class ListIngredient : Data
         {
             listIngredient[i].amount = 0;
             listIngredient[i].ingredient.unlocked = false;
+            listIngredient[i].ingredient.SetName();
         }
 
         if (tutorial.GetTutorial())
