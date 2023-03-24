@@ -52,6 +52,15 @@ public class CraftingStation : Interactable {
                 playerControllerSO.GetPlayerController().SetItemHold(go.Result);
                 ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
 
+                if (!productItem)
+                    print("Product Item is null");
+
+                if(productItem.product == null)
+                    print("productItem.product Item is null");
+
+                if (itemInStation == null)
+                    print("itemInStation is null");
+
                 productItem.product.SetAmount(itemInStation.GetAmount());
                 go.Result.transform.SetParent(arm);
                 go.Result.transform.localPosition = Vector3.zero;

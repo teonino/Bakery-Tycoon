@@ -17,6 +17,10 @@ public class CommandListManager : MonoBehaviour {
         day.DayTimeChange += DisableGameObject;
     }
 
+    private void OnDestroy() {
+        day.DayTimeChange -= DisableGameObject;
+    }
+
     private void DisableGameObject() {
         gameObject.SetActive(false);
     }
