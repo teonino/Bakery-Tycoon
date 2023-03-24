@@ -89,7 +89,7 @@ public class SpawnCustomer : MonoBehaviour {
         yield return new WaitForSeconds(randomTime);
         InstantiateCustomer();
 
-        if (nbCustomerSpawned + nbCustomerRegularSpawned < customer.GetNbRegularCustomer() + customer.GetNbRandomCustomer())
+        if (nbCustomerSpawned + nbCustomerRegularSpawned < customer.GetNbRegularCustomer() + customer.GetNbRandomCustomer() * reputation.GetBonus()) 
             StartCoroutine(SpawnDelay());
         else
             FindObjectOfType<DayManager>().UpdateDay();
@@ -104,7 +104,7 @@ public class SpawnCustomer : MonoBehaviour {
                     if (nbCustomerRegularSpawned < customer.GetNbRegularCustomer())
                         SpawnCustomerAsset(true);
                 }
-                else if (nbCustomerSpawned < customer.GetNbRandomCustomer())
+                else if (nbCustomerSpawned < customer.GetNbRandomCustomer() * reputation.GetBonus())
                     SpawnCustomerAsset(false);
 
                 //if all Random customer has been spawned => spawn a regular

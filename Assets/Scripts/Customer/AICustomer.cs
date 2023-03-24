@@ -141,6 +141,9 @@ public class AICustomer : Interactable
             go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(totalPrice, 0);
             //requestedProduct = null;
         };
+
+        totalPrice = Mathf.CeilToInt(totalPrice * reputation.GetBonus());
+
         cashRegister.GetComponent<Animation>().Play();
         money.AddMoney(totalPrice);
         reputation.AddReputation(saleReputation);

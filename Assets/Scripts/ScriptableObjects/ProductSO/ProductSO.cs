@@ -21,7 +21,6 @@ public class ProductSO : ScriptableObject {
 
     public void SetName() {
         StringTableEntry entry = table.GetTable().GetEntry(keyName);
-        Debug.Log("product : " + keyName);
         name = entry.GetLocalizedString();
     }
 

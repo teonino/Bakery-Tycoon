@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class WorkstationManager : MonoBehaviour {
@@ -122,12 +123,14 @@ public class WorkstationManager : MonoBehaviour {
         playerControllerSO.GetPlayerController().playerInput.Workstation.Cook.performed += Cook;
     }
 
+
     private void SetupRacks() {
         if (ingredientButtonList.Count > 0 && nbButton == lenght) {
             maxButtonInRack = (int)Math.Floor(scollRectTransform.rect.width / ingredientButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
             for (int i = 0; i < ingredientButtonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
                     rackAsset.InstantiateAsync(scroll.transform).Completed += (go) => {
+                        go.Result.name = "Rack " + rackList.Count;
                         rackList.Add(go.Result);
                         SetupButton();
                     };
@@ -185,7 +188,22 @@ public class WorkstationManager : MonoBehaviour {
                     StartCoroutine(waitForGamepad());
             ingredientPanelEnabled = true;
         }
+
+
+        if (controller.GetEventSystemCurrentlySelected() && controller.GetEventSystemCurrentlySelected().transform.parent && controller.GetEventSystemCurrentlySelected().transform.parent.gameObject != lastRackSelected) {
+            if (scroll.activeInHierarchy) {
+                for (int i = 0; i < rackList.Count; i++) {
+                    if (rackList[i] == controller.GetEventSystemCurrentlySelected().transform.parent.gameObject) {
+                        lastRackSelected = rackList[i];
+                        print("Rack" + i);
+                    }
+                }
+            }
+        }
     }
+
+
+    private GameObject lastRackSelected = null;
 
     public virtual void IngredientSelected(IngredientSO ingredient) {
 
