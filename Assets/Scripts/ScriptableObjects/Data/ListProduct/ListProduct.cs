@@ -11,9 +11,10 @@ public class ListProduct : Data {
     [SerializeField] private bool debug;
 
     public override void ResetValues() {
-        for (int i = 0; i < listProduct.Count; i++)
+        for (int i = 0; i < listProduct.Count; i++) {
             listProduct[i].unlocked = false;
-
+            listProduct[i].SetName();
+        }
         if (tutorial.GetTutorial()) 
             for (int i = 0; i < tutoProducts.Count; i++)
                 tutoProducts[i].unlocked = true;

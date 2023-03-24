@@ -18,13 +18,10 @@ public class EntranceDoor : Interactable {
         if (day.GetDayTime() == DayTime.Evening) {
             GameObject[] gos = GameObject.FindGameObjectsWithTag("Door");
 
-            if (gos.Length > 1) {
-                door1 = gos[0];
-                door2 = gos[1];
-                SaveManager save = FindObjectOfType<SaveManager>();
-                save?.Save();
-                StartCoroutine(ClosingDoors());
-            }
+            SaveManager save = FindObjectOfType<SaveManager>();
+            save?.Save();
+            StartCoroutine(ClosingDoors());
+
         }
 
         finishDayQuest?.OnInterract();
@@ -49,4 +46,3 @@ public class EntranceDoor : Interactable {
         SceneManager.LoadScene("FirstBakery_New");
     }
 }
- 

@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Tables;
 
 [CreateAssetMenu(fileName = "Product", menuName = "Product", order = 1)]
 public class ProductSO : ScriptableObject {
     [Header("Global variables")]
+    public string keyName;
     public new string name;
     public int price;
     public float recipePrice;
@@ -13,6 +16,13 @@ public class ProductSO : ScriptableObject {
     public bool unlocked = false;
     public Texture image;
     public AssetReference asset;
+
+    [SerializeField] private LocalizedStringTable table;
+
+    public void SetName() {
+        StringTableEntry entry = table.GetTable().GetEntry(keyName);
+        name = entry.GetLocalizedString();
+    }
 
     [Space(5)]
     [Header("Paste")]
