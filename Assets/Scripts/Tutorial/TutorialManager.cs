@@ -30,6 +30,7 @@ public class TutorialManager : MonoBehaviour
     private void OnDestroy()
     {
         tutorial.action -= SetDefaultButton;
+        dialogueManager.OnDestroyDialoguePanel -= LaunchQuest;
     }
 
     private void SetupDialogue()
@@ -51,13 +52,14 @@ public class TutorialManager : MonoBehaviour
 
     private void NextQuest()
     {
+        quests[indexQuest].OnCompletedAction -= NextQuest;
         indexQuest++;
         if (indexQuest < quests.Count)
         {
             SetupDialogue();
             SetupQuest();
             if (indexQuest == quests.Count - 1)
-                day.OnNextDayPhase();
+                day?.OnNextDayPhase();
         }
         else
         {
@@ -72,8 +74,7 @@ public class TutorialManager : MonoBehaviour
         LaunchQuest();
     }
 
-    private void SetDefaultButton()
-    {
+    private void SetDefaultButton() {
         dialogueManager.SetDefaultButton();
     }
 }
