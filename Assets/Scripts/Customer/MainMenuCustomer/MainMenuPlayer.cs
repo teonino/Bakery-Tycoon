@@ -7,11 +7,13 @@ using UnityEngine.AI;
 public class MainMenuPlayer : MonoBehaviour
 {
     public GameObject OriginalSpawn;
+    public GameObject cashMachineLookAt;
     public List<GameObject> Pathpoints;
     public NavMeshAgent agent;
     [SerializeField] private Animator animator;
-    [SerializeField] private float waitingTime = 80;
+    [SerializeField] private float waitingTime;
     public bool isWaiting = false;
+    [SerializeField] private int rdm;
 
     public void OnEnable()
     {
@@ -23,9 +25,10 @@ public class MainMenuPlayer : MonoBehaviour
 
     public IEnumerator Move()
     {
-        int rdn = Random.Range(0, Pathpoints.Count);
+        rdm = Random.Range(0, Pathpoints.Count);
         agent.speed = 3;
-        switch(rdn)
+        print(rdm);
+        switch(rdm)
         {
             case 0:
                 yield return new WaitForSeconds(3);
@@ -57,11 +60,15 @@ public class MainMenuPlayer : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         animator.SetBool("isWalking", false);
+        agent.transform.LookAt(Pathpoints[rdm].transform.position);
         yield return new WaitForSeconds(waitingTime);
         animator.SetBool("isWalking", true);
         agent.SetDestination(OriginalSpawn.transform.position);
+        yield return new WaitForSeconds(1.5f);
+        agent.transform.LookAt(cashMachineLookAt.transform.position);
+        animator.SetBool("isWalking", false);
     }
 
     public void triggerAnimation(string trigger)

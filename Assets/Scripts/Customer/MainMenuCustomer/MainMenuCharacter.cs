@@ -38,7 +38,7 @@ public class MainMenuCharacter : MonoBehaviour
             {
                 isWaiting = true;
                 triggerAnimation("Idle");
-                player.StartCoroutine(player.Move());
+                StartCoroutine(player.Move());
             }
         }
         else if (Vector3.Distance(transform.position, agent.destination) > 1.5f)
@@ -63,7 +63,6 @@ public class MainMenuCharacter : MonoBehaviour
 
     public void triggerAnimation(string trigger)
     {
-        print("set trigger activé: " + trigger);
         animator.SetTrigger(trigger);
     }
 
