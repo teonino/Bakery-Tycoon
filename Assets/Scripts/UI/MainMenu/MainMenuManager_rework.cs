@@ -168,7 +168,7 @@ public class MainMenuManager_rework : MonoBehaviour
             Blackscreen.transform.SetAsLastSibling();
             blackscreenAnimator.SetTrigger("FadeReverse");
             yield return new WaitForSeconds(0.7f);
-            SceneManager.LoadScene("First");
+            SceneManager.LoadScene("FirstBakery_New");
         }
         else if (panelName == "Back")
         {
