@@ -126,6 +126,17 @@ public class MainMenuManager_rework : MonoBehaviour
         StartCoroutine(DisplayPanel(panelName));
     }
 
+    public void ActiveCustomer()
+    {
+        currentCustomer.gameObject.SetActive(true);
+    }
+
+    public void LaunchLeavingFunction()
+    {
+        print("launch leaving function");
+        StartCoroutine(currentCustomer.Leaving());
+    }
+
     public IEnumerator DisplayPanel(string panelName)
     {
         Animator currentPanelAnimator = currentPanel.GetComponent<Animator>();
