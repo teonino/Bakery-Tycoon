@@ -27,5 +27,4 @@ public class Money : Data
         else
             stats.RemoveMoney(value);
     }
-
 }
