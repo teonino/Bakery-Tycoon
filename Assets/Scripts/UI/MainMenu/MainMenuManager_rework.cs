@@ -24,7 +24,14 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private GameObject buttonPanel;
     private Animator buttonPanelAnimator;
 
-    private bool canPressInput;
+    [SerializeField] private GameObject player;
+    private Animator playerAnimator;
+
+    [SerializeField] private GameObject CustomerSpawn;
+    private bool canPressInput = false;
+    public MainMenuCharacter currentCustomer;
+    public Animator currentCustomerAnimator;
+    [SerializeField] private List<MainMenuCharacter> mainMenuCharacters = new List<MainMenuCharacter>();
 
     private void OnEnable()
     {
@@ -40,7 +47,9 @@ public class MainMenuManager_rework : MonoBehaviour
         logoAnimator = logo.GetComponent<Animator>();
         buttonPanelAnimator = buttonPanel.GetComponent<Animator>();
         blackscreenAnimator.SetTrigger("Fade");
+        playerAnimator = player.GetComponent<Animator>();
         StartCoroutine(SetAtLastSiblingBlackscreen());
+        StartCoroutine(spawnCustomer());
     }
 
     public IEnumerator SetAtLastSiblingBlackscreen()
@@ -50,6 +59,7 @@ public class MainMenuManager_rework : MonoBehaviour
         startLogoAnim();
         yield return new WaitForSeconds(0.7f);
         startTextAnim();
+        canPressInput = true;
     }
 
     public void startLogoAnim()
@@ -81,5 +91,24 @@ public class MainMenuManager_rework : MonoBehaviour
         playerInput.UI.AnyKeyPressed.performed -= LaunchAnyKeyPressed;
         playerInput.UI.Disable();
     }
+
+    public IEnumerator spawnCustomer()
+    {
+        if (currentCustomer == null)
+        {
+            print("test");
+            int randomSpawnTime = Random.Range(1, 2);
+            yield return new WaitForSeconds(randomSpawnTime);
+            int rdm = Random.Range(0, mainMenuCharacters.Count);
+            currentCustomer = mainMenuCharacters[rdm];
+            currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
+            Instantiate(currentCustomer, CustomerSpawn.transform);
+            yield return new WaitForSeconds(0.5f);
+            print("le client attend");
+            yield return new WaitForEndOfFrame();
+        }
+        print("test failed");
+    }
+
 
 }
