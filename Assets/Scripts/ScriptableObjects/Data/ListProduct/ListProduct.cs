@@ -29,7 +29,14 @@ public class ListProduct : Data {
     }
 
     public int GetProductLenght() => listProduct.Count;
-    public ProductSO GetRandomProduct() => listProduct[Random.Range(0, GetProductLenght())];
+    public ProductSO GetRandomProduct() {
+        int rng ;
+        do
+            rng = Random.Range(0, GetProductLenght());
+        while (!listProduct[rng].unlocked);
+
+      return listProduct[rng];
+    }
     public List<ProductSO> GetProductList() => listProduct;
 
 }
