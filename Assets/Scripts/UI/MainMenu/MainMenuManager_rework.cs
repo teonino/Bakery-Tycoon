@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager_rework : MonoBehaviour
 {
@@ -28,16 +29,25 @@ public class MainMenuManager_rework : MonoBehaviour
     private Animator playerAnimator;
 
     [SerializeField] private GameObject CustomerSpawn;
-    private bool canPressInput = false;
+    private bool canPressInput = true;
     public MainMenuCharacter currentCustomer;
     public Animator currentCustomerAnimator;
     [SerializeField] private List<MainMenuCharacter> mainMenuCharacters = new List<MainMenuCharacter>();
+    [SerializeField] private List<GameObject> panelMainMenu = new List<GameObject> ();
+    [SerializeField] private List<Animator> animators = new List<Animator> ();
+    [SerializeField] private GameObject currentPanel;
 
     private void OnEnable()
     {
         playerInput = new PlayerInput();
         playerInput.UI.Enable();
         playerInput.UI.AnyKeyPressed.performed += LaunchAnyKeyPressed;
+
+        for (int i = 0; i < panelMainMenu.Count; i++)
+        {
+            animators.Add(panelMainMenu[i].GetComponent<Animator>());
+        }
+        currentPanel = panelMainMenu[0];
     }
 
     private void Start()
@@ -74,8 +84,12 @@ public class MainMenuManager_rework : MonoBehaviour
 
     private void LaunchAnyKeyPressed(InputAction.CallbackContext context)
     {
-        print("any key pressed");
-        StartCoroutine(AnyKeyPressed());
+        if (canPressInput)
+        {
+            print("any key pressed");
+            canPressInput = false;
+            StartCoroutine(AnyKeyPressed());
+        }
     }
 
     private IEnumerator AnyKeyPressed()
@@ -96,7 +110,6 @@ public class MainMenuManager_rework : MonoBehaviour
     {
         if (currentCustomer == null)
         {
-            print("test");
             int randomSpawnTime = Random.Range(1, 2);
             yield return new WaitForSeconds(randomSpawnTime);
             int rdm = Random.Range(0, mainMenuCharacters.Count);
@@ -104,11 +117,67 @@ public class MainMenuManager_rework : MonoBehaviour
             currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
             Instantiate(currentCustomer, CustomerSpawn.transform);
             yield return new WaitForSeconds(0.5f);
-            print("le client attend");
             yield return new WaitForEndOfFrame();
         }
-        print("test failed");
     }
 
+    public void LaunchDisplayPanel(string panelName)
+    {
+        StartCoroutine(DisplayPanel(panelName));
+    }
+
+    public IEnumerator DisplayPanel(string panelName)
+    {
+        Animator currentPanelAnimator = currentPanel.GetComponent<Animator>();
+        if(panelName == "Options")
+        {
+            currentPanelAnimator.SetTrigger("InsideToOutside");
+            yield return new WaitForSeconds(1);
+            panelMainMenu[1].SetActive(true);
+            panelMainMenu[2].SetActive(false);
+            currentPanel = panelMainMenu[1];
+            currentPanelAnimator = currentPanel.GetComponent<Animator>();
+            currentPanelAnimator.SetTrigger("OutsideToInside");
+        }
+        else if (panelName == "Credits")
+        {
+            currentPanelAnimator.SetTrigger("InsideToOutside");
+            yield return new WaitForSeconds(1);
+            panelMainMenu[1].SetActive(false);
+            panelMainMenu[2].SetActive(true);
+            currentPanel = panelMainMenu[2];
+            currentPanelAnimator = currentPanel.GetComponent<Animator>();
+            currentPanelAnimator.SetTrigger("OutsideToInside");
+        }
+        else if (panelName == "Tutorial")
+        {
+            Blackscreen.transform.SetAsLastSibling();
+            blackscreenAnimator.SetTrigger("FadeReverse");
+            yield return new WaitForSeconds(0.7f);
+            SceneManager.LoadScene("Tutorial");
+        }
+        else if (panelName == "Quit")
+        {
+            Blackscreen.transform.SetAsLastSibling();
+            blackscreenAnimator.SetTrigger("FadeReverse");
+            yield return new WaitForSeconds(0.7f);
+            Application.Quit();
+        }
+        else if (panelName == "Play")
+        {
+            Blackscreen.transform.SetAsLastSibling();
+            blackscreenAnimator.SetTrigger("FadeReverse");
+            yield return new WaitForSeconds(0.7f);
+            SceneManager.LoadScene("FirstBakery_New");
+        }
+        else if (panelName == "Back")
+        {
+            currentPanelAnimator.SetTrigger("InsideToOutside");
+            yield return new WaitForSeconds(1);
+            currentPanel = panelMainMenu[0];
+            currentPanelAnimator = currentPanel.GetComponent<Animator>();
+            currentPanelAnimator.SetTrigger("OutsideToInside");
+        }
+    }
 
 }
