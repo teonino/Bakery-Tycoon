@@ -10,11 +10,6 @@ public class ListIngredient : Data
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private bool debug;
 
-    private void OnEnable()
-    {
-        ResetValues();
-    }
-
     public override void ResetValues()
     {
         for (int i = 0; i < listIngredient.Count; i++)

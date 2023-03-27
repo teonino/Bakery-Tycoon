@@ -189,17 +189,17 @@ public class WorkstationManager : MonoBehaviour {
             ingredientPanelEnabled = true;
         }
 
-        
-        //if(controller.GetEventSystemCurrentlySelected() && controller.GetEventSystemCurrentlySelected().transform.parent && controller.GetEventSystemCurrentlySelected().transform.parent.gameObject != lastRackSelected) {
-        //    if (scroll.activeInHierarchy) {
-        //        for(int i = 0; i < rackList.Count; i++){
-        //            if (rackList[i] == controller.GetEventSystemCurrentlySelected().transform.parent.gameObject) {
-        //                lastRackSelected = rackList[i];
-        //                print("Rack" + i);
-        //            }
-        //        }
-        //    }
-        //}
+
+        if (controller.GetEventSystemCurrentlySelected() && controller.GetEventSystemCurrentlySelected().transform.parent && controller.GetEventSystemCurrentlySelected().transform.parent.gameObject != lastRackSelected) {
+            if (scroll.activeInHierarchy) {
+                for (int i = 0; i < rackList.Count; i++) {
+                    if (rackList[i] == controller.GetEventSystemCurrentlySelected().transform.parent.gameObject) {
+                        lastRackSelected = rackList[i];
+                        print("Rack" + i);
+                    }
+                }
+            }
+        }
     }
 
 

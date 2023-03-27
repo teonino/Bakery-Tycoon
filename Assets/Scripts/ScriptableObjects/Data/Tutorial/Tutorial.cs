@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tutorial", menuName = "Data/Tutorial")]
-public class Tutorial : ScriptableObject {
+public class Tutorial : Data {
     [SerializeField] private bool tutorial;
 
     private bool workstation = false;
@@ -12,7 +12,7 @@ public class Tutorial : ScriptableObject {
 
     public Action action;
 
-    private void OnEnable() {
+    public override void ResetValues() {
         workstation = AddIngredient = false;
     }
 
@@ -24,5 +24,7 @@ public class Tutorial : ScriptableObject {
     public void SetTutorial(bool value) => tutorial = value;
     public bool GetTutorial() => tutorial;
 
-    public void Invoke() => action?.Invoke(); 
+    public void Invoke() => action?.Invoke();
+
+
 }
