@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class SaveManager : MonoBehaviour {
+    [SerializeField] private ListProduct products;
     [SerializeField] private ListFurniture furnitures;
     [SerializeField] private GameObject defaultMainRoom;
     private Transform mainRoom;
@@ -86,7 +88,7 @@ public class SaveManager : MonoBehaviour {
             if (data.objectName.EndsWith("_A")) {
                 data.typeA = true;
             }
-            else if(data.objectName.EndsWith("_B")) {
+            else if (data.objectName.EndsWith("_B")) {
                 data.typeA = false;
             }
         }
@@ -94,7 +96,7 @@ public class SaveManager : MonoBehaviour {
         if (t.GetComponent<Shelf>()) {
             if (t.GetComponent<Shelf>().GetProduct() != null) {
                 data.hasProduct = true;
-                data.product = t.GetComponent<Shelf>().GetProduct();
+                data.productKeyname = t.GetComponent<Shelf>().GetProduct().GetKeyName();
             }
         }
 
@@ -136,14 +138,25 @@ public class SaveManager : MonoBehaviour {
                         instantiateObj.transform.rotation = data.rotation;
                         instantiateObj.transform.localScale = data.scale;
 
-                        if (data.hasProduct)
-                            instantiateObj.GetComponent<Shelf>().SpawnAsset(data.product.productSO);
+                        if (data.hasProduct) {
+                            instantiateObj.GetComponent<Shelf>().SpawnAsset(GetProduct(data.productKeyname));
+                        }
                     };
-                } else {
+                }
+                else {
                     print($"Error, {data.objectName} not found");
                 }
             }
         }
+    }
+
+    private ProductSO GetProduct(string productKeyname) {
+        foreach(ProductSO product in products.GetProductList()) {
+            if(product.keyName == productKeyname) {
+                return product;
+            }
+        }
+        return null;
     }
 
     public AssetReference GetAssetReference(CustomizableData data) {
