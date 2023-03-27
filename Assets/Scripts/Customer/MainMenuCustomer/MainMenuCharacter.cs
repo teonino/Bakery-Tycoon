@@ -26,8 +26,6 @@ public class MainMenuCharacter : MonoBehaviour
         agent.SetDestination(PathPoint.transform.position);
         agent.speed = 3;
         triggerAnimation("Walk");
-
-        StartCoroutine(waiting());
     }
 
     private void Update()
@@ -38,7 +36,7 @@ public class MainMenuCharacter : MonoBehaviour
             {
                 isWaiting = true;
                 triggerAnimation("Idle");
-                StartCoroutine(player.Move());
+                StartCoroutine(checkIfWaiting());
             }
         }
         else if (Vector3.Distance(transform.position, agent.destination) > 1.5f)
@@ -51,14 +49,45 @@ public class MainMenuCharacter : MonoBehaviour
         }
     }
 
-    private IEnumerator waiting()
+    private IEnumerator HelloAnimation()
     {
-        yield return new WaitForSeconds(waitingTime);
-        agent.SetDestination(OriginalSpawn.transform.position);
-        yield return new WaitForSeconds(2f);
-        manager.currentCustomer = null;
-        StartCoroutine(manager.spawnCustomer());
-        Destroy(this.gameObject);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetTrigger("Happy");
+    }
+
+    private IEnumerator checkIfWaiting()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if(isWaiting)
+        {
+            StartCoroutine(player.Move());
+            StartCoroutine(HelloAnimation());
+        }
+    }
+
+
+    public IEnumerator Leaving()
+    {
+        if (manager != null)
+        {
+            print("leaving function");
+            triggerAnimation("Happy");
+            yield return new WaitForSeconds(2f);
+            manager.currentCustomer = null;
+            StartCoroutine(manager.spawnCustomer());
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            SearchManager();
+        }
+    }
+
+    private void SearchManager()
+    {
+        manager = FindObjectOfType<MainMenuManager_rework>();
+        manager.ActiveCustomer();
+        StartCoroutine(Leaving());
     }
 
     public void triggerAnimation(string trigger)
