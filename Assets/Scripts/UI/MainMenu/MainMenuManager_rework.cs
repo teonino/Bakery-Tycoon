@@ -29,7 +29,7 @@ public class MainMenuManager_rework : MonoBehaviour
     private Animator playerAnimator;
 
     [SerializeField] private GameObject CustomerSpawn;
-    private bool canPressInput = true;
+    private bool canPressInput = false;
     public MainMenuCharacter currentCustomer;
     public Animator currentCustomerAnimator;
     [SerializeField] private List<MainMenuCharacter> mainMenuCharacters = new List<MainMenuCharacter>();
@@ -40,7 +40,11 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private creditScrolling credit;
     [SerializeField] private GameObject creditSpawn;
     [SerializeField] internal float creditSpeed;
+    [SerializeField] internal bool isInCredit = false;
+    private Animator creditAnimator;
     internal int creditIndex;
+    [SerializeField] private creditScrolling creditScript;
+    [SerializeField] private bool anyKeyWasPressed = false;
 
     private void OnEnable()
     {
@@ -65,6 +69,7 @@ public class MainMenuManager_rework : MonoBehaviour
         playerAnimator = player.GetComponent<Animator>();
         StartCoroutine(SetAtLastSiblingBlackscreen());
         StartCoroutine(spawnCustomer());
+        
     }
 
     public IEnumerator SetAtLastSiblingBlackscreen()
@@ -74,17 +79,24 @@ public class MainMenuManager_rework : MonoBehaviour
         startLogoAnim();
         yield return new WaitForSeconds(0.7f);
         startTextAnim();
-        canPressInput = true;
     }
 
     public void startLogoAnim()
     {
         logoAnimator.SetTrigger("FadeToUnfade");
+        StartCoroutine(waitForBoolAnyKey());
     }
 
     public void startTextAnim()
     {
         inputTextAnimator.SetTrigger("Unfade");
+        StartCoroutine(waitForBoolAnyKey());
+    }
+
+    private IEnumerator waitForBoolAnyKey()
+    {
+        yield return new WaitForSeconds(1.5f);
+        canPressInput = true;
     }
 
     private void LaunchAnyKeyPressed(InputAction.CallbackContext context)
@@ -104,6 +116,7 @@ public class MainMenuManager_rework : MonoBehaviour
         logoAnimator.SetTrigger("transitionToCornerUpLeft");
         yield return new WaitForSeconds(1);
         buttonPanelAnimator.SetTrigger("OutsideToInside");
+        anyKeyWasPressed = true;
     }
     private void OnDisable()
     {
@@ -147,69 +160,86 @@ public class MainMenuManager_rework : MonoBehaviour
         Animator currentPanelAnimator = currentPanel.GetComponent<Animator>();
         if(panelName == "Options")
         {
-            panelMainMenu[1].SetActive(true);
-            currentPanelAnimator.SetTrigger("InsideToOutside");
-            yield return new WaitForSeconds(1);
-            panelMainMenu[1].SetActive(true);
-            panelMainMenu[2].SetActive(false);
-            currentPanel = panelMainMenu[1];
-            currentPanelAnimator = currentPanel.GetComponent<Animator>();
-            currentPanelAnimator.SetTrigger("OutsideToInside");
+            if (anyKeyWasPressed)
+            {
+                if (isInCredit)
+                {
+                    creditAnimator.SetTrigger("fade");
+                    creditScript.waitForDestroyAfterCredits();
+                }
+
+                panelMainMenu[1].SetActive(true);
+                currentPanelAnimator.SetTrigger("InsideToOutside");
+                yield return new WaitForSeconds(1);
+                panelMainMenu[1].SetActive(true);
+                panelMainMenu[2].SetActive(false);
+                currentPanel = panelMainMenu[1];
+                currentPanelAnimator = currentPanel.GetComponent<Animator>();
+                currentPanelAnimator.SetTrigger("OutsideToInside");
+            }
         }
         else if (panelName == "Credits")
         {
-            displayCredit();
+            if (anyKeyWasPressed)
+            {
+                displayCredit();
+            }
         }
         else if (panelName == "Tutorial")
         {
-            Blackscreen.transform.SetAsLastSibling();
-            blackscreenAnimator.SetTrigger("FadeReverse");
-            yield return new WaitForSeconds(0.7f);
-            SceneManager.LoadScene("Tutorial");
+            if (anyKeyWasPressed)
+            {
+                Blackscreen.transform.SetAsLastSibling();
+                blackscreenAnimator.SetTrigger("FadeReverse");
+                yield return new WaitForSeconds(0.7f);
+                SceneManager.LoadScene("Tutorial");
+            }
         }
         else if (panelName == "Quit")
         {
-            Blackscreen.transform.SetAsLastSibling();
-            blackscreenAnimator.SetTrigger("FadeReverse");
-            yield return new WaitForSeconds(0.7f);
-            Application.Quit();
+            if (anyKeyWasPressed)
+            {
+                Blackscreen.transform.SetAsLastSibling();
+                blackscreenAnimator.SetTrigger("FadeReverse");
+                yield return new WaitForSeconds(0.7f);
+                Application.Quit();
+            }
         }
         else if (panelName == "Play")
         {
-            Blackscreen.transform.SetAsLastSibling();
-            blackscreenAnimator.SetTrigger("FadeReverse");
-            yield return new WaitForSeconds(0.7f);
-            SceneManager.LoadScene("FirstBakery_New");
+            if (anyKeyWasPressed)
+            {
+                Blackscreen.transform.SetAsLastSibling();
+                blackscreenAnimator.SetTrigger("FadeReverse");
+                yield return new WaitForSeconds(0.7f);
+                SceneManager.LoadScene("FirstBakery_New");
+            }
         }
         else if (panelName == "Back")
         {
-            currentPanelAnimator.SetTrigger("InsideToOutside");
-            yield return new WaitForSeconds(1);
-            currentPanel = panelMainMenu[0];
-            currentPanelAnimator = currentPanel.GetComponent<Animator>();
-            currentPanelAnimator.SetTrigger("OutsideToInside");
-            panelMainMenu[2].SetActive(false);
-        }
-        else if (panelName == "BackCredit")
-        {
-            currentPanelAnimator.SetTrigger("CreditFade");
-            yield return new WaitForSeconds(1);
-            currentPanelAnimator.SetTrigger("InsideToOutside");
-            yield return new WaitForSeconds(1);
-            currentPanel = panelMainMenu[0];
-            currentPanelAnimator = currentPanel.GetComponent<Animator>();
-            currentPanelAnimator.SetTrigger("OutsideToInside");
-            panelMainMenu[1].SetActive(false);
+            if (anyKeyWasPressed)
+            {
+                currentPanelAnimator.SetTrigger("InsideToOutside");
+                yield return new WaitForSeconds(1);
+                currentPanel = panelMainMenu[0];
+                currentPanelAnimator = currentPanel.GetComponent<Animator>();
+                currentPanelAnimator.SetTrigger("OutsideToInside");
+                panelMainMenu[2].SetActive(false);
+            }
         }
     }
 
     private void displayCredit()
     {
-        if (creditIndex < 1)
+        if (creditIndex < 1 && isInCredit == false)
         {
             creditIndex++;
-            Instantiate(credit, creditSpawn.transform);
+            creditScript = Instantiate(credit, creditSpawn.transform);
+            creditAnimator = creditScript.gameObject.GetComponent<Animator>();
+            isInCredit = true;
         }
+        else
+            print("Credit Index: " + creditIndex + " is in credit: " + isInCredit);
     }
 
 }

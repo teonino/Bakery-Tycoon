@@ -8914,6 +8914,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6885172061096097928, guid: 54d2fd5e9259bed4387ffc360b586f16, type: 3}
   m_PrefabInstance: {fileID: 179147436}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &528648130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7350327581809930784, guid: 332b989d7f5579d4ebcd0fafaadd404e, type: 3}
+  m_PrefabInstance: {fileID: 694408060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &531745036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9014,7 +9019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 277, y: -1465}
+  m_AnchoredPosition: {x: 277, y: -1471}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &534373097
@@ -23463,7 +23468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 528648130}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1932074535
@@ -30275,6 +30280,14 @@ PrefabInstance:
     - target: {fileID: 7008960060457032593, guid: 60cdf8971876593499ccd01305d97601, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7008960060457032598, guid: 60cdf8971876593499ccd01305d97601, type: 3}
+      propertyPath: presence.state
+      value: Talking with Mamie Motte
+      objectReference: {fileID: 0}
+    - target: {fileID: 7008960060457032598, guid: 60cdf8971876593499ccd01305d97601, type: 3}
+      propertyPath: presence.details
+      value: In the Bakery !
       objectReference: {fileID: 0}
     - target: {fileID: 7008960060457032599, guid: 60cdf8971876593499ccd01305d97601, type: 3}
       propertyPath: m_Name
