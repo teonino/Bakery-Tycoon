@@ -69,7 +69,7 @@ public class AIRandomCustomer : AICustomer
 
     private IEnumerator waitEndOfAnimation()
     {
-        if (!hasProdcut)
+        if (hasProdcut)
         {
             animator.SetTrigger("Happy");
             yield return new WaitForSeconds(3.4f);
@@ -120,7 +120,7 @@ public class AIRandomCustomer : AICustomer
         if (shelf.GetItem() && state == AIState.waiting && shelf.IsFirstInQueue(this) && Vector3.Distance(transform.position, agent.destination) < 1.5f)
         {
             ProductHolder objectOnShelf = shelf.GetItem().GetComponent<ProductHolder>();
-            if (objectOnShelf.product.GetName() == requestedProduct.name && shelf.GetItem().tag != "Paste")
+            if (objectOnShelf.product.GetKeyName() == requestedProduct.keyName && shelf.GetItem().tag != "Paste")
             {
                 if (coroutine != null)
                     StopCoroutine(coroutine);

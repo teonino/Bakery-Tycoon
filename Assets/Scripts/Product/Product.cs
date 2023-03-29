@@ -17,6 +17,20 @@ public class Product {
             return null;
         return productSO.name;
     }
+
+    public override string ToString() {
+        if (productSO)
+            return productSO.name;
+        else
+            return "Null";
+    }
+
+    public string GetKeyName() {
+        if (!productSO)
+            return null;
+        return productSO.keyName;
+    }
+
     public float GetPrice() => productSO.price;
     public CraftingStationType GetCraftingStation() => productSO.craftStationRequired;
 

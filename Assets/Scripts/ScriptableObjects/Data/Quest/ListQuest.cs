@@ -12,9 +12,9 @@ public class ListQuest : Data {
 
     public override void ResetValues() {
         //Daily Quests
-        for (int i = 0; i < dailyQuests.Count; i++) 
+        for (int i = 0; i < dailyQuests.Count; i++)
             dailyQuests[i].SetActive(false);
-        
+
         for (int i = 0; i < nbQuest; i++) {
             int rng = Random.Range(0, dailyQuests.Count);
 
@@ -28,11 +28,12 @@ public class ListQuest : Data {
                     CreateQuest createQuest = (CreateQuest)dailyQuests[rng];
 
                     //Only pick a product player can do
-                    ProductSO rngProduct = products.GetRandomProduct();
-                    while (!rngProduct.CheckRequirement())
+                    ProductSO rngProduct;
+                    do
                         rngProduct = products.GetRandomProduct();
+                    while (!rngProduct.CheckRequirement());
 
-                    createQuest.Init(products.GetRandomProduct(), 2);
+                    createQuest.Init(rngProduct, 2);
                     break;
                 case InterractQuest:
                     InterractQuest interractQuest = (InterractQuest)dailyQuests[rng];

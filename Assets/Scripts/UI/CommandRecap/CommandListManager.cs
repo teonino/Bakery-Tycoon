@@ -14,11 +14,11 @@ public class CommandListManager : MonoBehaviour {
     private List<CommandRecap> commands = new List<CommandRecap>();
 
     private void Start() {
-        day.DayTimeChange += DisableGameObject;
+        //day.DayTimeChange += DisableGameObject;
     }
 
     private void OnDestroy() {
-        day.DayTimeChange -= DisableGameObject;
+        //day.DayTimeChange -= DisableGameObject;
     }
 
     private void DisableGameObject() {
