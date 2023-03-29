@@ -12,6 +12,7 @@ public class InterractQuest : Quest {
     public void Init() {
         title = "Talk to a regular customer";
         isActive = true;
+        this.currentAmount = 0;
 
         reward = RewardType.Reputation;
         rewardAmount = 5;
@@ -30,7 +31,9 @@ public class InterractQuest : Quest {
         if (isActive) {
             if (spawnCustomer)
                 FindObjectOfType<SpawnCustomer>()?.SpawnCustomerAsset(true, breadSO);
+
             OnCompleted();
+            FindObjectOfType<StartingPanel>(true)?.UpdateUI();
 
             return true;
         }
