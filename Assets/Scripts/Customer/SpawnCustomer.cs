@@ -92,7 +92,7 @@ public class SpawnCustomer : MonoBehaviour {
         if (nbCustomerSpawned + nbCustomerRegularSpawned < customer.GetNbRegularCustomer() + customer.GetNbRandomCustomer() * reputation.GetBonus())
             StartCoroutine(SpawnDelay());
         else {
-            yield return new WaitForSeconds(120);
+            yield return new WaitForSeconds(30);
             FindObjectOfType<DayManager>().UpdateDay();
         }
     }

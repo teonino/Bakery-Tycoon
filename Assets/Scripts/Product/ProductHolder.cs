@@ -19,11 +19,12 @@ public class ProductHolder : MonoBehaviour {
             productModels[product.GetAmount()].gameObject.SetActive(false);
     }
 
-    public void DisplayOneGameObject() {
-        foreach(GameObject model in productModels) 
-            model.SetActive(false);
+    public void SetAmount(int i) {
+        product.SetAmount(i);
 
-        productModels[0].gameObject.SetActive(true);
+        for(int j = productModels.Count - 1; j > i; j--) {
+            productModels[j].gameObject.SetActive(false);
+        }
     }
 
     public void DisplayOneProduct() {

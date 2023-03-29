@@ -45,12 +45,12 @@ public class Shelf : Interactable {
             };
     }
 
-    public void SpawnAsset(ProductSO product) {
+    public void SpawnAsset(ProductSO product, int amount) {
         if (product) {
             product.asset.InstantiateAsync(transform).Completed += (go) => {
                 item = go.Result;
                 item.transform.position = itemPosition.transform.position;
-                item.GetComponent<ProductHolder>().product.SetAmount(3);
+                item.GetComponent<ProductHolder>().product.SetAmount(amount);
             };
         }
     }
