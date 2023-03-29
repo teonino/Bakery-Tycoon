@@ -33,7 +33,7 @@ public class ListProduct : Data {
         int rng ;
         do
             rng = Random.Range(0, GetProductLenght());
-        while (!listProduct[rng].unlocked);
+        while (!listProduct[rng].unlocked || !listProduct[rng].CheckRequirement());
 
       return listProduct[rng];
     }
