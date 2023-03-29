@@ -45,13 +45,30 @@ public class MainShelf : Shelf {
 
     public void SetDestinationToPos(AIRandomCustomer customer) {
         customer.SetDestination(pos.transform.position);
+        customer.intermediatePath = pos;
+        StartCoroutine(DistanceWithPos(customer));
+    }
+
+    public void SetDestinationToPos(AIRegularCustomer customer) {
+        customer.SetDestination(pos.transform.position);
+        customer.intermediatePath = pos;
         StartCoroutine(DistanceWithPos(customer));
     }
 
     private IEnumerator DistanceWithPos(AIRandomCustomer customer) {
         yield return null;
-        if(Vector3.Distance(customer.transform.position, pos.transform.position) < 0.4) {
+        if (Vector3.Distance(customer.transform.position, pos.transform.position) < 0.4) {
             GetAvailableQueuePosition(customer);
+        }
+        else {
+            StartCoroutine(DistanceWithPos(customer));
+        }
+    }
+
+    private IEnumerator DistanceWithPos(AIRegularCustomer customer) {
+        yield return null;
+        if (Vector3.Distance(customer.transform.position, pos.transform.position) < 0.4) {
+            customer.Sit();
         }
         else {
             StartCoroutine(DistanceWithPos(customer));
