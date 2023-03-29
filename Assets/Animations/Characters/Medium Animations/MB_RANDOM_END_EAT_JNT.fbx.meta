@@ -20,7 +20,14 @@ ModelImporter:
     removeConstantScaleCurves: 1
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'L_hip_bind_jnt'
+      : position error = 332.391144 mm\n\t'L_knee_bind_jnt' : position error = 471.644501
+      mm\n\t'L_ankle_bind_jnt' : position error = 308.678467 mm\n\t'L_ball_bind_jnt'
+      : position error = 391.749359 mm\n\t'R_hip_bind_jnt' : position error = 332.390808
+      mm\n\t'R_knee_bind_jnt' : position error = 471.643188 mm\n\t'R_ankle_bind_jnt'
+      : position error = 308.678345 mm\n\t'R_ball_bind_jnt' : position error = 391.747650
+      mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
@@ -41,7 +48,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 750
+      lastFrame: 872
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0.25
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 750
     isReadable: 0
   meshes:
     lODScreenPercentages: []

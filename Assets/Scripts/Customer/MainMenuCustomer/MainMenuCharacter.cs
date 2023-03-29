@@ -26,8 +26,6 @@ public class MainMenuCharacter : MonoBehaviour
         agent.SetDestination(PathPoint.transform.position);
         agent.speed = 3;
         triggerAnimation("Walk");
-
-        StartCoroutine(waiting());
     }
 
     private void Update()
@@ -38,7 +36,8 @@ public class MainMenuCharacter : MonoBehaviour
             {
                 isWaiting = true;
                 triggerAnimation("Idle");
-                player.StartCoroutine(player.Move());
+                StartCoroutine(HelloAnimation());
+                StartCoroutine(checkIfWaiting());
             }
         }
         else if (Vector3.Distance(transform.position, agent.destination) > 1.5f)
@@ -51,19 +50,50 @@ public class MainMenuCharacter : MonoBehaviour
         }
     }
 
-    private IEnumerator waiting()
+    private IEnumerator HelloAnimation()
     {
-        yield return new WaitForSeconds(waitingTime);
-        agent.SetDestination(OriginalSpawn.transform.position);
-        yield return new WaitForSeconds(2f);
-        manager.currentCustomer = null;
-        StartCoroutine(manager.spawnCustomer());
-        Destroy(this.gameObject);
+        animator.SetBool("Talk 0", true);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetTrigger("Talk");
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("Talk 0", false);
+    }
+
+    private IEnumerator checkIfWaiting()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if(isWaiting)
+        {
+            StartCoroutine(player.Move());
+        }
+    }
+
+
+    public IEnumerator Leaving()
+    {
+        if (manager != null)
+        {
+            triggerAnimation("Happy");
+            yield return new WaitForSeconds(2f);
+            manager.currentCustomer = null;
+            StartCoroutine(manager.spawnCustomer());
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            SearchManager();
+        }
+    }
+
+    private void SearchManager()
+    {
+        manager = FindObjectOfType<MainMenuManager_rework>();
+        manager.ActiveCustomer();
+        StartCoroutine(Leaving());
     }
 
     public void triggerAnimation(string trigger)
     {
-        print("set trigger activé: " + trigger);
         animator.SetTrigger(trigger);
     }
 

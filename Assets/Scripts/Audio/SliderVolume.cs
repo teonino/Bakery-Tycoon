@@ -90,16 +90,6 @@ public class SliderVolume : MonoBehaviour
         toggleButton.isOn = volumeSlider.value > volumeSlider.minValue;
 
     }
-    public void PlayPreviewAudio()
-    {
-        if (debugSound)
-            previewSound.Play();
-    }
-    public void StopPreviewAudio()
-    {
-        if (previewSound.isPlaying)
-            previewSound.Stop();
-    }
 
     public void SetSeleted(bool selected)
     {
