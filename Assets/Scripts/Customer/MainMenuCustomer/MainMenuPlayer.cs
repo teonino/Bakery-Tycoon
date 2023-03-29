@@ -14,14 +14,30 @@ public class MainMenuPlayer : MonoBehaviour
     [SerializeField] private float waitingTime;
     public bool isWaiting = false;
     [SerializeField] private int rdm;
+    [SerializeField] private MainMenuManager_rework manager;
+
+    private Quaternion originalRotation;
+    private Quaternion currentRotation;
+    private float t;
+    private float speed = 0.1f;
+    private bool haveToTurn;
 
     public void OnEnable()
     {
         animator = GetComponentInChildren<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
+        originalRotation = agent.transform.rotation;
     }
 
+    private void Update()
+    {
+        t = t + Time.deltaTime;
 
+        if(haveToTurn)
+        {
+            agent.transform.rotation = Quaternion.Lerp(currentRotation, originalRotation, t * speed);
+        }
+    }
 
     public IEnumerator Move()
     {
@@ -60,15 +76,20 @@ public class MainMenuPlayer : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.8f);
         animator.SetBool("isWalking", false);
         agent.transform.LookAt(Pathpoints[rdm].transform.position);
         yield return new WaitForSeconds(waitingTime);
         animator.SetBool("isWalking", true);
         agent.SetDestination(OriginalSpawn.transform.position);
         yield return new WaitForSeconds(1.5f);
+        t = 0;
         agent.transform.LookAt(cashMachineLookAt.transform.position);
+        haveToTurn = true;
+        yield return new WaitForSeconds(0.5f);
+        haveToTurn = false;
         animator.SetBool("isWalking", false);
+        manager.LaunchLeavingFunction();
     }
 
     public void triggerAnimation(string trigger)

@@ -37,6 +37,11 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private List<Animator> animators = new List<Animator> ();
     [SerializeField] private GameObject currentPanel;
 
+    [SerializeField] private creditScrolling credit;
+    [SerializeField] private GameObject creditSpawn;
+    [SerializeField] internal float creditSpeed;
+    internal int creditIndex;
+
     private void OnEnable()
     {
         playerInput = new PlayerInput();
@@ -126,11 +131,23 @@ public class MainMenuManager_rework : MonoBehaviour
         StartCoroutine(DisplayPanel(panelName));
     }
 
+    public void ActiveCustomer()
+    {
+        currentCustomer.gameObject.SetActive(true);
+    }
+
+    public void LaunchLeavingFunction()
+    {
+        print("launch leaving function");
+        StartCoroutine(currentCustomer.Leaving());
+    }
+
     public IEnumerator DisplayPanel(string panelName)
     {
         Animator currentPanelAnimator = currentPanel.GetComponent<Animator>();
         if(panelName == "Options")
         {
+            panelMainMenu[1].SetActive(true);
             currentPanelAnimator.SetTrigger("InsideToOutside");
             yield return new WaitForSeconds(1);
             panelMainMenu[1].SetActive(true);
@@ -141,13 +158,7 @@ public class MainMenuManager_rework : MonoBehaviour
         }
         else if (panelName == "Credits")
         {
-            currentPanelAnimator.SetTrigger("InsideToOutside");
-            yield return new WaitForSeconds(1);
-            panelMainMenu[1].SetActive(false);
-            panelMainMenu[2].SetActive(true);
-            currentPanel = panelMainMenu[2];
-            currentPanelAnimator = currentPanel.GetComponent<Animator>();
-            currentPanelAnimator.SetTrigger("OutsideToInside");
+            displayCredit();
         }
         else if (panelName == "Tutorial")
         {
@@ -177,6 +188,27 @@ public class MainMenuManager_rework : MonoBehaviour
             currentPanel = panelMainMenu[0];
             currentPanelAnimator = currentPanel.GetComponent<Animator>();
             currentPanelAnimator.SetTrigger("OutsideToInside");
+            panelMainMenu[2].SetActive(false);
+        }
+        else if (panelName == "BackCredit")
+        {
+            currentPanelAnimator.SetTrigger("CreditFade");
+            yield return new WaitForSeconds(1);
+            currentPanelAnimator.SetTrigger("InsideToOutside");
+            yield return new WaitForSeconds(1);
+            currentPanel = panelMainMenu[0];
+            currentPanelAnimator = currentPanel.GetComponent<Animator>();
+            currentPanelAnimator.SetTrigger("OutsideToInside");
+            panelMainMenu[1].SetActive(false);
+        }
+    }
+
+    private void displayCredit()
+    {
+        if (creditIndex < 1)
+        {
+            creditIndex++;
+            Instantiate(credit, creditSpawn.transform);
         }
     }
 
