@@ -25,7 +25,7 @@ public class PaymentCanvasManager : MonoBehaviour {
         else
         {
             bonusPricePanel.SetActive(false);
-            bonusPriceText.SetText("");
+            bonusPriceText.SetText("+ " + basePrice);
         }
 
         StartCoroutine(Lifespan());
