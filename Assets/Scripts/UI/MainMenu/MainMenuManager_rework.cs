@@ -46,6 +46,8 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private creditScrolling creditScript;
     [SerializeField] private bool anyKeyWasPressed = false;
 
+    [SerializeField] private List<ParticleSystem> sinkVFX;
+
     private void OnEnable()
     {
         playerInput = new PlayerInput();
@@ -57,6 +59,12 @@ public class MainMenuManager_rework : MonoBehaviour
             animators.Add(panelMainMenu[i].GetComponent<Animator>());
         }
         currentPanel = panelMainMenu[0];
+
+        for(int i = 0; i < sinkVFX.Count; i++)
+        {
+            sinkVFX[i].loop = true;
+            sinkVFX[i].Play();
+        }
     }
 
     private void Start()
