@@ -71,7 +71,6 @@ public class MainMenuCharacter : MonoBehaviour
         if (manager != null)
         {
             print("leaving function");
-            triggerAnimation("Happy");
             yield return new WaitForSeconds(2f);
             manager.currentCustomer = null;
             StartCoroutine(manager.spawnCustomer());
