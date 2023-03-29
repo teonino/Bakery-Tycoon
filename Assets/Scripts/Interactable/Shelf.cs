@@ -46,11 +46,13 @@ public class Shelf : Interactable {
     }
 
     public void SpawnAsset(ProductSO product) {
-        product.asset.InstantiateAsync(transform).Completed += (go) => {
-            item = go.Result;
-            item.transform.position = itemPosition.transform.position;
-            item.GetComponent<ProductHolder>().product.SetAmount(3);
-        };
+        if (product) {
+            product.asset.InstantiateAsync(transform).Completed += (go) => {
+                item = go.Result;
+                item.transform.position = itemPosition.transform.position;
+                item.GetComponent<ProductHolder>().product.SetAmount(3);
+            };
+        }
     }
 
     public override bool CanInterract() {

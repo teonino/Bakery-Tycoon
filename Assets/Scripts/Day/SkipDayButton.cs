@@ -9,11 +9,11 @@ public class SkipDayButton : MonoBehaviour
     [SerializeField] Day day;
 
     public void DisplayButton() {
-        gameObject.SetActive(!gameObject.activeSelf);
+        //gameObject.SetActive(!gameObject.activeSelf);
     }
 
     public void SkipDay() {
-        day.OnNewDay();
-        SceneManager.LoadScene("FirstBakery_New");
+        day.OnNextDayPhase();
+        //SceneManager.LoadScene("FirstBakery_New");
     }
 }

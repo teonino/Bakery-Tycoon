@@ -33,6 +33,10 @@ public class ProductSO : ScriptableObject {
     public CraftingStationType craftStationRequired;
     public List<IngredientsForProduct> ingredients;
 
+    public override string ToString() {
+        return name;
+    }
+
 
     [Space(5)]
     [Header("Minigames")]

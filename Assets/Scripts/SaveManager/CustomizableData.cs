@@ -12,7 +12,7 @@ public class CustomizableData
     public string objectName;
     public bool typeA;
     public bool hasProduct;
-    public Product product = null;
+    public string productKeyname;
 
     public override string ToString() {
         return objectName;

@@ -32,7 +32,7 @@ public class CreateQuest : Quest
     {
         if (isActive)
         {
-            if (string.Equals(this.product.name, product.name))
+            if (string.Equals(this.product.keyName, product.keyName))
             {
                 currentAmount++;
             }
