@@ -36,6 +36,7 @@ public class MainMenuCharacter : MonoBehaviour
             {
                 isWaiting = true;
                 triggerAnimation("Idle");
+                StartCoroutine(HelloAnimation());
                 StartCoroutine(checkIfWaiting());
             }
         }
@@ -51,8 +52,11 @@ public class MainMenuCharacter : MonoBehaviour
 
     private IEnumerator HelloAnimation()
     {
+        animator.SetBool("Talk 0", true);
         yield return new WaitForSeconds(0.5f);
-        animator.SetTrigger("Happy");
+        animator.SetTrigger("Talk");
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("Talk 0", false);
     }
 
     private IEnumerator checkIfWaiting()
@@ -61,7 +65,6 @@ public class MainMenuCharacter : MonoBehaviour
         if(isWaiting)
         {
             StartCoroutine(player.Move());
-            StartCoroutine(HelloAnimation());
         }
     }
 
@@ -70,7 +73,7 @@ public class MainMenuCharacter : MonoBehaviour
     {
         if (manager != null)
         {
-            print("leaving function");
+            triggerAnimation("Happy");
             yield return new WaitForSeconds(2f);
             manager.currentCustomer = null;
             StartCoroutine(manager.spawnCustomer());
