@@ -49,4 +49,5 @@ public class Product {
     public void RemoveAmount() => amount--;
     public int GetAmount() => amount;
     public void SetAmount(int i) => amount = i;
+    
 }

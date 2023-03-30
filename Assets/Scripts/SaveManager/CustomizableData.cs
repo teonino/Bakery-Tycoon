@@ -13,6 +13,7 @@ public class CustomizableData
     public bool typeA;
     public bool hasProduct;
     public string productKeyname;
+    public int productAmount;
 
     public override string ToString() {
         return objectName;

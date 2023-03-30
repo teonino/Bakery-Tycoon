@@ -19,25 +19,24 @@ public class AIRegularCustomer : AICustomer {
 
     [SerializeField] private ParticleSystem sitDownEffect;
     [SerializeField] private ParticleSystem flowerEffect;
-    
+
     private DialogueManager dialoguePanel;
     private int indexChair;
 
     public Action addConversation;
 
-    private int layerUsed;
-    private int layerOutline;
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
         sitDownEffect.Stop();
         flowerEffect.Stop();
-        layerOutline = LayerMask.NameToLayer("Outline");
     }
 
     public new void InitCustomer() {
         base.InitCustomer();
+
+        FindObjectOfType<MainShelf>().SetDestinationToPos(this);
+
         day.DayTimeChange += LeaveOnEvening;
         if (!tutorial)
             onTalk = FindObjectOfType<QuestHolder>()?.GetInterractQuest();
@@ -47,74 +46,56 @@ public class AIRegularCustomer : AICustomer {
     new void FixedUpdate() {
         base.FixedUpdate();
 
-        if (chair && state == AIState.idle)
-        {
-            Sit();
-            if (waitingTime)
-            {
+        if (chair && state == AIState.idle) {
+            if (waitingTime && coroutine == null) {
                 coroutine = StartCoroutine(CustomerWaiting(waitingTime.GetWaitingTime(), Leave));
                 flowerEffect.Play();
             }
-            //Go to the Chair
-            try
-            {
-                if (chair && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(chair.transform.position.x, chair.transform.position.z)) < 1 && state == AIState.moving)
-                {
-                    sitDownEffect.Play();
-                    productCanvas.SetActive(true);
-                    state = AIState.sitting;
-                    GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-                }
-            }
-            catch (Exception e)
-            {
-                print(e);
-            }
+        }
 
-            if (table && table.GetItem(false) && state == AIState.sitting)
-            {
-                if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetName() == requestedProduct.name && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste")
-                {
-                    if (coroutine != null)
-                        StopCoroutine(coroutine);
-                    ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
-                    if (!item)
-                    {
-                        if (productholder.product.GetAmount() > 1)
-                        {
-                            productholder.product.productSO.asset.InstantiateAsync(transform).Completed += (go) =>
-                            {
-                                item = go.Result;
-                                TakeItem(productholder, table.gameObject);
-                                table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
-                                state = AIState.eating;
+        //Go to the Chair
+        if (chair && state == AIState.moving && Vector3.Distance(transform.position, chair.transform.position) < 1) {
+            sitDownEffect.Play();
+            productCanvas.SetActive(true);
+            state = AIState.sitting;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        }
 
-                                spawner.RemoveCommandRecap(this);
-                                if (tutorial)
-                                    Leave();
-                                else
-                                {
-                                    StartCoroutine(CustomerWaiting(eatingTime, Leave));
-                                    flowerEffect.Play();
-                                }
-                            };
-                            productholder.product.RemoveAmount();
-                        }
-                        else
-                        {
-                            item = table.items[indexChair];
-                            TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
-                            productholder.blocked = true;
+        if (table && table.GetItem(false) && state == AIState.sitting) {
+            if (table.items[indexChair] && table.items[indexChair].GetComponent<ProductHolder>() && table.items[indexChair].GetComponent<ProductHolder>().product.productSO && table.items[indexChair].GetComponent<ProductHolder>().product.GetKeyName() == requestedProduct.keyName && table.items[indexChair].GetComponent<ProductHolder>().tag != "Paste") {
+                if (coroutine != null)
+                    StopCoroutine(coroutine);
+                ProductHolder productholder = table.items[indexChair].GetComponent<ProductHolder>();
+                if (!item) {
+                    if (productholder.product.GetAmount() > 1) {
+                        productholder.product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
+                            item = go.Result;
+                            TakeItem(productholder, table.gameObject);
+                            table.items[indexChair].GetComponent<ProductHolder>().blocked = true;
                             state = AIState.eating;
 
                             spawner.RemoveCommandRecap(this);
                             if (tutorial)
                                 Leave();
-                            else
-                            {
+                            else {
                                 StartCoroutine(CustomerWaiting(eatingTime, Leave));
                                 flowerEffect.Play();
                             }
+                        };
+                        productholder.product.RemoveAmount();
+                    }
+                    else {
+                        item = table.items[indexChair];
+                        TakeItem(item.GetComponent<ProductHolder>(), table.gameObject);
+                        productholder.blocked = true;
+                        state = AIState.eating;
+
+                        spawner.RemoveCommandRecap(this);
+                        if (tutorial)
+                            Leave();
+                        else {
+                            StartCoroutine(CustomerWaiting(eatingTime, Leave));
+                            flowerEffect.Play();
                         }
                     }
                 }
@@ -127,13 +108,12 @@ public class AIRegularCustomer : AICustomer {
     public override bool isRegular() {
         return true;
     }
-    private void Sit() {
+    public void Sit() {
         agent.SetDestination(chair.transform.position);
         state = AIState.moving;
     }
     private void LeaveOnEvening() {
         Leave();
-        gameObject.layer = layerUsed;
         day.DayTimeChange -= LeaveOnEvening;
 
     }
@@ -145,18 +125,14 @@ public class AIRegularCustomer : AICustomer {
             plateAsset.InstantiateAsync(table.itemPositions[indexChair].transform).Completed += (go) => {
                 go.Result.transform.localPosition = Vector3.zero;
                 table.items[indexChair] = go.Result;
-                layerUsed = gameObject.layer;
-                gameObject.layer = layerOutline;
             };
             Addressables.ReleaseInstance(table.items[indexChair]);
         }
         else {
             reputation.RemoveReputation(3);
-            gameObject.layer = layerUsed;
         }
 
         base.Leave();
-        gameObject.layer = layerUsed;
     }
 
     public override void Effect() {
