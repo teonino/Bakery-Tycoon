@@ -45,6 +45,7 @@ public class BuildingMode : Interactable {
     private Quaternion originalRotation;
     [SerializeField] private List<GameObject> uiInGame;
     [SerializeField] private GameObject uiCustomisation;
+    [SerializeField] private GameObject popUpCustomUnavaible;
 
     protected override void Start() {
         currentRaycastlayer = pickUpLayer;
@@ -93,10 +94,23 @@ public class BuildingMode : Interactable {
             }
             uiCustomisation.SetActive(true);
         }
+        else
+        {
+            StartCoroutine(DisplayPopUp());
+        }
     }
     public override bool CanInterract() {
         canInterract = day.GetDayTime() != DayTime.Day;
         return canInterract;
+    }
+
+    private IEnumerator DisplayPopUp()
+    {
+        popUpCustomUnavaible.SetActive(true);
+        playerControllerSO.GetPlayerController().playerInput.Disable();
+        yield return new WaitForSeconds(3);
+        playerControllerSO.GetPlayerController().playerInput.Enable();
+        popUpCustomUnavaible.SetActive(false);
     }
 
     public void Sell(CallbackContext ctx) {
