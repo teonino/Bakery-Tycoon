@@ -41,9 +41,8 @@ public class FurnitureButton : MonoBehaviour {
     }
 
     private void BuyFurniture() {
-        if (money.GetMoney() > furnitureSO.GetPrice())
+        if (money.GetMoney() >= furnitureSO.GetPrice())
             furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
-                money.AddMoney(-furnitureSO.GetPrice());
                 furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
                 furnitureManager.Quit();
             };
