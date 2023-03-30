@@ -35,7 +35,18 @@ public class StartingPanel : MonoBehaviour {
             questTxtAsset.InstantiateAsync(vLayout.transform).Completed += (go) => {
                 QuestContainer questContainer = go.Result.GetComponent<QuestContainer>();
 
-                questContainer.GetTitle().text = $"{quest.GetTitle()} \n";
+                string tmp;
+
+                questContainer.GetLocalizedString().SetKey(quest.GetKey());
+
+                tmp = questContainer.GetTitle().text;
+
+                if (quest.GetVariable() != "") {
+                    tmp += quest.GetVariable();
+                    questContainer.GetLocalizedString().enabled = false;
+                }
+                questContainer.GetTitle().text = tmp;
+
                 questContainer.GetNumber().text = $"{quest.GetCurrentAmount()} / {quest.GetObjective()}\n";
                 questsTxt.Add(questContainer);
             };
@@ -45,7 +56,6 @@ public class StartingPanel : MonoBehaviour {
     public void UpdateUI() {
         if (questsTxt != null) {
             for (int i = 0; i < questsTxt.Count; i++) {
-                questsTxt[i].GetTitle().text = $"{quests.GetDailyQuests()[i].GetTitle()} \n";
                 questsTxt[i].GetNumber().text = $"{quests.GetDailyQuests()[i].GetCurrentAmount()} / {quests.GetDailyQuests()[i].GetObjective()}\n";
             }
         }
