@@ -69,9 +69,10 @@ MonoBehaviour:
   customerBonus: {fileID: 11400000, guid: d36a98c5df68ccc4ab2c514b8c11d86f, type: 2}
   animator: {fileID: 4348696334825669489}
   waitingTime: {fileID: 11400000, guid: e410baaf272abf54cb97463e11c57b7f, type: 2}
-  saleReputation: 1
+  saleReputation: 5
   requestedProduct: {fileID: 0}
   state: 0
+  intermediatePath: {fileID: 0}
   plateAsset:
     m_AssetGUID: e4c125e2a7eeda84c9e60d4140b1e27f
     m_SubObjectName: 
@@ -94,7 +95,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2021704191120384995}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.23
+  m_Radius: 0.1
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -103,8 +104,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.49
-  m_BaseOffset: 0.01
+  m_Height: 1.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
 --- !u!33 &4945450775124309876

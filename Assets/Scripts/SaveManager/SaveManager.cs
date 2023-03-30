@@ -97,6 +97,7 @@ public class SaveManager : MonoBehaviour {
             if (t.GetComponent<Shelf>().GetProduct() != null) {
                 data.hasProduct = true;
                 data.productKeyname = t.GetComponent<Shelf>().GetProduct().GetKeyName();
+                data.productAmount = t.GetComponent<Shelf>().GetProduct().GetAmount();
             }
         }
 
@@ -139,7 +140,7 @@ public class SaveManager : MonoBehaviour {
                         instantiateObj.transform.localScale = data.scale;
 
                         if (data.hasProduct) {
-                            instantiateObj.GetComponent<Shelf>().SpawnAsset(GetProduct(data.productKeyname));
+                            instantiateObj.GetComponent<Shelf>().SpawnAsset(GetProduct(data.productKeyname), data.productAmount);
                         }
                     };
                 }

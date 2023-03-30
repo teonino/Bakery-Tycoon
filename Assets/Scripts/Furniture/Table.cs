@@ -85,7 +85,7 @@ public class Table : Interactable {
                         go.GetComponent<ProductHolder>().product.productSO.asset.InstantiateAsync(transform).Completed += (go) => {
                             items[indexItem] = go.Result;
                             items[indexItem].transform.localPosition = itemPositions[indexItem].transform.localPosition;
-                            go.Result.GetComponent<ProductHolder>().DisplayOneGameObject();
+                            go.Result.GetComponent<ProductHolder>().DisplayOneProduct();
                         };
 
                         go.GetComponent<ProductHolder>().RemoveAmount();

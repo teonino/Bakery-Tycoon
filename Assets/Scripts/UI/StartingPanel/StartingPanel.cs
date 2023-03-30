@@ -12,12 +12,17 @@ public class StartingPanel : MonoBehaviour {
     [SerializeField] private ListQuest quests;
     [SerializeField] private Day day;
     [SerializeField] private Controller controller;
+    [SerializeField] private Tutorial tutorial;
 
     private List<QuestContainer> questsTxt;
 
     void Start() {
-        questsTxt = new List<QuestContainer>();
-        SetQuests();
+        if (tutorial.GetTutorial())
+            gameObject.SetActive(false);
+        else {
+            questsTxt = new List<QuestContainer>();
+            SetQuests();
+        }
     }
 
     private void SetQuests() {
@@ -38,9 +43,11 @@ public class StartingPanel : MonoBehaviour {
     }
 
     public void UpdateUI() {
-        for (int i = 0; i < questsTxt.Count; i++) {
-            questsTxt[i].GetTitle().text = $"{quests.GetDailyQuests()[i].GetTitle()} \n";
-            questsTxt[i].GetNumber().text = $"{quests.GetDailyQuests()[i].GetCurrentAmount()} / {quests.GetDailyQuests()[i].GetObjective()}\n";
+        if (questsTxt != null) {
+            for (int i = 0; i < questsTxt.Count; i++) {
+                questsTxt[i].GetTitle().text = $"{quests.GetDailyQuests()[i].GetTitle()} \n";
+                questsTxt[i].GetNumber().text = $"{quests.GetDailyQuests()[i].GetCurrentAmount()} / {quests.GetDailyQuests()[i].GetObjective()}\n";
+            }
         }
     }
 }

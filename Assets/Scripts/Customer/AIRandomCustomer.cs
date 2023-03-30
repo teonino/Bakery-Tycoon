@@ -136,6 +136,7 @@ public class AIRandomCustomer : AICustomer
                             item.GetComponent<ProductHolder>().DisplayOneProduct();
                             vfx.Play();
                             TakeItem(objectOnShelf, shelf.gameObject);
+                            item.SetActive(false);
                         };
                         objectOnShelf.RemoveAmount();
                     }
@@ -145,6 +146,7 @@ public class AIRandomCustomer : AICustomer
                         item.transform.SetParent(transform);
                         TakeItem(objectOnShelf, shelf.gameObject);
                         shelf.RemoveItem();
+                        item.SetActive(false);
                     }
                 }
             }

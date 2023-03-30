@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class creditScrolling : MonoBehaviour
 {
     private MainMenuManager_rework manager;
     private bool creditStart;
+
+    private float t;
 
     private void OnEnable()
     {
@@ -16,7 +20,7 @@ public class creditScrolling : MonoBehaviour
 
     private void Update()
     {
-        if(creditStart)
+        if (creditStart)
         {
             gameObject.transform.Translate(Vector3.up * manager.creditSpeed);
         }
@@ -24,9 +28,19 @@ public class creditScrolling : MonoBehaviour
 
     private IEnumerator waitfordestroy()
     {
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(76);
         manager.creditIndex = 0;
+        manager.isInCredit = false;
         Destroy(this.gameObject);
     }
+
+    public IEnumerator waitForDestroyAfterCredits()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(this.gameObject);
+        manager.isInCredit = false;
+    }
+
 }
+
 
