@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776355326844694161}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 100, y: 100, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,7 +49,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 776355326844694161}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.23
+  m_Radius: 0.2
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -58,10 +58,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.49
+  m_Height: 1.5
   m_BaseOffset: 0.01
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 1
+  m_ObstacleAvoidanceType: 2
 --- !u!33 &1346182369413619515
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -156,10 +156,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalSpawn: {fileID: 0}
   PathPoint: {fileID: 0}
-  agent: {fileID: 0}
+  agent: {fileID: -3701176077405540702}
   player: {fileID: 0}
   manager: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 5820625122377478495}
   waitingTime: 10
   isWaiting: 0
 --- !u!1001 &120917813316979918
@@ -274,6 +274,11 @@ PrefabInstance:
 --- !u!4 &443375182841375525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55bfddf8c5c6dbe408d8780136d7bd0d, type: 3}
+  m_PrefabInstance: {fileID: 120917813316979918}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5820625122377478495 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 55bfddf8c5c6dbe408d8780136d7bd0d, type: 3}
   m_PrefabInstance: {fileID: 120917813316979918}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2123425827239074441

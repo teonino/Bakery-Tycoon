@@ -9,6 +9,8 @@ public class MainMenuManager_rework : MonoBehaviour
 
     [SerializeField] private Controller controller;
     [SerializeField] private PlayerControllerSO playerControllerSO;
+    [SerializeField] private GameObject firstOptionButton;
+    [SerializeField] private GameObject optionButton;
     public Controller GetController() => controller;
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -134,17 +136,18 @@ public class MainMenuManager_rework : MonoBehaviour
 
     public IEnumerator spawnCustomer()
     {
-        if (currentCustomer == null)
-        {
-            int randomSpawnTime = Random.Range(1, 2);
-            yield return new WaitForSeconds(randomSpawnTime);
-            int rdm = Random.Range(0, mainMenuCharacters.Count);
-            currentCustomer = mainMenuCharacters[rdm];
-            currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
-            Instantiate(currentCustomer, CustomerSpawn.transform);
-            yield return new WaitForSeconds(0.5f);
-            yield return new WaitForEndOfFrame();
-        }
+        yield return null;
+        //if (currentCustomer == null)
+        //{
+        //    int randomSpawnTime = Random.Range(1, 2);
+        //    yield return new WaitForSeconds(randomSpawnTime);
+        //    int rdm = Random.Range(0, mainMenuCharacters.Count - 1);
+        //    currentCustomer = mainMenuCharacters[rdm];
+        //    currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
+        //    Instantiate(currentCustomer, CustomerSpawn.transform);
+        //    yield return new WaitForSeconds(0.5f);
+        //    yield return new WaitForEndOfFrame();
+        //}
     }
 
     public void LaunchDisplayPanel(string panelName)
@@ -185,6 +188,9 @@ public class MainMenuManager_rework : MonoBehaviour
                 currentPanelAnimator = panelMainMenu[1].GetComponent<Animator>();
                 print(currentPanelAnimator);
                 currentPanelAnimator.SetTrigger("OutsideToInside");
+
+
+                controller.SetEventSystemToStartButton(firstOptionButton);
             }
         }
         else if (panelName == "Credits")

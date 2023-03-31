@@ -53,6 +53,6 @@ public class PauseManager : MonoBehaviour
     {
         playerControllerSO.GetPlayerController().playerInput.Pause.Unpause.performed -= ResumeInput;
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu_reworked");
+        SceneManager.LoadScene("MainMenu");
     }
 }
