@@ -49,7 +49,6 @@ public class SpawnCustomer : MonoBehaviour {
     private int nbConverstaions;
 
     void Start() {
-        tables = new List<Table>(FindObjectsOfType<Table>());
         doableProduct = new List<ProductSO>();
         availableProduct = new List<ProductSO>();
 
@@ -69,10 +68,10 @@ public class SpawnCustomer : MonoBehaviour {
     }
 
     private IEnumerator SpawnDelayFirstPack() {
-        randomTime = Random.Range(firstPackCustomer.GetDelaySpawn().x, firstPackCustomer.GetDelaySpawn().y); 
+        randomTime = Random.Range(firstPackCustomer.GetDelaySpawn().x, firstPackCustomer.GetDelaySpawn().y);
         yield return new WaitForSeconds(randomTime);
         enableSpawnRegularCustomer = false;
-        InstantiateCustomer(); 
+        InstantiateCustomer();
         nbCurrentCustomerFirstPack++;
 
         if (nbCurrentCustomerFirstPack == firstPackCustomer.GetNbRandomCustomer()) {
@@ -92,9 +91,16 @@ public class SpawnCustomer : MonoBehaviour {
         if (nbCustomerSpawned + nbCustomerRegularSpawned < customer.GetNbRegularCustomer() + customer.GetNbRandomCustomer() * reputation.GetBonus())
             StartCoroutine(SpawnDelay());
         else {
-            yield return new WaitForSeconds(30);
-            FindObjectOfType<DayManager>().UpdateDay();
+            StartCoroutine(PassToEvening());
         }
+    }
+
+    private IEnumerator PassToEvening() {
+        yield return new WaitForSeconds(2);
+        if (nbCustomer == 0)
+            FindObjectOfType<DayManager>().UpdateDay();
+        else
+            StartCoroutine(PassToEvening());
     }
 
     private void InstantiateCustomer() {
@@ -139,7 +145,7 @@ public class SpawnCustomer : MonoBehaviour {
                     go.Result.name = "RegularCustomer " + nbCustomerSpawned;
                     SetRegularCustomer(go.Result.GetComponent<AIRegularCustomer>(), product);
                     nbCustomerRegularSpawned++;
-                    
+
                 };
             else
                 regularCustomerAsset.InstantiateAsync(transform).Completed += (go) => {
@@ -149,7 +155,7 @@ public class SpawnCustomer : MonoBehaviour {
                 };
 
             notifEvent.Invoke(notifType);
-            
+
         }
         else {
             SpawnRandomCustomer(product);
@@ -209,16 +215,18 @@ public class SpawnCustomer : MonoBehaviour {
         availableProduct.Clear();
     }
 
-    private void AddConversation()
-    {
+    private void AddConversation() {
         nbConverstaions++;
-        if(nbConverstaions % 3 == 0)
-        {
+        if (nbConverstaions % 3 == 0) {
             ingredients.UnlockIngredient();
         }
     }
 
     private bool CheckChairs() {
+
+        if (tables == null)
+            tables = new List<Table>(FindObjectsOfType<Table>());
+
         for (int i = 0; i < tables.Count && !currentChair; i++) {
             indexChair = tables[i].GetChairAvailable();
             if (indexChair >= 0)

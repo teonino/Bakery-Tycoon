@@ -136,18 +136,16 @@ public class MainMenuManager_rework : MonoBehaviour
 
     public IEnumerator spawnCustomer()
     {
-        yield return null;
-        //if (currentCustomer == null)
-        //{
-        //    int randomSpawnTime = Random.Range(1, 2);
-        //    yield return new WaitForSeconds(randomSpawnTime);
-        //    int rdm = Random.Range(0, mainMenuCharacters.Count - 1);
-        //    currentCustomer = mainMenuCharacters[rdm];
-        //    currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
-        //    Instantiate(currentCustomer, CustomerSpawn.transform);
-        //    yield return new WaitForSeconds(0.5f);
-        //    yield return new WaitForEndOfFrame();
-        //}
+        if (currentCustomer == null) {
+            int randomSpawnTime = Random.Range(1, 2);
+            yield return new WaitForSeconds(randomSpawnTime);
+            int rdm = Random.Range(0, mainMenuCharacters.Count - 1);
+            currentCustomer = mainMenuCharacters[rdm];
+            currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
+            Instantiate(currentCustomer, CustomerSpawn.transform);
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void LaunchDisplayPanel(string panelName)
@@ -163,7 +161,7 @@ public class MainMenuManager_rework : MonoBehaviour
     public void LaunchLeavingFunction()
     {
         print("launch leaving function");
-        StartCoroutine(currentCustomer.Leaving());
+       // StartCoroutine(currentCustomer.Leaving());
     }
 
     public IEnumerator DisplayPanel(string panelName)
