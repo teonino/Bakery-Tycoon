@@ -45,6 +45,7 @@ public class BuildingMode : Interactable {
     private Quaternion originalRotation;
     [SerializeField] private List<GameObject> uiInGame;
     [SerializeField] private GameObject uiCustomisation;
+    [SerializeField] private GameObject popUpCustomUnavaible;
 
     protected override void Start() {
         currentRaycastlayer = pickUpLayer;
@@ -93,10 +94,23 @@ public class BuildingMode : Interactable {
             }
             uiCustomisation.SetActive(true);
         }
+        else
+        {
+            StartCoroutine(DisplayPopUp());
+        }
     }
     public override bool CanInterract() {
         canInterract = day.GetDayTime() != DayTime.Day;
         return canInterract;
+    }
+
+    private IEnumerator DisplayPopUp()
+    {
+        popUpCustomUnavaible.SetActive(true);
+        //playerControllerSO.GetPlayerController().playerInput.Disable();
+        yield return new WaitForSeconds(2);
+        //playerControllerSO.GetPlayerController().playerInput.Enable();
+        popUpCustomUnavaible.SetActive(false);
     }
 
     public void Sell(CallbackContext ctx) {
@@ -107,8 +121,10 @@ public class BuildingMode : Interactable {
         if (selectedGo) {
             if (selectedGo.TryGetComponent(out FurnitureHolder holder)) {
                 if (holder.CanRemoveSelectedItem()) {
-                    money.AddMoney(holder.GetFurniturePrice());
-                    print($"Sold {holder.name} => Add {holder.GetFurniturePrice()} €");
+                    if (!selectedGoIsBought) {
+                        money.AddMoney(holder.GetFurniturePrice());
+                        print($"Sold {holder.name} => Add {holder.GetFurniturePrice()} €");
+                    }
                     Destroy(holder.gameObject);
                     currentRaycastlayer = pickUpLayer;
                     selectedGo = null;
@@ -169,6 +185,7 @@ public class BuildingMode : Interactable {
     private void Select(CallbackContext context) {
         if (selectedGoIsWall || selectedGoIsFloor && selectedGo) {
             Destroy(disabledGo);
+            money.AddMoney(-selectedGo.GetComponent<FurnitureHolder>().GetFurniturePrice());
             currentRaycastlayer = pickUpLayer;
             selectedGo.layer = initialGoLayer;
             selectedGoIsFloor = selectedGoIsWall = false;
@@ -190,6 +207,8 @@ public class BuildingMode : Interactable {
                     SetSelectedGO(hit.collider.gameObject);
                 }
                 else if (selectedGo.GetComponent<CheckCollisionManager>().GetNbCollision() == 0) {
+                    if (selectedGoIsBought)
+                        money.AddMoney(-selectedGo.GetComponent<FurnitureHolder>().GetFurniturePrice());
                     ResetValue();
                 }
             }
@@ -278,10 +297,14 @@ public class BuildingMode : Interactable {
 
     private void FixedUpdate() {
         if (inBuildingMode) {
+
+            Vector2 movement = playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed;
             if (selectedGoIsWall || selectedGoIsFrame || selectedGoIsFloor) {
                 if (controller.IsGamepad() && cursorObject) {
-                    cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
-                    Replace(cursorObject.transform.position);
+                    if (cursorObject.transform.position.x - movement.x > 0 && cursorObject.transform.position.y - movement.y > 0 && cursorObject.transform.position.x + movement.x < Screen.currentResolution.width && cursorObject.transform.position.y + movement.y < Screen.currentResolution.height) {
+                        cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                        Replace(cursorObject.transform.position);
+                    }
                 }
                 else {
                     Replace(Mouse.current.position.ReadValue());
@@ -289,8 +312,10 @@ public class BuildingMode : Interactable {
             }
             else {
                 if (controller.IsGamepad() && cursorObject) {
-                    cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
-                    SnapGameObject(cursorObject.transform.position);
+                    if (cursorObject.transform.position.x  + movement.x > 0 && cursorObject.transform.position.y + movement.y > 0 && cursorObject.transform.position.x + movement.x < Screen.currentResolution.width && cursorObject.transform.position.y + movement.y < Screen.currentResolution.height) {
+                        cursorObject.transform.Translate(playerControllerSO.GetPlayerController().playerInput.Building.Move.ReadValue<Vector2>() * cursorSpeed);
+                        SnapGameObject(cursorObject.transform.position);
+                    }
                 }
                 else {
                     SnapGameObject(Mouse.current.position.ReadValue());

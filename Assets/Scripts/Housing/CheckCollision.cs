@@ -15,7 +15,7 @@ public class CheckCollision : MonoBehaviour {
             }
         }
         else {
-            if (collision.gameObject.layer == layer || collision.gameObject.tag == "Wall") {
+            if (collision.gameObject.layer == layer || collision.gameObject.tag == "Wall" || collision.gameObject.layer == LayerMask.NameToLayer("CustomizableChild")) {
                 nbCollision++;
                 manager.CheckNbCollision();
             }
@@ -30,7 +30,7 @@ public class CheckCollision : MonoBehaviour {
             }
         }
         else {
-            if (collision.gameObject.layer == layer || collision.gameObject.tag == "Wall") {
+            if (collision.gameObject.layer == layer || collision.gameObject.tag == "Wall" || collision.gameObject.layer == LayerMask.NameToLayer("CustomizableChild")) {
                 nbCollision--;
                 manager.CheckNbCollision();
             }
