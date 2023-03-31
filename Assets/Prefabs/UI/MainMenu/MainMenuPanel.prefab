@@ -37,6 +37,42 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &534001662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534001663}
+  m_Layer: 5
+  m_Name: spawnCredit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &534001663
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534001662}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 959834073959774096}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 277, y: -1471}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &858197189
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,9 +431,9 @@ MonoBehaviour:
   - {fileID: 959834073959774099}
   animators: []
   currentPanel: {fileID: 0}
-  credit: {fileID: 0}
-  creditSpawn: {fileID: 0}
-  creditSpeed: 0
+  credit: {fileID: 2751924842121629164, guid: 2a182531922ed444f831f1d8e7a0c2e0, type: 3}
+  creditSpawn: {fileID: 534001662}
+  creditSpeed: 0.3
   isInCredit: 0
   creditScript: {fileID: 0}
   anyKeyWasPressed: 0
@@ -1007,6 +1043,18 @@ PrefabInstance:
     - target: {fileID: 5103951428376162962, guid: e57439a4af41b964d8645a2c8ee07cef, type: 3}
       propertyPath: m_SizeDelta.y
       value: 425.02124
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103951428376162962, guid: e57439a4af41b964d8645a2c8ee07cef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.3971
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103951428376162962, guid: e57439a4af41b964d8645a2c8ee07cef, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.3971
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103951428376162962, guid: e57439a4af41b964d8645a2c8ee07cef, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.3971
       objectReference: {fileID: 0}
     - target: {fileID: 5103951428376162962, guid: e57439a4af41b964d8645a2c8ee07cef, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2606,7 +2654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6509896063456288898, guid: 1e1c153ddd6eddc49beb6c4ce7c3acae, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 6509896063456288898, guid: 1e1c153ddd6eddc49beb6c4ce7c3acae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3436,23 +3484,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1542387272290063286, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.49995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1542387272290063286, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1542387272290063286, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.49995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2099316332046808586, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.49995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2099316332046808586, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3722840197051815761, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3472,11 +3520,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5053109100045699462, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.49995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5053109100045699462, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5189974679053365564, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_Name
@@ -3556,7 +3604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5189974679053365567, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000091552734
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 5189974679053365567, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3572,15 +3620,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5649154325616340026, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.49995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5649154325616340026, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5649154325616340026, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.49995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6613358823454495409, guid: fdd72a0cd5d55ea47a4130d329fcf14b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3815,7 +3863,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:ddfc072ed31107f41923e2717a4bfffe
     m_TableEntryReference:
-      m_KeyId: 3573253324283904
+      m_KeyId: 23836979104235520
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
