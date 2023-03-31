@@ -65,7 +65,6 @@ namespace DiscordPresence
         public void ReadyCallback()
         {
             ++callbackCalls;
-            Debug.Log("Discord: ready");
             onConnect.Invoke();
             UpdatePresence(null);
         }

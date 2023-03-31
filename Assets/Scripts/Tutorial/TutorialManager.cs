@@ -47,7 +47,7 @@ public class TutorialManager : MonoBehaviour
             quests[indexQuest].UpdateUI(questTxt);
         }
         else
-            SceneManager.LoadScene("MainMenu_reworked");
+            SceneManager.LoadScene("MainMenu");
     }
 
     private void NextQuest()
