@@ -9,6 +9,7 @@ using UnityEngine.Events;
 public abstract class Quest : ScriptableObject {
     [Header("Global Quest Parameters")]
     [SerializeField] protected string title;
+    [SerializeField] protected string key;
     [SerializeField] private bool randomize;
     [SerializeField] protected RewardType reward;
     [SerializeField] protected int rewardAmount;
@@ -24,7 +25,6 @@ public abstract class Quest : ScriptableObject {
     [SerializeField] private List<IngredientSO> ingredientsToUnlock;
     [SerializeField] private List<ProductSO> productsToUnlock;
 
-    protected string key;
     protected string variable;
     protected int currentAmount = 0;
     protected int objectiveAmount = 1;

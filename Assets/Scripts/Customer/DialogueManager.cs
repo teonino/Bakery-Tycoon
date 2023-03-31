@@ -126,7 +126,7 @@ catch (Exception e) {
     public void SetTutorialDialogue() {
         LocalizedStringTable table = tutorialDialogueTable;
 
-        npcNameTxt.SetText(npcName);
+        npcNameTxt.SetText("Mamie Motte");
 
         npcSpeechTxt.enabled = false;
         npcSpeechTxt.SetTable(table);
