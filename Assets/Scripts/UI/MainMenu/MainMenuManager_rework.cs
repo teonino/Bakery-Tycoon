@@ -11,6 +11,9 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private GameObject firstOptionButton;
     [SerializeField] private GameObject optionButton;
+    [SerializeField] private List<Data> datas;
+    [SerializeField] private Tutorial tutorial;
+
     public Controller GetController() => controller;
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -136,18 +139,17 @@ public class MainMenuManager_rework : MonoBehaviour
 
     public IEnumerator spawnCustomer()
     {
-        yield return null;
-        //if (currentCustomer == null)
-        //{
-        //    int randomSpawnTime = Random.Range(1, 2);
-        //    yield return new WaitForSeconds(randomSpawnTime);
-        //    int rdm = Random.Range(0, mainMenuCharacters.Count - 1);
-        //    currentCustomer = mainMenuCharacters[rdm];
-        //    currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
-        //    Instantiate(currentCustomer, CustomerSpawn.transform);
-        //    yield return new WaitForSeconds(0.5f);
-        //    yield return new WaitForEndOfFrame();
-        //}
+        if (currentCustomer == null)
+        {
+            int randomSpawnTime = Random.Range(1, 2);
+            yield return new WaitForSeconds(randomSpawnTime);
+            int rdm = Random.Range(0, mainMenuCharacters.Count - 1);
+            currentCustomer = mainMenuCharacters[rdm];
+            currentCustomerAnimator = currentCustomer.GetComponentInChildren<Animator>();
+            Instantiate(currentCustomer, CustomerSpawn.transform);
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void LaunchDisplayPanel(string panelName)
@@ -163,7 +165,7 @@ public class MainMenuManager_rework : MonoBehaviour
     public void LaunchLeavingFunction()
     {
         print("launch leaving function");
-        StartCoroutine(currentCustomer.Leaving());
+        //StartCoroutine(currentCustomer.Leaving());
     }
 
     public IEnumerator DisplayPanel(string panelName)
@@ -181,14 +183,14 @@ public class MainMenuManager_rework : MonoBehaviour
 
                 panelMainMenu[1].SetActive(true);
                 panelMainMenu[0].GetComponent<Animator>().SetTrigger("InsideToOutside");
-                yield return new WaitForSeconds(1);
-                panelMainMenu[0].SetActive(false);
                 panelMainMenu[1].SetActive(true);
                 currentPanel = panelMainMenu[1];
                 currentPanelAnimator = panelMainMenu[1].GetComponent<Animator>();
                 print(currentPanelAnimator);
                 currentPanelAnimator.SetTrigger("OutsideToInside");
 
+                yield return new WaitForSeconds(1);
+                panelMainMenu[0].SetActive(false);
 
                 controller.SetEventSystemToStartButton(firstOptionButton);
             }
@@ -206,6 +208,11 @@ public class MainMenuManager_rework : MonoBehaviour
             {
                 Blackscreen.transform.SetAsLastSibling();
                 blackscreenAnimator.SetTrigger("FadeReverse");
+
+                tutorial.SetTutorial(true);
+                foreach (Data data in datas)
+                    data.ResetValues();
+
                 yield return new WaitForSeconds(0.7f);
                 SceneManager.LoadScene("Tutorial");
             }
@@ -226,6 +233,11 @@ public class MainMenuManager_rework : MonoBehaviour
             {
                 Blackscreen.transform.SetAsLastSibling();
                 blackscreenAnimator.SetTrigger("FadeReverse");
+
+                tutorial.SetTutorial(false);
+                foreach (Data data in datas)
+                    data.ResetValues();
+
                 yield return new WaitForSeconds(0.7f);
                 SceneManager.LoadScene("FirstBakery_New");
             }
@@ -236,12 +248,13 @@ public class MainMenuManager_rework : MonoBehaviour
             {
                 panelMainMenu[0].SetActive(true);
                 currentPanelAnimator.SetTrigger("InsideToOutside");
-                yield return new WaitForSeconds(1);
                 currentPanel = panelMainMenu[0];
                 currentPanelAnimator = currentPanel.GetComponent<Animator>();
                 currentPanelAnimator.SetTrigger("OutsideToInside");
                 yield return new WaitForSeconds(1);
                 panelMainMenu[1].SetActive(false);
+
+                controller.SetEventSystemToStartButton(optionButton);
             }
         }
     }
