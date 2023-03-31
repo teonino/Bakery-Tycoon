@@ -232,7 +232,7 @@ public class MainMenuManager_rework : MonoBehaviour
                 currentPanel = panelMainMenu[0];
                 currentPanelAnimator = currentPanel.GetComponent<Animator>();
                 currentPanelAnimator.SetTrigger("OutsideToInside");
-                panelMainMenu[2].SetActive(false);
+                panelMainMenu[1].SetActive(false);
             }
         }
     }
