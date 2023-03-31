@@ -106,11 +106,11 @@ public class BuildingMode : Interactable {
 
     private IEnumerator DisplayPopUp()
     {
-        popUpCustomUnavaible.SetActive(true);
+        popUpCustomUnavaible?.SetActive(true);
         //playerControllerSO.GetPlayerController().playerInput.Disable();
         yield return new WaitForSeconds(2);
         //playerControllerSO.GetPlayerController().playerInput.Enable();
-        popUpCustomUnavaible.SetActive(false);
+        popUpCustomUnavaible?.SetActive(false);
     }
 
     public void Sell(CallbackContext ctx) {
