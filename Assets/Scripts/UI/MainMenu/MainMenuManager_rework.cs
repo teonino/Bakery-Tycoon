@@ -11,6 +11,9 @@ public class MainMenuManager_rework : MonoBehaviour
     [SerializeField] private PlayerControllerSO playerControllerSO;
     [SerializeField] private GameObject firstOptionButton;
     [SerializeField] private GameObject optionButton;
+    [SerializeField] private List<Data> datas;
+    [SerializeField] private Tutorial tutorial;
+
     public Controller GetController() => controller;
     [HideInInspector] public PlayerInput playerInput { get; private set; }
 
@@ -204,6 +207,11 @@ public class MainMenuManager_rework : MonoBehaviour
             {
                 Blackscreen.transform.SetAsLastSibling();
                 blackscreenAnimator.SetTrigger("FadeReverse");
+
+                tutorial.SetTutorial(true);
+                foreach (Data data in datas)
+                    data.ResetValues();
+
                 yield return new WaitForSeconds(0.7f);
                 SceneManager.LoadScene("Tutorial");
             }
@@ -224,6 +232,11 @@ public class MainMenuManager_rework : MonoBehaviour
             {
                 Blackscreen.transform.SetAsLastSibling();
                 blackscreenAnimator.SetTrigger("FadeReverse");
+
+                tutorial.SetTutorial(false);
+                foreach (Data data in datas)
+                    data.ResetValues();
+
                 yield return new WaitForSeconds(0.7f);
                 SceneManager.LoadScene("FirstBakery_New");
             }
@@ -240,6 +253,8 @@ public class MainMenuManager_rework : MonoBehaviour
                 currentPanelAnimator.SetTrigger("OutsideToInside");
                 yield return new WaitForSeconds(1);
                 panelMainMenu[1].SetActive(false);
+
+                controller.SetEventSystemToStartButton(optionButton);
             }
         }
     }
@@ -256,5 +271,4 @@ public class MainMenuManager_rework : MonoBehaviour
         else
             print("Credit Index: " + creditIndex + " is in credit: " + isInCredit);
     }
-
 }
