@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 2029194075}
   - component: {fileID: 6629564694421760685}
   - component: {fileID: 6589027886929530191}
+  - component: {fileID: -2731414511632325516}
   m_Layer: 6
   m_Name: R_Fryer
   m_TagString: Untagged
@@ -244,7 +245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8762402543640223042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.5, y: 1, z: 0}
+  m_LocalPosition: {x: -9.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -349,6 +350,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-2731414511632325516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8762402543640223042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee94afaa32bcb4e983c51c5ca8af72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furniture: {fileID: 11400000, guid: 716999897b2c54f49b1aed4eb37eb977, type: 2}
+  mandatoryList: {fileID: 0}
 --- !u!1 &9220380104808961487
 GameObject:
   m_ObjectHideFlags: 0

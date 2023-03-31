@@ -28,7 +28,6 @@ public class AssetChoiceManager : MonoBehaviour {
 
     private void BuyFurnitureA() {
         furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
-            money.AddMoney(-furnitureSO.GetPrice());
             furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
             gameObject.SetActive(false);
             furnitureManager.Quit();
@@ -36,7 +35,6 @@ public class AssetChoiceManager : MonoBehaviour {
     }
     private void BuyFurnitureB() {
         furnitureSO.GetAssetB().InstantiateAsync().Completed += (go) => {
-            money.AddMoney(-furnitureSO.GetPrice());
             furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
             gameObject.SetActive(false);
             furnitureManager.Quit();

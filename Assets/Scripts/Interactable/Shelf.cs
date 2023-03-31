@@ -50,7 +50,7 @@ public class Shelf : Interactable {
             product.asset.InstantiateAsync(transform).Completed += (go) => {
                 item = go.Result;
                 item.transform.position = itemPosition.transform.position;
-                item.GetComponent<ProductHolder>().product.SetAmount(amount);
+                item.GetComponent<ProductHolder>().SetAmount(amount);
             };
         }
     }
