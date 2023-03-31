@@ -232,11 +232,13 @@ public class MainMenuManager_rework : MonoBehaviour
         {
             if (anyKeyWasPressed)
             {
+                panelMainMenu[0].SetActive(true);
                 currentPanelAnimator.SetTrigger("InsideToOutside");
                 yield return new WaitForSeconds(1);
                 currentPanel = panelMainMenu[0];
                 currentPanelAnimator = currentPanel.GetComponent<Animator>();
                 currentPanelAnimator.SetTrigger("OutsideToInside");
+                yield return new WaitForSeconds(1);
                 panelMainMenu[1].SetActive(false);
             }
         }

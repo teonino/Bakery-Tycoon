@@ -16,6 +16,8 @@ public class Workstation : Interactable {
     private GameObject workplacePanel;
     private SFXPlayer sfxPlayer;
 
+    [SerializeField] private Animator animator;
+
     [SerializeField] private ParticleSystem vfx;
 
     private void Awake() {
@@ -61,9 +63,15 @@ public class Workstation : Interactable {
     public void startMinigames(bool activate)
     {
         if (activate)
+        {
             vfx.Play();
+            animator.SetBool("isCooking", true);
+        }
         else
+        {
             vfx.Stop();
+            animator.SetBool("isCooking", false);
+        }
     }
 
 }
