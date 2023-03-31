@@ -46,7 +46,6 @@ public class BuildingMode : Interactable {
     [SerializeField] private List<GameObject> uiInGame;
     [SerializeField] private GameObject uiCustomisation;
     [SerializeField] private GameObject popUpCustomUnavaible;
-    [SerializeField] private AudioSource audioSource;
 
     protected override void Start() {
         currentRaycastlayer = pickUpLayer;
@@ -108,10 +107,9 @@ public class BuildingMode : Interactable {
     private IEnumerator DisplayPopUp()
     {
         popUpCustomUnavaible.SetActive(true);
-        playerControllerSO.GetPlayerController().playerInput.Disable();
-        audioSource.Play();
-        yield return new WaitForSeconds(3);
-        playerControllerSO.GetPlayerController().playerInput.Enable();
+        //playerControllerSO.GetPlayerController().playerInput.Disable();
+        yield return new WaitForSeconds(2);
+        //playerControllerSO.GetPlayerController().playerInput.Enable();
         popUpCustomUnavaible.SetActive(false);
     }
 

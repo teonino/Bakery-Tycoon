@@ -10,7 +10,8 @@ public class InterractQuest : Quest {
     [SerializeField] private ProductSO breadSO;
 
     public void Init() {
-        title = "Talk to a regular customer";
+        key = "InteractQuest";
+        variable = "";
         isActive = true;
         this.currentAmount = 0;
 

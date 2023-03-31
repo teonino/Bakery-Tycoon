@@ -24,6 +24,8 @@ public abstract class Quest : ScriptableObject {
     [SerializeField] private List<IngredientSO> ingredientsToUnlock;
     [SerializeField] private List<ProductSO> productsToUnlock;
 
+    protected string key;
+    protected string variable;
     protected int currentAmount = 0;
     protected int objectiveAmount = 1;
 
@@ -34,6 +36,8 @@ public abstract class Quest : ScriptableObject {
     public void SetActive(bool active) => isActive = active;
     public void UpdateUI(TextMeshProUGUI text) => text.text = title;
     public string GetTitle() => title;
+    public string GetKey() => key;
+    public string GetVariable() => variable;
     public virtual int GetCurrentAmount() => currentAmount;
     public virtual int GetObjective() => objectiveAmount;
     public bool IsActive() => isActive;
