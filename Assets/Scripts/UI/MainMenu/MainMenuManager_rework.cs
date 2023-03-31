@@ -177,12 +177,13 @@ public class MainMenuManager_rework : MonoBehaviour
                 }
 
                 panelMainMenu[1].SetActive(true);
-                currentPanelAnimator.SetTrigger("InsideToOutside");
+                panelMainMenu[0].GetComponent<Animator>().SetTrigger("InsideToOutside");
                 yield return new WaitForSeconds(1);
+                panelMainMenu[0].SetActive(false);
                 panelMainMenu[1].SetActive(true);
-                panelMainMenu[2].SetActive(false);
                 currentPanel = panelMainMenu[1];
-                currentPanelAnimator = currentPanel.GetComponent<Animator>();
+                currentPanelAnimator = panelMainMenu[1].GetComponent<Animator>();
+                print(currentPanelAnimator);
                 currentPanelAnimator.SetTrigger("OutsideToInside");
             }
         }
@@ -232,7 +233,7 @@ public class MainMenuManager_rework : MonoBehaviour
                 currentPanel = panelMainMenu[0];
                 currentPanelAnimator = currentPanel.GetComponent<Animator>();
                 currentPanelAnimator.SetTrigger("OutsideToInside");
-                panelMainMenu[2].SetActive(false);
+                panelMainMenu[1].SetActive(false);
             }
         }
     }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class ListRegular : Data {
     [SerializeField] private ListIngredient listIngredient;
     [SerializeField] private IngredientUnlockSO ingredientUnlock;
+    [SerializeField] private NotificationEvent notifEvent;
+    [SerializeField] private NotificationType notifType;
     int totalFriendship;
     int lastRank;
 
@@ -23,10 +25,13 @@ public class ListRegular : Data {
             totalFriendship = 0;
 
         if (totalFriendship % 3 == 0 && totalFriendship >= lastRank) {
-            for(int j = 0; j < stockIngredients.Count; j++) {
+            bool unlocked = false;
+            for(int j = 0; j < stockIngredients.Count && !unlocked; j++) {
                 if (!stockIngredients[j].ingredient.unlocked) {
                     stockIngredients[j].ingredient.unlocked = true;
-                    ingredientUnlock.Invoke(stockIngredients[j].ingredient);
+                    ingredientUnlock.Invoke(stockIngredients[j].ingredient); //Update ingredient available everywhere
+                    notifEvent.Invoke(notifType);
+                    unlocked = true;
                 }
             }
             lastRank = totalFriendship;
