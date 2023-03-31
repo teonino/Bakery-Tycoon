@@ -8,6 +8,7 @@ public class EntranceDoor : Interactable {
     [SerializeField] private GameObject door1;
     [SerializeField] private GameObject door2;
     [SerializeField] private InterractQuest finishDayQuest;
+    [SerializeField] private Tutorial tutorial;
     private bool isClosing = false;
 
     protected override void Start() {
@@ -16,12 +17,11 @@ public class EntranceDoor : Interactable {
 
     public override void Effect() {
         if (day.GetDayTime() == DayTime.Evening) {
-            GameObject[] gos = GameObject.FindGameObjectsWithTag("Door");
-
-            SaveManager save = FindObjectOfType<SaveManager>();
-            save?.Save();
+            if (!tutorial.GetTutorial()) {
+                SaveManager save = FindObjectOfType<SaveManager>();
+                save?.Save();
+            }
             StartCoroutine(ClosingDoors());
-
         }
 
         finishDayQuest?.OnInterract();

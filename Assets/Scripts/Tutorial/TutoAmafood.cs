@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class TutoAmafood : DeliveryManager {
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private OrderQuest orderQuest;
+    [SerializeField] private OrderQuest orderQuest2;
     [SerializeField] private InterractQuest productAmafoodInterract;
     [SerializeField] private DialogueManager dialogueManager;
 
@@ -50,8 +51,12 @@ public class TutoAmafood : DeliveryManager {
         base.SetIngredient(ingredient, add);
         if (orderQuest.CheckIngredient(ingredient)) {
             playerControllerSO.GetPlayerController().playerInput.Amafood.Disable();
-
-
+            playerControllerSO.GetPlayerController().playerInput.Ammount.Confirm.performed -= FindObjectOfType<AmmountManager>().Confirm;
+            playerControllerSO.GetPlayerController().playerInput.Ammount.Cancel.performed -= FindObjectOfType<AmmountManager>().Cancel;
+            dialogueManager.OnDisableDialoguePanel += EnableAmmountMap;
+        }
+        else if (orderQuest2.CheckIngredient(ingredient)) {
+            playerControllerSO.GetPlayerController().playerInput.Amafood.Disable();
             playerControllerSO.GetPlayerController().playerInput.Ammount.Confirm.performed -= FindObjectOfType<AmmountManager>().Confirm;
             playerControllerSO.GetPlayerController().playerInput.Ammount.Cancel.performed -= FindObjectOfType<AmmountManager>().Cancel;
             dialogueManager.OnDisableDialoguePanel += EnableAmmountMap;

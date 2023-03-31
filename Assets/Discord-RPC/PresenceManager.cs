@@ -128,7 +128,6 @@ namespace DiscordPresence
 
         void OnEnable()
         {
-            Debug.Log("Discord: init");
             callbackCalls = 0;
 
             handlers = new DiscordRpc.EventHandlers();
@@ -143,7 +142,6 @@ namespace DiscordPresence
 
         void OnDisable()
         {
-            Debug.Log("Discord: shutdown");
             DiscordRpc.Shutdown();
         }
 
