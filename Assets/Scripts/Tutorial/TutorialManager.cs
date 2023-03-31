@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI questTxt;
+    [SerializeField] private LocalizedStringComponent questTxt;
     [SerializeField] private List<Quest> quests;
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private Day day;
@@ -44,8 +44,7 @@ public class TutorialManager : MonoBehaviour
         if (indexQuest < quests.Count)
         {
             questTxt.gameObject.SetActive(true);
-            quests[indexQuest].UpdateUI(questTxt);
-        }
+            questTxt.SetKey(quests[indexQuest].GetKey());        }
         else
             SceneManager.LoadScene("MainMenu");
     }

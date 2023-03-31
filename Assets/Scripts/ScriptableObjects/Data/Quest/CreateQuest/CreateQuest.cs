@@ -13,7 +13,6 @@ public class CreateQuest : Quest
 
     public void Init(ProductSO product, int amount)
     {
-        key = "CreateQuest";
         variable = $" {amount} {product.name}";
         this.product = product;
         this.amount = amount;
