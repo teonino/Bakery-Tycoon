@@ -68,7 +68,7 @@ public class MainShelf : Shelf {
     private IEnumerator DistanceWithPos(AIRegularCustomer customer) {
         yield return null;
         if (Vector3.Distance(customer.transform.position, pos.transform.position) < 0.4) {
-            customer.Sit();
+            customer.GoToChair();
         }
         else {
             StartCoroutine(DistanceWithPos(customer));
