@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 2408465381862218653}
+  localizedString: {fileID: 5385149809205326706}
   number: {fileID: 8968469599806720923}
 --- !u!1 &5744523371880863292
 GameObject:
@@ -141,6 +142,7 @@ GameObject:
   - component: {fileID: 9057090605799958626}
   - component: {fileID: 2667463841360070074}
   - component: {fileID: 2408465381862218653}
+  - component: {fileID: 5385149809205326706}
   m_Layer: 5
   m_Name: MainText
   m_TagString: Untagged
@@ -265,6 +267,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5385149809205326706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5744523371880863292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af4e1b8a0dafa541a4f418c26944cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 2408465381862218653}
+  table:
+    m_TableReference:
+      m_TableCollectionName: GUID:f465224eecfa4934a87e5fcd61c4a142
+  key: CreateQuest
 --- !u!1 &7749044964045293398
 GameObject:
   m_ObjectHideFlags: 0

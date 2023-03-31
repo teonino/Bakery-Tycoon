@@ -9,14 +9,14 @@ public class CreateQuest : Quest
     [Header("Create Quest Parameters")]
     [SerializeField] private ProductSO product;
     [SerializeField] private int amount;
-    [SerializeField] private LocalizedStringComponent localizedString;
 
 
     public void Init(ProductSO product, int amount)
     {
+        key = "CreateQuest";
+        variable = $" {amount} {product.name}";
         this.product = product;
         this.amount = amount;
-        this.title = $"Create {amount} {product.name}";
         this.currentAmount = 0;
 
         isActive = true;
