@@ -107,9 +107,9 @@ public class BuildingMode : Interactable {
     private IEnumerator DisplayPopUp()
     {
         popUpCustomUnavaible.SetActive(true);
-        playerControllerSO.GetPlayerController().playerInput.Disable();
-        yield return new WaitForSeconds(3);
-        playerControllerSO.GetPlayerController().playerInput.Enable();
+        //playerControllerSO.GetPlayerController().playerInput.Disable();
+        yield return new WaitForSeconds(2);
+        //playerControllerSO.GetPlayerController().playerInput.Enable();
         popUpCustomUnavaible.SetActive(false);
     }
 
