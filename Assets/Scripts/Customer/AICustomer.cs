@@ -23,6 +23,7 @@ public class AICustomer : Interactable {
     [SerializeField] protected int saleReputation;
 
     [HideInInspector] public ProductSO requestedProduct;
+    private GameObject cashRegister;
 
     public AIState state = AIState.idle;
     protected CustomerInteractable interactable;
@@ -36,11 +37,14 @@ public class AICustomer : Interactable {
     protected Vector3 spawnPosition;
     protected bool tutorial;
     protected Coroutine coroutine;
+    protected bool hasProdcut = false;
+    public GameObject intermediatePath;
 
-    protected void Awake() {
+    protected virtual void Awake() {
         day = FindObjectOfType<DayTimeUI>().GetDay();
         money = FindObjectOfType<MoneyUI>().GetMoney();
         reputation = FindObjectOfType<ReputationUI>().GetReputation();
+        cashRegister = GameObject.FindGameObjectWithTag("CashRegister");
     }
 
     public void SetSpawner(SpawnCustomer spawner) => this.spawner = spawner;
@@ -54,7 +58,7 @@ public class AICustomer : Interactable {
                 productCanvas.GetComponentInChildren<RawImage>().texture = requestedProduct.image;
             else
                 Debug.LogError("RequestedProductNull");
-
+            productCanvas.SetActive(false);
             StartCoroutine(LaunchBonusTime());
         };
         spawnPosition = transform.position;
@@ -67,6 +71,9 @@ public class AICustomer : Interactable {
 
     protected void FixedUpdate() {
         //Exit the bakery
+        if (state == AIState.leaving && (transform.position - intermediatePath.transform.position).magnitude < 4)
+            agent.SetDestination(spawnPosition);
+
         if (state == AIState.leaving && (transform.position - spawnPosition).magnitude < 4)
             DestroyCustomer();
     }
@@ -104,9 +111,11 @@ public class AICustomer : Interactable {
     //Remove product panel + exit bakery
     protected virtual void Leave() {
         state = AIState.leaving;
+        if (animator)
+            animator.SetTrigger("Walk");
         if (agent) {
             agent.speed = 2;
-            agent.SetDestination(spawnPosition);
+            agent.SetDestination(intermediatePath.transform.position);
         }
 
         spawner.RemoveCommandRecap(this);
@@ -120,9 +129,12 @@ public class AICustomer : Interactable {
         assetPaymentCanvas.InstantiateAsync().Completed += (go) => {
             go.Result.transform.position = displayGO.transform.position + Vector3.up * 2;
             go.Result.gameObject.GetComponentInChildren<PaymentCanvasManager>().Init(totalPrice, 0);
-            requestedProduct = null;
+            //requestedProduct = null;
         };
 
+        totalPrice = Mathf.CeilToInt(totalPrice * reputation.GetBonus());
+
+        cashRegister.GetComponent<Animation>().Play();
         money.AddMoney(totalPrice);
         reputation.AddReputation(saleReputation);
     }

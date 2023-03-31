@@ -7,14 +7,13 @@ public class ListQuest : Data {
 
     [SerializeField] private int nbQuest;
     [SerializeField] private ListProduct products;
-    [SerializeField] private Quest mainQuest;
     [SerializeField] private List<Quest> dailyQuests;
 
     public override void ResetValues() {
         //Daily Quests
         for (int i = 0; i < dailyQuests.Count; i++) 
             dailyQuests[i].SetActive(false);
-        
+
         for (int i = 0; i < nbQuest; i++) {
             int rng = Random.Range(0, dailyQuests.Count);
 
@@ -28,10 +27,6 @@ public class ListQuest : Data {
                     CreateQuest createQuest = (CreateQuest)dailyQuests[rng];
 
                     //Only pick a product player can do
-                    ProductSO rngProduct = products.GetRandomProduct();
-                    while (!rngProduct.CheckRequirement())
-                        rngProduct = products.GetRandomProduct();
-
                     createQuest.Init(products.GetRandomProduct(), 2);
                     break;
                 case InterractQuest:

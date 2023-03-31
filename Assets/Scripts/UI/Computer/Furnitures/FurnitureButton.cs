@@ -10,11 +10,13 @@ public class FurnitureButton : MonoBehaviour {
     [SerializeField] private RawImage image;
 
     private FurnitureManager furnitureManager;
+    private Money money;
     private FurnitureSO furnitureSO;
     private Button button;
 
     private void Awake() {
         button = GetComponent<Button>();
+        money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
     // Start is called before the first frame update
@@ -34,14 +36,16 @@ public class FurnitureButton : MonoBehaviour {
     }
 
     private void DisplayAssetChoiceWindow() {
-        furnitureManager.DisplayAssetChoice(furnitureSO);
+        if (money.GetMoney() > furnitureSO.GetPrice())
+            furnitureManager.DisplayAssetChoice(furnitureSO, gameObject);
     }
 
     private void BuyFurniture() {
-        furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
-            furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
-            furnitureManager.Quit();
-        };
+        if (money.GetMoney() >= furnitureSO.GetPrice())
+            furnitureSO.GetAssetA().InstantiateAsync().Completed += (go) => {
+                furnitureManager.GetBuildingMode().SetSelectedGO(go.Result, true);
+                furnitureManager.Quit();
+            };
     }
 
     public void SetFurnitureManager(FurnitureManager value) => furnitureManager = value;

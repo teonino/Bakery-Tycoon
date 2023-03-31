@@ -21,7 +21,10 @@ public class BurnTop : Minigame {
         text.SetText("Spam " + char.ToUpper(inputName[0]) + inputName.Substring(1));
     }
 
-    void Update() => slider.value -= Time.deltaTime * valueLost;
+    protected override void Update() {
+        base.Update();
+        slider.value -= Time.deltaTime * valueLost;
+    }
 
     private void BurnTopAction(InputAction.CallbackContext context) {
         if (context.performed) {

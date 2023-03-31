@@ -7,9 +7,9 @@ using UnityEngine.InputSystem;
 public class Computer : Interactable {
     [SerializeField] private InterractQuest interractQuest;
     [SerializeField] private InterractQuest secondInterractQuest;
-    private GameObject computerPanel;
     [SerializeField] private SFXPlayer sfxPlayer;
 
+    private GameObject computerPanel;
     private void Awake() {
         computerPanel = FindObjectOfType<ComputerManager>(true).gameObject;
     }
@@ -17,6 +17,7 @@ public class Computer : Interactable {
     public override void Effect() {
         if (computerPanel)
             computerPanel.SetActive(true);
+
         interractQuest?.OnInterract();
         sfxPlayer.InteractSound();
         secondInterractQuest?.OnInterract();

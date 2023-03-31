@@ -44,7 +44,8 @@ public class RollPaste : Minigame {
         }
     }
 
-    private void Update() {
+    protected override void Update() {
+        base.Update();
         joyStickInput = playerController.playerInput.RollPaste.RollPasteAction.ReadValue<Vector2>();
 
         if (inputType == InputType.Gamepad) { 

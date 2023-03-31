@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.AddressableAssets;
 public class MainShelf : Shelf {
     private List<QueueShelf> queueCustomer;
     private List<QueueBakery> queueCustomerInteracting;
+    [SerializeField] private GameObject pos;
 
 
     private new void Start() {
@@ -24,6 +26,7 @@ public class MainShelf : Shelf {
             if (!queuePosition.HasCustomer() && !customer.inQueue) {
                 queuePosition.SetCustomer(customer);
                 customer.inQueue = true;
+                customer.inMainQueue = true;
                 customer.SetDestination(queuePosition.transform.position);
             }
         }
@@ -40,6 +43,38 @@ public class MainShelf : Shelf {
         }
     }
 
+    public void SetDestinationToPos(AIRandomCustomer customer) {
+        customer.SetDestination(pos.transform.position);
+        customer.intermediatePath = pos;
+        StartCoroutine(DistanceWithPos(customer));
+    }
+
+    public void SetDestinationToPos(AIRegularCustomer customer) {
+        customer.SetDestination(pos.transform.position);
+        customer.intermediatePath = pos;
+        StartCoroutine(DistanceWithPos(customer));
+    }
+
+    private IEnumerator DistanceWithPos(AIRandomCustomer customer) {
+        yield return null;
+        if (Vector3.Distance(customer.transform.position, pos.transform.position) < 0.4) {
+            GetAvailableQueuePosition(customer);
+        }
+        else {
+            StartCoroutine(DistanceWithPos(customer));
+        }
+    }
+
+    private IEnumerator DistanceWithPos(AIRegularCustomer customer) {
+        yield return null;
+        if (Vector3.Distance(customer.transform.position, pos.transform.position) < 0.4) {
+            customer.GoToChair();
+        }
+        else {
+            StartCoroutine(DistanceWithPos(customer));
+        }
+    }
+
     public void ForwardQueue(int index) {
         for (int i = index; i < queueCustomer.Count - 1; i++) {
             if (queueCustomer[i + 1].GetCustomer()) {
@@ -52,8 +87,10 @@ public class MainShelf : Shelf {
         if (queueCustomerInteracting[0].GetCustomer()) {
             queueCustomer[queueCustomer.Count - 1].SetCustomer(queueCustomerInteracting[0].GetCustomer());
             queueCustomerInteracting[0].SetCustomer(null);
+            queueCustomer[queueCustomer.Count - 1].GetCustomer().inMainQueue = true;
             queueCustomer[queueCustomer.Count - 1].GetCustomer().SetInteracting(null);
             queueCustomer[queueCustomer.Count - 1].GetCustomer().SetDestination(queueCustomer[queueCustomer.Count - 1].transform.position);
+            queueCustomer[queueCustomer.Count - 1].GetCustomer().GetAnimator().SetTrigger("Walk");
             queueCustomer[queueCustomer.Count - 1].GetCustomer().DispalyCanvas();
 
 

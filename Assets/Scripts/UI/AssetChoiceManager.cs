@@ -13,20 +13,17 @@ public class AssetChoiceManager : MonoBehaviour {
     [SerializeField] private RawImage imageB;
 
     private FurnitureManager furnitureManager;
+    private Money money;
     private FurnitureSO furnitureSO;
+
     private void OnEnable() {
-
-    }
-
-    private void OnDisable() {
-
+        controller.SetEventSystemToStartButton(buttonA.gameObject);
+        money = FindObjectOfType<MoneyUI>().GetMoney();
     }
 
     void Start() {
         buttonA.GetComponent<Button>().onClick.AddListener(BuyFurnitureA);
         buttonB.GetComponent<Button>().onClick.AddListener(BuyFurnitureB);
-
-        controller.SetEventSystemToStartButton(buttonA.gameObject);
     }
 
     private void BuyFurnitureA() {
@@ -53,6 +50,7 @@ public class AssetChoiceManager : MonoBehaviour {
 
     public void Quit(InputAction.CallbackContext ctx) {
         gameObject.SetActive(false);
+        furnitureManager.SetButtonForGamepad();
         playerController.GetPlayerController().playerInput.UI.Quit.performed -= Quit;
         playerController.GetPlayerController().playerInput.UI.Quit.performed += furnitureManager.Quit;
     }

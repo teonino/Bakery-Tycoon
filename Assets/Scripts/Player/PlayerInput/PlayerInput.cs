@@ -264,10 +264,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f20c6b3d-93c2-410c-8608-4aee64118af6"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DisplayRecipesBook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cce37324-3a82-4f1d-bc19-799d771899c5"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
                     ""action"": ""DisplayRecipesBook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -370,15 +381,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EnablePreview"",
-                    ""type"": ""Button"",
-                    ""id"": ""dc6397c9-46cb-4c83-8d55-017004fb26de"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -400,6 +402,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fd66a57-28e1-45bd-a808-8ce89e0f2b00"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -517,7 +530,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a1cda452-ca2c-41fe-9003-e3d60a7ebcdb"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -533,28 +546,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""Sell"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8c820a11-c504-424a-86b5-ec579444dfc4"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""EnablePreview"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e7153df7-0b5e-436a-9b44-87212b4e4568"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""EnablePreview"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -668,6 +659,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""70e907ca-fdd9-4f94-a29a-10d63e5d04fa"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""bea73c1c-fc4c-4fe9-8a65-ff60deb68141"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1135,6 +1135,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""507db58d-d8f6-4bed-96d3-376dbbacde1f"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;KeyboardMouse"",
+                    ""action"": ""AnyKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1392,7 +1403,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""d882eb63-93fb-4e05-bd5b-5b741ea49389"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold,Tap"",
+                    ""interactions"": ""Hold(duration=1.5),Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -1404,6 +1415,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""ChangeList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80084246-6ac9-4cff-843f-5dd00b2239e5"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
                     ""action"": ""ChangeList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1953,6 +1975,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""PoorLiquidAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02025e13-9718-4bae-a72b-1a6d8e8e1e13"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PoorLiquidAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1960,15 +1993,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""name"": ""Debug"",
             ""id"": ""5bc959d0-6276-4017-9445-5532c434ff99"",
             ""actions"": [
-                {
-                    ""name"": ""SwitchCamera"",
-                    ""type"": ""Button"",
-                    ""id"": ""be473f9a-9d30-4dc0-9b6e-f36d6c5c9239"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
                 {
                     ""name"": ""SpawnTruck"",
                     ""type"": ""Button"",
@@ -1980,17 +2004,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""ae501db4-181b-4cc5-857c-3fbe068c86a7"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchCamera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""52f2d5d5-6023-4513-bda5-430f3fc70f12"",
@@ -2009,7 +2022,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""8b7a84a5-4ca1-44c1-9d44-bdae276bc584"",
             ""actions"": [
                 {
-                    ""name"": ""ChangeTab"",
+                    ""name"": ""DisplayRecipe"",
                     ""type"": ""Button"",
                     ""id"": ""7290e45c-33b1-420d-a426-09054b675998"",
                     ""expectedControlType"": ""Button"",
@@ -2027,18 +2040,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""NextPage"",
+                    ""name"": ""Clear"",
                     ""type"": ""Button"",
-                    ""id"": ""04803631-23d8-4888-b723-a94afdd779e7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PreviousPage"",
-                    ""type"": ""Button"",
-                    ""id"": ""c28417d2-5208-4264-bfcc-b6cc26627d5f"",
+                    ""id"": ""cf71413d-1bec-4006-88b8-339342fb73ae"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -2053,7 +2057,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ChangeTab"",
+                    ""action"": ""DisplayRecipe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e0c9843-bcdf-45e1-9f26-3d1138647c6e"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisplayRecipe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -2081,23 +2096,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""db0c3868-c61f-484c-83b8-cc752be8102f"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""id"": ""42e149ef-c4cd-421b-bd73-b15dac34b617"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""NextPage"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8edfd2c0-26dd-4399-a83b-bc75bfd7f002"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""PreviousPage"",
+                    ""groups"": """",
+                    ""action"": ""Clear"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2209,6 +2213,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""RecipeBook"",
+            ""id"": ""39c87900-0e03-40bc-bc2e-088d653c46d0"",
+            ""actions"": [
+                {
+                    ""name"": ""PreviousPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef7f6ada-ccab-4f77-b4ab-f98293f9f6b0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""87ced78b-c17d-40b4-bc1b-e7d40b86de4b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""61a76c94-19cd-4955-9ee9-654b9c08debb"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b48e794-5414-48ab-9023-65c1d6bf2d2f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2259,7 +2311,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Building_Rotate = m_Building.FindAction("Rotate", throwIfNotFound: true);
         m_Building_DisplayFurnitureStore = m_Building.FindAction("DisplayFurnitureStore", throwIfNotFound: true);
         m_Building_Sell = m_Building.FindAction("Sell", throwIfNotFound: true);
-        m_Building_EnablePreview = m_Building.FindAction("EnablePreview", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Quit = m_UI.FindAction("Quit", throwIfNotFound: true);
@@ -2274,6 +2325,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_AnyKey = m_UI.FindAction("AnyKey", throwIfNotFound: true);
         // Ammount
         m_Ammount = asset.FindActionMap("Ammount", throwIfNotFound: true);
         m_Ammount_AddIngredient = m_Ammount.FindAction("AddIngredient", throwIfNotFound: true);
@@ -2318,14 +2370,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_PoorLiquid_PoorLiquidAction = m_PoorLiquid.FindAction("PoorLiquidAction", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
-        m_Debug_SwitchCamera = m_Debug.FindAction("SwitchCamera", throwIfNotFound: true);
         m_Debug_SpawnTruck = m_Debug.FindAction("SpawnTruck", throwIfNotFound: true);
         // Workstation
         m_Workstation = asset.FindActionMap("Workstation", throwIfNotFound: true);
-        m_Workstation_ChangeTab = m_Workstation.FindAction("ChangeTab", throwIfNotFound: true);
+        m_Workstation_DisplayRecipe = m_Workstation.FindAction("DisplayRecipe", throwIfNotFound: true);
         m_Workstation_Cook = m_Workstation.FindAction("Cook", throwIfNotFound: true);
-        m_Workstation_NextPage = m_Workstation.FindAction("NextPage", throwIfNotFound: true);
-        m_Workstation_PreviousPage = m_Workstation.FindAction("PreviousPage", throwIfNotFound: true);
+        m_Workstation_Clear = m_Workstation.FindAction("Clear", throwIfNotFound: true);
         // Audio
         m_Audio = asset.FindActionMap("Audio", throwIfNotFound: true);
         m_Audio_MuteSource = m_Audio.FindAction("MuteSource", throwIfNotFound: true);
@@ -2334,6 +2384,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Dialogue_Dialogue1 = m_Dialogue.FindAction("Dialogue1", throwIfNotFound: true);
         m_Dialogue_Dialogue2 = m_Dialogue.FindAction("Dialogue2", throwIfNotFound: true);
         m_Dialogue_Dialogue3 = m_Dialogue.FindAction("Dialogue3", throwIfNotFound: true);
+        // RecipeBook
+        m_RecipeBook = asset.FindActionMap("RecipeBook", throwIfNotFound: true);
+        m_RecipeBook_PreviousPage = m_RecipeBook.FindAction("PreviousPage", throwIfNotFound: true);
+        m_RecipeBook_NextPage = m_RecipeBook.FindAction("NextPage", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2497,7 +2551,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Building_Rotate;
     private readonly InputAction m_Building_DisplayFurnitureStore;
     private readonly InputAction m_Building_Sell;
-    private readonly InputAction m_Building_EnablePreview;
     public struct BuildingActions
     {
         private @PlayerInput m_Wrapper;
@@ -2508,7 +2561,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Rotate => m_Wrapper.m_Building_Rotate;
         public InputAction @DisplayFurnitureStore => m_Wrapper.m_Building_DisplayFurnitureStore;
         public InputAction @Sell => m_Wrapper.m_Building_Sell;
-        public InputAction @EnablePreview => m_Wrapper.m_Building_EnablePreview;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2536,9 +2588,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sell.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
                 @Sell.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
                 @Sell.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnSell;
-                @EnablePreview.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnEnablePreview;
-                @EnablePreview.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnEnablePreview;
-                @EnablePreview.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnEnablePreview;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -2561,9 +2610,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sell.started += instance.OnSell;
                 @Sell.performed += instance.OnSell;
                 @Sell.canceled += instance.OnSell;
-                @EnablePreview.started += instance.OnEnablePreview;
-                @EnablePreview.performed += instance.OnEnablePreview;
-                @EnablePreview.canceled += instance.OnEnablePreview;
             }
         }
     }
@@ -2584,6 +2630,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_AnyKey;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
@@ -2600,6 +2647,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @AnyKey => m_Wrapper.m_UI_AnyKey;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2645,6 +2693,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
+                @AnyKey.started -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyKey;
+                @AnyKey.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyKey;
+                @AnyKey.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyKey;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -2685,6 +2736,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+                @AnyKey.started += instance.OnAnyKey;
+                @AnyKey.performed += instance.OnAnyKey;
+                @AnyKey.canceled += instance.OnAnyKey;
             }
         }
     }
@@ -3128,13 +3182,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Debug
     private readonly InputActionMap m_Debug;
     private IDebugActions m_DebugActionsCallbackInterface;
-    private readonly InputAction m_Debug_SwitchCamera;
     private readonly InputAction m_Debug_SpawnTruck;
     public struct DebugActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SwitchCamera => m_Wrapper.m_Debug_SwitchCamera;
         public InputAction @SpawnTruck => m_Wrapper.m_Debug_SpawnTruck;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
@@ -3145,9 +3197,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_DebugActionsCallbackInterface != null)
             {
-                @SwitchCamera.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-                @SwitchCamera.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
-                @SwitchCamera.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSwitchCamera;
                 @SpawnTruck.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
                 @SpawnTruck.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
                 @SpawnTruck.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSpawnTruck;
@@ -3155,9 +3204,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             m_Wrapper.m_DebugActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @SwitchCamera.started += instance.OnSwitchCamera;
-                @SwitchCamera.performed += instance.OnSwitchCamera;
-                @SwitchCamera.canceled += instance.OnSwitchCamera;
                 @SpawnTruck.started += instance.OnSpawnTruck;
                 @SpawnTruck.performed += instance.OnSpawnTruck;
                 @SpawnTruck.canceled += instance.OnSpawnTruck;
@@ -3169,18 +3215,16 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Workstation
     private readonly InputActionMap m_Workstation;
     private IWorkstationActions m_WorkstationActionsCallbackInterface;
-    private readonly InputAction m_Workstation_ChangeTab;
+    private readonly InputAction m_Workstation_DisplayRecipe;
     private readonly InputAction m_Workstation_Cook;
-    private readonly InputAction m_Workstation_NextPage;
-    private readonly InputAction m_Workstation_PreviousPage;
+    private readonly InputAction m_Workstation_Clear;
     public struct WorkstationActions
     {
         private @PlayerInput m_Wrapper;
         public WorkstationActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ChangeTab => m_Wrapper.m_Workstation_ChangeTab;
+        public InputAction @DisplayRecipe => m_Wrapper.m_Workstation_DisplayRecipe;
         public InputAction @Cook => m_Wrapper.m_Workstation_Cook;
-        public InputAction @NextPage => m_Wrapper.m_Workstation_NextPage;
-        public InputAction @PreviousPage => m_Wrapper.m_Workstation_PreviousPage;
+        public InputAction @Clear => m_Wrapper.m_Workstation_Clear;
         public InputActionMap Get() { return m_Wrapper.m_Workstation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3190,34 +3234,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_WorkstationActionsCallbackInterface != null)
             {
-                @ChangeTab.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
-                @ChangeTab.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
-                @ChangeTab.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnChangeTab;
+                @DisplayRecipe.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnDisplayRecipe;
+                @DisplayRecipe.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnDisplayRecipe;
+                @DisplayRecipe.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnDisplayRecipe;
                 @Cook.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnCook;
-                @NextPage.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
-                @NextPage.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
-                @NextPage.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnNextPage;
-                @PreviousPage.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
-                @PreviousPage.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
-                @PreviousPage.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnPreviousPage;
+                @Clear.started -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
+                @Clear.performed -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
+                @Clear.canceled -= m_Wrapper.m_WorkstationActionsCallbackInterface.OnClear;
             }
             m_Wrapper.m_WorkstationActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @ChangeTab.started += instance.OnChangeTab;
-                @ChangeTab.performed += instance.OnChangeTab;
-                @ChangeTab.canceled += instance.OnChangeTab;
+                @DisplayRecipe.started += instance.OnDisplayRecipe;
+                @DisplayRecipe.performed += instance.OnDisplayRecipe;
+                @DisplayRecipe.canceled += instance.OnDisplayRecipe;
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
-                @NextPage.started += instance.OnNextPage;
-                @NextPage.performed += instance.OnNextPage;
-                @NextPage.canceled += instance.OnNextPage;
-                @PreviousPage.started += instance.OnPreviousPage;
-                @PreviousPage.performed += instance.OnPreviousPage;
-                @PreviousPage.canceled += instance.OnPreviousPage;
+                @Clear.started += instance.OnClear;
+                @Clear.performed += instance.OnClear;
+                @Clear.canceled += instance.OnClear;
             }
         }
     }
@@ -3304,6 +3342,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public DialogueActions @Dialogue => new DialogueActions(this);
+
+    // RecipeBook
+    private readonly InputActionMap m_RecipeBook;
+    private IRecipeBookActions m_RecipeBookActionsCallbackInterface;
+    private readonly InputAction m_RecipeBook_PreviousPage;
+    private readonly InputAction m_RecipeBook_NextPage;
+    public struct RecipeBookActions
+    {
+        private @PlayerInput m_Wrapper;
+        public RecipeBookActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PreviousPage => m_Wrapper.m_RecipeBook_PreviousPage;
+        public InputAction @NextPage => m_Wrapper.m_RecipeBook_NextPage;
+        public InputActionMap Get() { return m_Wrapper.m_RecipeBook; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(RecipeBookActions set) { return set.Get(); }
+        public void SetCallbacks(IRecipeBookActions instance)
+        {
+            if (m_Wrapper.m_RecipeBookActionsCallbackInterface != null)
+            {
+                @PreviousPage.started -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnPreviousPage;
+                @PreviousPage.performed -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnPreviousPage;
+                @PreviousPage.canceled -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnPreviousPage;
+                @NextPage.started -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnNextPage;
+                @NextPage.performed -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnNextPage;
+                @NextPage.canceled -= m_Wrapper.m_RecipeBookActionsCallbackInterface.OnNextPage;
+            }
+            m_Wrapper.m_RecipeBookActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PreviousPage.started += instance.OnPreviousPage;
+                @PreviousPage.performed += instance.OnPreviousPage;
+                @PreviousPage.canceled += instance.OnPreviousPage;
+                @NextPage.started += instance.OnNextPage;
+                @NextPage.performed += instance.OnNextPage;
+                @NextPage.canceled += instance.OnNextPage;
+            }
+        }
+    }
+    public RecipeBookActions @RecipeBook => new RecipeBookActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -3342,7 +3421,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRotate(InputAction.CallbackContext context);
         void OnDisplayFurnitureStore(InputAction.CallbackContext context);
         void OnSell(InputAction.CallbackContext context);
-        void OnEnablePreview(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -3358,6 +3436,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnAnyKey(InputAction.CallbackContext context);
     }
     public interface IAmmountActions
     {
@@ -3414,15 +3493,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface IDebugActions
     {
-        void OnSwitchCamera(InputAction.CallbackContext context);
         void OnSpawnTruck(InputAction.CallbackContext context);
     }
     public interface IWorkstationActions
     {
-        void OnChangeTab(InputAction.CallbackContext context);
+        void OnDisplayRecipe(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
-        void OnNextPage(InputAction.CallbackContext context);
-        void OnPreviousPage(InputAction.CallbackContext context);
+        void OnClear(InputAction.CallbackContext context);
     }
     public interface IAudioActions
     {
@@ -3433,5 +3510,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnDialogue1(InputAction.CallbackContext context);
         void OnDialogue2(InputAction.CallbackContext context);
         void OnDialogue3(InputAction.CallbackContext context);
+    }
+    public interface IRecipeBookActions
+    {
+        void OnPreviousPage(InputAction.CallbackContext context);
+        void OnNextPage(InputAction.CallbackContext context);
     }
 }

@@ -46,12 +46,11 @@ public class ListDeliveries : Data {
         if (!truckDelivery)
             truckDelivery = FindObjectOfType<TruckDelivery>();
 
-        if (!tutorial.GetTutorial()) {
-            yield return new WaitForSeconds(timeBeforeTruckDeparture);
-            truckDelivery.DeliveryDeparture();
-            yield return new WaitForSeconds(timeDeliveryValue - truckDeliveryTime.GetTime());
-            yield return new WaitForSeconds(truckDeliveryTime.GetTime());
-        }
+        yield return new WaitForSeconds(timeBeforeTruckDeparture);
+        truckDelivery.DeliveryDeparture();
+        yield return new WaitForSeconds(timeDeliveryValue - truckDeliveryTime.GetTime());
+        yield return new WaitForSeconds(truckDeliveryTime.GetTime());
+
     }
 
     public Delivery GetDeliveries() {

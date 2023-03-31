@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TabsManagement : MonoBehaviour {
     [SerializeField] private List<GameObject> panels;
     [SerializeField] private List<GameObject> tabs;
-    [SerializeField] private GameObject statisticTab;
+    //[SerializeField] private GameObject statisticTab;
     [SerializeField] private Controller controller;
     [SerializeField] private Day day;
     [SerializeField] private PlayerControllerSO playerController;
@@ -33,8 +33,8 @@ public class TabsManagement : MonoBehaviour {
     }
 
     private void EnableStatistic() {
-        if (day.GetDayTime() == DayTime.Evening)
-            statisticTab.SetActive(true);
+        //if (day.GetDayTime() == DayTime.Evening)
+        //    statisticTab.SetActive(true);
     }
 
 

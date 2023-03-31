@@ -18,18 +18,6 @@ public class CinemachineSwitcher : MonoBehaviour
         CinemachineAnimator = GetComponent<Animator>();
     }
 
-    private void Start()
-    { 
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.Enable();
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed += SwitchState;
-    }
-
-    private void OnDestroy()
-    {
-
-        controller.GetPlayerController().playerInput.Debug.SwitchCamera.performed -= SwitchState;
-    }
-
     public void SwitchState(InputAction.CallbackContext context)
     {
         print("switchState");

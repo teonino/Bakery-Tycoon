@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -6,32 +7,40 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class SaveManager : MonoBehaviour {
-    public List<FurnitureSO> furnitures;
-    private Transform level;
+    [SerializeField] private ListProduct products;
+    [SerializeField] private ListFurniture furnitures;
+    [SerializeField] private GameObject defaultMainRoom;
+    private Transform mainRoom;
     private string filepath = "Assets\\Save\\Savefile.json";
 
     public CustomizableData JSonFileReader { get; private set; }
 
+    private void Awake() {
+        GenerateWorld();
+    }
+
     private void Start() {
-        level = GameObject.FindGameObjectWithTag("Level")?.transform;
+        mainRoom = GameObject.FindGameObjectWithTag("Level")?.transform;
     }
 
     public void GenerateWorld() {
         if (File.Exists(filepath))
             Load(filepath);
-        else
-            print("oui");
+        else {
+            defaultMainRoom.SetActive(true);
+            Save();
+        }
     }
 
     public void Save() {
         CustomizableData data = new CustomizableData();
 
-        level = GameObject.FindGameObjectWithTag("Level").transform;
+        mainRoom = GameObject.FindGameObjectWithTag("Level").transform;
         StreamWriter w = new StreamWriter(filepath);
 
         w.WriteLine("{ \n \"Level\" : [");
 
-        FetchGameObjects(w, level, true);
+        FetchGameObjects(w, mainRoom, true);
 
         w.WriteLine("] \n }");
         w.Close();
@@ -43,17 +52,20 @@ public class SaveManager : MonoBehaviour {
         CustomizableData data;
 
         foreach (Transform dataTransform in parent) {
-            data = SetCustomizableData(dataTransform);
-            w.WriteLine(JsonUtility.ToJson(data));
+            if (dataTransform.tag != "Outdoor") {
+                data = SetCustomizableData(dataTransform);
+                w.WriteLine(JsonUtility.ToJson(data));
 
+                bool isPrefab = IsPrefab(data.objectName);
 
-            if (parentNotLastChild && dataTransform != level.GetChild(level.childCount - 1))
-                w.WriteLine(",");
-            else if (dataTransform.childCount > 0)
-                w.WriteLine(",");
+                if (parentNotLastChild && dataTransform != mainRoom.GetChild(mainRoom.childCount - 1))
+                    w.WriteLine(",");
+                else if (dataTransform.childCount > 0 && !isPrefab)
+                    w.WriteLine(",");
 
-            if (!GetGameObject(data.objectName) && dataTransform.childCount > 0)
-                FetchGameObjects(w, dataTransform, dataTransform != level.GetChild(level.childCount - 1));
+                if (!isPrefab && dataTransform.childCount > 0)
+                    FetchGameObjects(w, dataTransform, dataTransform != mainRoom.GetChild(mainRoom.childCount - 1));
+            }
         }
     }
 
@@ -71,6 +83,24 @@ public class SaveManager : MonoBehaviour {
             data.objectName = Regex.Replace(t.name, @" [(]\d+[)]", string.Empty);
             data.objectName = Regex.Replace(data.objectName, @"([(]Clone[)])", string.Empty);
         }
+
+        if (data.objectName != "Empty") {
+            if (data.objectName.EndsWith("_A")) {
+                data.typeA = true;
+            }
+            else if (data.objectName.EndsWith("_B")) {
+                data.typeA = false;
+            }
+        }
+
+        if (t.GetComponent<Shelf>()) {
+            if (t.GetComponent<Shelf>().GetProduct() != null) {
+                data.hasProduct = true;
+                data.productKeyname = t.GetComponent<Shelf>().GetProduct().GetKeyName();
+                data.productAmount = t.GetComponent<Shelf>().GetProduct().GetAmount();
+            }
+        }
+
         return data;
     }
 
@@ -89,65 +119,66 @@ public class SaveManager : MonoBehaviour {
             string json = File.ReadAllText(jsonfile);
             CustomizableDataList dataList = JsonUtility.FromJson<CustomizableDataList>(json);
 
-            int currentChildCount = 0;
-            int focusedChildCount = 0;
-            GameObject gameObjectParent = null;
+            LoadObjects(dataList, level.transform);
+        }
+    }
 
-            //NEED TO DO RECURSIVE FUNCTION
-            foreach (CustomizableData data in dataList.Level) {
-                GameObject obj = null, instantiateObj;
+    private void LoadObjects(CustomizableDataList dataList, Transform parent) {
+        foreach (CustomizableData data in dataList.Level) {
+            AssetReference asset;
+            GameObject instantiateObj;
 
-                if (data.objectName == "Empty") {
-                    focusedChildCount = data.childCount;
-                    currentChildCount = 0;
-                    gameObjectParent = obj;
+            if (data.objectName != "Empty") {
+                asset = GetAssetReference(data);
+                print($"Init {data.objectName} ...");
+                if (asset != null && asset.RuntimeKeyIsValid()) {
+                    asset.InstantiateAsync(parent).Completed += (go) => {
+                        instantiateObj = go.Result;
+                        instantiateObj.name = data.objectName;
+                        instantiateObj.transform.position = data.position;
+                        instantiateObj.transform.rotation = data.rotation;
+                        instantiateObj.transform.localScale = data.scale;
+
+                        if (data.hasProduct) {
+                            instantiateObj.GetComponent<Shelf>().SpawnAsset(GetProduct(data.productKeyname), data.productAmount);
+                        }
+                    };
                 }
                 else {
-                    obj = GetGameObject(data.objectName);
-                    currentChildCount++;
-                }
-
-                if (currentChildCount <= focusedChildCount && gameObjectParent != obj) {
-                    if (obj)
-                        instantiateObj = Instantiate(obj, gameObjectParent.transform);
-                    else {
-                        instantiateObj = new GameObject();
-                        instantiateObj.transform.parent = gameObjectParent.transform;
-                    }
-
-                    instantiateObj.name = data.objectName;
-                    instantiateObj.transform.position = data.position;
-                    instantiateObj.transform.rotation = data.rotation;
-                    instantiateObj.transform.localScale = data.scale;
-                }
-
-                else {
-                    if (obj)
-                        instantiateObj = Instantiate(obj);
-                    else
-                        instantiateObj = new GameObject();
-                    instantiateObj.transform.parent = level.transform;
-                    instantiateObj.name = data.objectName;
-                    instantiateObj.transform.position = data.position;
-                    instantiateObj.transform.rotation = data.rotation;
-                    instantiateObj.transform.localScale = data.scale;
-                    gameObjectParent = instantiateObj;
+                    print($"Error, {data.objectName} not found");
                 }
             }
         }
     }
 
-    private void LoadObjects() {
-        //foreach (CustomizableData data in dataList.Level) {
-
-        //}
+    private ProductSO GetProduct(string productKeyname) {
+        foreach(ProductSO product in products.GetProductList()) {
+            if(product.keyName == productKeyname) {
+                return product;
+            }
+        }
+        return null;
     }
 
-    public GameObject GetGameObject(string name) {
-        GameObject returnObject = null;
-        foreach (FurnitureSO furniture in furnitures) {
-            if (furniture.name == name) {
-                //returnObject = furniture.GetAssets();
+    public AssetReference GetAssetReference(CustomizableData data) {
+        AssetReference returnObject = null;
+
+        foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
+            if (data.objectName.Contains(furniture.name) && returnObject == null) {
+                if (data.typeA)
+                    returnObject = furniture.GetAssetA();
+                else
+                    returnObject = furniture.GetAssetB();
+            }
+        }
+        return returnObject;
+    }
+
+    public bool IsPrefab(string name) {
+        bool returnObject = false;
+        foreach (FurnitureSO furniture in furnitures.GetFurnitures()) {
+            if (name.Contains(furniture.name) && !returnObject) {
+                returnObject = true;
             }
         }
         return returnObject;

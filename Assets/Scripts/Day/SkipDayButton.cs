@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class SkipDayButton : MonoBehaviour
 {
-    [SerializeField] Day day;
+    [SerializeField] ListRegular list;
 
     public void DisplayButton() {
-        gameObject.SetActive(!gameObject.activeSelf);
+        //gameObject.SetActive(!gameObject.activeSelf);
     }
 
     public void SkipDay() {
-        day.OnNewDay();
-        SceneManager.LoadScene("FirstBakery_New");
+        list.AddFriendship(1);
     }
 }

@@ -4,7 +4,10 @@ using TMPro;
 using UnityEngine;
 
 public class PaymentCanvasManager : MonoBehaviour {
-    public int timeDisplaying = 2;
+    public int timeDisplaying = 30;
+
+    [SerializeField] private GameObject basePricePanel;
+    [SerializeField] private GameObject bonusPricePanel;
     public TextMeshProUGUI basePriceText;
     public TextMeshProUGUI bonusPriceText;
 
@@ -13,16 +16,25 @@ public class PaymentCanvasManager : MonoBehaviour {
         int basePrice = normal;
         int bonusPrice = bonus;
 
-        basePriceText.SetText(basePrice + "€");
+        basePriceText.SetText(basePrice.ToString());
         if (bonusPrice > 0)
-            bonusPriceText.SetText("+ " +bonusPrice + "€");
+        {
+            bonusPricePanel.SetActive(true);
+            bonusPriceText.SetText("+ " + bonusPrice);
+        }
         else
-            bonusPriceText.SetText("");
+        {
+            bonusPricePanel.SetActive(false);
+            bonusPriceText.SetText("+ " + basePrice);
+        }
 
         StartCoroutine(Lifespan());
     }
 
     private IEnumerator Lifespan() {
+        yield return new WaitForEndOfFrame();
+        basePricePanel.SetActive(true);
+        basePriceText.gameObject.SetActive(true);
         yield return new WaitForSeconds(timeDisplaying);
         Destroy(gameObject);
     }

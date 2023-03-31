@@ -54,7 +54,6 @@ public class MainMenuManager : MonoBehaviour
         Blackscreen.transform.SetAsLastSibling();
         blackscreenAnimator.SetTrigger("FadeReverse");
         yield return new WaitForSeconds(0.45f);
-        print("After delay");
         if(SceneToLoad != "quit")
         {
             SceneManager.LoadScene(SceneToLoad);

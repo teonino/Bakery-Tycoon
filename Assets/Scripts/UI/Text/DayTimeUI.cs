@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class DayTimeUI : MonoBehaviour {
     [SerializeField] private Day day;
-    private TextMeshProUGUI text;
+    private LocalizedStringComponent text;
     private int duration;
 
     private void Start() {
-        text = GetComponent<TextMeshProUGUI>();
+        text = GetComponent<LocalizedStringComponent>();
         SetDay();
     }
 
@@ -22,7 +22,7 @@ public class DayTimeUI : MonoBehaviour {
     }
 
     private void SetDay() {
-        text.SetText(GetDayTime());
+        text.SetKey(GetDayTime());
     }
 
     //private IEnumerator TimeRemaining() {

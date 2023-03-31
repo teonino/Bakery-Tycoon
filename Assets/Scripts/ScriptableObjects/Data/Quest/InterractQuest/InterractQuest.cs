@@ -10,18 +10,30 @@ public class InterractQuest : Quest {
     [SerializeField] private ProductSO breadSO;
 
     public void Init() {
-        title = "Talk to a regular customer";
+        variable = "";
         isActive = true;
+        this.currentAmount = 0;
 
         reward = RewardType.Reputation;
         rewardAmount = 5;
     }
 
+    public override int GetCurrentAmount()
+    {
+        if (isActive)
+            return 0;
+        else
+            return 1;
+    }
+    public override int GetObjective() => 1;
+
     public bool OnInterract() {
         if (isActive) {
             if (spawnCustomer)
                 FindObjectOfType<SpawnCustomer>()?.SpawnCustomerAsset(true, breadSO);
+
             OnCompleted();
+            FindObjectOfType<StartingPanel>(true)?.UpdateUI();
 
             return true;
         }

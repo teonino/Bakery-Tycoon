@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 [CreateAssetMenu(fileName = "name_SO", menuName = "Data/RegularCharacter")]
 public class RegularSO : Data {
     [SerializeField] private string nameNPC;
+    [SerializeField] private ListRegular listRegular;
     [SerializeField] private AssetReference model;
     [SerializeField] private int friendship;
 
@@ -13,9 +14,11 @@ public class RegularSO : Data {
     public AssetReference GetModel() => model;
     public void AddFrienship(int i) {
         friendship += i;
-        if (friendship < 1) {
+
+        if (friendship < 1) 
             friendship = 1;
-        }
+
+        listRegular.AddFriendship(i);
     }
     public override void ResetValues() {
         friendship = 1;

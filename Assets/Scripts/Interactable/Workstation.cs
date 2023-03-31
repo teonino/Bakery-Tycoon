@@ -14,10 +14,19 @@ public class Workstation : Interactable {
 
     private WorkstationManager manager;
     private GameObject workplacePanel;
+    private SFXPlayer sfxPlayer;
 
-    [SerializeField] private SFXPlayer sfxPlayer;
+    [SerializeField] private Animator animator;
 
-    private void Start() {
+    [SerializeField] private ParticleSystem vfx;
+
+    private void Awake() {
+        vfx.Stop();
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
+    }
+
+    protected override void Start() {
+        base.Start();
         if (!debug.GetDebug())
             skipMinigame = skipRequirement = false;
 
@@ -30,7 +39,7 @@ public class Workstation : Interactable {
     public override void Effect() {
         if (!playerControllerSO.GetPlayerController().GetItemHold()) {
             playerControllerSO.GetPlayerController().DisableInput();
-            sfxPlayer.InteractSound();
+            sfxPlayer?.InteractSound();
             manager.gameObject.SetActive(true);
         }
     }
@@ -50,4 +59,19 @@ public class Workstation : Interactable {
         playerControllerSO.GetPlayerController().EnableInput();
         workplacePanel.gameObject.SetActive(false);
     }
+
+    public void startMinigames(bool activate)
+    {
+        if (activate)
+        {
+            vfx.Play();
+            animator.SetBool("isCooking", true);
+        }
+        else
+        {
+            vfx.Stop();
+            animator.SetBool("isCooking", false);
+        }
+    }
+
 }

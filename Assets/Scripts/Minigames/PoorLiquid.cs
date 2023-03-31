@@ -32,7 +32,7 @@ public class PoorLiquid : Minigame {
             slider.value += Time.deltaTime;
         slider.value -= Time.deltaTime / 3;
 
-        if (CheckInZone()) {
+        if (CheckInZone() && playerController.playerInput.PoorLiquid.PoorLiquidAction.ReadValue<float>() <= 0) {
             End();
         }
 
@@ -43,11 +43,9 @@ public class PoorLiquid : Minigame {
 
     protected bool CheckInZone() {
         if (slider.value >= minValue && slider.value <= maxValue) {
-            sliderFiller.color = Color.green;
             return true;
         }
         else {
-            sliderFiller.color = Color.blue;
             return false;
         }
     }

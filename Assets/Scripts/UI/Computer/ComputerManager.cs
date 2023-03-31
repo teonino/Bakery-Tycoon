@@ -12,7 +12,7 @@ public class ComputerManager : MonoBehaviour {
     private void Awake()
     {
         tabsManagement.canChangeTab = true;
-        moneyRef.updateMoney();
+        moneyRef.subMoney();
     }
 
     private void Update() {
@@ -25,5 +25,10 @@ public class ComputerManager : MonoBehaviour {
             tabs[i]?.gameObject.SetActive(false);
         tabsManagement.canChangeTab = true;
         controller?.SetEventSystemToStartButton(null);
+    }
+
+    private void OnDestroy()
+    {
+        moneyRef.unsubMoney();
     }
 }

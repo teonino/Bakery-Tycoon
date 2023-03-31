@@ -13,6 +13,7 @@ public class CraftingStation : Interactable {
     [SerializeField] private CraftingStationType type;
     [SerializeField] private CreateQuest createQuest;
     [SerializeField] private CreateQuest CreateCerealQuest;
+    [SerializeField] private ParticleSystem vfx;
 
     [Header("Debug parameters")]
     [SerializeField] private bool skipCookingTime = false;
@@ -25,7 +26,10 @@ public class CraftingStation : Interactable {
     [SerializeField] private AudioSource TingSound;
     [SerializeField] private SFXPlayer sfxPlayer;
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
+        vfx?.Stop();
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
         if (!debugState.GetDebug())
             skipCookingTime = false;
     }
@@ -39,6 +43,7 @@ public class CraftingStation : Interactable {
             playerControllerSO.GetPlayerController().SetItemHold(null);
 
             CookingTime(itemInStation);
+            vfx?.Play();
             sfxPlayer.InteractSound();
         }
         else if (itemInStation != null && !playerControllerSO.GetPlayerController().GetItemHold() && !cooking) {
@@ -46,6 +51,15 @@ public class CraftingStation : Interactable {
                 Transform arm = playerControllerSO.GetPlayerController().GetItemSocket().transform;
                 playerControllerSO.GetPlayerController().SetItemHold(go.Result);
                 ProductHolder productItem = go.Result.GetComponent<ProductHolder>();
+
+                if (!productItem)
+                    print("Product Item is null");
+
+                if(productItem.product == null)
+                    print("productItem.product Item is null");
+
+                if (itemInStation == null)
+                    print("itemInStation is null");
 
                 productItem.product.SetAmount(itemInStation.GetAmount());
                 go.Result.transform.SetParent(arm);
@@ -127,6 +141,8 @@ public class CraftingStation : Interactable {
         TingSound.Play();
         cooking = false;
         readyText.SetActive(true);
+        vfx?.Stop();
+
     }
 
     //public void Clean() {

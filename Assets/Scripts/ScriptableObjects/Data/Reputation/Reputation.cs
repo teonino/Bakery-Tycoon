@@ -8,6 +8,7 @@ public class Reputation : Data {
     [SerializeField] private int level;
     [SerializeField] private int experience;
     [SerializeField] private List<int> experiencesPerLevel;
+    [SerializeField] private List<float> increaseMoneyAndCustomer;
     public Action UpdateUI;
 
     public override void ResetValues() {
@@ -17,8 +18,8 @@ public class Reputation : Data {
 
     public int GetLevel() => level;
     public int GetExperience() => experience;
-
     public int GetExpNeeded() => experiencesPerLevel[level];
+    public float GetBonus() => increaseMoneyAndCustomer[level];
 
     public void AddReputation(int value) {
         experience += value;

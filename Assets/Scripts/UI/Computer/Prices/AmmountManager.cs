@@ -27,42 +27,23 @@ public class AmmountManager : MonoBehaviour {
     private bool canUp;
     private bool canDown;
     private int timesToTest;
-    
-
 
     [HideInInspector] public DeliveryButton deliveryButton;
     [HideInInspector] public DeliveryManager deliveryManager;
 
     private ProductSO ProductSO;
     private IngredientSO Ingredient;
-    internal int originalAmmount = 0;
+    private DialogueManager dialogueManager;
+    private TutoAmafood tutoAmafood;
+    public int originalAmmount = 0;
 
-    private void Confirm(InputAction.CallbackContext ctx) {
-        StartCoroutine(WaitForGamepad());
-        deliveryButton.nbIngredient = ammountToBuy;
-        originalAmmount = ammountToBuy;
+    private void Start() {
+        dialogueManager = FindObjectOfType<DialogueManager>(true);
+        tutoAmafood = FindObjectOfType<TutoAmafood>();
+
+        if (tutoAmafood)
+            dialogueManager.OnDisableDialoguePanel += tutoAmafood.SetButtonForGamepadTutorial;
     }
-
-    private void Cancel(InputAction.CallbackContext ctx) {
-        if (originalAmmount < ammountToBuy) {
-            while(ammountToBuy != originalAmmount) {
-                SetIngredientsInCart(false);
-                ammountToBuy--;
-            }
-        } else {
-            while (ammountToBuy != originalAmmount) {
-                SetIngredientsInCart(true);
-                ammountToBuy++;
-            }
-        }
-
-        StartCoroutine(WaitForGamepad());
-    }
-
-    public void SetTexture(Texture texture) {
-        imageProduct.texture = texture;
-    }
-
     private void OnEnable() {
         deliveryManager = FindObjectOfType<DeliveryManager>();
         ammountToBuy = deliveryButton.nbIngredient;
@@ -84,6 +65,33 @@ public class AmmountManager : MonoBehaviour {
         //playerController.GetPlayerController().playerInput.Ammount.Cancel.performed += Confirm;
     }
 
+    public void Confirm(InputAction.CallbackContext ctx) {
+        StartCoroutine(WaitForGamepad());
+        deliveryButton.nbIngredient = ammountToBuy;
+        originalAmmount = ammountToBuy;
+    }
+
+    public void Cancel(InputAction.CallbackContext ctx) {
+        if (originalAmmount < ammountToBuy) {
+            while (ammountToBuy != originalAmmount) {
+                SetIngredientsInCart(false);
+                ammountToBuy--;
+            }
+        }
+        else {
+            while (ammountToBuy != originalAmmount) {
+                SetIngredientsInCart(true);
+                ammountToBuy++;
+            }
+        }
+
+        StartCoroutine(WaitForGamepad());
+    }
+
+    public void SetTexture(Texture texture) {
+        imageProduct.texture = texture;
+    }
+
     private void OnDisable() {
         deliveryButton = null;
 
@@ -99,10 +107,8 @@ public class AmmountManager : MonoBehaviour {
         playerController.GetPlayerController().playerInput.UI.Enable();
     }
 
-    private void ReleaseButton(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled)
-        {
+    private void ReleaseButton(InputAction.CallbackContext ctx) {
+        if (ctx.canceled) {
             canDown = false;
             canUp = false;
             timesToTest = 0;
@@ -139,32 +145,9 @@ public class AmmountManager : MonoBehaviour {
         }
     }
 
-    //private void Update()
-    //{
-    //    if (canUp && ammountToBuy < maxAmmountToBuy)
-    //    {
-    //        StartCoroutine(IncrementAmmountToBuy());
-    //        if(!upCoroutineFinished)
-    //        {
-    //            StartCoroutine(waitingtoGoFast(0));
-    //        }
-    //    }
-    //    else if (canDown && ammountToBuy > 0)
-    //    {
-    //        StartCoroutine(DecrementAmmountToBuy());
-    //        if (!downCoroutineFinished)
-    //        {
-    //            StartCoroutine(waitingtoGoFast(1));
-    //        }
-    //    }
-    //}
-
-    private IEnumerator IncrementAmmountToBuy()
-    {
-        if (canUp && ammountToBuy < maxAmmountToBuy)
-        {
-            if (timesToTest < 3)
-            {
+    private IEnumerator IncrementAmmountToBuy() {
+        if (canUp && ammountToBuy < maxAmmountToBuy) {
+            if (timesToTest < 3) {
                 upArrowAnimator.SetTrigger("MoveUp");
                 popSource.PlayOneShot(popClip);
                 timesToTest += 1;
@@ -174,47 +157,40 @@ public class AmmountManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.5f);
                 StartCoroutine(IncrementAmmountToBuy());
             }
-            else if (timesToTest >= 3)
-            {
+            else if (timesToTest >= 3) {
                 StartCoroutine(IncrementFastAmmountToBuy());
                 timesToTest = 0;
             }
             yield return null;
-        } 
+        }
     }
 
-    private IEnumerator IncrementFastAmmountToBuy()
-    {
-        if (canUp && ammountToBuy < maxAmmountToBuy)
-        {
+    private IEnumerator IncrementFastAmmountToBuy() {
+        if (canUp && ammountToBuy < maxAmmountToBuy) {
             yield return new WaitForSeconds(0.1f);
             upArrowAnimator.SetTrigger("MoveUp");
             popSource.PlayOneShot(popClip);
             ammountToBuy += 1;
-            textAmmount.text = ammountToBuy.ToString(); 
+            textAmmount.text = ammountToBuy.ToString();
             SetIngredientsInCart(true);
             StartCoroutine(IncrementFastAmmountToBuy());
         }
         yield return null;
     }
 
-    private IEnumerator DecrementAmmountToBuy()
-    {
-        if (canDown && ammountToBuy > 0)
-        {
-            if (timesToTest < 3)
-            {
+    private IEnumerator DecrementAmmountToBuy() {
+        if (canDown && ammountToBuy > 0) {
+            if (timesToTest < 3) {
                 downArrowAnimator.SetTrigger("MoveDown");
                 popSource.PlayOneShot(popClip);
                 timesToTest += 1;
                 ammountToBuy -= 1;
-                textAmmount.text = ammountToBuy.ToString(); 
+                textAmmount.text = ammountToBuy.ToString();
                 SetIngredientsInCart(false);
                 yield return new WaitForSeconds(0.3f);
                 StartCoroutine(DecrementAmmountToBuy());
             }
-            else if (timesToTest >= 3)
-            {
+            else if (timesToTest >= 3) {
                 StartCoroutine(DecrementFastAmmountToBuy());
                 timesToTest = 0;
             }
@@ -222,10 +198,8 @@ public class AmmountManager : MonoBehaviour {
         }
     }
 
-    private IEnumerator DecrementFastAmmountToBuy()
-    {
-        if (canDown && ammountToBuy > 0)
-        {
+    private IEnumerator DecrementFastAmmountToBuy() {
+        if (canDown && ammountToBuy > 0) {
             yield return new WaitForSeconds(0.1f);
             downArrowAnimator.SetTrigger("MoveDown");
             popSource.PlayOneShot(popClip);

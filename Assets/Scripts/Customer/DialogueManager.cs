@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,13 +19,16 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private CharacterTables characterTables;
     [SerializeField] private LocalizedStringTable tutorialDialogueTable;
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private List<GameObject> buttonImage;
 
     private string npcName;
     private int idDialogue;
     private int tutorialId = 1;
     private RegularSO currentRegular;
+    private bool updateEnable = false;
 
     public Action OnDestroyDialoguePanel;
+    public Action OnDisableDialoguePanel;
 
     private void OnEnable() {
         if (playerControllerSO.GetPlayerController()) {
@@ -38,6 +41,7 @@ public class DialogueManager : MonoBehaviour {
             Time.timeScale = 0;
         }
     }
+
     private void Start() {
         playerControllerSO.GetPlayerController().DisableInput();
         controller.RegisterCurrentSelectedButton();
@@ -45,7 +49,7 @@ public class DialogueManager : MonoBehaviour {
 
 
         for (int i = 0; i < playerAnswersTxt.Count; i++)
-            playerAnswersTxt[0].GetComponent<DialogueButton>().tutorial = tutorial;
+            playerAnswersButtons[0].tutorial = tutorial;
     }
 
     public void GetDialogues(int id, string character, RegularSO regular = null) {
@@ -56,6 +60,31 @@ public class DialogueManager : MonoBehaviour {
             SetDialogue(id);
         else
             SetTutorialDialogue();
+    }
+
+    private void Update() {
+        if (updateEnable) {
+            GameObject go = controller.GetEventSystemCurrentlySelected();
+            if (!(go == playerAnswersButtons[0].gameObject || go == playerAnswersButtons[1].gameObject || go == playerAnswersButtons[2].gameObject)) {
+                controller.SetEventSystemToStartButton(playerAnswersButtons[0].gameObject);
+            }
+
+            if (go == playerAnswersButtons[0].gameObject && !buttonImage[0].activeSelf) {
+                buttonImage[0].SetActive(true);
+                buttonImage[1].SetActive(false);
+                buttonImage[2].SetActive(false);
+            }
+            else if (go == playerAnswersButtons[1].gameObject && !buttonImage[1].activeSelf) {
+                buttonImage[0].SetActive(false);
+                buttonImage[1].SetActive(true); 
+                buttonImage[2].SetActive(false);
+            }
+            else if (go == playerAnswersButtons[2].gameObject && !buttonImage[2].activeSelf) {
+                buttonImage[0].SetActive(false);
+                buttonImage[1].SetActive(false);
+                buttonImage[2].SetActive(true); 
+            }
+        }
     }
 
     /*Old dialogue code
@@ -97,7 +126,7 @@ catch (Exception e) {
     public void SetTutorialDialogue() {
         LocalizedStringTable table = tutorialDialogueTable;
 
-        npcNameTxt.SetText(npcName);
+        npcNameTxt.SetText("Mamie Motte");
 
         npcSpeechTxt.enabled = false;
         npcSpeechTxt.SetTable(table);
@@ -111,8 +140,7 @@ catch (Exception e) {
         playerAnswersTxt[0].SetKey(key);
         playerAnswersTxt[0].enabled = true;
 
-
-        DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
+        DialogueButton button = playerAnswersButtons[0];
         button.dialogueManager = this;
         button.SetTutorial(tutorial);
 
@@ -122,6 +150,10 @@ catch (Exception e) {
         else {
             button.SetNextDialogue(0);
         }
+
+
+        playerAnswersTxt[1].gameObject.SetActive(false);
+        playerAnswersTxt[2].gameObject.SetActive(false);
 
         tutorialId++;
         StartCoroutine(WaitForGamepad(button.gameObject));
@@ -149,7 +181,7 @@ catch (Exception e) {
             playerAnswersTxt[i].SetKey(key);
             playerAnswersTxt[i].enabled = true;
 
-            DialogueButton button = playerAnswersTxt[i].GetComponent<DialogueButton>();
+            DialogueButton button = playerAnswersButtons[i];
             button.dialogueManager = this;
             button.SetTutorial(tutorial);
             StringTableEntry entry = table.GetTable().GetEntry(key);
@@ -178,7 +210,7 @@ catch (Exception e) {
         playerAnswersTxt[0].SetKey("Answer");
         playerAnswersTxt[0].enabled = true;
 
-        DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
+        DialogueButton button = playerAnswersButtons[0];
         button.SetNextDialogue(0);
 
         StartCoroutine(WaitForGamepad(button.gameObject));
@@ -199,21 +231,23 @@ catch (Exception e) {
 
         currentRegular?.AddFrienship(relation);
 
-        DialogueButton button = playerAnswersTxt[0].GetComponent<DialogueButton>();
+        DialogueButton button = playerAnswersButtons[0];
         button.SetNextDialogue(0);
         button.SetRelationReward(0);
         StartCoroutine(WaitForGamepad(button.gameObject));
     }
 
+
     private IEnumerator WaitForGamepad(GameObject go) {
         yield return new WaitForEndOfFrame();
+        controller.RegisterCurrentSelectedButton();
         controller.SetEventSystemToStartButton(go);
+        updateEnable = true;
     }
 
     public void SetDefaultButton() {
         if (gameObject.activeSelf) {
-            controller.RegisterCurrentSelectedButton();
-            StartCoroutine(WaitForGamepad(playerAnswersTxt[0].GetComponent<DialogueButton>().gameObject));
+            StartCoroutine(WaitForGamepad(playerAnswersButtons[0].gameObject));
         }
     }
 
@@ -240,12 +274,14 @@ catch (Exception e) {
         playerControllerSO.GetPlayerController().EnableInput();
         controller.SetEventSystemToLastButton();
 
+        OnDisableDialoguePanel?.Invoke();
+
         foreach (LocalizedStringComponent button in playerAnswersTxt)
             if (controller.GetEventSystemCurrentlySelected() == button.gameObject)
                 controller.SetEventSystemToStartButton(null);
 
         Time.timeScale = 1;
         OnDestroyDialoguePanel?.Invoke();
-        Addressables.ReleaseInstance(gameObject);
+        updateEnable = false;
     }
 }

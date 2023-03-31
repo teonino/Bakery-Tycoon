@@ -4,15 +4,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TutorialManager : MonoBehaviour {
-    [SerializeField] private TextMeshProUGUI questTxt;
+public class TutorialManager : MonoBehaviour
+{
+    [SerializeField] private LocalizedStringComponent questTxt;
     [SerializeField] private List<Quest> quests;
     [SerializeField] private Tutorial tutorial;
+    [SerializeField] private Day day;
 
     private int indexQuest = 0;
     private DialogueManager dialogueManager;
 
-    private void Awake() {
+    private void Awake()
+    {
         foreach (Quest quest in quests)
             quest.SetActive(false);
 
@@ -24,36 +27,47 @@ public class TutorialManager : MonoBehaviour {
         SetupQuest();
     }
 
-    private void OnDestroy() {
-        tutorial.action += SetDefaultButton;
+    private void OnDestroy()
+    {
+        tutorial.action -= SetDefaultButton;
+        dialogueManager.OnDestroyDialoguePanel -= LaunchQuest;
     }
 
-    private void SetupDialogue() {
+    private void SetupDialogue()
+    {
         dialogueManager.gameObject.SetActive(true);
         dialogueManager.GetDialogues(indexQuest + 1, "Tutorial");
     }
 
-    private void LaunchQuest() {
-        if (indexQuest < quests.Count) {
+    private void LaunchQuest()
+    {
+        if (indexQuest < quests.Count)
+        {
             questTxt.gameObject.SetActive(true);
-            quests[indexQuest].UpdateUI(questTxt);
-        }
+            questTxt.SetKey(quests[indexQuest].GetKey());        }
         else
             SceneManager.LoadScene("MainMenu");
     }
 
-    private void NextQuest() {
+    private void NextQuest()
+    {
+        quests[indexQuest].OnCompletedAction -= NextQuest;
         indexQuest++;
-        if (indexQuest < quests.Count) {
+        if (indexQuest < quests.Count)
+        {
             SetupDialogue();
             SetupQuest();
+            if (indexQuest == quests.Count - 1)
+                day?.OnNextDayPhase();
         }
-        else {
+        else
+        {
             questTxt.gameObject.SetActive(false);
             SetupDialogue();
         }
     }
-    private void SetupQuest() {
+    private void SetupQuest()
+    {
         quests[indexQuest].OnCompletedAction += NextQuest;
         quests[indexQuest].SetActive(true);
         LaunchQuest();

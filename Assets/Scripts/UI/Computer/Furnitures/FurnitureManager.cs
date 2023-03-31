@@ -28,15 +28,7 @@ public class FurnitureManager : MonoBehaviour {
     private List<FurnitureType> furnitureTypeFilter;
     private List<FurnitureStyle> furnitureStyleFilter;
     private BuildingMode buildingMode;
-
-    private void OnEnable() {
-        if (gameObject.activeSelf) {
-            //Manage Inputs
-            playerController.DisableInput();
-            playerController.playerInput.UI.Enable();
-            playerController.playerInput.UI.Quit.performed += Quit;
-        }
-    }
+    private GameObject lastButton;
 
     // Start is called before the first frame update
     void Awake() {
@@ -48,6 +40,37 @@ public class FurnitureManager : MonoBehaviour {
 
         lenght = furnitures.GetFurnitureCount();
         playerController = playerControllerSO.GetPlayerController();
+    }
+
+    private void OnEnable() {
+        if (gameObject.activeSelf) {
+            //Manage Inputs
+            playerController.DisableInput();
+            playerController.playerInput.UI.Enable();
+            playerController.playerInput.UI.Quit.performed += Quit;
+
+            SetButtonForGamepad();
+
+            scrollRectTransform.position = new Vector3(scrollRectTransform.position.x, 0, scrollRectTransform.position.z);
+
+            furnitureTypeFilter.Clear();
+            furnitureStyleFilter.Clear();
+        }
+    }
+
+    public void SetButtonForGamepad() {
+        if (lastButton)
+            controller.SetEventSystemToStartButton(lastButton);
+        else {
+            if (controller.IsGamepad() && furnitureButtonList.Count > 0) {
+                int i = 0;
+                while (!furnitureButtonList[i].activeSelf)
+                    i++;
+                controller.SetEventSystemToStartButton(furnitureButtonList[i]);
+            }
+            else
+                controller.SetEventSystemToStartButton(null);
+        }
     }
 
     public void SetBuildingMode(BuildingMode building) => buildingMode = building;
@@ -69,7 +92,7 @@ public class FurnitureManager : MonoBehaviour {
     }
     private void SetupRacks() {
         if (furnitureButtonList.Count > 0 && nbButton == lenght) {
-            maxButtonInRack = (int)Math.Floor(buttonPanel.GetComponent<RectTransform>().rect.width / furnitureButtonList[0].GetComponent<RectTransform>().sizeDelta.x);
+            maxButtonInRack = (int)Math.Floor(buttonPanel.GetComponent<RectTransform>().rect.width / furnitureButtonList[0].GetComponent<RectTransform>().sizeDelta.x) ;
             for (int i = 0; i < furnitureButtonList.Count; i++) {
                 if (i % maxButtonInRack == 0) {
                     furnitureRackAsset.InstantiateAsync(buttonPanel.transform).Completed += (go) => {
@@ -83,7 +106,6 @@ public class FurnitureManager : MonoBehaviour {
     }
     private void SetupButton() {
         if (furnitureRackList.Count * maxButtonInRack >= furnitureButtonList.Count) {
-            SetVerticalLayoutGroup();
 
             for (int i = 0; i < lenght; i++) {
                 if (i / maxButtonInRack < furnitureRackList.Count) {
@@ -91,6 +113,7 @@ public class FurnitureManager : MonoBehaviour {
                     furnitureButtonList[i].transform.localScale = Vector3.one;
                 }
             }
+            SetVerticalLayoutGroup();
 
             if (controller.IsGamepad())
                 controller.SetEventSystemToStartButton(furnitureButtonList[0]);
@@ -106,7 +129,7 @@ public class FurnitureManager : MonoBehaviour {
             if (furnitureRackList[i].activeSelf)
                 nbRack++;
 
-        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].GetComponent<RectTransform>().rect.height * nbRack);
+        buttonPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(buttonPanel.GetComponent<RectTransform>().rect.width / 2, furnitureRackList[0].transform.GetChild(0).GetComponent<RectTransform>().rect.height * (nbRack + 1));
         buttonPanel.GetComponent<RectTransform>().localPosition = new Vector3(buttonPanel.GetComponent<RectTransform>().localPosition.x, 0, 0);
     }
 
@@ -138,8 +161,8 @@ public class FurnitureManager : MonoBehaviour {
         switch (filter) {
             case 1: type = FurnitureType.Utility; break;
             case 2: type = FurnitureType.Table; break;
-            case 3: type = FurnitureType.Chair; break;
-            case 4: type = FurnitureType.Shelf; break;
+            case 3: type = FurnitureType.Frame; break;
+            case 4: type = FurnitureType.Entrance; break;
             case 5: type = FurnitureType.Decoration; break;
             case 6: type = FurnitureType.Floor; break;
             case 7: type = FurnitureType.Wall; break;
@@ -240,14 +263,13 @@ public class FurnitureManager : MonoBehaviour {
         SetVerticalLayoutGroup();
     }
 
-    public void DisplayAssetChoice(FurnitureSO furniture) {
+    public void DisplayAssetChoice(FurnitureSO furniture, GameObject button) {
         assetChoicePanel.SetActive(true);
         AssetChoiceManager choiceManager = assetChoicePanel.GetComponent<AssetChoiceManager>();
 
         choiceManager.SetFurnitureSO(furniture);
         choiceManager.SetFurnitureManager(this);
-
-
+        lastButton = button;
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Quit.performed += choiceManager.Quit;
     }
@@ -266,6 +288,7 @@ public class FurnitureManager : MonoBehaviour {
     public void Quit() {
         playerController.playerInput.UI.Quit.performed -= Quit;
         playerController.playerInput.UI.Disable();
+        lastButton = null;
         buildingMode.Effect();
         gameObject.SetActive(false);
     }
