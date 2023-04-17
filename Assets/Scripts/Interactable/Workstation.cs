@@ -23,6 +23,7 @@ public class Workstation : Interactable {
     private void Awake() {
         vfx.Stop();
         sfxPlayer = FindObjectOfType<SFXPlayer>();
+        animator = FindObjectOfType<PlayerController>().GetAnimator();
     }
 
     protected override void Start() {

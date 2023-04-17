@@ -11,7 +11,7 @@ public class ListRegular : Data {
     int totalFriendship;
     int lastRank;
 
-    private List<StockIngredient> stockIngredients;
+    public List<StockIngredient> stockIngredients;
 
     public override void ResetValues() {
         totalFriendship = 0;

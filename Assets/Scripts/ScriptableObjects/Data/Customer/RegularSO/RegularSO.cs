@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 public class RegularSO : Data {
     [SerializeField] private string nameNPC;
     [SerializeField] private ListRegular listRegular;
+    [SerializeField] private ListIngredient listIngredient;
     [SerializeField] private AssetReference model;
     [SerializeField] private int friendship;
 
@@ -17,6 +18,9 @@ public class RegularSO : Data {
 
         if (friendship < 1) 
             friendship = 1;
+
+        if(listRegular.stockIngredients == null)
+            listRegular.stockIngredients = listIngredient.GetIngredientList();
 
         listRegular.AddFriendship(i);
     }
