@@ -64,13 +64,13 @@ public class Workstation : Interactable {
     {
         if (activate)
         {
-            vfx.Play();
-            animator.SetBool("isCooking", true);
+            vfx?.Play();
+            animator?.SetBool("isCooking", true);
         }
         else
         {
-            vfx.Stop();
-            animator.SetBool("isCooking", false);
+            vfx?.Stop();
+            animator?.SetBool("isCooking", false);
         }
     }
 

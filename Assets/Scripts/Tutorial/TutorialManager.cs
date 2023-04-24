@@ -43,10 +43,12 @@ public class TutorialManager : MonoBehaviour
     {
         if (indexQuest < quests.Count)
         {
+            questTxt.gameObject.SetActive(false);
+            questTxt.SetKey(quests[indexQuest].GetKey());
             questTxt.gameObject.SetActive(true);
-            questTxt.SetKey(quests[indexQuest].GetKey());        }
+        }
         else
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(0);
     }
 
     private void NextQuest()

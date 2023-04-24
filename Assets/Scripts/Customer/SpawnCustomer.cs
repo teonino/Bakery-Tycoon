@@ -97,7 +97,7 @@ public class SpawnCustomer : MonoBehaviour {
 
     private IEnumerator PassToEvening() {
         yield return new WaitForSeconds(2);
-        if (nbCustomer == 0)
+        if (FindObjectsOfType<AICustomer>().Length == 0)
             FindObjectOfType<DayManager>().UpdateDay();
         else
             StartCoroutine(PassToEvening());
