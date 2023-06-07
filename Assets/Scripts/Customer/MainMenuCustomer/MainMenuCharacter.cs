@@ -69,28 +69,6 @@ public class MainMenuCharacter : MonoBehaviour
     }
 
 
-    public IEnumerator Leaving()
-    {
-        if (manager != null)
-        {
-            triggerAnimation("Happy");
-            yield return new WaitForSeconds(2f);
-            manager.currentCustomer = null;
-            StartCoroutine(manager.spawnCustomer());
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            SearchManager();
-        }
-    }
-
-    private void SearchManager()
-    {
-        manager = FindObjectOfType<MainMenuManager_rework>();
-        manager.ActiveCustomer();
-        StartCoroutine(Leaving());
-    }
 
     public void triggerAnimation(string trigger)
     {
