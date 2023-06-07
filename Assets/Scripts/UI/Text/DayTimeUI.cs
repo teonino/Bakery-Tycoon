@@ -27,6 +27,7 @@ public class DayTimeUI : MonoBehaviour
 
     private void SetDay()
     {
+        text.enabled = false;
         switch (day.GetDayTime())
         {
             case DayTime.Day:
@@ -36,6 +37,7 @@ public class DayTimeUI : MonoBehaviour
                 text.SetKey("Evening");
                 break;
         }
+        text.enabled = true;
     }
 
         //private IEnumerator TimeRemaining() {

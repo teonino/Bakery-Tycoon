@@ -39,6 +39,7 @@ public class AIRegularCustomer : AICustomer
         base.InitCustomer();
 
         FindObjectOfType<MainShelf>().SetDestinationToPos(this);
+        regularSO = FindObjectOfType<RegularHolder>().GetRegular(regularSO);
         animator.SetTrigger("Walk");
         day.DayTimeChange += LeaveOnEvening;
         if (!tutorial)

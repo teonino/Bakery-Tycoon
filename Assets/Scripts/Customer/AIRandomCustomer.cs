@@ -105,7 +105,7 @@ public class AIRandomCustomer : AICustomer
         }
 
         //If too far away from destination, retrigger movements
-        if (state != AIState.moving && Vector3.Distance(transform.position, agent.destination) > 2)
+        if (state != AIState.moving && Vector3.Distance(transform.position, agent.destination) > 0.5f)
         {
             SetDestination(agent.destination);
         }

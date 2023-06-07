@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public PlayerControllerSO GetPlayerControllerSO() => playerControllerSO;
+    public Animator GetAnimator() => animator;
 
     // Update is called once per frame
     private void FixedUpdate() {
